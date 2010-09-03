@@ -1,0 +1,2 @@
+class GeneratorType < TechnicalComponent
+end

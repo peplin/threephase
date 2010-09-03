@@ -1,0 +1,2 @@
+class StorageDeviceType < TechnicalComponent
+end
