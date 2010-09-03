@@ -10,11 +10,11 @@ class CreateBlips < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :blips, [:x, :y, :zone], :unique => true
+    add_index :blips, [:x, :y, :zone_id], :unique => true
   end
 
   def self.down
     drop_table :blips
-    remove_index :blips, [:x, :y, :zone]
+    remove_index :blips, [:x, :y, :zone_id]
   end
 end

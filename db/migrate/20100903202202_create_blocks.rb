@@ -16,11 +16,11 @@ class CreateBlocks < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :blocks, [:x, :y, :map], :unique => true
+    add_index :blocks, [:x, :y, :map_id], :unique => true
   end
 
   def self.down
     drop_table :blocks
-    remove_index :blocks, [:x, :y, :map]
+    remove_index :blocks, [:x, :y, :map_id]
   end
 end
