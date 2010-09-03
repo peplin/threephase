@@ -6,8 +6,6 @@ class CreateBlips < ActiveRecord::Migration
       t.integer :power_factor
 
       t.references :zone
-
-      t.timestamps
     end
 
     add_index :blips, [:x, :y, :zone_id], :unique => true

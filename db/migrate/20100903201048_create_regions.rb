@@ -7,8 +7,6 @@ class CreateRegions < ActiveRecord::Migration
       t.references :map
       t.references :game
       t.references :user
-
-      t.timestamps
     end
   end
 

@@ -5,8 +5,6 @@ class CreateLoadProfiles < ActiveRecord::Migration
       t.integer :demand
 
       t.references :zone
-
-      t.timestamps
     end
   end
 

@@ -5,8 +5,6 @@ class CreateWindProfiles < ActiveRecord::Migration
       t.float :speed
 
       t.references :block
-
-      t.timestamps
     end
   end
 

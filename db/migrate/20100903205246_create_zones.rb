@@ -5,8 +5,6 @@ class CreateZones < ActiveRecord::Migration
       t.integer :x
       t.integer :y
       t.references :region
-
-      t.timestamps
     end
     
     add_index :zones, [:x, :y], :unique => true
