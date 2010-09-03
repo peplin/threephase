@@ -3,7 +3,10 @@ class CreateRegions < ActiveRecord::Migration
     create_table :regions do |t|
       t.string :name
       t.integer :research_budget
+
       t.references :map
+      t.references :game
+      t.references :user
 
       t.timestamps
     end
