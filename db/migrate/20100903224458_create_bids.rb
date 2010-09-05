@@ -4,6 +4,8 @@ class CreateBids < ActiveRecord::Migration
       t.integer :price
       t.boolean :accepted
 
+      t.references :generator
+
       t.timestamps
     end
   end
