@@ -5,6 +5,7 @@ class CreateMarketPrices < ActiveRecord::Migration
       t.float :price, :null => false
 
       t.references :game, :null => false
+      t.references :fuel
 
       t.timestamps
     end

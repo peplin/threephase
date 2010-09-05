@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe GeneratorType do
+  it { should have_one :technical_component }
+  it { should have_many :generators }
   it { should belong_to :fuel }
   it { should validate_presence_of :safety_mtbf }
   it { should validate_presence_of :safety_incident_severity }

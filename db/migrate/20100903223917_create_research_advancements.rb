@@ -5,6 +5,8 @@ class CreateResearchAdvancements < ActiveRecord::Migration
       t.string :parameter, :null => false
       t.float :adjustment, :null => false
 
+      t.references :region, :null => false
+
       t.timestamps
     end
   end

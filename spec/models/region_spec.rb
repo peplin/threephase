@@ -3,6 +3,11 @@ require 'spec_helper'
 describe Region do
   it { should belong_to :map }
   it { should belong_to :game }
+  it { should belong_to :user }
+  it { should have_many :research_advancements }
+  it { should have_many :proposed_fuel_contracts }
+  it { should have_many :received_fuel_contracts }
+  it { should have_many :interstate_lines }
   it { should validate_presence_of :name }
   it { should validate_presence_of :research_budget }
   it { should allow_value(1000).for(:research_budget) }

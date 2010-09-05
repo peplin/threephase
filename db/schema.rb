@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
   end
 
   create_table "fuel_contracts", :force => true do |t|
-    t.integer  "approved"
+    t.datetime "approved"
     t.float    "price_per_unit",      :null => false
     t.integer  "amount",              :null => false
     t.integer  "duration",            :null => false
@@ -118,9 +118,9 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
   end
 
   create_table "generator_types", :force => true do |t|
-    t.integer  "safety_mtbf",              :null => false
+    t.datetime "safety_mtbf",              :null => false
     t.integer  "safety_incident_severity", :null => false
-    t.integer  "ramping_speed",            :null => false
+    t.datetime "ramping_speed",            :null => false
     t.float    "fuel_efficiency",          :null => false
     t.integer  "air_emissions",            :null => false
     t.integer  "water_emissions",          :null => false
@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.string   "market_type", :null => false
     t.float    "price",       :null => false
     t.integer  "game_id",     :null => false
+    t.integer  "fuel_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -202,6 +203,7 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.string   "reason",     :null => false
     t.string   "parameter",  :null => false
     t.float    "adjustment", :null => false
+    t.integer  "region_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -228,8 +230,8 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.integer  "peak_capacity_min",            :null => false
     t.integer  "peak_capacity_max",            :null => false
     t.integer  "average_capacity",             :null => false
-    t.integer  "mtbf",                         :null => false
-    t.integer  "mttr",                         :null => false
+    t.datetime "mtbf",                         :null => false
+    t.datetime "mttr",                         :null => false
     t.integer  "repair_cost",                  :null => false
     t.integer  "workforce",                    :null => false
     t.integer  "area",                         :null => false
@@ -240,7 +242,7 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.integer  "waste_disposal_cost_max",      :null => false
     t.integer  "noise",                        :null => false
     t.boolean  "operating",                    :null => false
-    t.integer  "lifetime",                     :null => false
+    t.datetime "lifetime",                     :null => false
     t.integer  "user_id"
     t.integer  "buildable_id",                 :null => false
     t.string   "buildable_type",               :null => false
