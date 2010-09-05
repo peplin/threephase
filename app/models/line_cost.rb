@@ -6,5 +6,5 @@ end
 class LineMaintenanceCost < LineCost
 end
 
-class LineCapitolColst < LineCost
+class LineCapitolCost < LineCost
 end
