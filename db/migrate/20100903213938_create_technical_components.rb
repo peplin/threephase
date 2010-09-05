@@ -6,8 +6,8 @@ class CreateTechnicalComponents < ActiveRecord::Migration
       t.integer :peak_capacity_min, :null => false
       t.integer :peak_capacity_max, :null => false
       t.integer :average_capacity, :null => false
-      t.integer :mtbf, :null => false
-      t.integer :mttr, :null => false
+      t.datetime :mtbf, :null => false
+      t.datetime :mttr, :null => false
       t.integer :repair_cost, :null => false
       t.integer :workforce, :null => false
       t.integer :area, :null => false
@@ -18,7 +18,7 @@ class CreateTechnicalComponents < ActiveRecord::Migration
       t.integer :waste_disposal_cost_max, :null => false
       t.integer :noise, :null => false
       t.boolean :operating, :null => false
-      t.integer :lifetime, :null => false
+      t.datetime :lifetime, :null => false
 
       t.references :user
       t.references :buildable, :null => false
