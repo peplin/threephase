@@ -222,9 +222,9 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.datetime "updated_at"
   end
 
-  create_table "technical_components", :force => true do |t|
+  create_table "technical_components", :id => false, :force => true do |t|
     t.string   "name",                         :null => false
-    t.text     "description",                  :null => false
+    t.text     "description"
     t.integer  "peak_capacity_min",            :null => false
     t.integer  "peak_capacity_max",            :null => false
     t.integer  "average_capacity",             :null => false
@@ -241,8 +241,10 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.integer  "noise",                        :null => false
     t.boolean  "operating",                    :null => false
     t.integer  "lifetime",                     :null => false
+    t.integer  "id"
     t.integer  "user_id"
     t.integer  "buildable_id",                 :null => false
+    t.string   "buildable_type",               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

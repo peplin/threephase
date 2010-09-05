@@ -22,7 +22,7 @@ class CreateTechnicalComponents < ActiveRecord::Migration
 
       t.references :user
       t.references :buildable, :null => false
-      t.integer :buildable_id, :null => false
+      t.string :buildable_type, :null => false
 
       t.timestamps
     end

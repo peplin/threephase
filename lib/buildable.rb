@@ -11,12 +11,6 @@ module Buildable
     technical_component_without_autobuild || build_technical_component
   end
 
-  def method_missing(meth, *args, &blk)
-    technical_component.send(meth, *args, &blk)
-  rescue NoMethodError
-    super
-  end
-
   module ClassMethods
     def define_technical_component_accessors
       all_attributes = TechnicalComponent.content_columns.map(&:name)
