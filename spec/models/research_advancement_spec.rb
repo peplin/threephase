@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe ResearchAdvancement do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should belong_to :region }
+  it { should validate_presence_of :reason }
+  it { should validate_presence_of :parameter }
+  it { should validate_presence_of :adjustment }
 end

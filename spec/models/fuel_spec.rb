@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe Fuel do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should have_many :fuel_contracts }
+  it { should have_many :market_prices }
+  it { should validate_presence_of :name }
+  it { should validate_presence_of :description }
 end

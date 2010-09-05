@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe Bid do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should validate_presence_of :price }
+  it { should_not validate_presence_of :accepted }
+  it { should belong_to :generator }
 end

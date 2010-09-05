@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Repair do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should belong_to :repairable }
+  it { should validate_presence_of :repairable_type }
+  it { should validate_presence_of :reason }
+  it { should validate_presence_of :cost }
+  it { should validate_presence_of :offline }
 end

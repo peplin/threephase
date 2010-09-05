@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe StorageDeviceType do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should have_many :storage_devices }
+  it { should have_many :zones }
+  it { should validate_presence_of :decay_rate }
+  it { should validate_presence_of :efficiency }
 end

@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe AllowedTechnicalComponentType do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should have_db_index :buildable_id }
+  it { should have_db_index :game_id }
+  it { should belong_to :game }
+  it { should belong_to :buildable }
 end

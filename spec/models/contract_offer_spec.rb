@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe ContractOffer do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should belong_to :contract_negotiation }
+  it { should_not validate_presence_of :accepted }
+  it { should validate_presence_of :proposed_amount }
 end

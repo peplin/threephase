@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe WindProfile do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should belong_to :block }
+  it { should validate_presence_of :hour }
+  it { should validate_presence_of :speed }
 end
