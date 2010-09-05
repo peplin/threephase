@@ -2,7 +2,7 @@ class CreateTechnicalComponents < ActiveRecord::Migration
   def self.up
     create_table :technical_components do |t|
       t.string :name, :null => false
-      t.text :description, :null => false
+      t.text :description
       t.integer :peak_capacity_min, :null => false
       t.integer :peak_capacity_max, :null => false
       t.integer :average_capacity, :null => false
