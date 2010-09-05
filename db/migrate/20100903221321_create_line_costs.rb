@@ -1,6 +1,6 @@
 class CreateLineCosts < ActiveRecord::Migration
   def self.up
-    create_table :line_costs :id => false do |t|
+    create_table :line_costs, :id => false do |t|
       t.string :cost_type
       t.integer :length_min
       t.integer :length_max
