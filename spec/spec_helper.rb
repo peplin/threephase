@@ -1,4 +1,5 @@
 require 'shoulda'
+require 'shoulda/active_record'
 
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
@@ -11,6 +12,7 @@ require 'rspec/rails'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 Rspec.configure do |config|
+  config.include(Shoulda::ActiveRecord::Matchers)
   # == Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
