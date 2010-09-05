@@ -1,17 +1,17 @@
 class CreateBlocks < ActiveRecord::Migration
   def self.up
     create_table :blocks do |t|
-      t.integer :x
-      t.integer :y
-      t.integer :elevation
-      t.integer :type
-      t.float :wind_speed
-      t.integer :water_flow
-      t.integer :sunfall
-      t.integer :natural_gas_index
-      t.integer :coal_index
+      t.integer :x, :null => false
+      t.integer :y, :null => false
+      t.integer :elevation, :null => false
+      t.integer :type, :null => false
+      t.float :wind_speed, :null => false
+      t.integer :water_flow, :null => false
+      t.integer :sunfall, :null => false
+      t.integer :natural_gas_index, :null => false
+      t.integer :coal_index, :null => false
 
-      t.references :map
+      t.references :map, :null => false
 
       t.timestamps
     end

@@ -1,12 +1,12 @@
 class CreateRepairs < ActiveRecord::Migration
   def self.up
     create_table :repairs do |t|
-      t.string :reason
-      t.integer :cost
-      t.boolean :offline
+      t.string :reason, :null => false
+      t.integer :cost, :null => false
+      t.boolean :offline, :null => false
 
-      t.references :repairable
-      t.string :repairable_type
+      t.references :repairable, :null => false
+      t.string :repairable_type, :null => false
 
       t.timestamps
     end

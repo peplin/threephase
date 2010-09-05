@@ -1,11 +1,11 @@
 class CreateBlips < ActiveRecord::Migration
   def self.up
     create_table :blips do |t|
-      t.integer :x
-      t.integer :y
-      t.integer :power_factor
+      t.integer :x, :null => false
+      t.integer :y, :null => false
+      t.integer :power_factor, :null => false
 
-      t.references :zone
+      t.references :zone, :null => false
     end
 
     add_index :blips, [:x, :y, :zone_id], :unique => true

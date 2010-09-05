@@ -1,8 +1,8 @@
 class CreateMaps < ActiveRecord::Migration
   def self.up
     create_table :maps do |t|
-      t.string :name
-      t.references :user, :null => true
+      t.string :name, :null => false
+      t.references :user
 
       t.timestamps
     end

@@ -1,11 +1,11 @@
 class CreateLineTypes < ActiveRecord::Migration
   def self.up
     create_table :line_types do |t|
-      t.boolean :ac
-      t.integer :voltage
-      t.integer :resistance
-      t.float :diameter
-      t.integer :height
+      t.boolean :ac, :null => false
+      t.integer :voltage, :null => false
+      t.integer :resistance, :null => false
+      t.float :diameter, :null => false
+      t.integer :height, :null => false
 
       t.timestamps
     end

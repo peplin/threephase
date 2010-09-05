@@ -1,9 +1,9 @@
 class CreateResearchAdvancements < ActiveRecord::Migration
   def self.up
     create_table :research_advancements do |t|
-      t.string :reason
-      t.string :parameter
-      t.float :adjustment
+      t.string :reason, :null => false
+      t.string :parameter, :null => false
+      t.float :adjustment, :null => false
 
       t.timestamps
     end

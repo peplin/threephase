@@ -1,28 +1,28 @@
 class CreateTechnicalComponents < ActiveRecord::Migration
   def self.up
     create_table :technical_components do |t|
-      t.string :name
-      t.text :description
-      t.integer :peak_capacity_min
-      t.integer :peak_capacity_max
-      t.integer :average_capacity
-      t.integer :mtbf
-      t.integer :mttr
-      t.integer :repair_cost
-      t.integer :workforce
-      t.integer :area
-      t.integer :capitol_cost_min
-      t.integer :capitol_cost_max
-      t.integer :environmental_disruptiveness
-      t.integer :waste_disposal_cost_min
-      t.integer :waste_disposal_cost_max
-      t.integer :noise
-      t.boolean :online
-      t.integer :lifetime
+      t.string :name, :null => false
+      t.text :description, :null => false
+      t.integer :peak_capacity_min, :null => false
+      t.integer :peak_capacity_max, :null => false
+      t.integer :average_capacity, :null => false
+      t.integer :mtbf, :null => false
+      t.integer :mttr, :null => false
+      t.integer :repair_cost, :null => false
+      t.integer :workforce, :null => false
+      t.integer :area, :null => false
+      t.integer :capitol_cost_min, :null => false
+      t.integer :capitol_cost_max, :null => false
+      t.integer :environmental_disruptiveness, :null => false
+      t.integer :waste_disposal_cost_min, :null => false
+      t.integer :waste_disposal_cost_max, :null => false
+      t.integer :noise, :null => false
+      t.boolean :operating, :null => false
+      t.integer :lifetime, :null => false
 
-      t.references :user, :null => true
-      t.references :buildable
-      t.integer :buildable_id
+      t.references :user
+      t.references :buildable, :null => false
+      t.integer :buildable_id, :null => false
 
       t.timestamps
     end

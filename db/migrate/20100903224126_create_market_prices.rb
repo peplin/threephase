@@ -1,10 +1,10 @@
 class CreateMarketPrices < ActiveRecord::Migration
   def self.up
     create_table :market_prices do |t|
-      t.string :market_type
-      t.float :price
+      t.string :market_type, :null => false
+      t.float :price, :null => false
 
-      t.references :game
+      t.references :game, :null => false
 
       t.timestamps
     end

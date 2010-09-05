@@ -1,10 +1,10 @@
 class CreateLoadProfiles < ActiveRecord::Migration
   def self.up
     create_table :load_profiles do |t|
-      t.integer :hour
-      t.integer :demand
+      t.integer :hour, :null => false
+      t.integer :demand, :null => false
 
-      t.references :zone
+      t.references :zone, :null => false
     end
   end
 

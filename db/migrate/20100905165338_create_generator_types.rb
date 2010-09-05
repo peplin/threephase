@@ -1,17 +1,17 @@
 class CreateGeneratorTypes < ActiveRecord::Migration
   def self.up
     create_table :generator_types do |t|
-      t.integer :safety_mtbf
-      t.integer :safety_incident_severity
-      t.integer :ramping_speed
-      t.float :fuel_efficiency
-      t.integer :air_emissions
-      t.integer :water_emissions
-      t.integer :maintenance_cost_min
-      t.integer :maintenance_cost_max
-      t.float :tax_credit
+      t.integer :safety_mtbf, :null => false
+      t.integer :safety_incident_severity, :null => false
+      t.integer :ramping_speed, :null => false
+      t.float :fuel_efficiency, :null => false
+      t.integer :air_emissions, :null => false
+      t.integer :water_emissions, :null => false
+      t.integer :maintenance_cost_min, :null => false
+      t.integer :maintenance_cost_max, :null => false
+      t.float :tax_credit, :null => false
 
-      t.references :fuel, :null => true
+      t.references :fuel
 
       t.timestamps
     end

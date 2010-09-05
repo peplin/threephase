@@ -1,10 +1,10 @@
 class CreateBids < ActiveRecord::Migration
   def self.up
     create_table :bids do |t|
-      t.integer :price
+      t.integer :price, :null => false
       t.boolean :accepted
 
-      t.references :generator
+      t.references :generator, :null => false
 
       t.timestamps
     end
