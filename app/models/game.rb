@@ -11,27 +11,30 @@ class Game < ActiveRecord::Base
   has_many :regions
   has_many :users, :through => :regions
   has_many :maps, :through => :regions
-  validates_presence_of :max_line_capacity
-  validates_presence_of :technology_cost
-  validates_presence_of :technology_reliability
-  validates_presence_of :power_factor
-  validates_presence_of :frequency
-  validates_presence_of :wind_speed
-  validates_presence_of :sunfall
-  validates_presence_of :water_flow
-  validates_presence_of :regulation_type
-  validates_presence_of :starting_capitol
-  validates_presence_of :interest_rate
-  validates_presence_of :reliability_constraint
-  validates_presence_of :fuel_cost
-  validates_presence_of :fuel_cost_volatility
-  validates_presence_of :workforce_reliability
-  validates_presence_of :workforce_cost
-  validates_presence_of :unionized
-  validates_presence_of :carbon_allowance
-  validates_presence_of :tax_credit
-  validates_presence_of :renewable_requirement
-  validates_presence_of :political_stability
-  validates_presence_of :political_opposition
-  validates_presence_of :public_support
+
+  validates :max_line_capacity, :presence => true
+  validates :technology_cost, :presence => true, :percentage => true
+  validates :technology_reliability, :presence => true, :percentage => true
+  validates :power_factor, :presence => true, :percentage => true
+  validates :frequency, :presence => true
+  validates :wind_speed, :presence => true, :percentage => true
+  validates :sunfall, :presence => true, :percentage => true
+  validates :water_flow, :presence => true, :percentage => true
+
+  validates :regulation_type, :presence => true
+  validates :starting_capitol, :presence => true
+  validates :interest_rate, :presence => true, :percentage => true
+  validates :reliability_constraint, :presence => true
+  validates :fuel_cost, :presence => true, :percentage => true
+  validates :fuel_cost_volatility, :presence => true, :percentage => true
+  validates :workforce_reliability, :presence => true, :percentage => true
+  validates :workforce_cost, :presence => true, :percentage => true
+  validates :unionized, :presence => true
+
+  validates :carbon_allowance, :presence => true, :percentage => true
+  validates :tax_credit, :presence => true, :percentage => true
+  validates :renewable_requirement, :presence => true, :percentage => true
+  validates :political_stability, :presence => true, :percentage => true
+  validates :political_opposition, :presence => true, :percentage => true
+  validates :public_support, :presence => true, :percentage => true
 end
