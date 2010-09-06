@@ -5,8 +5,8 @@ describe Game do
   it { should have_many :spot_market_prices }
   it { should have_many :carbon_credit_market_prices }
   it { should have_many :regions }
-  it { should have_many(:users).through(:region) }
-  it { should have_many(:maps).through(:region) }
+  it { should have_many(:users).through(:regions) }
+  it { should have_many(:maps).through(:regions) }
   it { should have_many(:generator_types).through(:allowed_generator_types) }
 
   it { should validate_presence_of :max_line_capacity}

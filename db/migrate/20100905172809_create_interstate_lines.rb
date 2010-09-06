@@ -3,7 +3,8 @@ class CreateInterstateLines < ActiveRecord::Migration
     create_table :interstate_lines do |t|
       t.boolean :accepted
       
-      t.references :region, :null => false
+      t.integer :incoming_region_id, :null => false
+      t.integer :outgoing_region_id, :null => false
       t.references :line_type, :null => false
 
       t.timestamps

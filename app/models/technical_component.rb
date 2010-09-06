@@ -1,6 +1,7 @@
 class TechnicalComponent < ActiveRecord::Base
   belongs_to :buildable, :polymorphic => true, :dependent => :destroy
   belongs_to :user
+  has_many :technical_component_instances, :as => :buildable
   validates_presence_of :name
   validates_presence_of :peak_capacity_min
   validates_presence_of :peak_capacity_max

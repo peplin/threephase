@@ -4,8 +4,8 @@ class CreateTechnicalComponentInstances < ActiveRecord::Migration
       t.string :instance_type, :null => false
 
       t.references :zone, :null => false
-      t.references :buildable_type, :null => false
-      t.string :buildable_type_type, :null => false
+      t.references :buildable, :null => false
+      t.string :buildable_type, :null => false
 
       t.timestamps
     end

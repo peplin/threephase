@@ -134,8 +134,9 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
 
   create_table "interstate_lines", :force => true do |t|
     t.boolean  "accepted"
-    t.integer  "region_id",    :null => false
-    t.integer  "line_type_id", :null => false
+    t.integer  "incoming_region_id", :null => false
+    t.integer  "outgoing_region_id", :null => false
+    t.integer  "line_type_id",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -147,6 +148,7 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.integer "cost_min",               :null => false
     t.integer "cost_max",               :null => false
     t.integer "technical_component_id", :null => false
+    t.integer "line_type_id",           :null => false
   end
 
   create_table "line_types", :force => true do |t|
@@ -203,7 +205,7 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.string   "reason",     :null => false
     t.string   "parameter",  :null => false
     t.float    "adjustment", :null => false
-    t.integer  "region_id"
+    t.integer  "region_id",  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -216,10 +218,10 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
   end
 
   create_table "technical_component_instances", :force => true do |t|
-    t.string   "instance_type",       :null => false
-    t.integer  "zone_id",             :null => false
-    t.integer  "buildable_type_id",   :null => false
-    t.string   "buildable_type_type", :null => false
+    t.string   "instance_type",  :null => false
+    t.integer  "zone_id",        :null => false
+    t.integer  "buildable_id",   :null => false
+    t.string   "buildable_type", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
