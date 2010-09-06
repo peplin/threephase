@@ -1,7 +1,7 @@
 class CreateAllowedTechnicalComponentTypes < ActiveRecord::Migration
   def self.up
     create_table :allowed_technical_component_types, :id => false do |t|
-      t.string :component_type
+      t.string :component_type, :null => false
 
       t.references :game, :null => false
       t.references :buildable, :null => false

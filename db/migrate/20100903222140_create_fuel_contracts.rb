@@ -1,10 +1,10 @@
 class CreateFuelContracts < ActiveRecord::Migration
   def self.up
     create_table :fuel_contracts do |t|
-      t.datetime :approved
+      t.datetime :approved, :default => Time.now
       t.float :price_per_unit, :null => false
       t.integer :amount, :null => false
-      t.integer :duration, :null => false
+      t.integer :duration, :null => false, :default => 7
 
       t.references :fuel, :null => false
       t.integer :proposing_region_id, :null => false

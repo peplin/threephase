@@ -3,7 +3,7 @@ class CreateRepairs < ActiveRecord::Migration
     create_table :repairs do |t|
       t.string :reason, :null => false
       t.integer :cost, :null => false
-      t.boolean :offline, :null => false
+      t.boolean :offline, :null => false, :default => false
 
       t.references :repairable, :null => false
       t.string :repairable_type, :null => false

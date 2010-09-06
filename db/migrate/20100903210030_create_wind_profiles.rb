@@ -2,7 +2,7 @@ class CreateWindProfiles < ActiveRecord::Migration
   def self.up
     create_table :wind_profiles do |t|
       t.integer :hour, :null => false
-      t.float :speed, :null => false
+      t.float :speed, :null => false, :default => 0
 
       t.references :block, :null => false
     end

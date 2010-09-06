@@ -4,12 +4,12 @@ class CreateBlocks < ActiveRecord::Migration
       t.integer :x, :null => false
       t.integer :y, :null => false
       t.integer :elevation, :null => false
-      t.integer :type, :null => false
-      t.float :wind_speed, :null => false
-      t.integer :water_flow, :null => false
-      t.integer :sunfall, :null => false
-      t.integer :natural_gas_index, :null => false
-      t.integer :coal_index, :null => false
+      t.integer :type, :null => false, :default => 0
+      t.float :wind_speed, :null => false, :default => 0
+      t.integer :water_flow, :null => false, :default => 0
+      t.integer :sunfall, :null => false, :default => 5125
+      t.integer :natural_gas_index, :null => false, :default => 0
+      t.integer :coal_index, :null => false, :default => 0
 
       t.references :map, :null => false
 

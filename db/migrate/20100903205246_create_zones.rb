@@ -4,6 +4,7 @@ class CreateZones < ActiveRecord::Migration
       t.string :name, :null => false
       t.integer :x, :null => false
       t.integer :y, :null => false
+
       t.references :region, :null => false
     end
     
