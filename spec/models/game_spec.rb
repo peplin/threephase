@@ -10,19 +10,45 @@ describe Game do
   it { should have_many(:generator_types).through(:allowed_generator_types) }
 
   it { should validate_presence_of :speed}
+
   it { should validate_presence_of :max_players}
+  it { should allow_value(3).for(:max_players) }
+  it { should_not allow_value(0).for(:max_players) }
+
   it { should validate_presence_of :max_line_capacity}
+  it { should allow_value(300).for(:max_line_capacity) }
+  it { should_not allow_value(24).for(:max_line_capacity) }
+  it { should_not allow_value(2001).for(:max_line_capacity) }
+
   it { should validate_presence_of :technology_cost}
   it { should validate_presence_of :technology_reliability}
   it { should validate_presence_of :power_factor}
+
   it { should validate_presence_of :frequency}
+  it { should allow_value(60).for(:frequency) }
+  it { should_not allow_value(9).for(:frequency) }
+  it { should_not allow_value(121).for(:frequency) }
+
   it { should validate_presence_of :wind_speed}
   it { should validate_presence_of :sunfall}
   it { should validate_presence_of :water_flow }
+
   it { should validate_presence_of :regulation_type }
+  it { should allow_value(3).for(:regulation_type) }
+  it { should_not allow_value(-1).for(:regulation_type) }
+  it { should_not allow_value(4).for(:regulation_type) }
+
   it { should validate_presence_of :starting_capitol }
+  it { should allow_value(1000000).for(:starting_capitol) }
+  it { should_not allow_value(-1).for(:starting_capitol) }
+
   it { should validate_presence_of :interest_rate }
+
   it { should validate_presence_of :reliability_constraint }
+  it { should allow_value(1).for(:reliability_constraint) }
+  it { should allow_value(0).for(:reliability_constraint) }
+  it { should_not allow_value(-1).for(:reliability_constraint) }
+
   it { should validate_presence_of :fuel_cost }
   it { should validate_presence_of :fuel_cost_volatility }
   it { should validate_presence_of :workforce_reliability }
