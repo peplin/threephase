@@ -9,6 +9,8 @@ describe Game do
   it { should have_many(:maps).through(:regions) }
   it { should have_many(:generator_types).through(:allowed_generator_types) }
 
+  it { should validate_presence_of :speed}
+  it { should validate_presence_of :max_players}
   it { should validate_presence_of :max_line_capacity}
   it { should validate_presence_of :technology_cost}
   it { should validate_presence_of :technology_reliability}

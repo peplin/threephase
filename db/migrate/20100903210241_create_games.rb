@@ -1,6 +1,9 @@
 class CreateGames < ActiveRecord::Migration
   def self.up
     create_table :games do |t|
+      t.integer :speed, :null => false, :default => 0
+      t.integer :max_players, :null => false, :default => 1
+
       t.integer :max_line_capacity, :null => false
       t.integer :technology_cost, :null => false
       t.integer :technology_reliability, :null => false
