@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'time'
 
 describe Game do
   it { should have_many :fuel_market_prices }
@@ -60,4 +61,32 @@ describe Game do
   it { should validate_presence_of :political_stability }
   it { should validate_presence_of :political_opposition }
   it { should validate_presence_of :public_support }
+
+  it "should have a base time scale factor" do
+    assert Game.TIME_SCALE_FACTOR
+  end
+
+  context "A Game instance" do
+    setup do
+      @game = Game.new
+    end
+
+    context "should know how much game-relative time has passed" do
+      setup do
+        @game.updated_at = Time.parse("1 minute ago")
+        @now = Time.now
+      end
+
+      it "with a real-time speed" do
+        @game.speed = 0
+        assert_equal @game.time_since(@now), @now - @game.updated_at
+      end
+
+      it "with maxiumum speed" do
+        @game.speed = 1
+        assert_equal @game.time_since(@now),
+            Game.TIME_SCALE_FACTOR * (@now - @game.updated_at)
+      end
+    end
+  end
 end

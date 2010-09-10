@@ -52,7 +52,7 @@ describe GeneratorType do
       end
 
       it "should know it doesn't burn any fuel" do
-        assert_equal @generator_type.fuel_amount?, 0
+        assert_equal @generator_type.fuel_amount, 0
       end
 
       it "should return a marginal cost independent of fuel price" do
@@ -72,7 +72,7 @@ describe GeneratorType do
       end
 
       it "should return the amount of fuel it burns" do
-        assert_equal @generator_type.fuel_amount?,
+        assert_equal @generator_type.fuel_amount,
             @generator_type.average_capacity * @generator_type.fuel_efficiency
       end
 

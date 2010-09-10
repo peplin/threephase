@@ -11,4 +11,14 @@ describe Zone do
   it { should validate_presence_of :name }
   it { should validate_presence_of :x }
   it { should validate_presence_of :y }
+
+  context "A Zone instance" do
+    setup do
+      @zone = Zone.new
+    end
+
+    it "should know its current demand" do
+      assert @zone.demand
+    end
+  end
 end
