@@ -7,10 +7,10 @@ describe "routing to generators" do
   it { {:get, "/game/1/zone/2/generators"}.should route_to(
       :action => :index, :game => 1, :zone => 2, :controller => "generators") }
 
-  it { {:get, "/game/1/generator/new"}.should route_to(:action => :new,
+  it { {:get, "/game/1/generators/new"}.should route_to(:action => :new,
       :game => 1, :controller => "generators") }
 
-  it { {:get, "/game/1/zone/2/generator/new"}.should route_to(:action => :new,
+  it { {:get, "/game/1/zone/2/generators/new"}.should route_to(:action => :new,
       :game => 1, :zone => 2, :controller => "generators") }
 
   it { {:post, "/generators"}.should route_to(:action => :create,
