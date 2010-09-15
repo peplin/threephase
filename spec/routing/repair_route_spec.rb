@@ -7,11 +7,8 @@ describe "routing to repairs" do
   it { {:get, "/generator/1/repairs"}.should route_to(:action => :index,
       :generator => 1, :controller => "repairs") }
 
-  it { {:post, "/generator/1/repairs"}.should route_to(:action => :create,
-      :generator => 1, :controller => "repairs") }
-
-  it { {:get, "/generator/1/repair/2"}.should route_to(:action => :show,
-        :generator => 1, :id => 2, :controller => "repairs") }
+  it { {:post, "/repairs"}.should route_to(:action => :create,
+      :controller => "repairs") }
 
   it { {:get, "/repair/1"}.should route_to(:action => :show,
         :id => 1, :controller => "repairs") }
