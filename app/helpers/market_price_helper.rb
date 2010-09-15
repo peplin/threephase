@@ -1,0 +1,2 @@
+module MarketPriceHelper
+end
