@@ -19,7 +19,7 @@ describe "routing to generators" do
   it { {:get, "/generator/1"}.should route_to(:action => :show,
       :id => 1, :controller => "generators") }
 
-  it { {:edit, "/generator/1"}.should route_to(:action => :show,
+  it { {:get, "/generator/1/edit"}.should route_to(:action => :show,
       :id => 1, :controller => "generators") }
 
   it { {:put, "/generator/1"}.should route_to(:action => :update,

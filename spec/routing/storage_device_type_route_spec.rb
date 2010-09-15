@@ -24,7 +24,7 @@ describe "routing to storage device types" do
   it { {:get, "/stores/type/1"}.should route_to(:action => :show,
         :id => 1, :controller => "storage_device_types") }
 
-  it { {:edit, "/stores/type/1"}.should route_to(:action => :show,
+  it { {:get, "/stores/type/1/edit"}.should route_to(:action => :show,
         :id => 1, :controller => "storage_device_types") }
 
   it { {:put, "/stores/type/1"}.should route_to(:action => :update,

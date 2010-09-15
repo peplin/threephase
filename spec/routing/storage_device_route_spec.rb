@@ -19,7 +19,7 @@ describe "routing to stores" do
   it { {:get, "/store/1"}.should route_to(:action => :show,
         :id => 1, :controller => "storage_devices") }
 
-  it { {:edit, "/store/1"}.should route_to(:action => :show,
+  it { {:get, "/store/1/edit"}.should route_to(:action => :show,
         :id => 1, :controller => "storage_devices") }
 
   it { {:put, "/store/1"}.should route_to(:action => :update,

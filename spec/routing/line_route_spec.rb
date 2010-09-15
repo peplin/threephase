@@ -16,7 +16,7 @@ describe "routing to lines" do
   it { {:get, "/line/1"}.should route_to(:action => :show,
         :id => 1, :controller => "lines") }
 
-  it { {:edit, "/line/1"}.should route_to(:action => :show,
+  it { {:get, "/line/1/edit"}.should route_to(:action => :show,
         :id => 1, :controller => "lines") }
 
   it { {:put, "/line/1"}.should route_to(:action => :update,

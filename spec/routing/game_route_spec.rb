@@ -19,8 +19,8 @@ describe "routing to games" do
         :controller => "games")
   end
 
-  it "routes /game/:id to game#show for id" do
-    {:edit, "/game/1"}.should route_to(:action => :show, :id => 1,
+  it "routes /game/:id/edit to game#edit for id" do
+    {:get, "/game/1/edit"}.should route_to(:action => :show, :id => 1,
         :controller => "games")
   end
 

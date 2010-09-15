@@ -24,7 +24,7 @@ describe "routing to generator types" do
   it { {:get, "/generator/type/1"}.should route_to(:action => :show,
       :id => 1, :controller => "generator_types") }
 
-  it { {:edit, "/generator/type/1"}.should route_to(:action => :show,
+  it { {:get, "/generator/type/1/edit"}.should route_to(:action => :show,
       :id => 1, :controller => "generator_types") }
 
   it { {:put, "/generator/type/1"}.should route_to(:action => :update,
