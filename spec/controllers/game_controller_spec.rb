@@ -83,17 +83,17 @@ describe GameController do
 
   context "on POST to :create" do
     context "for HTML" do
-      it { should redirect_to game_path @game }
       it "should create a game" do
         proc { post :create, :game => @data }.should change(Game, :count)
+        should redirect_to game_path @game
       end
     end
 
     context "for JSON" do
-      it { should respond_with :success }
       it "should create a game" do
         proc { post :create, :format => "json", :game => @data
           }.should change(Game, :count)
+        should respond_with :success
       end
     end
   end

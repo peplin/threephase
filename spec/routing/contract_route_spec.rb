@@ -20,8 +20,21 @@ describe "routing to contracts" do
       :action => :respond, :generator => 1, :contract => 2, :offer => 3,
       :controller => "contracts") }
 
+  it { {:put, "/contract/2/offer/3"}.should route_to(
+      :action => :respond, :contract => 2, :offer => 3,
+      :controller => "contracts") }
+
+  it { {:put, "/offer/3"}.should route_to(:action => :respond, :offer => 3,
+      :controller => "contracts") }
+
   it { {:get, "/generator/1/contract/2"}.should route_to(:action => :show,
       :generator => 1, :contract => 2, :controller => "contracts") }
+
+  it { {:get, "/game/1/contract/2"}.should route_to(:action => :show,
+      :game => 1, :contract => 2, :controller => "contracts") }
+
+  it { {:get, "/contract/2"}.should route_to(:action => :show,
+      :contract => 2, :controller => "contracts") }
 
   it "does not allow contract updating" do
     {:put => "/generator/1/contract/1"}.should_not be_routable
