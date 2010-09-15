@@ -1,58 +1,69 @@
 require 'spec_helper'
 
-describe LineTypeController do
+describe LineController do
   before :each do
-    @line_type = LineType.all.first
+    @line = Line.all.first
     @game = Game.all.first
+    @zone = Zone.all.first
   end
 
   context "on GET to" do
     context "for HTML" do
-      context ":index" do
+      context ":index with game" do
         before do
-          get :index
+          get :index, :game => @game
         end
 
         it { should respond_with :success }
         it { should render_template :index }
-        it { should assign_to(:line_types) }
+        it { should assign_to(:lines) }
+      end
+
+      context ":index with game and zone" do
+        before do
+          get :index, :game => @game, :zone => @zone
+        end
+
+        it { should respond_with :success }
+        it { should render_template :index }
+        it { should assign_to(:lines) }
       end
 
       context ":new" do
         before do
-          get :new
+          get :new, :game => @game
         end
 
         it { should respond_with :success }
         it { should render_template :new }
-        it { should assign_to(:line_type).with_kind_of(LineType) }
+        it { should assign_to(:line).with_kind_of(Line) }
       end
 
       context ":edit" do
         before do
-          get :edit, :id => @line_type
+          get :edit, :id => @line
         end
 
         it { should respond_with :success }
         it { should render_template :edit }
-        it { should assign_to(:line_type).with(@line_type) }
+        it { should assign_to(:line).with(@line) }
       end
 
       context ":show" do
         before do
-          get :show, :id => @line_type
+          get :show, :id => @line
         end
 
         it { should respond_with :success }
         it { should render_template :show }
-        it { should assign_to(:line_type).with(@line_type) }
+        it { should assign_to(:line).with(@line) }
       end
     end
 
     context "for JSON" do
-      context ":index" do
+      context ":index with game" do
         before do
-          get :index, :format => "json"
+          get :index, :game => @game, :format => "json"
         end
 
         it { should respond_with :success }
@@ -61,7 +72,7 @@ describe LineTypeController do
 
       context ":show" do
         before do
-          get :show, :id => @line_type, :format => "json"
+          get :show, :id => @line, :format => "json"
         end
 
         it { should respond_with :success }
@@ -72,20 +83,21 @@ describe LineTypeController do
 
   context "on POST to :create" do
     before do
-      #TODO line_type params?
+      #TODO line params?
       @data = {}
     end
+
     context "for HTML" do
-      it "should create a line_type" do
-        proc { post :create, :line_type => @data }.should change(
-            LineType, :count).by(1)
+      it "should create a line" do
+        proc { post :create, :line => @data }.should change(Line, :count).by(1)
         should respond_with :success
+        # TODO check that params are saved
       end
     end
 
     context "for JSON" do
       before do
-        post :create, :line_type => @data, :format => "json"
+        post :create, :line => @data, :format => "json"
       end
 
       it { should respond_with :success }
@@ -93,11 +105,13 @@ describe LineTypeController do
   end
 
   context "on PUT to :update" do
+    before do
+      #TODO line params?
+      @data = {}
+    end
     context "for HTML" do
       before do
-        #TODO line_type params?
-        put :update, :id => @line_type, :line_type => @data
-        @data = {}
+        put :update, :id => @line, :line => @data
       end
 
       it { should respond_with :success }
@@ -108,30 +122,10 @@ describe LineTypeController do
 
     context "for JSON" do
       before do
-        put :update, :id => @line_type, :line_type => @data,
-            :format => "json"
+        put :update, :id => @line, :line => @data, :format => "json"
       end
 
       it { should respond_with :success }
-    end
-  end
-
-  context "on DELETE to :delete" do
-    context "for HTML" do
-      it "should delete a line_type" do
-        proc { delete :delete, :id => @line_type }.should change(
-            LineType, :count).by(-1)
-        should respond_with :success
-      end
-    end
-
-    context "for JSON" do
-      it "should delete a line_type" do
-        proc { delete :delete, :id => @line_type }.should change(
-            LineType, :count).by(-1)
-        should respond_with :success
-        it { should respond_with_content_type :json }
-      end
     end
   end
 end
