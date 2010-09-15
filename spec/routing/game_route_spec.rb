@@ -29,6 +29,18 @@ describe "routing to games" do
         :controller => "games")
   end
 
+  it "routes /game/:id/allowed to game#allowed" do
+    {:get, "/game/1/allowed"}.should route_to(:action => :allowed, :id => 1,
+        :controller => "games")
+  end
+
+  it "routes /game/:id/allowed/:allowed to game#allow" do
+    {:put, "/game/1/allowed/2"}.should route_to(:action => :allow, :id => 1,
+        :allowed => 2, :controller => "games")
+    {:delete, "/game/1/allowed/2"}.should route_to(:action => :disallow,
+        :id => 1, :allowed => 2, :controller => "games")
+  end
+
   it "does not permit games to be deleted" do
     {:delete, "/game/1"}.should_not be_routable
   end

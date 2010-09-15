@@ -3,6 +3,7 @@ require 'spec_helper'
 describe GameController do
   before :each do
     @game = Game.all.first
+    @generator_type = GeneratorType.all.first
     # TODO which parameters can you update?
     @data = {}
   end
@@ -84,7 +85,7 @@ describe GameController do
   context "on POST to :create" do
     context "for HTML" do
       it "should create a game" do
-        proc { post :create, :game => @data }.should change(Game, :count)
+        proc { post :create, :game => @data }.should change(Game, :count).by(1)
         should redirect_to game_path @game
       end
     end
@@ -92,7 +93,7 @@ describe GameController do
     context "for JSON" do
       it "should create a game" do
         proc { post :create, :format => "json", :game => @data
-          }.should change(Game, :count)
+          }.should change(Game, :count).by(1)
         should respond_with :success
       end
     end
@@ -100,17 +101,57 @@ describe GameController do
 
   context "on PUT to :update" do
     context "for HTML" do
-      it { should redirect_to game_path @game }
       it "should update a game" do
-        proc { put :update, :game => @data }.should_not change(Game, :count)
+        proc { put :update, :id => @game, :game => @data
+            }.should_not change(Game, :count)
+        should redirect_to game_path @game
         @game = Game.find @game
       end
     end
 
     context "for JSON" do
       before do
-        put :update, :format => "json", :game => @data 
+        put :update, :id => @game, :game => @data, :format => "json"
       end
+
+      it { should respond_with :success }
+    end
+  end
+
+  context "on PUT to :allow" do
+    context "for HTML" do
+      it "should create an allowed component for the game" do
+        proc { put :allow, :id => @game, :allowed => @generator_type,
+            :format => "json" }.should change(
+            AllowedTechnicalComponentType, :count).by(1)
+        should redirect_to allowed_types_path @game
+      end
+    end
+
+    context "for JSON" do
+      before do
+        put :allow, :id => @game, :format => "json"
+      end
+
+      it { should respond_with :success }
+    end
+  end
+
+  context "on DELETE to :disallow" do
+    context "for HTML" do
+      it "should delete an allowed component for the game" do
+        proc { delete :disallow, :id => @game, :allowed => @generator_type,
+            :format => "json" }.should change(
+            AllowedTechnicalComponentType, :count).by(-1)
+        should redirect_to allowed_types_path @game
+      end
+    end
+
+    context "for JSON" do
+      before do
+        delete :allow, :id => @game, :format => "json"
+      end
+
       it { should respond_with :success }
     end
   end
