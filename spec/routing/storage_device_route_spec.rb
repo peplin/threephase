@@ -4,8 +4,8 @@ describe "routing to stores" do
   it { {:get, "/game/1/stores"}.should route_to(:action => :index,
         :game => 1, :controller => "storage_devices") }
 
-  it { {:get, "/game/1/zone/2/stores"}.should route_to(
-      :action => :index, :game => 1, :zone => 2, :controller => "storage_devices") }
+  it { {:get, "/game/1/zone/2/stores"}.should route_to(:action => :index,
+      :game => 1, :zone => 2, :controller => "storage_devices") }
 
   it { {:get, "/game/1/store/new"}.should route_to(:action => :new,
       :game => 1, :controller => "storage_devices") }
@@ -19,7 +19,7 @@ describe "routing to stores" do
   it { {:get, "/store/1"}.should route_to(:action => :show,
         :id => 1, :controller => "storage_devices") }
 
-  it { {:get, "/store/1/edit"}.should route_to(:action => :show,
+  it { {:get, "/store/1/edit"}.should route_to(:action => :edit,
         :id => 1, :controller => "storage_devices") }
 
   it { {:put, "/store/1"}.should route_to(:action => :update,
