@@ -144,21 +144,21 @@ describe ContractNegotiationController do
       context "with a generator and contract" do
         it "should update the offer" do
           proc { put :create, :generator => @generator, :contract => @contract,
-              :offer => @offer}.should change(ContractOffer, :count)
+              :offer => @data}.should change(ContractOffer, :count)
           should respond_with :success
         end
       end
 
       context "with a contract" do
         it "should update the offer" do
-          proc { put :create, :contract => @contract, :offer => @offer
+          proc { put :create, :contract => @contract, :offer => @data
               }.should change(ContractOffer, :count)
           should respond_with :success
         end
       end
 
       it "should update the offer" do
-        proc { put :create, :offer => @offer }.should change(
+        proc { put :create, :offer => @data }.should change(
             ContractOffer, :count)
         should respond_with :success
       end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "routing to generator types" do
   it { {:get, "/game/1/generators/types"}.should route_to(:action => :index,
-      :game => 1, :controller => "generator_types") }
+      :game => 1, :controller => "allowed_technical_component_types") }
 
   it { {:post, "/game/1/generators/types"}.should route_to(:action => :create,
       :game => 1, :type => "generator",
@@ -19,12 +19,12 @@ describe "routing to generator types" do
       :controller => "generator_types") }
 
   it { {:post, "/generators/types"}.should route_to(:action => :create,
-      :controller => "generator") }
+      :controller => "generator_types") }
 
   it { {:get, "/generator/type/1"}.should route_to(:action => :show,
       :id => 1, :controller => "generator_types") }
 
-  it { {:get, "/generator/type/1/edit"}.should route_to(:action => :show,
+  it { {:get, "/generator/type/1/edit"}.should route_to(:action => :edit,
       :id => 1, :controller => "generator_types") }
 
   it { {:put, "/generator/type/1"}.should route_to(:action => :update,

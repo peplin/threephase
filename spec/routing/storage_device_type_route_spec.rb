@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe "routing to storage device types" do
   it { {:get, "/game/1/stores/types"}.should route_to(:action => :index,
-        :game => 1, :controller => "storage_device_types") }
+        :game => 1, :controller => "allowed_technical_component_types") }
 
   it { {:post, "/game/1/stores/types"}.should route_to(:action => :create,
         :game => 1, :type => "storage_device",
-        :controller => "storage_device_types") }
+        :controller => "allowed_technical_component_types") }
 
   it { {:delete, "/game/1/stores/type/1"}.should route_to(:action => :delete,
         :game => 1, :id => 1, :type => "storage_device",
-        :controller => "storage_device_types") }
+        :controller => "allowed_technical_component_types") }
 
   it { {:get, "/stores/types"}.should route_to(:action => :index,
         :controller => "storage_device_types") }
