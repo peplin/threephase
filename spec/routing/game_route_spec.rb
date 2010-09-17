@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe "routing to games" do
+  before :all do
+    @game = Game.all.first
+    @allowed = AllowedGeneratorType.all.first
+  end
+
   it "routes /games to game#index" do
     {:get, "/games"}.should route_to(:action => :index, :controller => "games")
   end
@@ -15,36 +20,36 @@ describe "routing to games" do
   end
 
   it "routes /game/:id to game#show for id" do
-    {:get, "/game/1"}.should route_to(:action => :show, :id => 1,
+    {:get, "/game/#{@game}"}.should route_to(:action => :show, :id => @game,
         :controller => "games")
   end
 
   it "routes /game/:id/edit to game#edit for id" do
-    {:get, "/game/1/edit"}.should route_to(:action => :show, :id => 1,
+    {:get, "/game/#{@game}/edit"}.should route_to(:action => :show, :id => @game,
         :controller => "games")
   end
 
   it "routes /game/:id to game#update for id" do
-    {:put, "/game/1"}.should route_to(:action => :update, :id => 1,
+    {:put, "/game/#{@game}"}.should route_to(:action => :update, :id => @game,
         :controller => "games")
   end
 
   it "routes /game/:id/allowed to game#allowed" do
-    {:get, "/game/1/allowed"}.should route_to(:action => :allowed, :id => 1,
+    {:get, "/game/#{@game}/allowed"}.should route_to(:action => :allowed, :id => @game,
         :controller => "games")
   end
 
   it "routes /game/:id/allowed/:allowed_id to game#allow" do
-    {:post, "/game/1/allowed"}.should route_to(:action => :allow,
-        :id => 1, :controller => "games")
+    {:post, "/game/#{@game}/allowed"}.should route_to(:action => :allow,
+        :id => @game, :controller => "games")
   end
   it "routes /game/:id/allowed/:allowed_id to game#disaallow" do
-    {:delete, "/game/1/allowed/2"}.should route_to(
-        :action => :disallow, :id => 1, :allowed_id => 2,
+    {:delete, "/game/#{@game}/allowed/#{@allowed}"}.should route_to(
+        :action => :disallow, :id => @game, :allowed_id => @allowed,
         :controller => "games")
   end
 
   it "does not permit games to be deleted" do
-    {:delete, "/game/1"}.should_not be_routable
+    {:delete, "/game/#{@game}"}.should_not be_routable
   end
 end

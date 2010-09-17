@@ -1,29 +1,37 @@
 require 'spec_helper'
 
 describe "routing to stores" do
-  it { {:get, "/game/1/stores"}.should route_to(:action => :index,
-        :game => 1, :controller => "storage_devices") }
+  before :all do
+    @game = Game.all.first
+    @store = StorageDevice.all.first
+    @zone = Zone.all.first
+  end
 
-  it { {:get, "/game/1/zone/2/stores"}.should route_to(:action => :index,
-      :game => 1, :zone => 2, :controller => "storage_devices") }
+  it { {:get, "/game/#{@game}/stores"}.should route_to(:action => :index,
+        :game => @game, :controller => "storage_devices") }
 
-  it { {:get, "/game/1/store/new"}.should route_to(:action => :new,
-      :game => 1, :controller => "storage_devices") }
+  it { {:get, "/game/#{@game}/zone/#{@zone}/stores"}.should route_to(
+      :action => :index, :game => @game, :zone => @zone,
+      :controller => "storage_devices") }
 
-  it { {:get, "/game/1/zone/2/store/new"}.should route_to(:action => :new,
-      :game => 1, :zone => 2, :controller => "storage_devices") }
+  it { {:get, "/game/#{@game}/store/new"}.should route_to(:action => :new,
+      :game => @game, :controller => "storage_devices") }
+
+  it { {:get, "/game/#{@game}/zone/#{@zone}/store/new"}.should route_to(
+      :action => :new, :game => @game, :zone => @zone,
+      :controller => "storage_devices") }
 
   it { {:post, "/stores"}.should route_to(:action => :create,
       :controller => "storage_devices") }
 
-  it { {:get, "/store/1"}.should route_to(:action => :show,
-        :id => 1, :controller => "storage_devices") }
+  it { {:get, "/store/#{@store}"}.should route_to(:action => :show,
+        :id => @store, :controller => "storage_devices") }
 
-  it { {:get, "/store/1/edit"}.should route_to(:action => :edit,
-        :id => 1, :controller => "storage_devices") }
+  it { {:get, "/store/#{@store}/edit"}.should route_to(:action => :edit,
+        :id => @store, :controller => "storage_devices") }
 
-  it { {:put, "/store/1"}.should route_to(:action => :update,
-        :id => 1, :controller => "storage_devices") }
+  it { {:put, "/store/#{@store}"}.should route_to(:action => :update,
+        :id => @store, :controller => "storage_devices") }
 
   it "does not expose a list of all stores" do
     {:get => "/stores"}.should_not be_routable

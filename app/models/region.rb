@@ -9,6 +9,6 @@ class Region < ActiveRecord::Base
   belongs_to :user
 
   validates :name, :presence => true
-  validates :research_budget, :presence => true, :numericality => true,
-      :greater_than_or_equal_to => 0
+  validates :research_budget, :presence => true,
+      :numericality => {:greater_than_or_equal_to => 0}
 end

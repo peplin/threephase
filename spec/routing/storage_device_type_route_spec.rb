@@ -1,16 +1,9 @@
 require 'spec_helper'
 
 describe "routing to storage device types" do
-  it { {:get, "/game/1/stores/types"}.should route_to(:action => :index,
-        :game => 1, :controller => "allowed_technical_component_types") }
-
-  it { {:post, "/game/1/stores/types"}.should route_to(:action => :create,
-        :game => 1, :type => "storage_device",
-        :controller => "allowed_technical_component_types") }
-
-  it { {:delete, "/game/1/stores/type/1"}.should route_to(:action => :delete,
-        :game => 1, :id => 1, :type => "storage_device",
-        :controller => "allowed_technical_component_types") }
+  before :all do
+    @type = StorageDeviceType.all.first
+  end
 
   it { {:get, "/stores/types"}.should route_to(:action => :index,
         :controller => "storage_device_types") }
@@ -21,15 +14,15 @@ describe "routing to storage device types" do
   it { {:post, "/stores/types"}.should route_to(:action => :create,
       :controller => "storage_device_types") }
 
-  it { {:get, "/stores/type/1"}.should route_to(:action => :show,
-        :id => 1, :controller => "storage_device_types") }
+  it { {:get, "/stores/type/#{@type}"}.should route_to(:action => :show,
+        :id => @type, :controller => "storage_device_types") }
 
-  it { {:get, "/stores/type/1/edit"}.should route_to(:action => :show,
-        :id => 1, :controller => "storage_device_types") }
+  it { {:get, "/stores/type/#{@type}/edit"}.should route_to(:action => :show,
+        :id => @type, :controller => "storage_device_types") }
 
-  it { {:put, "/stores/type/1"}.should route_to(:action => :update,
-        :id => 1, :controller => "storage_device_types") }
+  it { {:put, "/stores/type/#{@type}"}.should route_to(:action => :update,
+        :id => @type, :controller => "storage_device_types") }
 
-  it { {:delete, "/stores/type/1"}.should route_to(:action => :delete,
-        :id => 1, :controller => "storage_device_types") }
+  it { {:delete, "/stores/type/#{@type}"}.should route_to(:action => :delete,
+        :id => @type, :controller => "storage_device_types") }
 end

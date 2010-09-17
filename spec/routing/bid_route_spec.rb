@@ -1,36 +1,44 @@
 require 'spec_helper'
 
 describe "routing to bids" do
-  it { {:get, "/game/1/bids"}.should route_to(:action => :index,
-        :game => 1, :controller => "bids") }
+  before :all do
+    @generator = Generator.all.first
+    @game = Game.all.first
+    @bid = Bid.all.first
+  end
 
-  it { {:get, "/generator/1/bids"}.should route_to(:action => :index,
-        :generator => 1, :controller => "bids") }
+  it { {:get, "/game/#{@game}/bids"}.should route_to(:action => :index,
+        :game => @game, :controller => "bids") }
 
-  it { {:get, "/generator/1/bids/new"}.should route_to(:action => :new,
-      :game => 1, :controller => "bids") }
+  it { {:get, "/generator/#{@generator}/bids"}.should route_to(:action => :index,
+        :generator => @generator, :controller => "bids") }
 
-  it { {:post, "/generator/1/bids"}.should route_to(:action => :create,
-      :generator => 1, :controller => "bids") }
+  it { {:get, "/generator/#{@generator}/bids/new"}.should route_to(:action => :new,
+      :game => @game, :controller => "bids") }
 
-  it { {:get, "/generator/1/bid/1"}.should route_to(:action => :show,
-        :generator => 1, :bid => 1, :controller => "bids") }
+  it { {:post, "/generator/#{@generator}/bids"}.should route_to(:action => :create,
+      :generator => @generator, :controller => "bids") }
 
-  it { {:get, "/game/1/bid/1"}.should route_to(:action => :show,
-        :game => 1, :bid => 1, :controller => "bids") }
+  it { {:get, "/generator/#{@generator}/bid/#{@bid}"}.should route_to(:action => :show,
+        :generator => @generator, :bid => @bid, :controller => "bids") }
 
-  it { {:get, "/bid/1"}.should route_to(:action => :show,
-        :bid => 1, :controller => "bids") }
+  it { {:get, "/game/#{@game}/bid/#{@bid}"}.should route_to(:action => :show,
+        :game => @game, :bid => @bid, :controller => "bids") }
+
+  it { {:get, "/bid/#{@bid}"}.should route_to(:action => :show,
+        :bid => @bid, :controller => "bids") }
 
   it "does not expose a master list of bids" do
     {:get => "/bids"}.should_not be_routable
   end
 
   it "does not allow bid updating" do
-    {:put => "/generator/1/bid/1"}.should_not be_routable
+    {:put => "/generator/#{@generator}/bid/#{@bid}"}.should_not be_routable
+    {:put => "/bids/#{@bid}"}.should_not be_routable
   end
 
   it "does not allow bid deleting" do
-    {:delete => "/generator/1/bids/1"}.should_not be_routable
+    {:delete => "/generator/#{@generator}/bids/#{@bid}"}.should_not be_routable
+    {:delete => "/bids/#{@bid}"}.should_not be_routable
   end
 end

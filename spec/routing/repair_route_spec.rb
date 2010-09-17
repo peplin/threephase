@@ -1,27 +1,33 @@
 require 'spec_helper'
 
 describe "routing to repairs" do
-  it { {:get, "/game/1/repairs"}.should route_to(:action => :index,
-      :game => 1, :controller => "repairs") }
+  before :all do
+    @game = Game.all.first
+    @generator = Generator.all.first
+    @repair = Repair.all.first
+  end
 
-  it { {:get, "/generator/1/repairs"}.should route_to(:action => :index,
-      :generator => 1, :controller => "repairs") }
+  it { {:get, "/game/#{@game}/repairs"}.should route_to(:action => :index,
+      :game => @game, :controller => "repairs") }
+
+  it { {:get, "/generator/#{@generator}/repairs"}.should route_to(
+      :action => :index, :generator => @generator, :controller => "repairs") }
 
   it { {:post, "/repairs"}.should route_to(:action => :create,
       :controller => "repairs") }
 
-  it { {:get, "/repair/1"}.should route_to(:action => :show,
-        :id => 1, :controller => "repairs") }
+  it { {:get, "/repair/#{@repair}"}.should route_to(:action => :show,
+        :id => @repair, :controller => "repairs") }
 
   it "does not expose a list of all repairs" do
     {:get => "/repairs"}.should_not be_routable
   end
 
   it "does not allow editing of a repair" do
-    {:put => "/generator/1/repair/1"}.should_not be_routable
+    {:put => "/repair/#{@repair}" }.should_not be_routable
   end
 
   it "does not allow deleting of a repair" do
-    {:delete => "/generator/1/repair/1"}.should_not be_routable
+    {:delete => "/repair/#{@repair}" }.should_not be_routable
   end
 end

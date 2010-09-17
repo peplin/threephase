@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe "routing to users" do
+  before :all do
+    @user = User.all.first
+  end
+
   it { {:get, "/users"}.should route_to(:action => :index,
         :controller => "users") }
 
@@ -10,11 +14,11 @@ describe "routing to users" do
   it { {:post, "/users"}.should route_to(:action => :create,
       :controller => "users") }
 
-  it { {:get, "/user/1"}.should route_to(:action => :show,
-      :id => 1, :controller => "users") }
+  it { {:get, "/user/#{@user}"}.should route_to(:action => :show,
+      :id => @user, :controller => "users") }
 
-  it { {:get, "/user/1/edit"}.should route_to(:action => :edit,
-      :id => 1, :controller => "users") }
+  it { {:get, "/user/#{@user}/edit"}.should route_to(:action => :edit,
+      :id => @user, :controller => "users") }
 
   it { {:get, "/me/edit"}.should route_to(:action => :show,
       :controller => "users") }
@@ -22,6 +26,6 @@ describe "routing to users" do
   it { {:get, "/me"}.should route_to(:action => :edit,
       :controller => "users") }
 
-  it { {:put, "/user/1"}.should route_to(:action => :update,
-      :id => 1, :controller => "users") }
+  it { {:put, "/user/#{@user}"}.should route_to(:action => :update,
+      :id => @user, :controller => "users") }
 end
