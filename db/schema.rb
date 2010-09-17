@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100905173026) do
+ActiveRecord::Schema.define(:version => 20100917175426) do
 
   create_table "allowed_technical_component_types", :id => false, :force => true do |t|
     t.string  "component_type", :null => false
@@ -73,26 +73,16 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.datetime "updated_at"
   end
 
-  create_table "fuel_contracts", :force => true do |t|
-    t.datetime "approved",            :default => '2010-09-06 04:04:10'
-    t.float    "price_per_unit",                                         :null => false
-    t.integer  "amount",                                                 :null => false
-    t.integer  "duration",            :default => 7,                     :null => false
-    t.integer  "fuel_id",                                                :null => false
-    t.integer  "proposing_region_id",                                    :null => false
-    t.integer  "receiving_region_id",                                    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "fuels", :force => true do |t|
-    t.string "name",        :null => false
-    t.text   "description"
+  create_table "fuel_types", :force => true do |t|
+    t.string  "name",        :null => false
+    t.text    "description"
+    t.integer "market_id",   :null => false
   end
 
   create_table "games", :force => true do |t|
     t.integer  "speed",                  :default => 0,           :null => false
     t.integer  "max_players",            :default => 1,           :null => false
+    t.datetime "started"
     t.integer  "max_line_capacity",      :default => 1500,        :null => false
     t.integer  "technology_cost",        :default => 50,          :null => false
     t.integer  "technology_reliability", :default => 50,          :null => false
@@ -178,12 +168,15 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
   end
 
   create_table "market_prices", :force => true do |t|
-    t.string   "market_type", :null => false
-    t.float    "price",       :null => false
-    t.integer  "game_id",     :null => false
-    t.integer  "fuel_id"
+    t.float    "price",      :null => false
+    t.integer  "market_id",  :null => false
+    t.integer  "game_id",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "markets", :force => true do |t|
+    t.string "name", :null => false
   end
 
   create_table "regions", :force => true do |t|
@@ -198,6 +191,7 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
     t.string   "reason",                             :null => false
     t.integer  "cost",                               :null => false
     t.boolean  "offline",         :default => false, :null => false
+    t.integer  "duration",                           :null => false
     t.integer  "repairable_id",                      :null => false
     t.string   "repairable_type",                    :null => false
     t.datetime "created_at"
@@ -221,36 +215,37 @@ ActiveRecord::Schema.define(:version => 20100905173026) do
   end
 
   create_table "technical_component_instances", :force => true do |t|
-    t.string   "instance_type",  :null => false
-    t.integer  "zone_id",        :null => false
-    t.integer  "buildable_id",   :null => false
-    t.string   "buildable_type", :null => false
+    t.string   "instance_type",                     :null => false
+    t.boolean  "operating",       :default => true, :null => false
+    t.integer  "operating_level", :default => 100,  :null => false
+    t.integer  "zone_id",                           :null => false
+    t.integer  "buildable_id",                      :null => false
+    t.string   "buildable_type",                    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "technical_components", :force => true do |t|
-    t.string   "name",                                           :null => false
+    t.string   "name",                                        :null => false
     t.text     "description"
-    t.integer  "peak_capacity_min",            :default => 0,    :null => false
-    t.integer  "peak_capacity_max",                              :null => false
-    t.integer  "average_capacity",                               :null => false
-    t.integer  "mtbf",                                           :null => false
-    t.integer  "mttr",                                           :null => false
-    t.integer  "repair_cost",                                    :null => false
-    t.integer  "workforce",                                      :null => false
-    t.integer  "area",                                           :null => false
-    t.integer  "capitol_cost_min",             :default => 0,    :null => false
-    t.integer  "capitol_cost_max",                               :null => false
-    t.integer  "environmental_disruptiveness",                   :null => false
-    t.integer  "waste_disposal_cost_min",      :default => 0,    :null => false
-    t.integer  "waste_disposal_cost_max",                        :null => false
-    t.integer  "noise",                                          :null => false
-    t.boolean  "operating",                    :default => true, :null => false
-    t.integer  "lifetime",                                       :null => false
+    t.integer  "peak_capacity_min",            :default => 0, :null => false
+    t.integer  "peak_capacity_max",                           :null => false
+    t.integer  "average_capacity",                            :null => false
+    t.integer  "mtbf",                                        :null => false
+    t.integer  "mttr",                                        :null => false
+    t.integer  "repair_cost",                                 :null => false
+    t.integer  "workforce",                                   :null => false
+    t.integer  "area",                                        :null => false
+    t.integer  "capitol_cost_min",             :default => 0, :null => false
+    t.integer  "capitol_cost_max",                            :null => false
+    t.integer  "environmental_disruptiveness",                :null => false
+    t.integer  "waste_disposal_cost_min",      :default => 0, :null => false
+    t.integer  "waste_disposal_cost_max",                     :null => false
+    t.integer  "noise",                                       :null => false
+    t.integer  "lifetime",                                    :null => false
     t.integer  "user_id"
-    t.integer  "buildable_id",                                   :null => false
-    t.string   "buildable_type",                                 :null => false
+    t.integer  "buildable_id",                                :null => false
+    t.string   "buildable_type",                              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

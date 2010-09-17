@@ -4,7 +4,7 @@ class CreateRepairs < ActiveRecord::Migration
       t.string :reason, :null => false
       t.integer :cost, :null => false
       t.boolean :offline, :null => false, :default => false
-      t.duration :duration, :null => false
+      t.integer :duration, :null => false
 
       t.references :repairable, :null => false
       t.string :repairable_type, :null => false

@@ -4,18 +4,18 @@ describe "routing to generator types" do
   before :all do
     @game = Game.all.first
     @type = GeneratorType.all.first
-    @allowed = AllowedGeneratorType.all.first
   end
 
-  it { {:get, "/game/#{@game}/allowed"}.should route_to(:action => :index,
-      :game => @game, :controller => "allowed_technical_component_types") }
+  it { {:get, "/games/#{@game}/generators/types"}.should route_to(:action => :index,
+      :game => @game, :type => GeneratorType,
+      :controller => "allowed_technical_components") }
 
-  it { {:post, "/game/#{@game}/allowed"}.should route_to(:action => :create,
-      :game => @game, :controller => "allowed_technical_component_types") }
+  it { {:post, "/games/#{@game}/generators/types"}.should route_to(:action => :allow,
+        :game => @game, :controller => "allowed_technical_components") }
 
-  it { {:delete, "/game/#{@game}/allowed/#{@allowed}"}.should route_to(
-      :action => :delete, :game => @game, :id => @allowed,
-      :controller => "allowed_technical_component_types") }
+  it { {:delete, "/games/#{@game}/generators/types/#{@type}"}.should route_to(
+      :action => :disallow, :game => @game, :type => @type,
+      :controller => "allowed_technical_components") }
 
   it { {:get, "/generators/types"}.should route_to(:action => :index,
       :controller => "generator_types") }
@@ -26,15 +26,15 @@ describe "routing to generator types" do
   it { {:post, "/generators/types"}.should route_to(:action => :create,
       :controller => "generator_types") }
 
-  it { {:get, "/generator/type/#{@type}"}.should route_to(:action => :show,
+  it { {:get, "/generator/types/#{@type}"}.should route_to(:action => :show,
       :id => @type, :controller => "generator_types") }
 
-  it { {:get, "/generator/type/#{@type}/edit"}.should route_to(:action => :edit,
+  it { {:get, "/generator/types/#{@type}/edit"}.should route_to(:action => :edit,
       :id => @type, :controller => "generator_types") }
 
-  it { {:put, "/generator/type/#{@type}"}.should route_to(:action => :update,
+  it { {:put, "/generator/types/#{@type}"}.should route_to(:action => :update,
       :id => @type, :controller => "generator_types") }
 
-  it { {:delete, "/generator/type/#{@type}"}.should route_to(:action => :delete,
+  it { {:delete, "/generator/types/#{@type}"}.should route_to(:action => :delete,
       :id => @type, :controller => "generator_types") }
 end

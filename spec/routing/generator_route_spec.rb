@@ -6,28 +6,59 @@ describe "routing to generators" do
     @zone = Zone.all.first
   end
 
-  it { {:get, "/game/#{@game}/generators"}.should route_to(:action => :index,
-        :game => @game, :controller => "generators") }
+  it "should expose a list of a game's generators" do
+    {:get, "/games/#{@game}/generators"}.should route_to(:action => :index,
+        :game => @game, :controller => "generators")
+  end
 
-  it { {:get, "/game/#{@game}/zone/#{@zone}/generators"}.should route_to(:action => :index,
-      :game => @game, :zone => @zone, :controller => "generators") }
+  it "should expose a list of a zone's generators" do
+    {:get, "/games/#{@game}/zones/#{@zone}/generators"}.should route_to(
+        :action => :index, :game => @game, :zone => @zone,
+        :controller => "generators")
+  end
 
-  it { {:get, "/game/#{@game}/generators/new"}.should route_to(:action => :new,
-      :game => @game, :controller => "generators") }
-
-  it { {:get, "/game/#{@game}/zone/#{@zone}/generators/new"}.should route_to(:action => :new,
-      :game => @game, :zone => @zone, :controller => "generators") }
+  it { {:get, "/games/#{@game}/zones/#{@zone}/generators/new"}.should route_to(
+      :action => :new, :game => @game, :zone => @zone,
+      :controller => "generators") }
 
   it { {:post, "/generators"}.should route_to(:action => :create,
       :controller => "generators") }
 
-  it { {:get, "/generator/#{@generator}"}.should route_to(:action => :show,
-      :id => @generator, :controller => "generators") }
+  it "should expose a hackable URL to a game's generator" do
+    {:get, "/games/#{@game}/generators/#{@generator}"}.should route_to(
+        :action => :show, :game => @game, :id => @generator,
+        :controller => "generators")
+  end
 
-  it { {:get, "/generator/#{@generator}/edit"}.should route_to(:action => :edit,
-      :id => @generator, :controller => "generators") }
+  it "should expose a hackable URL to a zone's generator" do
+    {:get, "/games/#{@game}/zones/#{@zone}/generators/#{@generator}"
+        }.should route_to(:action => :show, :game => @game, :zone => @zone,
+        :id => @generator, :controller => "generators")
+  end
 
-  it { {:put, "/generator/#{@generator}"}.should route_to(:action => :update,
+  it "should expose a direct URL to a generator" do
+    {:get, "/generators/#{@generator}"}.should route_to(:action => :show,
+      :id => @generator, :controller => "generators")
+  end
+
+  it "should expose a hackable URL to edit a zone's generator" do
+    {:get, "/games/#{@game}/zones/#{@zone}/generators/#{@generator}/edit"
+        }.should route_to(:action => :edit, :game => @game, :zone => @zone,
+        :id => @generator, :controller => "generators")
+  end
+
+  it "should expose a hackable URL to edit a game's generator" do
+    {:get, "/games/#{@game}/generators/#{@generator}/edit"}.should route_to(
+        :action => :edit, :game => @game, :id => @generator,
+        :controller => "generators")
+  end
+
+  it "should expose a direct URL to edit a generator" do
+    {:get, "/generators/#{@generator}/edit"}.should route_to(:action => :edit,
+      :id => @generator, :controller => "generators")
+  end
+
+  it { {:put, "/generators/#{@generator}"}.should route_to(:action => :update,
       :id => @generator, :controller => "generators") }
 
   it "does not expose a list of all generators" do

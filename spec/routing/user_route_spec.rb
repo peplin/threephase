@@ -14,10 +14,10 @@ describe "routing to users" do
   it { {:post, "/users"}.should route_to(:action => :create,
       :controller => "users") }
 
-  it { {:get, "/user/#{@user}"}.should route_to(:action => :show,
+  it { {:get, "/users/#{@user}"}.should route_to(:action => :show,
       :id => @user, :controller => "users") }
 
-  it { {:get, "/user/#{@user}/edit"}.should route_to(:action => :edit,
+  it { {:get, "/users/#{@user}/edit"}.should route_to(:action => :edit,
       :id => @user, :controller => "users") }
 
   it { {:get, "/me/edit"}.should route_to(:action => :show,
@@ -26,6 +26,6 @@ describe "routing to users" do
   it { {:get, "/me"}.should route_to(:action => :edit,
       :controller => "users") }
 
-  it { {:put, "/user/#{@user}"}.should route_to(:action => :update,
+  it { {:put, "/users/#{@user}"}.should route_to(:action => :update,
       :id => @user, :controller => "users") }
 end

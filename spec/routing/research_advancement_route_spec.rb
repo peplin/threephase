@@ -6,20 +6,20 @@ describe "routing to research_advancements" do
     @advancement = ResearchAdvancement.all.first
   end
 
-  it { {:get, "/game/#{@game}/research_advancements"}.should route_to(
+  it { {:get, "/games/#{@game}/research-advancements"}.should route_to(
       :action => :index, :game => @game,
       :controller => "research_advancements") }
 
-  it { {:get, "/game/#{@game}/research_advancement/#{@advancement}"
+  it { {:get, "/games/#{@game}/research-advancements/#{@advancement}"
       }.should route_to(:action => :show, :game => @game, :id => @advancement,
       :controller => "research_advancements") }
 
-  it { {:post, "/game/#{@game}/research_advancements"}.should route_to(
+  it { {:post, "/games/#{@game}/research-advancements"}.should route_to(
       :action => :create, :game => @game,
       :controller => "research_advancements") }
 
   it "does not expose a list of all research_advancements" do
-    {:get => "/research_advancements"}.should_not be_routable
+    {:get => "/research-advancements"}.should_not be_routable
   end
 
   it "does not allow editing of a research" do
