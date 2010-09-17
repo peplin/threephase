@@ -96,8 +96,7 @@ describe BidsController do
 
   context "on POST to :create" do
     before do
-      #TODO bid params?
-      @data = {}
+      @data = {:generator => @generator, :price => 100}
     end
     context "for HTML" do
       before do
@@ -105,6 +104,7 @@ describe BidsController do
       end
 
       it { should respond_with :success }
+      it { should redirect_to generator_path @generator }
     end
 
     context "for JSON" do

@@ -72,9 +72,29 @@ describe LineTypesController do
 
   context "on POST to :create" do
     before do
-      #TODO line_type params?
-      @data = {}
+      @data = {:ac => 1,
+          :voltage => 1,
+          :resistance => 1,
+          :diameter => 1,
+          :height => 1,
+          :name => "Zap",
+          :peak_capacity_min => 1,
+          :peak_capacity_max => 2,
+          :average_capacity => 1,
+          :mtbf => 1,
+          :mttr => 1,
+          :repair_cost => 1,
+          :workforce => 1,
+          :area => 1,
+          :capitol_cost_min => 1,
+          :capitol_cost_min => 2,
+          :environmental_disruptiveness => 1,
+          :waste_disposal_cost_min => 1,
+          :waste_disposal_cost_max => 2,
+          :noise => 1,
+          :lifetime => 1}
     end
+
     context "for HTML" do
       it "should create a line_type" do
         proc { post :create, :line_type => @data }.should change(
@@ -95,12 +115,31 @@ describe LineTypesController do
   context "on PUT to :update" do
     context "for HTML" do
       before do
-        #TODO line_type params?
+      @data = {:ac => 42,
+          :voltage => 42,
+          :resistance => 42,
+          :diameter => 42,
+          :height => 42,
+          :name => "Zap",
+          :peak_capacity_min => 42,
+          :peak_capacity_max => 82,
+          :average_capacity => 42,
+          :mtbf => 42,
+          :mttr => 42,
+          :repair_cost => 42,
+          :workforce => 42,
+          :area => 42,
+          :capitol_cost_min => 42,
+          :capitol_cost_min => 2,
+          :environmental_disruptiveness => 42,
+          :waste_disposal_cost_min => 42,
+          :waste_disposal_cost_max => 82,
+          :noise => 42,
+          :lifetime => 42}
         put :update, :id => @line_type, :line_type => @data
-        @data = {}
       end
 
-      it { should respond_with :success }
+      it { should redirect_to line_type_path @line_type }
       it "should update the generator type" do
         # TODO check that it is updated
       end
@@ -108,8 +147,7 @@ describe LineTypesController do
 
     context "for JSON" do
       before do
-        put :update, :id => @line_type, :line_type => @data,
-            :format => "json"
+        put :update, :id => @line_type, :line_type => @data, :format => "json"
       end
 
       it { should respond_with :success }
@@ -121,7 +159,7 @@ describe LineTypesController do
       it "should delete a line_type" do
         proc { delete :delete, :id => @line_type }.should change(
             LineType, :count).by(-1)
-        should respond_with :success
+        should redirect_to line_types_path
       end
     end
 

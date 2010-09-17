@@ -6,6 +6,7 @@ describe InterstateLinesController do
     @interstate_line = InterstateLine.all.first
     @generator = Generator.all.first
     @region = Region.all.first
+    @another_region = Region.all[1]
   end
 
   context "on GET to" do
@@ -79,15 +80,15 @@ describe InterstateLinesController do
 
   context "on POST to :create" do
     before do
-      #TODO interstate_line params?
-      @data = {}
+      @data = {:incoming_region => @region, :outgoing_region => @another_region,
+          :line_type => @line_type}
     end
 
     context "for HTML" do
       it "should create an interstate_line" do
         proc { post :create, :interstate_line => @data
             }.should change(InterstateLine, :count).by(1)
-        should respond_with :success
+        should redirect_to region_path @region
         # TODO check that params are saved
       end
     end
@@ -103,15 +104,14 @@ describe InterstateLinesController do
 
   context "on PUT to :respond" do
     before do
-      #TODO interstate_line response params?
-      @data = {}
+      @data = {:accepted => true}
     end
 
     context "for HTML" do
       it "should update an interstate_line" do
         proc { put :respond, :interstate_line => @data
             }.should_not change(InterstateLine, :count).by(1)
-        should respond_with :success
+        should redirect_to region_path @region
         # TODO check that params are saved
       end
     end

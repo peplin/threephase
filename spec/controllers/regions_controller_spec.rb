@@ -5,6 +5,7 @@ describe RegionsController do
     @game = Game.all.first
     @region = Region.all.first
     @zone = Zone.all.first
+    @map = Map.all.first
   end
 
   context "on GET to" do
@@ -51,18 +52,22 @@ describe RegionsController do
     end
   end
 
+  # TODO POST?
+  #  @data = {:map => @map, :game => @game, :user => @user,
+  #      :name => "Big Town", :research_budget => 1}
+
   context "on PUT to :update" do
     before do
-      #TODO region params?
-      @data = {}
+      @data = {:name => "Big Town", :research_budget => 42}
     end
+
     context "for HTML" do
       before do
         put :update, :id => @region, :region => @data
       end
 
-      it { should respond_with :success }
-      it "should update the generator type" do
+      it { should redirect_to region_path @region }
+      it "should update the region" do
         # TODO check that it is updated
       end
     end

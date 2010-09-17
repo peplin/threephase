@@ -3,4 +3,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
   has_many :repairs, :as => :repairable, :dependent => :destroy
   belongs_to :buildable, :polymorphic => true
   belongs_to :zone
+
+  validates :operating, :presence => true
+  validates :operating_level, :presence => true, :percentage => true
 end

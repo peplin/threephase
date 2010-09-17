@@ -90,8 +90,8 @@ describe ContractNegotiationsController do
 
   context "on POST to :create" do
     before do
-      #TODO contract params?
-      @data = {}
+      @data = {:generator => @generator, :reason => "For the hell of it.",
+          :amount => 42, :offline => true}
     end
     context "for HTML" do
 
@@ -99,6 +99,7 @@ describe ContractNegotiationsController do
         proc { post :create, :contract => @data }.should change(
             ContractNegotiation, :count)
         should respond_with :success
+        should redirect_to generator_contract_path @generator, @contract
       end
     end
 
@@ -113,22 +114,21 @@ describe ContractNegotiationsController do
 
   context "on POST to :offer" do
     before do
-      #TODO contract offer params?
-      @data = {}
+      @data = {:proposed_amount => 24}
     end
     context "for HTML" do
 
-      it "should create an offier" do
-        proc { post :create, :generator => @generator, :offer => @data
+      it "should create an offer" do
+        proc { post :create, :id => @contract, :offer => @data
             }.should change(ContractOffer, :count)
         should respond_with :success
+        should redirect_to generator_contract_path @generator, @contract
       end
     end
 
     context "for JSON" do
       before do
-        post :create, :generator => @generator, :offer => @data,
-            :format => "json"
+        post :create, :id => @contract, :offer => @data, :format => "json"
       end
 
       it { should respond_with :success }
@@ -137,36 +137,20 @@ describe ContractNegotiationsController do
 
   context "on PUT to :respond" do
     before do
-      #TODO contract offer params?
-      @data = {}
+      @data = {:accepted => true}
     end
     context "for HTML" do
-      context "with a generator and contract" do
-        it "should update the offer" do
-          proc { put :create, :generator => @generator, :contract => @contract,
-              :offer => @data}.should change(ContractOffer, :count)
-          should respond_with :success
-        end
-      end
-
-      context "with a contract" do
-        it "should update the offer" do
-          proc { put :create, :contract => @contract, :offer => @data
-              }.should change(ContractOffer, :count)
-          should respond_with :success
-        end
-      end
-
       it "should update the offer" do
-        proc { put :create, :offer => @data }.should change(
-            ContractOffer, :count)
+        proc { put :respond, :id => @offer, :offer => @data
+            }.should change(ContractOffer, :count)
         should respond_with :success
+        should redirect_to generator_contract_path @generator, @contract
       end
     end
 
     context "for JSON" do
       before do
-        put :create, :offer => @data, :format => "json"
+        put :respond, :id => @data, :format => "json"
       end
 
       it { should respond_with :success }

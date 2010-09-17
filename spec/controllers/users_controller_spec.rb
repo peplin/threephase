@@ -115,15 +115,14 @@ describe UsersController do
 
   context "on PUT to :update" do
     before do
-      #TODO user params?
-      @data = {}
+      @data = {:email => "example@example.com"}
     end
     context "for HTML" do
       before do
         put :update, :id => @user, :user => @data
       end
 
-      it { should respond_with :success }
+      it { should redirect_to this_user_path @user }
       it "should update the generator type" do
         # TODO check that it is updated
       end

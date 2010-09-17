@@ -8,7 +8,7 @@ class Region < ActiveRecord::Base
   belongs_to :game
   belongs_to :user
 
-  validates_presence_of :name
-  validates_presence_of :research_budget
-  validates_numericality_of :research_budget, :greater_than_or_equal_to => 0
+  validates :name, :presence => true
+  validates :research_budget, :presence => true, :numericality => true,
+      :greater_than_or_equal_to => 0
 end

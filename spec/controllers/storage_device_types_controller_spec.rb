@@ -74,8 +74,24 @@ describe StorageDeviceTypesController do
 
   context "on POST to :create" do
     before do
-      #TODO storage_device_type params?
-      @data = {}
+      @data = {:decay_rate => 1,
+          :efficiency => 1,
+          :name => "Cat Dog",
+          :peak_capacity_min => 1,
+          :peak_capacity_max => 2,
+          :average_capacity => 1,
+          :mtbf => 1,
+          :mttr => 1,
+          :repair_cost => 1,
+          :workforce => 1,
+          :area => 1,
+          :capitol_cost_min => 1,
+          :capitol_cost_min => 2,
+          :environmental_disruptiveness => 1,
+          :waste_disposal_cost_min => 1,
+          :waste_disposal_cost_max => 2,
+          :noise => 1,
+          :lifetime => 1}
     end
     context "for HTML" do
       it "should create a storage_device_type" do
@@ -97,12 +113,28 @@ describe StorageDeviceTypesController do
   context "on PUT to :update" do
     context "for HTML" do
       before do
-        #TODO storage_device_type params?
+        @data = {:decay_rate => 1,
+            :efficiency => 1,
+            :name => "Cat Dog",
+            :peak_capacity_min => 1,
+            :peak_capacity_max => 2,
+            :average_capacity => 1,
+            :mtbf => 1,
+            :mttr => 1,
+            :repair_cost => 1,
+            :workforce => 1,
+            :area => 1,
+            :capitol_cost_min => 1,
+            :capitol_cost_min => 2,
+            :environmental_disruptiveness => 1,
+            :waste_disposal_cost_min => 1,
+            :waste_disposal_cost_max => 2,
+            :noise => 1,
+            :lifetime => 1}
         put :create, :id => @storage_device_type, :storage_device_type => @data
-        @data = {}
       end
 
-      it { should respond_with :success }
+      it { should redirect_to storage_device_type_path @storage_device_type }
       it "should update the generator type" do
         # TODO check that it is updated
       end
@@ -123,7 +155,7 @@ describe StorageDeviceTypesController do
       it "should delete a storage_device_type" do
         proc { delete :delete, :id => @storage_device_type }.should change(
             StorageDeviceType, :count).by(-1)
-        should respond_with :success
+        should redirect_to generator_types_path
       end
     end
 

@@ -63,15 +63,15 @@ describe RepairsController do
 
   context "on POST to :create" do
     before do
-      #TODO repair params?
-      @data = {}
+      @data = {:repairable => @generator, :reason => "For the hell of it.",
+          :cost => 1, :offline => true}
     end
 
     context "for HTML" do
       it "should create an repair" do
         proc { post :create, :repair => @data
             }.should change(Repair, :count).by(1)
-        should respond_with :success
+        should redirect_to generator_repair_path @generator
         # TODO check that params are saved
       end
     end

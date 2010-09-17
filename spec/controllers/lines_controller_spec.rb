@@ -83,14 +83,14 @@ describe LinesController do
 
   context "on POST to :create" do
     before do
-      #TODO line params?
-      @data = {}
+      @data = {:line_type => @line_type, :zone => @zone, :operating => false,
+          :operating_level => 42}
     end
 
     context "for HTML" do
       it "should create a line" do
         proc { post :create, :line => @data }.should change(Line, :count).by(1)
-        should respond_with :success
+        it { should redirect_to region_path @zone.region }
         # TODO check that params are saved
       end
     end
@@ -106,15 +106,14 @@ describe LinesController do
 
   context "on PUT to :update" do
     before do
-      #TODO line params?
-      @data = {}
+      @data = {:operating => true, :operating_level => 1}
     end
     context "for HTML" do
       before do
         put :update, :id => @line, :line => @data
       end
 
-      it { should respond_with :success }
+      it { should redirect_to region_path @zone.region }
       it "should update the generator type" do
         # TODO check that it is updated
       end

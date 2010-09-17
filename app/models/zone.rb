@@ -5,6 +5,7 @@ class Zone < ActiveRecord::Base
   has_many :generators
   has_many :lines
   has_many :storage_devices
+
   validates_presence_of :name
   validates_presence_of :x
   validates_presence_of :y

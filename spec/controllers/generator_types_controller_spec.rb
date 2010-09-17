@@ -71,14 +71,45 @@ describe GeneratorTypesController do
 
   context "on POST to :create" do
     before do
-      #TODO generator_type params?
-      @data = {}
+      @data = {:safety_mtbf => 1,
+          :safety_incident_severity => 1,
+          :ramping_speed => 1,
+          :fuel_efficiency => 1,
+          :air_emissions => 1,
+          :water_emissions => 1,
+          :maintenance_cost_min => 1,
+          :maintenance_cost_max => 2,
+          :tax_credit => 1,
+          :name => "Cat Dog",
+          :peak_capacity_min => 1,
+          :peak_capacity_max => 2,
+          :average_capacity => 1,
+          :mtbf => 1,
+          :mttr => 1,
+          :repair_cost => 1,
+          :workforce => 1,
+          :area => 1,
+          :capitol_cost_min => 1,
+          :capitol_cost_min => 2,
+          :environmental_disruptiveness => 1,
+          :waste_disposal_cost_min => 1,
+          :waste_disposal_cost_max => 2,
+          :noise => 1,
+          :lifetime => 1}
     end
+
     context "for HTML" do
       it "should create a generator_type" do
         proc { post :create, :generator_type => @data }.should change(
             GeneratorType, :count).by(1)
-        should respond_with :success
+      end
+      
+      context "when created" do
+        before do
+          post :create, :generator_type => @data
+        end
+
+        it { should redirect_to generator_type_path @generator_type }
       end
     end
 
@@ -93,21 +124,48 @@ describe GeneratorTypesController do
 
   context "on PUT to :update" do
     before do
-      #TODO generator_type params?
-      put :create, :id => @generator_type, :generator_type => @data
-      @data = {}
+      @data = {:safety_mtbf => 42,
+          :safety_incident_severity => 42,
+          :ramping_speed => 42,
+          :fuel_efficiency => 42,
+          :air_emissions => 42,
+          :water_emissions => 42,
+          :maintenance_cost_min => 42,
+          :maintenance_cost_max => 84,
+          :tax_credit => 42,
+          :name => "Cat Dog",
+          :peak_capacity_min => 42,
+          :peak_capacity_max => 82,
+          :average_capacity => 42,
+          :mtbf => 42,
+          :mttr => 42,
+          :repair_cost => 42,
+          :workforce => 42,
+          :area => 42,
+          :capitol_cost_min => 42,
+          :capitol_cost_min => 2,
+          :environmental_disruptiveness => 42,
+          :waste_disposal_cost_min => 42,
+          :waste_disposal_cost_max => 82,
+          :noise => 42,
+          :lifetime => 42}
     end
 
     context "for HTML" do
+      before do
+        put :update, :id => @generator_type, :generator_type => @data
+      end
+
+      it { should redirect_to generator_type_path @generator_type }
       it "should update the generator type" do
-        should respond_with :success
         # TODO check that it is updated
+        # TODO permission check
       end
     end
 
     context "for JSON" do
       before do
-        put :create, :id => @generator_type, :generator_type => @data,
+        put :update, :id => @generator_type, :generator_type => @data,
             :format => "json"
       end
 
@@ -120,7 +178,7 @@ describe GeneratorTypesController do
       it "should delete a generator_type" do
         proc { delete :delete, :id => @generator_type }.should change(
             GeneratorType, :count).by(-1)
-        should respond_with :success
+        should redirect_to generator_types_path
       end
     end
 
@@ -129,7 +187,6 @@ describe GeneratorTypesController do
         proc { delete :delete, :id => @generator_type }.should change(
             GeneratorType, :count).by(-1)
         should respond_with :success
-        it { should respond_with_content_type :json }
       end
     end
   end

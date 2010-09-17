@@ -62,14 +62,13 @@ describe ZonesController do
 
   context "on POST to :create" do
     before do
-      #TODO zone params?
-      @data = {}
+      @data = {:region => @region, :name => "Super Zone", :x => 1, :y => 2}
     end
 
     context "for HTML" do
       it "should create an zone" do
         proc { post :create, :zone => @data }.should change(Zone, :count).by(1)
-        should respond_with :success
+        should redirect_to zone_path @zone
         # TODO check that params are saved
       end
     end

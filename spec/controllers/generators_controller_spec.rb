@@ -94,15 +94,15 @@ describe GeneratorsController do
 
   context "on POST to :create" do
     before do
-      #TODO generator params?
-      @data = {}
+      @data = {:generator_type => @generator_type, :zone => @zone,
+          :operating => false, :operating_level => 42}
     end
 
     context "for HTML" do
       it "should create a generator" do
         proc { post :create, :generator => @data
             }.should change(Generator, :count).by(1)
-        should respond_with :success
+        should redirect_to region_path @zone.region
         # TODO check that params are saved
       end
     end
@@ -118,15 +118,14 @@ describe GeneratorsController do
 
   context "on PUT to :update" do
     before do
-      #TODO generator params?
-      @data = {}
+      @data = {:operating => false, :operating_level => 1}
     end
     context "for HTML" do
       before do
         put :update, :id => @generator, :generator => @data
       end
 
-      it { should respond_with :success }
+      it { should redirect_to region_path @zone.region }
       it "should update the generator type" do
         # TODO check that it is updated
       end

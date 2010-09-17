@@ -94,15 +94,15 @@ describe StorageDevicesController do
 
   context "on POST to :create" do
     before do
-      #TODO storage_device params?
-      @data = {}
+      @data = {:storage_device_type => @generator_type, :zone => @zone,
+          :operating => false, :operating_level => 42}
     end
 
     context "for HTML" do
       it "should create a storage_device" do
         proc { post :create, :storage_device => @data
             }.should change(StorageDevice, :count).by(1)
-        should respond_with :success
+        should redirect_to region_path @zone.region
         # TODO check that params are saved
       end
     end
@@ -118,15 +118,14 @@ describe StorageDevicesController do
 
   context "on PUT to :update" do
     before do
-      #TODO storage_device params?
-      @data = {}
+      @data = {:operating => false, :operating_level => 1}
     end
     context "for HTML" do
       before do
         put :update, :id => @storage_device, :storage_device => @data
       end
 
-      it { should respond_with :success }
+      it { should redirect_to region_path @zone.region }
       it "should update the storage_device type" do
         # TODO check that it is updated
       end

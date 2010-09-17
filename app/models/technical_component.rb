@@ -19,6 +19,5 @@ class TechnicalComponent < ActiveRecord::Base
   validates :waste_disposal_cost_min, :presence => true
   validates :waste_disposal_cost_max, :presence => true
   validates :noise, :presence => true
-  validates :operating, :presence => true
   validates :lifetime, :presence => true
 end

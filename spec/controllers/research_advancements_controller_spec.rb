@@ -52,15 +52,15 @@ describe ResearchAdvancementsController do
 
   context "on POST to :create" do
     before do
-      #TODO advancement params?
-      @data = {}
+      @data = {:region => @region, :reason => "For the hell of it.",
+          :parameter => "technology_cost", :adjustment => 1}
     end
 
     context "for HTML" do
       it "should create an advancement" do
         proc { post :create, :advancement => @data
             }.should change(ResearchAdvancement, :count).by(1)
-        should respond_with :success
+        should redirect_to region_path @region
         # TODO check that params are saved
       end
     end
