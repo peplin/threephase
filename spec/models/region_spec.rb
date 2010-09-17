@@ -17,7 +17,7 @@ describe Region do
   context "A Region instance" do
     before do
       @game = Game.all.first
-      @region = Region.create :name => "T'Pol", :game => @game
+      @region = Region.create :name => "T'Pol", :game => @game, :map => Map.all.first
     end
 
     it { @region.friendly_id.should eq("#{@game}-#{@region.name}".downcase) }

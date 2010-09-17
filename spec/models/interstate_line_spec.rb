@@ -9,11 +9,11 @@ describe InterstateLine do
   it { should respond_to :friendly_id }
 
   context "A InterstateLine instance" do
-    setup do
+    before do
       @incoming = Region.all.first
       @outgoing = Region.all[1]
       @line = InterstateLine.create :incoming_region => @incoming,
-          :outgoing => @outgoing
+          :outgoing_region => @outgoing
     end
 
     it { @line.friendly_id.should eq(

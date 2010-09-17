@@ -4,12 +4,13 @@ class CreateRegions < ActiveRecord::Migration
       t.string :name, :null => false
       t.integer :research_budget, :null => false, :default => 5000000
       t.string :cached_slug
-      t.index :cached_slug, :unique => true
 
       t.references :map, :null => false
       t.references :game, :null => false
       t.references :user
     end
+
+    add_index :regions, :cached_slug, :unique => true
   end
 
   def self.down

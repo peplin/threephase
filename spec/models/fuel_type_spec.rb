@@ -10,7 +10,8 @@ describe FuelType do
 
   context "A FuelType instance" do
     before do
-      @type = FuelType.create :name => "Foo"
+      @market = Market.all.first
+      @type = FuelType.create :name => "Foo", :market => @market
     end
 
     it { @type.friendly_id.should eq(@type.name.downcase) }

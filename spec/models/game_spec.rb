@@ -66,12 +66,12 @@ describe Game do
   end
 
   context "A Game instance" do
-    setup do
+    before do
       @game = Game.new
     end
 
     context "should know how much game-relative time has passed" do
-      setup do
+      before do
         @game.updated_at = Time.parse("1 minute ago")
         @now = Time.now
       end

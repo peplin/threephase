@@ -4,7 +4,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email, :limit => 100
       t.string :nickname
       t.string :cached_slug
-      t.index :cached_slug, :unique => true
 
       t.string   "salt", :limit => 40
       t.string   "remember_token", :limit => 40
@@ -16,6 +15,8 @@ class CreateUsers < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :users, :cached_slug, :unique => true
   end
 
   def self.down

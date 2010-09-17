@@ -3,7 +3,6 @@ class CreateInterstateLines < ActiveRecord::Migration
     create_table :interstate_lines do |t|
       t.boolean :accepted
       t.string :cached_slug
-      t.index :cached_slug, :unique => true
       t.boolean :operating, :null => false, :default => true
       t.integer :operating_level, :null => false, :default => 100
       
@@ -13,6 +12,8 @@ class CreateInterstateLines < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :interstate_lines, :cached_slug, :unique => true
   end
 
   def self.down

@@ -29,7 +29,7 @@ describe GeneratorType do
   it { should_not allow_value(-1).for(:tax_credit) }
 
   context "A GeneratorType instance" do
-    setup do
+    before do
       @generator_type = GeneratorType.new
     end
 
@@ -43,8 +43,8 @@ describe GeneratorType do
     end
 
     context "with a renewable fuel" do
-      setup do
-        @generator_type.fuel_type = Fuel.find_by_renewable(true).first
+      before do
+        @generator_type.fuel_type = FuelType.find_by_renewable(true).first
       end
 
       it "should know its fuel is renewable" do
@@ -63,8 +63,8 @@ describe GeneratorType do
     end
 
     context "with a nonrenewable fuel" do
-      setup do
-        @generator_type.fuel_type = Fuel.find_by_renewable(false).first
+      before do
+        @generator_type.fuel_type = FuelType.find_by_renewable(false).first
       end
 
       it "should know its fuel is renewable" do

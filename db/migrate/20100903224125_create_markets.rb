@@ -3,8 +3,8 @@ class CreateMarkets < ActiveRecord::Migration
     create_table :markets do |t|
       t.string :name, :null => false
       t.string :cached_slug
-      t.index :cached_slug, :unique => true
     end
+    add_index :markets, :cached_slug, :unique => true
   end
 
   def self.down

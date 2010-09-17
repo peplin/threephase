@@ -4,10 +4,10 @@ class CreateFuelTypes < ActiveRecord::Migration
       t.string :name, :null => false
       t.text :description
       t.string :cached_slug
-      t.index :cached_slug, :unique => true
 
       t.references :market, :null => false
     end
+    add_index :fuel_types, :cached_slug, :unique => true
   end
 
   def self.down

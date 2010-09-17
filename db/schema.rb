@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer "market_id",   :null => false
   end
 
+  add_index "fuel_types", ["cached_slug"], :name => "index_fuel_types_on_cached_slug", :unique => true
+
   create_table "games", :force => true do |t|
     t.integer  "speed",                  :default => 0,           :null => false
     t.integer  "max_players",            :default => 1,           :null => false
@@ -121,7 +123,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer  "maintenance_cost_min",     :default => 0,  :null => false
     t.integer  "maintenance_cost_max",                     :null => false
     t.float    "tax_credit",                               :null => false
-    t.integer  "fuel_id"
+    t.integer  "fuel_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -129,12 +131,16 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "interstate_lines", :force => true do |t|
     t.boolean  "accepted"
     t.string   "cached_slug"
-    t.integer  "incoming_region_id", :null => false
-    t.integer  "outgoing_region_id", :null => false
-    t.integer  "line_type_id",       :null => false
+    t.boolean  "operating",          :default => true, :null => false
+    t.integer  "operating_level",    :default => 100,  :null => false
+    t.integer  "incoming_region_id",                   :null => false
+    t.integer  "outgoing_region_id",                   :null => false
+    t.integer  "line_type_id",                         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "interstate_lines", ["cached_slug"], :name => "index_interstate_lines_on_cached_slug", :unique => true
 
   create_table "line_costs", :id => false, :force => true do |t|
     t.string  "cost_type",              :null => false
@@ -170,6 +176,8 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.datetime "updated_at"
   end
 
+  add_index "maps", ["cached_slug"], :name => "index_maps_on_cached_slug", :unique => true
+
   create_table "market_prices", :force => true do |t|
     t.float    "price",      :null => false
     t.integer  "market_id",  :null => false
@@ -183,6 +191,8 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.string "cached_slug"
   end
 
+  add_index "markets", ["cached_slug"], :name => "index_markets_on_cached_slug", :unique => true
+
   create_table "regions", :force => true do |t|
     t.string  "name",                                 :null => false
     t.integer "research_budget", :default => 5000000, :null => false
@@ -191,6 +201,8 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer "game_id",                              :null => false
     t.integer "user_id"
   end
+
+  add_index "regions", ["cached_slug"], :name => "index_regions_on_cached_slug", :unique => true
 
   create_table "repairs", :force => true do |t|
     t.string   "reason",                             :null => false
@@ -282,6 +294,8 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.datetime "updated_at"
   end
 
+  add_index "users", ["cached_slug"], :name => "index_users_on_cached_slug", :unique => true
+
   create_table "wind_profiles", :force => true do |t|
     t.integer "hour",                      :null => false
     t.float   "speed",    :default => 0.0, :null => false
@@ -296,6 +310,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer "region_id",   :null => false
   end
 
+  add_index "zones", ["cached_slug"], :name => "index_zones_on_cached_slug", :unique => true
   add_index "zones", ["x", "y"], :name => "index_zones_on_x_and_y", :unique => true
 
 end

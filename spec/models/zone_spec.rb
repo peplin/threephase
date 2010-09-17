@@ -15,7 +15,7 @@ describe Zone do
   it { should respond_to :friendly_id }
 
   context "A Zone instance" do
-    setup do
+    before do
       @zone = Zone.create :name => "Foo"
     end
 

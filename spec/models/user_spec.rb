@@ -11,7 +11,7 @@ describe User do
   it { should respond_to :friendly_id }
 
   context "A User instance" do
-    setup do
+    before do
       @user = User.create :nickname => "Foo"
     end
 
