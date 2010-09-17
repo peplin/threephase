@@ -3,6 +3,7 @@ class CreateGames < ActiveRecord::Migration
     create_table :games do |t|
       t.integer :speed, :null => false, :default => 0
       t.integer :max_players, :null => false, :default => 1
+      t.datetime :started
 
       t.integer :max_line_capacity, :null => false, :default => 1500
       t.integer :technology_cost, :null => false, :default => 50
