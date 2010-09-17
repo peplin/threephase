@@ -17,7 +17,6 @@ class CreateTechnicalComponents < ActiveRecord::Migration
       t.integer :waste_disposal_cost_min, :null => false, :default => 0
       t.integer :waste_disposal_cost_max, :null => false
       t.integer :noise, :null => false
-      t.boolean :operating, :null => false, :default => true
       t.integer :lifetime, :null => false
 
       t.references :user
