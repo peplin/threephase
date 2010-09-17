@@ -4,6 +4,8 @@ class CreateZones < ActiveRecord::Migration
       t.string :name, :null => false
       t.integer :x, :null => false
       t.integer :y, :null => false
+      t.string :cached_slug
+      t.index :cached_slug, :unique => true
 
       t.references :region, :null => false
     end

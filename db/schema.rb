@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100917175426) do
+ActiveRecord::Schema.define(:version => 20100917220041) do
 
   create_table "allowed_technical_component_types", :id => false, :force => true do |t|
     t.string  "component_type", :null => false
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20100917175426) do
   create_table "fuel_types", :force => true do |t|
     t.string  "name",        :null => false
     t.text    "description"
+    t.string  "cached_slug"
     t.integer "market_id",   :null => false
   end
 
@@ -127,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20100917175426) do
 
   create_table "interstate_lines", :force => true do |t|
     t.boolean  "accepted"
+    t.string   "cached_slug"
     t.integer  "incoming_region_id", :null => false
     t.integer  "outgoing_region_id", :null => false
     t.integer  "line_type_id",       :null => false
@@ -161,7 +163,8 @@ ActiveRecord::Schema.define(:version => 20100917175426) do
   end
 
   create_table "maps", :force => true do |t|
-    t.string   "name",       :null => false
+    t.string   "name",        :null => false
+    t.string   "cached_slug"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -176,12 +179,14 @@ ActiveRecord::Schema.define(:version => 20100917175426) do
   end
 
   create_table "markets", :force => true do |t|
-    t.string "name", :null => false
+    t.string "name",        :null => false
+    t.string "cached_slug"
   end
 
   create_table "regions", :force => true do |t|
     t.string  "name",                                 :null => false
     t.integer "research_budget", :default => 5000000, :null => false
+    t.string  "cached_slug"
     t.integer "map_id",                               :null => false
     t.integer "game_id",                              :null => false
     t.integer "user_id"
@@ -206,6 +211,18 @@ ActiveRecord::Schema.define(:version => 20100917175426) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "slugs", :force => true do |t|
+    t.string   "name"
+    t.integer  "sluggable_id"
+    t.integer  "sequence",                     :default => 1, :null => false
+    t.string   "sluggable_type", :limit => 40
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "slugs", ["name", "sluggable_type", "sequence", "scope"], :name => "index_slugs_on_n_s_s_and_s", :unique => true
+  add_index "slugs", ["sluggable_id"], :name => "index_slugs_on_sluggable_id"
 
   create_table "storage_device_types", :force => true do |t|
     t.float    "decay_rate",                 :null => false
@@ -252,13 +269,15 @@ ActiveRecord::Schema.define(:version => 20100917175426) do
 
   create_table "users", :force => true do |t|
     t.string   "email",                     :limit => 100
+    t.string   "nickname"
+    t.string   "cached_slug"
     t.string   "salt",                      :limit => 40
     t.string   "remember_token",            :limit => 40
     t.datetime "remember_token_expires_at"
-    t.boolean  "admin",                                    :default => false, :null => false
     t.string   "encrypted_password",        :limit => 128
     t.string   "confirmation_token",        :limit => 128
-    t.boolean  "email_confirmed",                          :default => false, :null => false
+    t.boolean  "admin",                                    :default => false, :null => false
+    t.boolean  "email_confirmed",                          :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -270,10 +289,11 @@ ActiveRecord::Schema.define(:version => 20100917175426) do
   end
 
   create_table "zones", :force => true do |t|
-    t.string  "name",      :null => false
-    t.integer "x",         :null => false
-    t.integer "y",         :null => false
-    t.integer "region_id", :null => false
+    t.string  "name",        :null => false
+    t.integer "x",           :null => false
+    t.integer "y",           :null => false
+    t.string  "cached_slug"
+    t.integer "region_id",   :null => false
   end
 
   add_index "zones", ["x", "y"], :name => "index_zones_on_x_and_y", :unique => true

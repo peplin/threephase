@@ -3,6 +3,8 @@ class CreateRegions < ActiveRecord::Migration
     create_table :regions do |t|
       t.string :name, :null => false
       t.integer :research_budget, :null => false, :default => 5000000
+      t.string :cached_slug
+      t.index :cached_slug, :unique => true
 
       t.references :map, :null => false
       t.references :game, :null => false

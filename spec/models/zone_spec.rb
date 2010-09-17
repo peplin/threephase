@@ -12,13 +12,17 @@ describe Zone do
   it { should validate_presence_of :x }
   it { should validate_presence_of :y }
 
+  it { should respond_to :friendly_id }
+
   context "A Zone instance" do
     setup do
-      @zone = Zone.new
+      @zone = Zone.create :name => "Foo"
     end
 
     it "should know its current demand" do
       assert @zone.demand
     end
+
+    it { @zone.friendly_id.should eq(@zone.name.downcase) }
   end
 end
