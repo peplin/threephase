@@ -1,2 +1,0 @@
-class ZoneController < ApplicationController
-end

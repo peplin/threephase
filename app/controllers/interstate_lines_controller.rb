@@ -1,0 +1,2 @@
+class InterstateLinesController < ApplicationController
+end

@@ -1,2 +1,0 @@
-class MarketPriceController < ApplicationController
-end

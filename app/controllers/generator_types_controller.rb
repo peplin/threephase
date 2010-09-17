@@ -1,0 +1,2 @@
+class GeneratorTypesController < ApplicationController
+end

@@ -1,0 +1,2 @@
+class StorageDeviceTypesController < ApplicationController
+end
