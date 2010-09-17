@@ -5,4 +5,5 @@ describe Repair do
   it { should validate_presence_of :reason }
   it { should validate_presence_of :cost }
   it { should validate_presence_of :offline }
+  it { should validate_presence_of :duration }
 end
