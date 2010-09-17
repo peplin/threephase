@@ -3,7 +3,7 @@ require 'spec_helper'
 describe MarketPricesController do
   before :each do
     @game = Game.all.first
-    @market_price = MarketPrice.all.first
+    @market = Market.all.first
     @zone = Zone.all.first
   end
 
@@ -31,22 +31,22 @@ describe MarketPricesController do
 
       context ":show with a game" do
         before do
-          get :show, :game => @game, :id => @market_price
+          get :show, :game => @game, :id => @market
         end
 
         it { should respond_with :success }
         it { should render_template :show }
-        it { should assign_to(:market_price).with(@market_price) }
+        it { should assign_to(:market_price).with(@market) }
       end
 
       context ":show with a zone" do
         before do
-          get :show, :game => @game, :zone => @zone, :id => @market_price
+          get :show, :game => @game, :zone => @zone, :id => @market
         end
 
         it { should respond_with :success }
         it { should render_template :show }
-        it { should assign_to(:market_price).with(@market_price) }
+        it { should assign_to(:market_price).with(@market) }
       end
     end
 
@@ -62,7 +62,7 @@ describe MarketPricesController do
 
       context ":show" do
         before do
-          get :show, :game => @game, :id => @market_price, :format => "json"
+          get :show, :game => @game, :id => @market, :format => "json"
         end
 
         it { should respond_with :success }

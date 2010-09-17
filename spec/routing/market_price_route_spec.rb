@@ -4,7 +4,7 @@ describe "routing to market_prices" do
   before :all do
     @game = Game.all.first
     @zone = Zone.all.first
-    @market = "fuel"
+    @market = Market.all.first
   end
 
   it { {:get, "/game/#{@game}/market-prices"}.should route_to(:action => :index,
