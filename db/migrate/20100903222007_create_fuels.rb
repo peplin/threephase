@@ -3,6 +3,8 @@ class CreateFuels < ActiveRecord::Migration
     create_table :fuels do |t|
       t.string :name, :null => false
       t.text :description
+
+      t.references :market, :null => false
     end
   end
 

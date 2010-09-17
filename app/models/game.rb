@@ -1,7 +1,6 @@
 class Game < ActiveRecord::Base
-  has_many :spot_market_prices
-  has_many :fuel_market_prices
-  has_many :carbon_credit_market_prices
+  has_many :market_prices
+  has_many :markets, :through => :market_prices
   has_many :allowed_generator_types
   has_many :allowed_line_types
   has_many :allowed_storage_device_types
