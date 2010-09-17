@@ -1,6 +1,6 @@
 class Market < ActiveRecord::Base
   has_many :market_prices
-  has_many :fuels
+  has_many :fuel_types
 
-  validates :price, :presence => true
+  validates :name, :presence => true
 end

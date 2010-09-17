@@ -2,9 +2,8 @@ require 'spec_helper'
 require 'time'
 
 describe Game do
-  it { should have_many :fuel_market_prices }
-  it { should have_many :spot_market_prices }
-  it { should have_many :carbon_credit_market_prices }
+  it { should have_many :market_prices }
+  it { should have_many(:markets).through(:market_prices) }
   it { should have_many :regions }
   it { should have_many(:users).through(:regions) }
   it { should have_many(:maps).through(:regions) }

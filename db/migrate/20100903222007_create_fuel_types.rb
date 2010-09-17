@@ -1,6 +1,6 @@
-class CreateFuels < ActiveRecord::Migration
+class CreateFuelTypes < ActiveRecord::Migration
   def self.up
-    create_table :fuels do |t|
+    create_table :fuel_types do |t|
       t.string :name, :null => false
       t.text :description
 
@@ -9,6 +9,6 @@ class CreateFuels < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :fuels
+    drop_table :fuel_types
   end
 end

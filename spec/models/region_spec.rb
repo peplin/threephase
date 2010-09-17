@@ -5,8 +5,6 @@ describe Region do
   it { should belong_to :game }
   it { should belong_to :user }
   it { should have_many :research_advancements }
-  it { should have_many :proposed_fuel_contracts }
-  it { should have_many :received_fuel_contracts }
   it { should have_many :incoming_interstate_lines }
   it { should have_many :outgoing_interstate_lines }
   it { should validate_presence_of :name }

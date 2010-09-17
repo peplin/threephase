@@ -1,7 +1,7 @@
 class GeneratorType < ActiveRecord::Base
   acts_as_technical_component
   has_many :generators, :foreign_key => "buildable_id"
-  belongs_to :fuel
+  belongs_to :fuel_type
 
   validates :safety_mtbf, :presence => true
   validates :safety_incident_severity, :presence => true, :percentage => true

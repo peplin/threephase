@@ -3,7 +3,7 @@ require 'spec_helper'
 describe GeneratorType do
   it { should have_one :technical_component }
   it { should have_many :generators }
-  it { should belong_to :fuel }
+  it { should belong_to :fuel_type }
 
   it { should validate_presence_of :safety_mtbf }
   it { should validate_presence_of :safety_incident_severity }
@@ -44,7 +44,7 @@ describe GeneratorType do
 
     context "with a renewable fuel" do
       setup do
-        @generator_type.fuel = Fuel.find_by_renewable(true).first
+        @generator_type.fuel_type = Fuel.find_by_renewable(true).first
       end
 
       it "should know its fuel is renewable" do
@@ -64,7 +64,7 @@ describe GeneratorType do
 
     context "with a nonrenewable fuel" do
       setup do
-        @generator_type.fuel = Fuel.find_by_renewable(false).first
+        @generator_type.fuel_type = Fuel.find_by_renewable(false).first
       end
 
       it "should know its fuel is renewable" do
