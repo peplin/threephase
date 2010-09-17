@@ -50,6 +50,5 @@ describe TechnicalComponent do
   it { should allow_value(100).for(:noise) }
   it { should_not allow_value(-1).for(:noise) }
 
-  it { should validate_presence_of :operating }
   it { should validate_presence_of :lifetime }
 end
