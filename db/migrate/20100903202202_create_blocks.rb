@@ -3,7 +3,7 @@ class CreateBlocks < ActiveRecord::Migration
     create_table :blocks do |t|
       t.integer :x, :null => false
       t.integer :y, :null => false
-      t.integer :elevation, :null => false
+      t.integer :elevation, :null => false, :default => 0
       t.integer :type, :null => false, :default => 0
       t.float :wind_speed, :null => false, :default => 0
       t.integer :water_flow, :null => false, :default => 0

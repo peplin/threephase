@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "blocks", :force => true do |t|
     t.integer  "x",                                   :null => false
     t.integer  "y",                                   :null => false
-    t.integer  "elevation",                           :null => false
+    t.integer  "elevation",         :default => 0,    :null => false
     t.integer  "type",              :default => 0,    :null => false
     t.float    "wind_speed",        :default => 0.0,  :null => false
     t.integer  "water_flow",        :default => 0,    :null => false
@@ -143,13 +143,12 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   add_index "interstate_lines", ["cached_slug"], :name => "index_interstate_lines_on_cached_slug", :unique => true
 
   create_table "line_costs", :id => false, :force => true do |t|
-    t.string  "cost_type",              :null => false
-    t.integer "length_min",             :null => false
-    t.integer "length_max",             :null => false
-    t.integer "cost_min",               :null => false
-    t.integer "cost_max",               :null => false
-    t.integer "technical_component_id", :null => false
-    t.integer "line_type_id",           :null => false
+    t.string  "cost_type",    :null => false
+    t.integer "length_min",   :null => false
+    t.integer "length_max",   :null => false
+    t.integer "cost_min",     :null => false
+    t.integer "cost_max",     :null => false
+    t.integer "line_type_id", :null => false
   end
 
   create_table "line_types", :force => true do |t|

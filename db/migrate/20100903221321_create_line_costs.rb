@@ -7,7 +7,6 @@ class CreateLineCosts < ActiveRecord::Migration
       t.integer :cost_min, :null => false
       t.integer :cost_max, :null => false
 
-      t.references :technical_component, :null => false
       t.references :line_type, :null => false
     end
   end

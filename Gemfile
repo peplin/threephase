@@ -12,8 +12,9 @@ gem 'friendly_id', "~> 3.1"
 # gem 'capistrano'
 
 group :test, :development do
-  gem "shoulda"
-  gem "rcov"
-  gem "rspec-rails", ">= 2.0.0.beta.20"
+  gem 'shoulda'
+  gem 'rcov'
+  gem 'rspec-rails', ">= 2.0.0.beta.20"
   gem 'ruby-debug'
+  gem 'factory_girl'
 end

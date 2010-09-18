@@ -119,7 +119,7 @@ describe ContractNegotiationsController do
     end
   end
 
-  context "on POST"
+  context "on POST" do
     context "to :create" do
       before do
         @data = {:generator => @generator, :reason => "For the hell of it.",
