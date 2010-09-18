@@ -13,20 +13,27 @@ describe "routing to bids" do
   end
 
   it "should expose a list of all bids for a generator" do
-    {:get, "/generator/#{@generator}/bids"}.should route_to(:action => :index,
-        :generator => @generator, :controller => "bids")
+    {:get, "/games/#{@game}/generators/#{@generator}/bids"}.should route_to(
+        :action => :index, :generator => @generator, :controller => "bids")
   end
 
   it "should expose a new bid form for a generator" do
-    {:get, "/generator/#{@generator}/bids/new"}.should route_to(:action => :new,
-      :game => @game, :controller => "bids")
+    {:get, "/games/#{@game}/generators/#{@generator}/bids/new"
+        }.should route_to(:action => :new, :game => @game,
+        :generator => @generator, :controller => "bids")
   end
 
   it { {:post, "/bids"}.should route_to(:action => :create,
       :controller => "bids") }
 
+  it "should expose a hackable URL to a game's bid" do
+    {:get, "/games/#{@game}/bids/#{@bid}"}.should route_to(
+        :action => :show, :game => @game, :bid => @bid, :controller => "bids")
+  end
+
   it "should expose a hackable URL to a generator's bid" do
-    {:get, "/generator/#{@generator}/bids/#{@bid}"}.should route_to(:action => :show,
+    {:get, "/games/#{@game}/generators/#{@generator}/bids/#{@bid}"
+        }.should route_to(:action => :show, :game => @game,
         :generator => @generator, :bid => @bid, :controller => "bids")
   end
 
@@ -40,12 +47,12 @@ describe "routing to bids" do
   end
 
   it "does not allow bid updating" do
-    {:put => "/generator/#{@generator}/bid/#{@bid}"}.should_not be_routable
+    {:put => "/generators/#{@generator}/bid/#{@bid}"}.should_not be_routable
     {:put => "/bids/#{@bid}"}.should_not be_routable
   end
 
   it "does not allow bid deleting" do
-    {:delete => "/generator/#{@generator}/bids/#{@bid}"}.should_not be_routable
+    {:delete => "/generators/#{@generator}/bids/#{@bid}"}.should_not be_routable
     {:delete => "/bids/#{@bid}"}.should_not be_routable
   end
 end

@@ -9,63 +9,94 @@ describe ContractNegotiationsController do
 
   context "on GET to" do
     context "for HTML" do
-      context ":index with a generator" do
-        before do
-          get :index, :generator => @generator
+      context ":index" do
+        context "with a game" do
+          before do
+            get :index, :game => @game
+          end
+
+          it { should respond_with :success }
+          it { should render_template :index }
+          it { should assign_to(:contracts) }
+          it { should assign_to(:generator) }
         end
 
-        it { should respond_with :success }
-        it { should render_template :index }
-        it { should assign_to(:contracts) }
-        it { should assign_to(:generator) }
+        context "with a game and generator" do
+          before do
+            get :index, :game => @game, :generator => @generator
+          end
+
+          it { should respond_with :success }
+          it { should render_template :index }
+          it { should assign_to(:contracts) }
+          it { should assign_to(:game) }
+          it { should assign_to(:generators) }
+        end
+
+        context "with invalid parameters" do
+          it "should respond with 404"
+        end
+
+        context "with unauthorized objects" do
+          it "should not allow access if user isn't in the game"
+          it "should not allow access if user doesn't own the generator"
+        end
       end
 
-      context ":index with a game" do
-        before do
-          get :index, :game => @game
+      context ":show" do
+        context do
+          before do
+            get :show, :contract => @contract
+          end
+
+          it { should respond_with :success }
+          it { should render_template :show }
+          it { should assign_to(:contract) }
+          it { should assign_to(:generator) }
         end
 
-        it { should respond_with :success }
-        it { should render_template :index }
-        it { should assign_to(:contracts) }
-        it { should assign_to(:game) }
-        it { should assign_to(:generators) }
-      end
+        context "with a game" do
+          before do
+            get :show, :game => @game, :contract => @contract
+          end
 
-      context ":show with a generator" do
-        before do
-          get :show, :generator => @generator, :contract => @contract
+          it { should respond_with :success }
+          it { should render_template :show }
+          it { should assign_to(:contract) }
+          it { should assign_to(:generator) }
         end
 
-        it { should respond_with :success }
-        it { should render_template :show }
-        it { should assign_to(:contract) }
-        it { should assign_to(:generator) }
-      end
+        context "with a game and a generator" do
+          before do
+            get :show, :game => @game, :generator => @generator,
+                :contract => @contract
+          end
 
-      context ":show with a game" do
-        before do
-          get :show, :game => @game, :contract => @contract
+          it { should respond_with :success }
+          it { should render_template :show }
+          it { should assign_to(:contract) }
+          it { should assign_to(:generator) }
         end
 
-        it { should respond_with :success }
-        it { should render_template :show }
-        it { should assign_to(:contract) }
-        it { should assign_to(:generator) }
-      end
-
-      context ":show with a contract" do
-        before do
-          get :show, :contract => @contract
+        context "with invalid parameters" do
+          it "should respond with 404"
         end
-
-        it { should respond_with :success }
-        it { should render_template :show }
-        it { should assign_to(:contract) }
-        it { should assign_to(:generator) }
       end
 
       context ":new" do
+        context do
+          before do
+            get :new, :game => @game, :generator => @generator
+          end
+
+          it { should respond_with :success }
+          it { should render_template :new }
+          it { assigns(:contract).should be_a_new(ContractNegotiation) }
+        end
+
+        context "with invalid parameters" do
+          it "should respond with 404"
+        end
       end
     end
 
@@ -88,50 +119,60 @@ describe ContractNegotiationsController do
     end
   end
 
-  context "on POST to :create" do
-    before do
-      @data = {:generator => @generator, :reason => "For the hell of it.",
-          :amount => 42, :offline => true}
-    end
-    context "for HTML" do
-
-      it "should create a contract" do
-        proc { post :create, :contract => @data }.should change(
-            ContractNegotiation, :count)
-        should respond_with :success
-        should redirect_to generator_contract_path @generator, @contract
-      end
-    end
-
-    context "for JSON" do
+  context "on POST"
+    context "to :create" do
       before do
-        post :create, :contract => @data, :format => "json"
+        @data = {:generator => @generator, :reason => "For the hell of it.",
+            :amount => 42, :offline => true}
       end
 
-      it { should respond_with :success }
-    end
-  end
+      context "for HTML" do
+        it "should create a contract" do
+          proc { post :create, :contract => @data }.should change(
+              ContractNegotiation, :count)
+          should respond_with :success
+          should redirect_to generator_contract_path @generator, @contract
+        end
 
-  context "on POST to :offer" do
-    before do
-      @data = {:proposed_amount => 24}
-    end
-    context "for HTML" do
+        context "with invalid data" do
+          it "should respond with 400"
+        end
+      end
 
-      it "should create an offer" do
-        proc { post :create, :id => @contract, :offer => @data
-            }.should change(ContractOffer, :count)
-        should respond_with :success
-        should redirect_to generator_contract_path @generator, @contract
+      context "for JSON" do
+        before do
+          post :create, :contract => @data, :format => "json"
+        end
+
+        it { should respond_with :success }
       end
     end
 
-    context "for JSON" do
+    context "to :offer" do
       before do
-        post :create, :id => @contract, :offer => @data, :format => "json"
+        @data = {:proposed_amount => 24}
       end
 
-      it { should respond_with :success }
+      context "for HTML" do
+        it "should create an offer" do
+          proc { post :create, :id => @contract, :offer => @data
+              }.should change(ContractOffer, :count)
+          should respond_with :success
+          should redirect_to generator_contract_path @generator, @contract
+        end
+
+        context "with invalid data" do
+          it "should respond with 400"
+        end
+      end
+
+      context "for JSON" do
+        before do
+          post :create, :id => @contract, :offer => @data, :format => "json"
+        end
+
+        it { should respond_with :success }
+      end
     end
   end
 
@@ -139,6 +180,7 @@ describe ContractNegotiationsController do
     before do
       @data = {:accepted => true}
     end
+
     context "for HTML" do
       it "should update the offer" do
         proc { put :respond, :id => @offer, :offer => @data

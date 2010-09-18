@@ -9,6 +9,10 @@ require 'shoulda'
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
+def json_response
+  ActiveSupport::JSON.decode @response.body
+end
+
 Rspec.configure do |config|
   config.include(Shoulda::ActiveRecord::Matchers)
   config.include(Shoulda::ActionController::Matchers, :type => :controllers)

@@ -8,9 +8,9 @@ describe BidsController do
 
   context "on GET to" do
     context "for HTML" do
-      context ":index with a generator" do
+      context ":index with a game" do
         before do
-          get :index, :generator => @generator
+          get :index, :game => @game
         end
 
         it { should respond_with :success }
@@ -19,9 +19,9 @@ describe BidsController do
         it { should assign_to(:generator) }
       end
 
-      context ":index with a game" do
+      context ":index with a game and generator" do
         before do
-          get :index, :game => @game
+          get :index, :game => @game, :generator => @generator
         end
 
         it { should respond_with :success }
@@ -31,9 +31,15 @@ describe BidsController do
         it { should assign_to(:generators) }
       end
 
-      context ":show with a generator" do
+      context ":index with invalid parameters" do
+        it "should respond with 404 when game is invalid"
+        it "should respond with 404 when generator is invalid"
+        it "should respond with 404 when both game and generator are invalid"
+      end
+
+      context ":show with a game and generator" do
         before do
-          get :show, :generator => @generator, :bid => @bid
+          get :show, :game => @game, :generator => @generator, :bid => @bid
         end
 
         it { should respond_with :success }
@@ -64,15 +70,37 @@ describe BidsController do
         it { should assign_to(:generator) }
       end
 
+      context ":show with invalid parameters" do
+        it "should respond with 404 when game is invalid"
+        it "should respond with 404 when generator is invalid"
+        it "should respond with 404 when both game and generator are invalid"
+        it "should respond with 404 when bid is invalid"
+      end
+
+      context ":show with invalid parameters" do
+        it "should respond with 404 when game is invalid"
+        it "should respond with 404 when generator is invalid"
+        it "should respond with 404 when both game and generator are invalid"
+      end
+
       context ":new" do
-        before do
-          get :new
+        context do
+          before do
+            get :new, :game => @game, :generator => @generator
+          end
+
+          it { should respond_with :success }
+          it { should render_template :new }
+          it { should assign_to(:bid).with_kind_of(Bid) }
         end
 
-        it { should respond_with :success }
-        it { should render_template :new }
-        it { should assign_to(:bid).with_kind_of(Bid) }
+        context "with invalid parameters" do
+          it "should respond with 404 when game is invalid"
+          it "should respond with 404 when generator is invalid"
+          it "should respond with 404 when both game and generator are invalid"
+        end
       end
+
     end
 
     context "for JSON" do
@@ -98,6 +126,7 @@ describe BidsController do
     before do
       @data = {:generator => @generator, :price => 100}
     end
+
     context "for HTML" do
       before do
         post :create, :bid => @data
@@ -105,6 +134,23 @@ describe BidsController do
 
       it { should respond_with :success }
       it { should redirect_to generator_path @generator }
+
+      context "with invalid data" do
+        it "should return 400 generator is missing"
+        it "should return 400 when price is invalid"
+      end
+
+      context "for a generator not owned by this user" do
+        it "should return not authorized"
+      end
+      
+      context "when a bid already exists for today" do
+        it "should return a 409 conflict"
+      end
+
+      context "when the game doesn't have rate of return regulation" do
+        it "should return 403 forbidden"
+      end
     end
 
     context "for JSON" do
