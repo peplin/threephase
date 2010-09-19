@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe ContractNegotiationsController do
   before :each do
-    @generator = Generator.all.first
-    @offer = Offer.all.first
-    @contract = ContractNegotiation.all.first
+    @generator = Factory :generator
+    @offer = Factory :offer
+    @contract = Factory :contract
   end
 
   context "on GET to" do
@@ -120,12 +120,11 @@ describe ContractNegotiationsController do
   end
 
   context "on POST" do
-    context "to :create" do
-      before do
-        @data = {:generator => @generator, :reason => "For the hell of it.",
-            :amount => 42, :offline => true}
-      end
+    before do
+      @data =  Factory.attributes_for :contract_negotiation
+    end
 
+    context "to :create" do
       context "for HTML" do
         it "should create a contract" do
           proc { post :create, :contract => @data }.should change(
@@ -150,7 +149,7 @@ describe ContractNegotiationsController do
 
     context "to :offer" do
       before do
-        @data = {:proposed_amount => 24}
+        @data = Factory.attributes_for :contract_offer
       end
 
       context "for HTML" do
@@ -178,7 +177,7 @@ describe ContractNegotiationsController do
 
   context "on PUT to :respond" do
     before do
-      @data = {:accepted => true}
+      @data = Factory.attributes_for :accepted_offer
     end
 
     context "for HTML" do

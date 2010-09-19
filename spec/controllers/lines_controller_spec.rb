@@ -5,6 +5,7 @@ describe LinesController do
     @line = Line.all.first
     @game = Game.all.first
     @zone = Zone.all.first
+    @data = Factory.attributes_for :line
   end
 
   context "on GET to" do
@@ -82,11 +83,6 @@ describe LinesController do
   end
 
   context "on POST to :create" do
-    before do
-      @data = {:line_type => @line_type, :zone => @zone, :operating => false,
-          :operating_level => 42}
-    end
-
     context "for HTML" do
       it "should create a line" do
         proc { post :create, :line => @data }.should change(Line, :count).by(1)
@@ -105,9 +101,6 @@ describe LinesController do
   end
 
   context "on PUT to :update" do
-    before do
-      @data = {:operating => true, :operating_level => 1}
-    end
     context "for HTML" do
       before do
         put :update, :id => @line, :line => @data

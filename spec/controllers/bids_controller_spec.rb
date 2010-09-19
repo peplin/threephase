@@ -4,6 +4,7 @@ describe BidsController do
   before :each do
     @generator = Generator.all.first
     @bid = Bid.all.first
+    @data = Factory.attributes_for :bid
   end
 
   context "on GET to" do
@@ -123,10 +124,6 @@ describe BidsController do
   end
 
   context "on POST to :create" do
-    before do
-      @data = {:generator => @generator, :price => 100}
-    end
-
     context "for HTML" do
       before do
         post :create, :bid => @data

@@ -4,6 +4,7 @@ describe GamesController do
   before :each do
     @game = Game.all.first
     @generator_type = GeneratorType.all.first
+    @data = Factory.attributes_for :game
   end
 
   context "on GET to" do
@@ -131,32 +132,6 @@ describe GamesController do
   end
 
   context "on PUT to :update" do
-    before do
-      @data = {:max_line_capaicity => 42,
-          :technology_cost => 42,
-          :technology_reliability => 42,
-          :power_factor => 42,
-          :frequency => 42,
-          :wind_speed => 42,
-          :sunfall => 42,
-          :water_flow => 42,
-          :regulation_type => 42,
-          :starting_capitol => 42,
-          :interest_rate => 42,
-          :reliability_constraint => 42,
-          :fuel_cost => 42,
-          :fuel_cost_volatility => 42,
-          :workforce_reliability => 42,
-          :workforce_cost => 42,
-          :unionized => 42,
-          :carbon_allowance => 42,
-          :tax_credit => 42,
-          :renewable_requirement => 42,
-          :political_stability => 42,
-          :political_opposition => 42,
-          :public_support => 42}
-    end
-
     context "for HTML" do
       it "should not create a new game" do
         proc { put :update, :id => @game, :game => @data
@@ -185,10 +160,6 @@ describe GamesController do
   end
 
   context "on POST to :allow" do
-    before do
-      @data = {:type => "generator", :id => @generator_type}
-    end
-
     context "for HTML" do
       it "should create an allowed component for the game" do
         proc { post :allow, :id => @game, :allowed => @data

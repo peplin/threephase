@@ -4,6 +4,7 @@ describe StorageDeviceTypesController do
   before :each do
     @storage_device_type = StorageDeviceType.all.first
     @game = Game.all.first
+    @data = Factory.attributes_for :storage_device_type
   end
 
   context "on GET to" do
@@ -73,26 +74,6 @@ describe StorageDeviceTypesController do
   end
 
   context "on POST to :create" do
-    before do
-      @data = {:decay_rate => 1,
-          :efficiency => 1,
-          :name => "Cat Dog",
-          :peak_capacity_min => 1,
-          :peak_capacity_max => 2,
-          :average_capacity => 1,
-          :mtbf => 1,
-          :mttr => 1,
-          :repair_cost => 1,
-          :workforce => 1,
-          :area => 1,
-          :capitol_cost_min => 1,
-          :capitol_cost_min => 2,
-          :environmental_disruptiveness => 1,
-          :waste_disposal_cost_min => 1,
-          :waste_disposal_cost_max => 2,
-          :noise => 1,
-          :lifetime => 1}
-    end
     context "for HTML" do
       it "should create a storage_device_type" do
         proc { post :create, :storage_device_type => @data }.should change(
@@ -113,24 +94,6 @@ describe StorageDeviceTypesController do
   context "on PUT to :update" do
     context "for HTML" do
       before do
-        @data = {:decay_rate => 1,
-            :efficiency => 1,
-            :name => "Cat Dog",
-            :peak_capacity_min => 1,
-            :peak_capacity_max => 2,
-            :average_capacity => 1,
-            :mtbf => 1,
-            :mttr => 1,
-            :repair_cost => 1,
-            :workforce => 1,
-            :area => 1,
-            :capitol_cost_min => 1,
-            :capitol_cost_min => 2,
-            :environmental_disruptiveness => 1,
-            :waste_disposal_cost_min => 1,
-            :waste_disposal_cost_max => 2,
-            :noise => 1,
-            :lifetime => 1}
         put :create, :id => @storage_device_type, :storage_device_type => @data
       end
 

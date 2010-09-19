@@ -52,10 +52,8 @@ describe ResearchAdvancementsController do
 
   context "on POST to :create" do
     before do
-      @data = {:region => @region, :reason => "For the hell of it.",
-          :parameter => "technology_cost", :adjustment => 1}
+      Factory.attributes_for :research_advancement
     end
-
     context "for HTML" do
       it "should create an advancement" do
         proc { post :create, :advancement => @data

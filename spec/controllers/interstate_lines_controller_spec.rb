@@ -7,6 +7,7 @@ describe InterstateLinesController do
     @generator = Generator.all.first
     @region = Region.all.first
     @another_region = Region.all[1]
+    @data = Factory.attributes_for :interstate_line
   end
 
   context "on GET to" do
@@ -79,11 +80,6 @@ describe InterstateLinesController do
   end
 
   context "on POST to :create" do
-    before do
-      @data = {:incoming_region => @region, :outgoing_region => @another_region,
-          :line_type => @line_type}
-    end
-
     context "for HTML" do
       it "should create an interstate_line" do
         proc { post :create, :interstate_line => @data
@@ -104,7 +100,7 @@ describe InterstateLinesController do
 
   context "on PUT to :respond" do
     before do
-      @data = {:accepted => true}
+    @data = Factory.attributes_for :interstate_line, :accepted => true
     end
 
     context "for HTML" do

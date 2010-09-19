@@ -5,6 +5,7 @@ describe StorageDevicesController do
     @storage_device = StorageDevice.all.first
     @game = Game.all.first
     @zone = Zone.all.first
+    @data = Factory.attributes_for :storage_device
   end
 
   context "on GET to" do
@@ -93,11 +94,6 @@ describe StorageDevicesController do
   end
 
   context "on POST to :create" do
-    before do
-      @data = {:storage_device_type => @generator_type, :zone => @zone,
-          :operating => false, :operating_level => 42}
-    end
-
     context "for HTML" do
       it "should create a storage_device" do
         proc { post :create, :storage_device => @data
@@ -117,9 +113,6 @@ describe StorageDevicesController do
   end
 
   context "on PUT to :update" do
-    before do
-      @data = {:operating => false, :operating_level => 1}
-    end
     context "for HTML" do
       before do
         put :update, :id => @storage_device, :storage_device => @data

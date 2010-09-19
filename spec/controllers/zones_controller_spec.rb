@@ -62,7 +62,7 @@ describe ZonesController do
 
   context "on POST to :create" do
     before do
-      @data = {:region => @region, :name => "Super Zone", :x => 1, :y => 2}
+      @data = Factory.attributes_for :zone
     end
 
     context "for HTML" do

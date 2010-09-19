@@ -63,8 +63,7 @@ describe RepairsController do
 
   context "on POST to :create" do
     before do
-      @data = {:repairable => @generator, :reason => "For the hell of it.",
-          :cost => 1, :offline => true}
+      @data = Factory.attributes_for :repair
     end
 
     context "for HTML" do

@@ -5,6 +5,7 @@ describe GeneratorsController do
     @generator = Generator.all.first
     @game = Game.all.first
     @zone = Zone.all.first
+    @data = Factory.attributes_for(:generator)
   end
 
   context "as an admin" do
@@ -95,11 +96,6 @@ describe GeneratorsController do
 
     context "on POST to :create" do
       context "with valid data" do
-        before do
-          @data = {:generator_type => @generator_type, :zone => @zone,
-              :operating => false, :operating_level => 42}
-        end
-
         context "for HTML" do
           before do
             post :create, :generator => @data
@@ -145,10 +141,6 @@ describe GeneratorsController do
 
     context "on PUT to :update" do
       context "with valid data" do
-        before do
-          @data = {:operating => false, :operating_level => 1}
-        end
-
         context "for HTML" do
           before do
             put :update, :id => @generator, :generator => @data
