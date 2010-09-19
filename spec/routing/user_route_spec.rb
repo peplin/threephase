@@ -5,13 +5,25 @@ describe "routing to users" do
     @user = User.all.first
   end
 
+  it { {:get, "/login"}.should route_to(:action => :new,
+        :controller => "user_sessions") }
+
+  it { {:get, "/logout"}.should route_to(:action => :destroy,
+        :controller => "user_sessions") }
+
+  it { {:post, "/authenticate"}.should route_to(:action => :create,
+        :controller => "user_sessions") }
+
+  it { {:get, "/signup"}.should route_to(:action => :new,
+        :controller => "users") }
+
+  it { {:put, "/connect"}.should route_to(:action => :update,
+        :controller => "users") }
+
+  it { {:get, "/reset"}.should route_to(:action => :detonate,
+        :controller => "users") }
+
   it { {:get, "/users"}.should route_to(:action => :index,
-        :controller => "users") }
-
-  it { {:get, "/users/new"}.should route_to(:action => :new,
-        :controller => "users") }
-
-  it { {:post, "/users"}.should route_to(:action => :create,
       :controller => "users") }
 
   it { {:get, "/users/#{@user}"}.should route_to(:action => :show,

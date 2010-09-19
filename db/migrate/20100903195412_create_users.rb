@@ -1,21 +1,29 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.string :email, :limit => 100
-      t.string :nickname
-      t.string :cached_slug
+      t.string :login, :null => true
+      t.string :email, :null => true
+      t.string :crypted_password, :null => true
+      t.string :password_salt, :null => true
+      t.string :persistence_token, :null => false
+      t.integer :login_count, :default => 0, :null => false
+      t.datetime :last_request_at
+      t.datetime :last_login_at
+      t.datetime :current_login_at
+      t.string :last_login_ip
+      t.string :current_login_ip
+      t.integer :active_token_id
 
-      t.string   "salt", :limit => 40
-      t.string   "remember_token", :limit => 40
-      t.datetime "remember_token_expires_at"
-      t.string   "encrypted_password", :limit => 128
-      t.string   "confirmation_token", :limit => 128
       t.boolean  "admin", :null => false, :default => false
-      t.boolean  "email_confirmed", :default => false
+      t.string :cached_slug
 
       t.timestamps
     end
 
+    add_index :users, :login
+    add_index :users, :persistence_token
+    add_index :users, :last_request_at
+    add_index :users, :active_token_id
     add_index :users, :cached_slug, :unique => true
   end
 

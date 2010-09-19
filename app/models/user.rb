@@ -2,9 +2,9 @@ class User < ActiveRecord::Base
   has_many :maps
   has_many :regions
   has_many :games, :through => :regions
-  has_friendly_id :nickname, :use_slug => true
-
-  validates_presence_of :email
-  validates_format_of :email,
-      :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  acts_as_authentic do |config|
+    config.validate_email_field = false
+    config.validate_login_field = false
+    config.validate_password_field = false
+  end
 end
