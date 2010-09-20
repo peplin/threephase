@@ -14,6 +14,7 @@ gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => "
 gem "oauth"
 gem "oauth2"
 gem "authlogic-connect"
+gem "enumerated_attribute"
 
 # Deploy with Capistrano
 # gem 'capistrano'

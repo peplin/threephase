@@ -4,7 +4,7 @@ class CreateBlocks < ActiveRecord::Migration
       t.integer :x, :null => false
       t.integer :y, :null => false
       t.integer :elevation, :null => false, :default => 0
-      t.integer :type, :null => false, :default => 0
+      t.enum :type, :null => false
       t.float :wind_speed, :null => false, :default => 0
       t.integer :water_flow, :null => false, :default => 0
       t.integer :sunfall, :null => false, :default => 5125
