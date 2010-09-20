@@ -26,4 +26,5 @@ group :test, :development do
   gem 'ruby-debug'
   gem 'factory_girl'
   gem 'single_test'
+  gem 'mocha'
 end

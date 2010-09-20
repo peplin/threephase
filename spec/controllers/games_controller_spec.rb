@@ -1,9 +1,13 @@
 require 'spec_helper'
 require 'crud_helper'
 
+
 describe GamesController do
+  before :all do
+    @model = Game
+  end
+
   before :each do
-    @model = 'Game'
     @game = Factory :game
     @generator_type = Factory :generator_type
   end
@@ -13,21 +17,8 @@ describe GamesController do
     @game.save!
   end
 
-  def reallow_type
-    add_generator_type_to_game
-    post_allow @game.allowed_generator_types.first.attributes
-  end
-
-  def post_allow type, format='html'
-    post :allow, :id => @game, :allowed => type, :format => format
-  end
-
   def delete_disallow id, format='html'
     delete :disallow, :id => @game, :allowed_id => id, :format => format
-  end
-
-  def do_get action, format='html'
-    get action, :format => format
   end
 
   context "as an admin" do
@@ -35,147 +26,27 @@ describe GamesController do
       Factory :admin_user_session
     end
 
-    context "on GET to" do
-      context "index" do
-        before :all do
-          @action = :index
-        end
+    it_should_behave_like "GET index"
+    it_should_behave_like "GET show"
+    it_should_behave_like "GET edit"
+    it_should_behave_like "GET new"
+    it_should_behave_like "POST create"
 
-        context "for HTML" do
-          share_as :Index do
-            before :all do
-              get @action
-            end
-
-            it { should respond_with :success }
-            it { should render_template :index }
-            it { should assign_to(:games) }
-          end
-        end
-
-        context "get JSON", :shared => true do
-          before do
-            get @action, :format => "json"
-          end
-          it { should respond_with_content_type :json }
-        end
-      end
-
-      context "new" do
-        before do
-          get :new
-        end
-
-        share_as :New do
-          it { should render_template :new }
-          it { assigns(:game).should be_a_new Game }
-        end
-
-        it { should respond_with :success }
-      end
-
-      context "edit" do
-        share_as :Edit do
-          before do
-            get :edit, :id => @game
-          end
-
-          it { should respond_with :success }
-          it { should render_template :edit }
-          it { should assign_to(:game).with(@game) }
-        end
-
-        it { should respond_with :success }
-      end
-
-      context "show" do
-        before do
-          @action = :show
-          @params = {:id => @game}
-        end
-
-        context "for HTML" do
-          share_as :Show do
-            context "should render the show template for a valid record" do
-              before do
-                get :show, :id => @game
-              end
-
-              it { should respond_with :success }
-              it { should render_template :show }
-              it { should assign_to(:game).with(@game) }
-            end
-
-            context "should return an error with a missing record" do
-              before do
-                get :show, :id => 42
-              end
-
-              it { should respond_with :missing }
-              it { should_not render_template :index }
-              it { should_not assign_to :game }
-            end
-          end
-        end
-
-        it_should_behave_like "get JSON"
-      end
-    end
-
-    context "on POST to :create" do
+    context "on POST to :create without data" do
       before do
-        @data = Factory.attributes_for :game
-        @action = :create
+        do_post
       end
 
-      context "for HTML" do
-        context "with custom parameters" do
-          before do
-            post :create, :game => @data 
-          end
-
-          it "should create a game" do
-            proc { post :create, :game => @data 
-                }.should change(Game, :count).by(1)
-          end
-          it { should respond_with :success }
-          it { should redirect_to game_path @game }
-          it { should set_the_flash } 
-        end
-
-        context "without data" do
-          before do
-            post :create
-          end
-
-          it "should create a default game" do
-            proc { post :create }.should change(Game, :count).by(1)
-          end
-
-          it { should respond_with :success }
-          it { should redirect_to game_path @game }
-          it { should set_the_flash } 
-        end
-
-        context "with invalid data" do
-          before do
-            post :create, :game => Factory.attributes_for(:invalid_game)
-          end
-
-          it "should not create a game" do
-            proc { post :create }.should_not change(Game, :count)
-          end
-
-          it { should respond_with :bad_request }
-          it { should set_the_flash } 
-          it_should_behave_like New
-        end
+      it "should create a default game" do
+        proc { do_post }.should change(Game, :count).by(1)
       end
 
-      context "for JSON" do
-        it "should create a game" do
-          should respond_with :success
-        end
+      it { should respond_with :success }
+      it { should redirect_to game_path @game }
+      it { should set_the_flash } 
+
+      def do_post 
+        post :create
       end
     end
 
@@ -200,7 +71,7 @@ describe GamesController do
           it { should redirect_to game_path @game }
           it { should set_the_flash }
           it "should not update the game" do 
-            @game.updated_at.should_not eq(@game.reload.updated_at)
+            @game.updated_at.should eq(@game.reload.updated_at)
           end
         end
 
@@ -213,7 +84,7 @@ describe GamesController do
           it { should redirect_to game_path @game }
           it { should set_the_flash }
           it "should update the game" do
-            @game.updated_at.should eq(@game.reload.updated_at)
+            @game.updated_at.should_not eq(@game.reload.updated_at)
           end
         end
       end
@@ -223,7 +94,10 @@ describe GamesController do
           put :update, :id => @game, :game => @data, :format => "json"
         end
 
-        it { should respond_with :success }
+        share_as :JSONResponse do
+          it { should respond_with :success }
+          it { should respond_with_content_type :json }
+        end
       end
     end
 
@@ -236,7 +110,7 @@ describe GamesController do
       context "for HTML" do
         context "with a new type" do
           before do
-            allow_type @data
+            do_post
           end
 
           share_as :TypeAllowed do
@@ -247,7 +121,8 @@ describe GamesController do
 
         context "with an existing type" do
           before do
-            reallow_type
+            add_generator_type_to_game
+            do_post @game.allowed_generator_types.first.attributes
           end
 
           it_should_behave_like TypeAllowed
@@ -256,10 +131,14 @@ describe GamesController do
 
       context "for JSON" do
         before do
-          post :allow, :id => @game, :allowed => @data, :format => "json"
+          do_post :format => 'json'
         end
+        it_should_behave_like JSONResponse
+      end
 
-        it { should respond_with :success }
+      def do_post type=nil, format='html'
+        type = @data unless type
+        post :allow, :game_id => @game, :id => type, :format => format
       end
     end
 
@@ -268,7 +147,7 @@ describe GamesController do
         context "with an existing allowed type" do
           before do
             add_generator_type_to_game
-            disallow_json @allowed
+            do_delete
           end
 
           it { @game.allowed_generator_types.should_not include(@type) }
@@ -277,8 +156,7 @@ describe GamesController do
 
         context "with an already disallowed type" do
           before do
-            delete :disallow, :id => @game, :allowed_id => @allowed,
-                :format => "json"
+            do_delete
           end
 
           it { should respond_with :missing }
@@ -287,12 +165,14 @@ describe GamesController do
 
       context "for JSON" do
         before do
-          delete :disallow, :id => @game, :allowed_id => @allowed,
-              :format => "json"
+          do_delete 'json'
         end
-
-        it { should respond_with :success }
+        it_should_behave_like JSONResponse
       end
+    end
+
+    def do_delete format='html'
+      delete :disallow, :game_id => @game, :id => @allowed, :format => format
     end
   end
 end
