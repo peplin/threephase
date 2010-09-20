@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(:version => 20100919222346) do
     t.integer  "sunfall",                :default => 50,          :null => false
     t.integer  "water_flow",             :default => 50,          :null => false
     t.integer  "regulation_type",        :default => 0,           :null => false
-    t.float    "starting_capitol",       :default => 500000000.0, :null => false
+    t.float    "starting_capital",       :default => 500000000.0, :null => false
     t.integer  "interest_rate",          :default => 6,           :null => false
     t.integer  "reliability_constraint", :default => 1,           :null => false
     t.integer  "fuel_cost",              :default => 50,          :null => false
@@ -287,8 +287,8 @@ ActiveRecord::Schema.define(:version => 20100919222346) do
     t.integer  "repair_cost",                                 :null => false
     t.integer  "workforce",                                   :null => false
     t.integer  "area",                                        :null => false
-    t.integer  "capitol_cost_min",             :default => 0, :null => false
-    t.integer  "capitol_cost_max",                            :null => false
+    t.integer  "capital_cost_min",             :default => 0, :null => false
+    t.integer  "capital_cost_max",                            :null => false
     t.integer  "environmental_disruptiveness",                :null => false
     t.integer  "waste_disposal_cost_min",      :default => 0, :null => false
     t.integer  "waste_disposal_cost_max",                     :null => false
@@ -320,13 +320,11 @@ ActiveRecord::Schema.define(:version => 20100919222346) do
     t.string   "current_login_ip"
     t.integer  "active_token_id"
     t.boolean  "admin",             :default => false, :null => false
-    t.string   "cached_slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "users", ["active_token_id"], :name => "index_users_on_active_token_id"
-  add_index "users", ["cached_slug"], :name => "index_users_on_cached_slug", :unique => true
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
   add_index "users", ["login"], :name => "index_users_on_login"
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"

@@ -21,7 +21,7 @@ class Game < ActiveRecord::Base
   validates :water_flow, :presence => true, :percentage => true
 
   validates :regulation_type, :presence => true
-  validates :starting_capitol, :presence => true
+  validates :starting_capital, :presence => true
   validates :interest_rate, :presence => true, :percentage => true
   validates :reliability_constraint, :presence => true
   validates :fuel_cost, :presence => true, :percentage => true

@@ -38,9 +38,9 @@ describe Game do
   it { should_not allow_value(-1).for(:regulation_type) }
   it { should_not allow_value(4).for(:regulation_type) }
 
-  it { should validate_presence_of :starting_capitol }
-  it { should allow_value(1000000).for(:starting_capitol) }
-  it { should_not allow_value(-1).for(:starting_capitol) }
+  it { should validate_presence_of :starting_capital }
+  it { should allow_value(1000000).for(:starting_capital) }
+  it { should_not allow_value(-1).for(:starting_capital) }
 
   it { should validate_presence_of :interest_rate }
 

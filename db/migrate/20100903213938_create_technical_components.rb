@@ -11,8 +11,8 @@ class CreateTechnicalComponents < ActiveRecord::Migration
       t.integer :repair_cost, :null => false
       t.integer :workforce, :null => false
       t.integer :area, :null => false
-      t.integer :capitol_cost_min, :null => false, :default => 0
-      t.integer :capitol_cost_max, :null => false
+      t.integer :capital_cost_min, :null => false, :default => 0
+      t.integer :capital_cost_max, :null => false
       t.integer :environmental_disruptiveness, :null => false
       t.integer :waste_disposal_cost_min, :null => false, :default => 0
       t.integer :waste_disposal_cost_max, :null => false

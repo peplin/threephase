@@ -12,8 +12,8 @@ class TechnicalComponent < ActiveRecord::Base
   validates :repair_cost, :presence => true, :percentage => true
   validates :workforce, :presence => true
   validates :area, :presence => true
-  validates :capitol_cost_min, :presence => true
-  validates :capitol_cost_max, :presence => true
+  validates :capital_cost_min, :presence => true
+  validates :capital_cost_max, :presence => true
   validates :environmental_disruptiveness, :presence => true,
       :percentage => true
   validates :waste_disposal_cost_min, :presence => true

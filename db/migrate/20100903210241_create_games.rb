@@ -15,7 +15,7 @@ class CreateGames < ActiveRecord::Migration
       t.integer :water_flow, :null => false, :default => 50
 
       t.integer :regulation_type, :null => false, :default => 0
-      t.float :starting_capitol, :null => false, :default => 500000000
+      t.float :starting_capital, :null => false, :default => 500000000
       t.integer :interest_rate, :null => false, :default => 6
       t.integer :reliability_constraint, :null => false, :default => 1
       t.integer :fuel_cost, :null => false, :default => 50

@@ -5,7 +5,7 @@ describe LineType do
   it { should have_many :lines }
   it { should have_many :interstate_lines }
   it { should have_many :line_maintenance_costs }
-  it { should have_many :line_capitol_costs }
+  it { should have_many :line_capital_costs }
 
   it { should validate_presence_of :ac }
 

@@ -15,7 +15,6 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :active_token_id
 
       t.boolean  "admin", :null => false, :default => false
-      t.string :cached_slug
 
       t.timestamps
     end
@@ -24,7 +23,6 @@ class CreateUsers < ActiveRecord::Migration
     add_index :users, :persistence_token
     add_index :users, :last_request_at
     add_index :users, :active_token_id
-    add_index :users, :cached_slug, :unique => true
   end
 
   def self.down

@@ -28,13 +28,13 @@ describe TechnicalComponent do
   it { should allow_value(100).for(:area) }
   it { should_not allow_value(0).for(:area) }
 
-  it { should validate_presence_of :capitol_cost_min }
-  it { should allow_value(100).for(:capitol_cost_min) }
-  it { should_not allow_value(0).for(:capitol_cost_min) }
+  it { should validate_presence_of :capital_cost_min }
+  it { should allow_value(100).for(:capital_cost_min) }
+  it { should_not allow_value(0).for(:capital_cost_min) }
 
-  it { should validate_presence_of :capitol_cost_max }
-  it { should allow_value(100).for(:capitol_cost_max) }
-  it { should_not allow_value(0).for(:capitol_cost_max) }
+  it { should validate_presence_of :capital_cost_max }
+  it { should allow_value(100).for(:capital_cost_max) }
+  it { should_not allow_value(0).for(:capital_cost_max) }
 
   it { should validate_presence_of :environmental_disruptiveness }
 
