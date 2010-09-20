@@ -5,3 +5,6 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
 Threephase::Application.load_tasks
+
+require 'single_test'
+SingleTest.load_tasks

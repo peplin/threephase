@@ -24,4 +24,5 @@ group :test, :development do
   gem 'rspec-rails', ">= 2.0.0.beta.20"
   gem 'ruby-debug'
   gem 'factory_girl'
+  gem 'single_test'
 end
