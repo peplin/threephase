@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'crud_helper'
-
 
 describe GamesController do
   before :all do
@@ -71,15 +69,17 @@ describe GamesController do
       end
 
       context "for HTML" do
+        share_as :TypeAllowed do
+          it { @game.allowed_generator_types.should include(@type) }
+          it { should redirect_to allowed_types_path @game }
+        end
+
         context "with a new type" do
           before do
             do_post
           end
 
-          share_as :TypeAllowed do
-            it { @game.allowed_generator_types.should include(@type) }
-            it { should redirect_to allowed_types_path @game }
-          end
+          it_should_behave_like TypeAllowed
         end
 
         context "with an existing type" do
@@ -144,11 +144,8 @@ describe GamesController do
     end
   end
 
-  context "as a player" do
-    before do
-      Factory :user_session
-    end
 
+  share_examples_for "a user with limited access" do
     it_should_behave_like "GET index"
     it_should_behave_like "GET show"
     it_should_behave_like "unauthorized GET edit"
@@ -157,12 +154,14 @@ describe GamesController do
     it_should_behave_like "unauthorized PUT update"
   end
 
+  context "as a player" do
+    before do
+      Factory :user_session
+    end
+    it_should_behave_like "a user with limited access"
+  end
+
   context "as an anonymous user" do
-    it_should_behave_like "GET index"
-    it_should_behave_like "GET show"
-    it_should_behave_like "unauthorized GET edit"
-    it_should_behave_like "unauthorized GET new"
-    it_should_behave_like "unauthorized POST create"
-    it_should_behave_like "unauthorized PUT update"
+    it_should_behave_like "a user with limited access"
   end
 end

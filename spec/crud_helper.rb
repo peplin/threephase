@@ -120,7 +120,7 @@ share_examples_for "GET show" do
       @response.body.should == 'JSON'
     end
 
-    def do_get format = 'html'
+    def do_get format='html'
       get 'show', :id => @instance, :format => format
     end
   end
@@ -172,32 +172,6 @@ share_examples_for "unauthorized GET show" do
   end
 end
 
-share_examples_for "POST create" do
-  include CrudSetup
-
-  before do
-    setup_crud_names
-  end
-
-  context "with valid params" do
-    it_should_behave_like "successful POST create"
-
-    def do_post format = 'html'
-      post 'create', @assigns_model_name => @params, :format => format
-    end
-  end
-
-  context "with invalid parameters" do
-    it_should_behave_like "unsuccessful POST create"
-
-    def do_post format = 'html'
-      post 'create',
-          @assigns_model_name => Factory.attributes_for(@assigns_model_name),
-          :format => format
-    end
-  end
-end
-
 share_examples_for "unauthorized POST create" do
   include CrudSetup
 
@@ -238,6 +212,10 @@ share_examples_for "successful POST create" do
   it "should create a #{@model_name}" do
     proc { do_post }.should change(@model, :count).by(1)
   end
+
+  def do_post format = 'html'
+    post 'create', @assigns_model_name => @params, :format => format
+  end
 end
 
 share_examples_for "unsuccessful POST create" do
@@ -252,42 +230,44 @@ share_examples_for "unsuccessful POST create" do
   it { should set_the_flash }
   it { should render_template :new }
   it { assigns(@assigns_model_name).should be_a_new @model }
+
+  def do_post format = 'html'
+    # TODO how to get invalid data here for an unknown class?
+    post 'create', @assigns_model_name => Factory.attributes_for(:invalid_game),
+        :format => format
+  end
 end
 
-
-share_examples_for "PUT update" do
-  include CrudSetup
-
-  context "with valid parameters" do
-    it_should_behave_like "successful PUT update"
-
-    def do_put format = 'html'
-      put 'update', :id => @instance, @assigns_model_name => @data,
-          :format => format
-    end
+share_examples_for "POST create" do
+  context "with valid data" do
+    it_should_behave_like "successful POST create"
   end
 
-  context "with invalid parameters" do
-    it_should_behave_like "unsuccessful PUT update"
-
-    def do_put format = 'html'
-      put 'update', :id => @instance, :format => format
-    end
+  context "with invalid data" do
+    it_should_behave_like "unsuccessful POST create"
   end
 end
 
 share_examples_for "unauthorized PUT update" do
-  include CrudSetup
-
   before do
-    setup_crud_names
     do_put
   end
 
   it { should redirect_to login_path }
 
   def do_put format = 'html'
-    put 'update', :id => @instance, :format => format
+    put 'update', :id => @instance, @assigns_model_name => @data,
+        :format => format
+  end
+end
+
+share_examples_for "PUT update" do
+  context "with valid data" do
+    it_should_behave_like "successful PUT update"
+  end
+
+  context "with invalid data" do
+    it_should_behave_like "unsuccessful PUT update"
   end
 end
 
@@ -314,6 +294,11 @@ share_examples_for "successful PUT update" do
     do_put 'json'
     it_should_behave_like JSONResponse
   end
+
+  def do_put format = 'html'
+    put 'update', :id => @instance, @assigns_model_name => @data,
+        :format => format
+  end
 end
 
 share_examples_for "unsuccessful PUT update" do
@@ -332,6 +317,10 @@ share_examples_for "unsuccessful PUT update" do
   end
   it "should not update the #{@model_name}" do
     @instance.updated_at.should eq(@instance.reload.updated_at)
+  end
+
+  def do_put format = 'html'
+    put 'update', :id => @instance, :format => format
   end
 end
 
@@ -419,10 +408,6 @@ share_examples_for "GET edit" do
     it { should respond_with :success }
     it { should render_template :edit }
     it { should assign_to(@assigns_model_name).with(@sinstance) }
-
-    def do_get format = 'html'
-      get 'edit', :id => @instance, :format => format
-    end
   end
 
   context "with an invalid ID" do
@@ -444,11 +429,8 @@ share_examples_for "unauthorized GET edit" do
   include CrudSetup
 
   before do
-    @instance = Factory @assigns_model_name
     setup_crud_names
-  end
-
-  before do
+    @instance = Factory @assigns_model_name
     do_get
   end
 

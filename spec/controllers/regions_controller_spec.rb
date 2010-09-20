@@ -2,82 +2,60 @@ require 'spec_helper'
 
 describe RegionsController do
   before :each do
-    @game = Game.all.first
-    @region = Region.all.first
-    @zone = Zone.all.first
-    @map = Map.all.first
+    @model = Region
+    @game = Factory :game
+    @map = Factory :map
+    @region = Factory :region, :map => @map, :game => @game
+    @zone = Factory :zone, :region => @region
   end
 
-  context "on GET to" do
-    context "for HTML" do
-      context ":index" do
-        before do
-          get :index, :game => @game
-        end
+  context "as an admin" do
+    context "on GET to" do
+      context "index" do
+        it_should_behave_like "GET index"
 
-        it { should respond_with :success }
-        it { should render_template :index }
-        it { should assign_to(:regions) }
+        def do_get format='html'
+          get :index, :game => @game, :format => format
+        end
       end
 
-      context ":show with a game" do
-        before do
-          get :show, :game => @game, :id => @region
-        end
+      context "show with a game" do
+        it_should_behave_like "GET show"
 
-        it { should respond_with :success }
-        it { should render_template :show }
-        it { should assign_to(:region).with(@region) }
+        def do_get format='html'
+          get :show, :game => @game, :id => @region, :format => format
+        end
       end
     end
 
-    context "for JSON" do
-      context ":index" do
+    # TODO POST?
+    #  @data = {:map => @map, :game => @game, :user => @user,
+    #      :name => "Big Town", :research_budget => 1}
+
+    context "on PUT to :update" do
+      context "with valid data" do
         before do
-          get :index, :game => @game, :format => "json"
+          @data = Factory.attributes_for :region
         end
 
-        it { should respond_with :success }
-        it { should respond_with_content_type :json }
+        it_should_behave_like "successful PUT update"
+
+        def do_put
+          put :update, :id => @region, :region => @data
+        end
       end
 
-      context ":show" do
-        before do
-          get :show, :game => @game, :id => @region, :format => "json"
-        end
+      context "with invalid data" do
+        it_should_behave_like "unsuccessful PUT update"
 
-        it { should respond_with :success }
-        it { should respond_with_content_type :json }
+        def do_put
+          put :update, :id => @region
+        end
       end
     end
   end
 
-  # TODO POST?
-  #  @data = {:map => @map, :game => @game, :user => @user,
-  #      :name => "Big Town", :research_budget => 1}
-
-  context "on PUT to :update" do
-    before do
-      @data = {:name => "Big Town", :research_budget => 42}
-    end
-
-    context "for HTML" do
-      before do
-        put :update, :id => @region, :region => @data
-      end
-
-      it { should redirect_to region_path @region }
-      it "should update the region" do
-        # TODO check that it is updated
-      end
-    end
-
-    context "for JSON" do
-      before do
-        put :update, :id => @region, :region => @data, :format => "json"
-      end
-
-      it { should respond_with :success }
-    end
+  context "as a player" do
+    it "should not allow me to update regions not mine"
   end
 end
