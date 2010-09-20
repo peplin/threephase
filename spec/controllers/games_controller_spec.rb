@@ -12,15 +12,6 @@ describe GamesController do
     @generator_type = Factory :generator_type
   end
 
-  def add_generator_type_to_game
-    @game.allowed_generator_types << Factory(:allowed_generator_type)
-    @game.save!
-  end
-
-  def delete_disallow id, format='html'
-    delete :disallow, :id => @game, :allowed_id => id, :format => format
-  end
-
   context "as an admin" do
     before do
       Factory :admin_user_session
@@ -31,19 +22,10 @@ describe GamesController do
     it_should_behave_like "GET edit"
     it_should_behave_like "GET new"
     it_should_behave_like "POST create"
+    it_should_behave_like "PUT update"
 
     context "on POST to :create without data" do
-      before do
-        do_post
-      end
-
-      it "should create a default game" do
-        proc { do_post }.should change(Game, :count).by(1)
-      end
-
-      it { should respond_with :success }
-      it { should redirect_to game_path @game }
-      it { should set_the_flash } 
+      it_should_behave_like "successful POST create"
 
       def do_post 
         post :create
@@ -57,34 +39,19 @@ describe GamesController do
       end
 
       context "for HTML" do
-        it "should not create a new game" do
-          proc { put :update, :id => @game, :game => @data
-              }.should_not change(Game, :count)
-        end
-
         context "when a started game is updated" do
-          before do
-            put :update, :id => @started_game, :game => @data
-          end
+          it_should_behave_like "unsuccessful PUT update"
 
-          it { should respond_with :bad_request }
-          it { should redirect_to game_path @game }
-          it { should set_the_flash }
-          it "should not update the game" do 
-            @game.updated_at.should eq(@game.reload.updated_at)
+          def do_put format='html'
+            put :update, :id => @started_game, :game => @data
           end
         end
 
         context "when a not started game is updated" do
-          before do
-            put :update, :id => @game, :game => @data
-          end
+          it_should_behave_like "successful PUT update"
 
-          it { should respond_with :success }
-          it { should redirect_to game_path @game }
-          it { should set_the_flash }
-          it "should update the game" do
-            @game.updated_at.should_not eq(@game.reload.updated_at)
+          def do_put format='html'
+            put :update, :id => @game, :game => @data
           end
         end
       end
@@ -93,11 +60,7 @@ describe GamesController do
         before do
           put :update, :id => @game, :game => @data, :format => "json"
         end
-
-        share_as :JSONResponse do
-          it { should respond_with :success }
-          it { should respond_with_content_type :json }
-        end
+        it_should_behave_like JSONResponse
       end
     end
 
@@ -174,5 +137,32 @@ describe GamesController do
     def do_delete format='html'
       delete :disallow, :game_id => @game, :id => @allowed, :format => format
     end
+
+    def add_generator_type_to_game
+      @game.allowed_generator_types << Factory(:allowed_generator_type)
+      @game.save!
+    end
+  end
+
+  context "as a player" do
+    before do
+      Factory :user_session
+    end
+
+    it_should_behave_like "GET index"
+    it_should_behave_like "GET show"
+    it_should_behave_like "unauthorized GET edit"
+    it_should_behave_like "unauthorized GET new"
+    it_should_behave_like "unauthorized POST create"
+    it_should_behave_like "unauthorized PUT update"
+  end
+
+  context "as an anonymous user" do
+    it_should_behave_like "GET index"
+    it_should_behave_like "GET show"
+    it_should_behave_like "unauthorized GET edit"
+    it_should_behave_like "unauthorized GET new"
+    it_should_behave_like "unauthorized POST create"
+    it_should_behave_like "unauthorized PUT update"
   end
 end
