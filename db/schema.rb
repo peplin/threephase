@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100919222346) do
+ActiveRecord::Schema.define(:version => 20100917220041) do
 
   create_table "access_tokens", :force => true do |t|
     t.integer  "user_id"
@@ -297,11 +297,6 @@ ActiveRecord::Schema.define(:version => 20100919222346) do
     t.integer  "user_id"
     t.integer  "buildable_id",                                :null => false
     t.string   "buildable_type",                              :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "user_sessions", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
