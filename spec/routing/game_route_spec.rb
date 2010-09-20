@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "routing to games" do
   before :all do
     @game = Factory(:game).to_param
-    @allowed = Factory(:allowed).to_param_generator_type
+    @allowed = Factory(:allowed_generator_type).to_param
   end
 
   it "routes /games to game#index" do

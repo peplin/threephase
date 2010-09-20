@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "routing to storage device types" do
   before :all do
-    @type = Factory(:storage).to_param_device_type
+    @type = Factory(:storage_device_type).to_param
   end
 
   it { {:get, "/games/#{@game}/storage-devices/types"}.should route_to(:action => "index",

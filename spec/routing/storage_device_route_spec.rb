@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "routing to storage-devices" do
   before :each do
     @game = Factory(:game).to_param
-    @store = Factory(:storage).to_param_device
+    @store = Factory(:storage_device).to_param
     @zone = Factory(:zone).to_param
   end
 

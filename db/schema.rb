@@ -219,7 +219,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "repairs", :force => true do |t|
     t.string   "reason",                             :null => false
     t.integer  "cost",                               :null => false
-    t.boolean  "offline",         :default => false, :null => false
+    t.boolean  "offline",         :default => false
     t.integer  "duration",                           :null => false
     t.integer  "repairable_id",                      :null => false
     t.string   "repairable_type",                    :null => false

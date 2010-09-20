@@ -3,6 +3,5 @@ class Repair < ActiveRecord::Base
 
   validates_presence_of :reason
   validates_presence_of :cost
-  validates_presence_of :offline
   validates_presence_of :duration
 end

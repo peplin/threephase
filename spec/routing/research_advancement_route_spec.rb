@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "routing to research_advancements" do
   before :all do
     @game = Factory(:game).to_param
-    @advancement = Factory(:research).to_param_advancement
+    @advancement = Factory(:research_advancement).to_param
   end
 
   it { {:get, "/games/#{@game}/advancements"}.should route_to(

@@ -4,8 +4,8 @@ describe "routing to contracts" do
   before :all do
     @game = Factory(:game).to_param
     @generator = Factory(:generator).to_param
-    @contract = Factory(:contract).to_param_negotiation
-    @offer = Factory(:contract).to_param_offer
+    @contract = Factory(:contract_negotiation).to_param
+    @offer = Factory(:contract_offer).to_param
   end
 
   it "should expose a list of all contracts for a game" do
