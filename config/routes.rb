@@ -55,4 +55,41 @@ Threephase::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+  #
+  resources :games, :except => [:destroy] do
+    resources :zones do
+      resources :lines
+    end
+    resources :bids
+    resources :contract_negotiations
+    resources :generators
+    resources :generator_types
+    resources :interstate_lines
+    resources :lines
+    resources :line_types
+    resources :market_prices
+    resources :regions
+    resources :repairs
+    resources :advancements, :controller => "research_advancements"
+    resources :storage_devices
+    resources :storage_device_types
+  end
+
+  resources :bids
+  resources :contract_negotiations
+  resources :generators
+  resources :generator_types
+  resources :interstate_lines
+  resources :lines, :except => [:index]
+  resources :line_types
+  resources :market_prices
+  resources :regions
+  resources :repairs
+  resources :advancements, :controller => "research_advancements"
+  resources :storage_devices
+  resources :storage_device_types
+  resources :zones
+
+  resources :users
+  resource :users
 end

@@ -1,39 +1,39 @@
 require 'spec_helper'
 
 describe "routing to zones" do
-  before :all do
-    @game = Game.all.first
-    @zone = Zone.all.first
-    @region = Region.all.first
+  before :each do
+    @game = Factory(:game).to_param
+    @zone = Factory(:zone).to_param
+    @region = Factory(:region).to_param
   end
 
   it "should expose a list of a game's zones" do
-    {:get, "/games/#{@game}/zones"}.should route_to(:action => :index,
+    {:get, "/games/#{@game}/zones"}.should route_to(:action => "index",
       :game => @game, :controller => "zones")
   end
 
   it "should expose a list of a region's zones" do
     {:get, "/games/#{@game}/region/#{@region}/zones"}.should route_to(
-        :action => :index, :game => @game, :region => @region,
+        :action => "index", :game => @game, :region => @region,
         :controller => "zones")
   end
 
-  it { {:post, "/zones"}.should route_to(:action => :create,
+  it { {:post, "/zones"}.should route_to(:action => "create",
       :controller => "zones") }
 
   it "should expose a hackable URL to a game's zone" do
-    {:get, "/games/#{@game}/zones/#{@zone}"}.should route_to(:action => :show,
+    {:get, "/games/#{@game}/zones/#{@zone}"}.should route_to(:action => "show",
         :game => @game, :id => @zone, :controller => "zones")
   end
 
   it "should expose a hackable URL to a region's zone" do
     {:get, "/games/#{@game}/regions/#{@region}/zones/#{@zone}"
-        }.should route_to(:action => :show, :game => @game, :region => @region,
+        }.should route_to(:action => "show", :game => @game, :region => @region,
         :id => @zone, :controller => "zones")
   end
 
   it "should expose a direct URL to a zone" do
-    {:get, "/zones/#{@zone}"}.should route_to(:action => :show, :id => @zone,
+    {:get, "/zones/#{@zone}"}.should route_to(:action => "show", :id => @zone,
       :controller => "zones")
   end
 

@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.boolean  "operating",       :default => true, :null => false
     t.integer  "operating_level", :default => 100,  :null => false
     t.integer  "zone_id",                           :null => false
+    t.integer  "other_zone_id"
     t.integer  "buildable_id",                      :null => false
     t.string   "buildable_type",                    :null => false
     t.datetime "created_at"

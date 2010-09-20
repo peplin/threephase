@@ -2,52 +2,52 @@ require 'spec_helper'
 
 describe "routing to contracts" do
   before :all do
-    @game = Game.all.first
-    @generator = Generator.all.first
-    @contract = ContractNegotiation.all.first
-    @offer = ContractOffer.all.first
+    @game = Factory(:game).to_param
+    @generator = Factory(:generator).to_param
+    @contract = Factory(:contract).to_param_negotiation
+    @offer = Factory(:contract).to_param_offer
   end
 
   it "should expose a list of all contracts for a game" do
-    {:get, "/games/#{@game}/contracts"}.should route_to(:action => :index,
+    {:get, "/games/#{@game}/contracts"}.should route_to(:action => "index",
         :game => @game, :controller => "contracts")
   end
 
   it "should expose a list of all contracts for a generator" do
     {:get, "/games/#{@game}/generators/#{@generator}/contracts"
-        }.should route_to(:action => :index, :generator => @generator,
+        }.should route_to(:action => "index", :generator => @generator,
         :controller => "contracts")
   end
 
   it "should expose a form for a new contract for a generator" do
     {:get, "/games/#{@game}/generators/#{@generator}/contracts/new"
-        }.should route_to(:action => :new, :game => @game,
+        }.should route_to(:action => "new", :game => @game,
         :generator => @generator, :controller => "contracts")
   end
 
-  it { {:post, "/contracts"}.should route_to(:action => :create,
+  it { {:post, "/contracts"}.should route_to(:action => "create",
       :controller => "contracts") }
 
-  it { {:post, "/contracts/#{@contract}"}.should route_to(:action => :offer,
+  it { {:post, "/contracts/#{@contract}"}.should route_to(:action => "offer",
       :contract => @contract, :controller => "contracts") }
 
-  it { {:put, "/offer/#{@offer}"}.should route_to(:action => :respond,
-      :offer => @offer, :controller => "contracts") }
+  it { {:put, "/offer/#{@offer}"}.should route_to(:action => "respond",
+      "offer" => @offer, :controller => "contracts") }
 
   it "should expose a hackable URL to a game's contract" do
     {:get, "/games/#{@game}/contracts/#{@contract}"}.should route_to(
-      :action => :show, :game => @game, :contract => @contract,
+      :action => "show", :game => @game, :contract => @contract,
       :controller => "contracts")
   end
 
   it "should expose a hackable URL to a generator's contract" do
     {:get, "/games/#{@game}/generators/#{@generator}/contracts/#{@contract}" }.should route_to(
-        :action => :show, :generator => @generator, :contract => @contract,
+        :action => "show", :generator => @generator, :contract => @contract,
         :controller => "contracts")
   end
 
   it "should expose a direct URL to a contract" do
-    {:get, "/contracts/#{@contract}"}.should route_to(:action => :show,
+    {:get, "/contracts/#{@contract}"}.should route_to(:action => "show",
       :contract => @contract, :controller => "contracts")
   end
 
