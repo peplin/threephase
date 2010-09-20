@@ -1,4 +1,7 @@
 class GamesController < ApplicationController
+  before_filter find_games, :only => :index
+  before_filter find_game, :only => [:show, :edit, :update]
+
   def index
   end
 
@@ -15,5 +18,15 @@ class GamesController < ApplicationController
   end
 
   def update
+  end
+
+  private
+
+  def find_games
+    @games = Game.all
+  end
+
+  def find_game
+    @game = Game.find params[:id]
   end
 end

@@ -23,17 +23,14 @@ Threephase::Application.routes.draw do
 
     resources :bids
     resources :contracts, :controller => :contract_negotiations
-    resources :generator_types
     resources :interstatelines, :controller => :interstate_lines
 
-    resources :line_types
     resources :prices, :controller => :market_prices,
         :only => [:index, :show]
     resources :repairs
     resources :advancements, :controller => :research_advancements,
         :only => [:create, :index, :show]
     resources :stores, :controller => :storage_devices
-    resources :storage_device_types
   end
 
   resources :bids, :only => [:show, :create]
@@ -68,12 +65,10 @@ Threephase::Application.routes.draw do
     end
   end
 
-  resources :line_types, :except => [:destroy]
   resources :regions, :only => [:show, :update]
   resources :repairs, :except => [:index, :destroy, :update]
   resources :advancements, :controller => :research_advancements,
       :only => [:create]
-  resources :storage_device_types
   resources :zones, :only => [:show, :create]
 
   resources :users, :path_names => {:new => 'signup'}, :except => [:create] do
