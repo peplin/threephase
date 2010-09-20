@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe LinesController do
   before :each do
-    @line = Line.all.first
-    @game = Game.all.first
-    @zone = Zone.all.first
+    @line = Factory :line
+    @game = Factory :game
+    @zone = Factory :zone
     @data = Factory.attributes_for :line
   end
 

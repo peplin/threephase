@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe InterstateLinesController do
   before :each do
-    @game = Game.all.first
-    @interstate_line = InterstateLine.all.first
-    @generator = Generator.all.first
-    @region = Region.all.first
+    @game = Factory :game
+    @interstate_line = Factory :interstateLine
+    @generator = Factory :generator
+    @region = Factory :region
     @another_region = Region.all[1]
     @data = Factory.attributes_for :interstate_line
   end

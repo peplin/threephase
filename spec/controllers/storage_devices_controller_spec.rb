@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe StorageDevicesController do
   before :each do
-    @storage_device = StorageDevice.all.first
-    @game = Game.all.first
-    @zone = Zone.all.first
+    @storage_device = Factory :storageDevice
+    @game = Factory :game
+    @zone = Factory :zone
     @data = Factory.attributes_for :storage_device
   end
 

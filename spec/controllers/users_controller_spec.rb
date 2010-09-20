@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe UsersController do
   before :each do
-    @user = User.all.first
+    @user = Factory :user
   end
 
   context "on GET to" do

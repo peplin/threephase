@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe GeneratorTypesController do
   before :each do
-    @generator_type = GeneratorType.all.first
+    @generator_type = Factory :generatorType
     @data = Factory.attributes_for :generator_type
   end
 

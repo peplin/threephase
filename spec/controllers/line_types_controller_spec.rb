@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe LineTypesController do
   before :each do
-    @line_type = LineType.all.first
-    @game = Game.all.first
+    @line_type = Factory :lineType
+    @game = Factory :game
     @data = Factory.attributes_for :line_type
   end
 

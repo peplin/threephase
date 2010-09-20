@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe BidsController do
   before :each do
-    @generator = Generator.all.first
-    @bid = Bid.all.first
+    @generator = Factory :generator
+    @bid = Factory :bid
     @data = Factory.attributes_for :bid
   end
 

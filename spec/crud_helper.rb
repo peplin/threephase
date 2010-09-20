@@ -249,7 +249,11 @@ share_examples_for "POST create" do
 end
 
 share_examples_for "unauthorized PUT update" do
+  include CrudSetup
+
   before do
+    setup_crud_names
+    @instance = Factory @assigns_model_name
     do_put
   end
 
@@ -408,6 +412,10 @@ share_examples_for "GET edit" do
     it { should respond_with :success }
     it { should render_template :edit }
     it { should assign_to(@assigns_model_name).with(@sinstance) }
+
+    def do_get format = 'html'
+      get 'edit', :id => @instance, :format => format
+    end
   end
 
   context "with an invalid ID" do

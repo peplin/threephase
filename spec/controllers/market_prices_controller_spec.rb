@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe MarketPricesController do
   before :each do
-    @game = Game.all.first
-    @market = Market.all.first
-    @zone = Zone.all.first
+    @game = Factory :game
+    @market = Factory :market
+    @zone = Factory :zone
   end
 
   context "on GET to" do

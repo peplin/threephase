@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe StorageDeviceTypesController do
   before :each do
-    @storage_device_type = StorageDeviceType.all.first
-    @game = Game.all.first
+    @storage_device_type = Factory :storageDeviceType
+    @game = Factory :game
     @data = Factory.attributes_for :storage_device_type
   end
 

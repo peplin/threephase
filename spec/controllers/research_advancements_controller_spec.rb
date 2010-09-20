@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe ResearchAdvancementsController do
   before :each do
-    @game = Game.all.first
-    @advancement = ResearchAdvancement.all.first
+    @game = Factory :game
+    @advancement = Factory :researchAdvancement
   end
 
   context "on GET to" do

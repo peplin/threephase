@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe RepairsController do
   before :each do
-    @game = Game.all.first
-    @repair = Repair.all.first
-    @generator = Generator.all.first
+    @game = Factory :game
+    @repair = Factory :repair
+    @generator = Factory :generator
   end
 
   context "on GET to" do

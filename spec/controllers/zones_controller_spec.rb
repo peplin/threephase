@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe ZonesController do
-  before :each do
-    @game = Game.all.first
-    @zone = Zone.all.first
+  before do
+    @game = Factory :game
+    @zone = Factory :zone
   end
 
   context "on GET to" do

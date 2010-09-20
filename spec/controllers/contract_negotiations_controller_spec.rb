@@ -3,8 +3,8 @@ require 'spec_helper'
 describe ContractNegotiationsController do
   before :each do
     @generator = Factory :generator
-    @offer = Factory :offer
-    @contract = Factory :contract
+    @offer = Factory :contract_offer
+    @contract = Factory :contract_negotiation
   end
 
   context "on GET to" do

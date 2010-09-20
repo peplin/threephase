@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe GeneratorsController do
   before :each do
-    @generator = Generator.all.first
-    @game = Game.all.first
-    @zone = Zone.all.first
+    @generator = Factory :generator
+    @game = Factory :game
+    @zone = Factory :zone
     @data = Factory.attributes_for(:generator)
   end
 
