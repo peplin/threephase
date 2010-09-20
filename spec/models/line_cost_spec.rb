@@ -11,5 +11,5 @@ end
 describe LineMaintenanceCost do
 end
 
-describe LineCapitolCost do
+describe LineCapitalCost do
 end

@@ -10,5 +10,5 @@ end
 class LineMaintenanceCost < LineCost
 end
 
-class LineCapitolCost < LineCost
+class LineCapitalCost < LineCost
 end

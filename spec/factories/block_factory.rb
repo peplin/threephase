@@ -13,21 +13,21 @@ Factory.define :block do |b|
 end
 
 Factory.define :mountain_block, :parent => :block do |b|
-  b.type Block.MOUNTAIN_TYPE
+  b.type :mountain
   b.elevation 100 + rand(600)
 end
 
 Factory.define :water_block, :parent => :block do |b|
-  b.type Block.WATER_TYPE
+  b.type :water
   b.water_flow rand(20)
 end
 
 Factory.define :sunny_block, :parent => :block do |b|
-  b.type Block.PLAINS_TYPE
+  b.type :plains
   b.sunfall 3000 + rand(4000)
 end
 
 Factory.define :windy_block, :parent => :block do |b|
-  b.type Block.PLAINS_TYPE
+  b.type :plains
   b.wind_speed rand(30)
 end

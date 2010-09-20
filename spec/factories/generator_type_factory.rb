@@ -1,6 +1,10 @@
-Factory.define :line_type do |t|
-  t.voltage 720
-  t.resistance 100
-  t.diameter 1 + rand(4)
-  t.height -10 + rand(20)
+Factory.define :generator_type do |t|
+  t.safety_mtbf 30 + rand(100)
+  t.ramping_speed 1 + rand(60)
+  t.fuel_efficiency rand(100)
+  t.air_emissions rand(100)
+  t.water_emissions rand(100)
+  t.maintenance_cost_max 1000 + rand(1000)
+  t.tax_credit rand(1000)
+  t.association :fuel_type, :factory => :fuel_type
 end

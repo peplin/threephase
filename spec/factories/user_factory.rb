@@ -8,5 +8,5 @@ end
 
 Factory.define :user do |u|
   u.nickname { Factory.next(:nickname) }
-  u.email "#{u.nickname}@example.com"
+  u.email {|a| "#{a.nickname}@example.com" }
 end

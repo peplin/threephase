@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20100919222346) do
     t.integer  "x",                                   :null => false
     t.integer  "y",                                   :null => false
     t.integer  "elevation",         :default => 0,    :null => false
-    t.integer  "type",              :default => 0,    :null => false
+    t.string   "type",                                :null => false
     t.float    "wind_speed",        :default => 0.0,  :null => false
     t.integer  "water_flow",        :default => 0,    :null => false
     t.integer  "sunfall",           :default => 5125, :null => false

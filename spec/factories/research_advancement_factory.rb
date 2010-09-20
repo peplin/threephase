@@ -1,5 +1,6 @@
-Factory.define :fuel_type do |f|
-  f.name "Coal"
-  f.description "A sedimentary rock."
-  f.association :market, :factory => :market
+Factory.define :research_advancement do |f|
+  f.reason "For the hell of it."
+  f.parameter "technology_cost"
+  f.adjustment -1 * rand(5)
+  f.association :region, :factory => :region
 end
