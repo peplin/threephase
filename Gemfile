@@ -28,4 +28,5 @@ group :test, :development do
   gem 'factory_girl'
   gem 'single_test'
   gem 'mocha'
+  gem 'hirb'
 end

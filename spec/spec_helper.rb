@@ -19,6 +19,12 @@ def json_response
   ActiveSupport::JSON.decode @response.body
 end
 
+def flunk(*args, &block)
+  # Workaround for rspec-rails bug #192
+  # http://github.com/rspec/rspec-rails/issues/issue/192
+  assertion_delegate.flunk(*args, &block)
+end
+
 Rspec.configure do |config|
   config.include(Shoulda::ActiveRecord::Matchers)
   config.include(Shoulda::ActionController::Matchers, :type => :controllers)

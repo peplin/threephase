@@ -14,6 +14,11 @@ module CrudSetup
     @assigns_model_name            = @model_name.underscore.to_sym
     @pluralized_assigns_model_name = @model_name.underscore.pluralize.to_sym
   end
+
+  def subject
+    # This is to fix a bug in Shoulda - get undefined attributes without it
+    @controller
+  end
 end
 
 share_as :JSONResponse do
@@ -23,7 +28,6 @@ share_as :JSONResponse do
     setup_crud_names
   end
 
-  it { should respond_with :success }
   it { should respond_with_content_type :json }
 end
 
@@ -40,14 +44,10 @@ share_examples_for "GET index" do
       do_get
     end
 
-    it "should find all #{@pluralized_model_name}" do
-      @model.should_receive(:find).with(:all)
-    end
-
     it { should respond_with :success }
     it { should render_template @template }
 
-    it "should assign the #{@pluralized_model_name} view variable" do
+    it "should assign a collection view variable" do
       should assign_to(@pluralized_assigns_model_name)
     end
   end
@@ -57,9 +57,8 @@ share_examples_for "GET index" do
       do_get 'json'
     end
 
-    it "should respond with JSON" do
-      it { should respond_with_content_type :json }
-    end
+    it { should respond_with :success }
+    it_should_behave_like JSONResponse
   end
 
   def do_get format='html'
@@ -68,12 +67,14 @@ share_examples_for "GET index" do
 end
 
 share_examples_for "unauthorized GET index" do
+  include CrudSetup
+
   context "for HTML" do
     before do
       do_get
     end
 
-    it { should redirect_to login_path }
+    it { should redirect_to login_users_path }
   end
 
   context "for JSON" do
@@ -106,18 +107,14 @@ share_examples_for "GET show" do
     it { should respond_with :success }
     it { should render_template @template }
 
-    it "should find the correct #{@model_name}" do
-      @model.should_receive(:find).with(
-          @instance.to_param).and_return(@instance)
-      do_get
-    end
-
     it { should assign_to(@assigns_model_name).with(@instance) }
 
-    it "should render the correct JSON when requesting JSON" do
-      @model.any_instance.expects(:to_json).returns('JSON')
-      do_get 'json'
-      @response.body.should == 'JSON'
+    context "should accept JSON" do
+      before do
+        do_get 'json'
+      end
+      it_should_behave_like JSONResponse
+      it { should respond_with :success }
     end
 
     def do_get format='html'
@@ -132,7 +129,7 @@ share_examples_for "GET show" do
 
     it { should respond_with :missing }
     it { should_not render_template @template }
-    it { should assign_to(@assigns_model_name) }
+    it { should_not assign_to(@assigns_model_name) }
 
     it "should send a 404 if not found via JSON" do
       do_get 'json'
@@ -147,6 +144,8 @@ share_examples_for "GET show" do
 end
 
 share_examples_for "unauthorized GET show" do
+  include CrudSetup
+
   before do
     @instance = Factory @assigns_model_name
   end
@@ -156,7 +155,7 @@ share_examples_for "unauthorized GET show" do
       do_get
     end
 
-    it { should redirect_to login_path }
+    it { should redirect_to login_users_path }
   end
 
   context "for JSON" do
@@ -180,7 +179,7 @@ share_examples_for "unauthorized POST create" do
     do_post
   end
 
-  it { should redirect_to login_path }
+  it { should redirect_to login_users_path }
 
   def do_post format = 'html'
     post 'create', @assigns_model_name => @params, :format => format
@@ -192,24 +191,26 @@ share_examples_for "successful POST create" do
 
   before do
     setup_crud_names
-    @params = Factory.attributes_for(@assigns_model_name, :id => 1)
-    @model.any_instance.stubs(:to_param).returns(1)
+    @params = Factory.attributes_for(@assigns_model_name)
     do_post
   end
 
   it { should set_the_flash }
 
-  it "should redirect to the new #{@model_name}'s show page" do
-    should redirect_to eval("#{@model_name}_path 1")
+  it "should redirect to the new instance's show page" do
+    @id = assigns(@assigns_model_name).id
+    should redirect_to eval("#{@model_name.underscore}_path @id")
   end
 
-  it "should return .to_json when requesting JSON" do
-    @model.any_instance.expects(:to_json).returns('JSON')
-    do_post 'json'
-    @response.body.should == "JSON"
+  context "should accept JSON" do
+    before do
+      do_post 'json'
+    end
+    it_should_behave_like JSONResponse
+    it { should respond_with :created }
   end
 
-  it "should create a #{@model_name}" do
+  it "should create a new instance" do
     proc { do_post }.should change(@model, :count).by(1)
   end
 
@@ -229,7 +230,7 @@ share_examples_for "unsuccessful POST create" do
   it { should respond_with :bad_request }
   it { should set_the_flash }
   it { should render_template :new }
-  it { assigns(@assigns_model_name).should be_a_new @model }
+  it { should assign_to(@assigns_model_name).with_kind_of(@model) }
 
   def do_post format = 'html'
     # TODO how to get invalid data here for an unknown class?
@@ -239,6 +240,8 @@ share_examples_for "unsuccessful POST create" do
 end
 
 share_examples_for "POST create" do
+  include CrudSetup
+
   context "with valid data" do
     it_should_behave_like "successful POST create"
   end
@@ -257,7 +260,7 @@ share_examples_for "unauthorized PUT update" do
     do_put
   end
 
-  it { should redirect_to login_path }
+  it { should redirect_to login_users_path }
 
   def do_put format = 'html'
     put 'update', :id => @instance, @assigns_model_name => @data,
@@ -266,6 +269,8 @@ share_examples_for "unauthorized PUT update" do
 end
 
 share_examples_for "PUT update" do
+  include CrudSetup
+
   context "with valid data" do
     it_should_behave_like "successful PUT update"
   end
@@ -285,18 +290,20 @@ share_examples_for "successful PUT update" do
     do_put
   end
 
-  it { should respond_with :success }
   it { should set_the_flash }
-  it "should redirect to the updated #{@model_name}'s show page" do
-    should redirect_to eval("#{@model_name}_path 1")
+  it "should redirect to the updated instance's show page" do
+    should redirect_to eval("#{@model_name.underscore}_path @instance")
   end
-  it "should update the #{@model_name}" do
+  it "should update the instance" do
     @instance.updated_at.should_not eq(@instance.reload.updated_at)
   end
 
-  it "should accept JSON" do
-    do_put 'json'
+  context "should accept json" do
+    before do
+      do_put 'json'
+    end
     it_should_behave_like JSONResponse
+    it { should respond_with :success }
   end
 
   def do_put format = 'html'
@@ -314,12 +321,11 @@ share_examples_for "unsuccessful PUT update" do
     do_put
   end
 
-  it { should respond_with :bad_request }
   it { should set_the_flash }
-  it "should redirect to the updated #{@model_name}'s edit page" do
-    should redirect_to eval("#{@model_name}_path 1")
+  it "should redirect to the updated instance's edit page" do
+    should redirect_to eval("#{@model_name.underscore}_path @instance")
   end
-  it "should not update the #{@model_name}" do
+  it "should not update the instance" do
     @instance.updated_at.should eq(@instance.reload.updated_at)
   end
 
@@ -337,51 +343,40 @@ share_examples_for "DELETE destroy" do
   end
 
   context "with a valid id" do
-
     before do
-      @stubbed_model.stub!(:destroy).and_return(true)
-      @model.stub!(:find).and_return(@stubbed_model)
-    end
-
-    it "should find the correct #{@model_name}" do
-      @model.should_receive(:find).with(@stubbed_model.id.to_s).and_return(@stubbed_model)
+      @instance = Factory @assigns_model_name
       do_delete
     end
 
-    it "should destroy the #{@model_name}" do
-      @stubbed_model.should_receive(:destroy).and_return(true)
-      do_delete
+    it "should redirect to the model index when requesting HTML" do
+      should redirect_to eval("#{@pluralized_assigns_model_name}_path")
     end
 
-    it "should redirect to #{@model_name} index when requesting HTML" do
-      do_delete
-      @response.should redirect_to("/admin/#{@pluralized_assigns_model_name}")
-    end
-
-    it "should render 200 when requesting JSON" do
-      do_delete 'json'
-      @response.headers["Status"].should == "200 OK"
+    context "should accept JSON" do
+      before do
+        do_delete 'json'
+      end
+      it_should_behave_like JSONResponse
+      it { should respond_with :accepted }
     end
 
     def do_delete format = 'html'
-      delete 'destroy', :id => @stubbed_model.id, :format => format
+      delete 'destroy', :id => @instance.to_param, :format => format
     end
   end
 
   context "with an invalid ID" do
-
     before do
-      @model.stub!(:find).and_raise(ActiveRecord::RecordNotFound)
+      do_delete
     end
 
-    it "should redirect to #{@model_name} index when requesting HTML" do
-      do_delete
-      @response.should redirect_to("/admin/#{@pluralized_assigns_model_name}")
+    it "should redirect to the model index when requesting HTML" do
+      should redirect_to eval("#{@pluralized_assigns_model_name}_path")
     end
 
     it "should render a 404 when requesting JSON" do
       do_delete 'json'
-      @response.headers["Status"].should == "404 Not Found"
+      should respond_with :missing
     end
 
     def do_delete format = 'html'
@@ -404,14 +399,9 @@ share_examples_for "GET edit" do
       do_get
     end
 
-    it "should find the #{@model_name}" do
-      @model.expects(:find).with(@instance.to_param).returns(@instance)
-      do_get
-    end
-
     it { should respond_with :success }
     it { should render_template :edit }
-    it { should assign_to(@assigns_model_name).with(@sinstance) }
+    it { should assign_to(@assigns_model_name).with(@instance) }
 
     def do_get format = 'html'
       get 'edit', :id => @instance, :format => format
@@ -442,7 +432,7 @@ share_examples_for "unauthorized GET edit" do
     do_get
   end
 
-  it { should redirect_to login_path }
+  it { should redirect_to login_users_path }
 
   def do_get format = 'html'
     get 'edit', :id => @instance, :format => format
@@ -460,7 +450,7 @@ share_examples_for "GET new" do
 
   it { should respond_with :success }
   it { should render_template :new }
-  it { assigns(@assigns_model_name).should be_a_new @model }
+  it { should assign_to(@assigns_model_name).with_kind_of(@model) }
 
   def do_get format = 'html'
     get 'new', :format => format
@@ -468,11 +458,13 @@ share_examples_for "GET new" do
 end
 
 share_examples_for "unauthorized GET new" do
+  include CrudSetup
+
   before do
     do_get
   end
 
-  it { should redirect_to login_path }
+  it { should redirect_to login_users_path }
 
   def do_get format = 'html'
     get 'new', :format => format
