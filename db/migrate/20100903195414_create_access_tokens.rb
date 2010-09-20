@@ -10,7 +10,7 @@ class CreateAccessTokens < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :access_tokens, :key, :unique
+    add_index :access_tokens, :key, :unique => true
   end
 
   def self.down

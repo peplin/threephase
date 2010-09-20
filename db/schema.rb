@@ -10,7 +10,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100917220041) do
+ActiveRecord::Schema.define(:version => 20100919222346) do
+
+  create_table "access_tokens", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "type",       :limit => 30
+    t.string   "key"
+    t.string   "token",      :limit => 1024
+    t.string   "secret"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "access_tokens", ["key"], :name => "index_access_tokens_on_key", :unique => true
 
   create_table "allowed_technical_component_types", :id => false, :force => true do |t|
     t.string  "component_type", :null => false
@@ -223,6 +236,16 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.datetime "updated_at"
   end
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
   create_table "slugs", :force => true do |t|
     t.string   "name"
     t.integer  "sluggable_id"
@@ -278,22 +301,35 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.datetime "updated_at"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "email",                     :limit => 100
-    t.string   "nickname"
-    t.string   "cached_slug"
-    t.string   "salt",                      :limit => 40
-    t.string   "remember_token",            :limit => 40
-    t.datetime "remember_token_expires_at"
-    t.string   "encrypted_password",        :limit => 128
-    t.string   "confirmation_token",        :limit => 128
-    t.boolean  "admin",                                    :default => false, :null => false
-    t.boolean  "email_confirmed",                          :default => false
+  create_table "user_sessions", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  create_table "users", :force => true do |t|
+    t.string   "login"
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token",                    :null => false
+    t.integer  "login_count",       :default => 0,     :null => false
+    t.datetime "last_request_at"
+    t.datetime "last_login_at"
+    t.datetime "current_login_at"
+    t.string   "last_login_ip"
+    t.string   "current_login_ip"
+    t.integer  "active_token_id"
+    t.boolean  "admin",             :default => false, :null => false
+    t.string   "cached_slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["active_token_id"], :name => "index_users_on_active_token_id"
   add_index "users", ["cached_slug"], :name => "index_users_on_cached_slug", :unique => true
+  add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
+  add_index "users", ["login"], :name => "index_users_on_login"
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
   create_table "wind_profiles", :force => true do |t|
     t.integer "hour",                      :null => false
