@@ -6,6 +6,7 @@ class CreateTechnicalComponentInstances < ActiveRecord::Migration
       t.integer :operating_level, :null => false, :default => 100
 
       t.references :zone, :null => false
+      t.references :other_zone # only for lines
       t.references :buildable, :null => false
       t.string :buildable_type, :null => false
 
