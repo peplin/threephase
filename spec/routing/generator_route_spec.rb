@@ -4,21 +4,22 @@ describe "routing to generators" do
   before :each do
     @game = Factory(:game).to_param
     @zone = Factory(:zone).to_param
+    @generator = Factory(:generator).to_param
   end
 
   it "should expose a list of a game's generators" do
     {:get, "/games/#{@game}/generators"}.should route_to(:action => "index",
-        :game => @game, :controller => "generators")
+        :game_id => @game, :controller => "generators")
   end
 
   it "should expose a list of a zone's generators" do
     {:get, "/games/#{@game}/zones/#{@zone}/generators"}.should route_to(
-        :action => "index", :game => @game, :zone => @zone,
+        :action => "index", :game_id => @game, :zone_id => @zone,
         :controller => "generators")
   end
 
   it { {:get, "/games/#{@game}/zones/#{@zone}/generators/new"}.should route_to(
-      :action => "new", :game => @game, :zone => @zone,
+      :action => "new", :game_id => @game, :zone_id => @zone,
       :controller => "generators") }
 
   it { {:post, "/generators"}.should route_to(:action => "create",
@@ -26,14 +27,14 @@ describe "routing to generators" do
 
   it "should expose a hackable URL to a game's generator" do
     {:get, "/games/#{@game}/generators/#{@generator}"}.should route_to(
-        :action => "show", :game => @game, :id => @generator,
+        :action => "show", :game_id => @game, :id => @generator,
         :controller => "generators")
   end
 
   it "should expose a hackable URL to a zone's generator" do
     {:get, "/games/#{@game}/zones/#{@zone}/generators/#{@generator}"
-        }.should route_to(:action => "show", :game => @game, :zone => @zone,
-        :id => @generator, :controller => "generators")
+        }.should route_to(:action => "show", :game_id => @game,
+        :zone_id => @zone, :id => @generator, :controller => "generators")
   end
 
   it "should expose a direct URL to a generator" do
@@ -43,13 +44,13 @@ describe "routing to generators" do
 
   it "should expose a hackable URL to edit a zone's generator" do
     {:get, "/games/#{@game}/zones/#{@zone}/generators/#{@generator}/edit"
-        }.should route_to(:action => "edit", :game => @game, :zone => @zone,
-        :id => @generator, :controller => "generators")
+        }.should route_to(:action => "edit", :game_id => @game,
+        :zone_id => @zone, :id => @generator, :controller => "generators")
   end
 
   it "should expose a hackable URL to edit a game's generator" do
     {:get, "/games/#{@game}/generators/#{@generator}/edit"}.should route_to(
-        :action => "edit", :game => @game, :id => @generator,
+        :action => "edit", :game_id => @game, :id => @generator,
         :controller => "generators")
   end
 

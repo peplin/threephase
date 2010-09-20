@@ -1,21 +1,10 @@
 require 'spec_helper'
 
 describe "routing to line types" do
-  before :all do
+  before do
     @game = Factory(:game).to_param
     @type = Factory(:line_type).to_param
   end
-
-  it { {:get, "/games/#{@game}/lines/types"}.should route_to(:action => "index",
-      :game => @game, :type => LineType,
-      :controller => "allowed_technical_components") }
-
-  it { {:post, "/games/#{@game}/lines/types"}.should route_to(:action => "allow",
-        :game => @game, :controller => "allowed_technical_components") }
-
-  it { {:delete, "/games/#{@game}/lines/types/#{@type}"}.should route_to(
-      :action => "disallow", :game => @game, :type => @type,
-      :controller => "allowed_technical_components") }
 
   it { {:get, "/lines/types"}.should route_to(:action => "index",
         :controller => "line_types") }

@@ -1,26 +1,26 @@
 require 'spec_helper'
 
 describe "routing to users" do
-  before :all do
+  before do
     @user = Factory(:user).to_param
   end
 
-  it { {:get, "/login"}.should route_to(:action => "new",
+  it { {:get, "/users/login"}.should route_to(:action => "new",
         :controller => "user_sessions") }
 
-  it { {:get, "/logout"}.should route_to(:action => "destroy",
+  it { {:get, "/users/logout"}.should route_to(:action => "destroy",
         :controller => "user_sessions") }
 
-  it { {:post, "/authenticate"}.should route_to(:action => "create",
+  it { {:post, "/users/authenticate"}.should route_to(:action => "create",
         :controller => "user_sessions") }
 
-  it { {:get, "/signup"}.should route_to(:action => "new",
+  it { {:get, "/users/signup"}.should route_to(:action => "new",
         :controller => "users") }
 
-  it { {:put, "/connect"}.should route_to(:action => "update",
+  it { {:put, "/users/connect"}.should route_to(:action => "connect",
         :controller => "users") }
 
-  it { {:get, "/reset"}.should route_to(:action => "detonate",
+  it { {:get, "/users/reset"}.should route_to(:action => "detonate",
         :controller => "users") }
 
   it { {:get, "/users"}.should route_to(:action => "index",
@@ -32,10 +32,10 @@ describe "routing to users" do
   it { {:get, "/users/#{@user}/edit"}.should route_to(:action => "edit",
       :id => @user, :controller => "users") }
 
-  it { {:get, "/me/edit"}.should route_to(:action => "show",
+  it { {:get, "/user/edit"}.should route_to(:action => "edit",
       :controller => "users") }
 
-  it { {:get, "/me"}.should route_to(:action => "edit",
+  it { {:get, "/user"}.should route_to(:action => "show",
       :controller => "users") }
 
   it { {:put, "/users/#{@user}"}.should route_to(:action => "update",

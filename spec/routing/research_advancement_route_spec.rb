@@ -1,21 +1,21 @@
 require 'spec_helper'
 
 describe "routing to research_advancements" do
-  before :all do
+  before do
     @game = Factory(:game).to_param
     @advancement = Factory(:research_advancement).to_param
   end
 
   it { {:get, "/games/#{@game}/advancements"}.should route_to(
-      :action => "index", :game => @game,
+      :action => "index", :game_id => @game,
       :controller => "research_advancements") }
 
   it { {:get, "/games/#{@game}/advancements/#{@advancement}"
-      }.should route_to(:action => "show", :game => @game, :id => @advancement,
-      :controller => "research_advancements") }
+      }.should route_to(:action => "show", :game_id => @game,
+      :id => @advancement, :controller => "research_advancements") }
 
   it { {:post, "/games/#{@game}/advancements"}.should route_to(
-      :action => "create", :game => @game,
+      :action => "create", :game_id => @game,
       :controller => "research_advancements") }
 
   it "does not expose a list of all research_advancements" do

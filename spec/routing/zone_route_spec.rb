@@ -9,12 +9,12 @@ describe "routing to zones" do
 
   it "should expose a list of a game's zones" do
     {:get, "/games/#{@game}/zones"}.should route_to(:action => "index",
-      :game => @game, :controller => "zones")
+      :game_id => @game, :controller => "zones")
   end
 
   it "should expose a list of a region's zones" do
-    {:get, "/games/#{@game}/region/#{@region}/zones"}.should route_to(
-        :action => "index", :game => @game, :region => @region,
+    {:get, "/games/#{@game}/regions/#{@region}/zones"}.should route_to(
+        :action => "index", :game_id => @game, :region_id => @region,
         :controller => "zones")
   end
 
@@ -23,13 +23,13 @@ describe "routing to zones" do
 
   it "should expose a hackable URL to a game's zone" do
     {:get, "/games/#{@game}/zones/#{@zone}"}.should route_to(:action => "show",
-        :game => @game, :id => @zone, :controller => "zones")
+        :game_id => @game, :id => @zone, :controller => "zones")
   end
 
   it "should expose a hackable URL to a region's zone" do
     {:get, "/games/#{@game}/regions/#{@region}/zones/#{@zone}"
-        }.should route_to(:action => "show", :game => @game, :region => @region,
-        :id => @zone, :controller => "zones")
+        }.should route_to(:action => "show", :game_id => @game,
+        :region_id => @region, :id => @zone, :controller => "zones")
   end
 
   it "should expose a direct URL to a zone" do
