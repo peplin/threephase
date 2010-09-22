@@ -4,7 +4,7 @@ class BidsController < ApplicationController
   before_filter :find_bids, :only => :index
   before_filter :find_bid, :only => :show
 
-  respond_to :json, :only => [:index, :show, :create]
+  respond_to :json, :except => [:new, :edit]
   respond_to :html
 
   def index

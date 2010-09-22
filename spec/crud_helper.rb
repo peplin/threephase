@@ -352,54 +352,65 @@ share_examples_for "standard unsuccessful PUT update" do
   end
 end
 
-share_examples_for "DELETE destroy" do
+share_examples_for "successful DELETE destroy" do
   include CrudSetup
 
   before do
     setup_crud_names
+    @instance = Factory @assigns_model_name
+    do_delete
   end
 
-  context "with a valid id" do
-    before do
-      @instance = Factory @assigns_model_name
-      do_delete
-    end
-
-    it "should redirect to the model index when requesting HTML" do
-      should redirect_to eval("#{@pluralized_assigns_model_name}_path")
-    end
-
-    context "should accept JSON" do
-      before do
-        do_delete 'json'
-      end
-      it_should_behave_like JSONResponse
-      it { should respond_with :accepted }
-    end
-
-    def do_delete format = 'html'
-      delete 'destroy', :id => @instance.to_param, :format => format
-    end
+  it "should redirect to the model index when requesting HTML" do
+    should redirect_to eval("#{@pluralized_assigns_model_name}_path")
   end
 
-  context "with an invalid ID" do
+  context "should accept JSON" do
     before do
-      do_delete
-    end
-
-    it "should redirect to the model index when requesting HTML" do
-      should redirect_to eval("#{@pluralized_assigns_model_name}_path")
-    end
-
-    it "should render a 404 when requesting JSON" do
       do_delete 'json'
-      should respond_with :missing
     end
-
-    def do_delete format = 'html'
-      delete 'destroy', :id => -1, :format => format
-    end
+    it_should_behave_like JSONResponse
+    it { should respond_with :accepted }
   end
+end
+
+share_examples_for "unsuccessful DELETE destroy" do
+  include CrudSetup
+
+  before do
+    setup_crud_names
+    do_delete
+  end
+
+  it "should redirect to the model index when requesting HTML" do
+    should redirect_to eval("#{@pluralized_assigns_model_name}_path")
+  end
+
+  it "should render a 404 when requesting JSON" do
+    do_delete 'json'
+    should respond_with :missing
+  end
+end
+
+share_examples_for "standard successful DELETE destroy" do
+  it_should_behave_like "successful DELETE destroy"
+
+  def do_delete format = 'html'
+    delete 'destroy', :id => @instance.to_param, :format => format
+  end
+end
+
+share_examples_for "standard unsuccessful DELETE destroy" do
+  it_should_behave_like "unsuccessful DELETE destroy"
+
+  def do_delete format = 'html'
+    delete 'destroy', :id => -1, :format => format
+  end
+end
+
+share_examples_for "standard DELETE destroy" do
+  it_should_behave_like "standard successful DELETE destroy"
+  it_should_behave_like "standard unsuccessful DELETE destroy"
 end
 
 share_examples_for "successful GET edit" do

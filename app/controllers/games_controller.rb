@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_filter :find_games, :only => :index
   before_filter :find_game, :only => [:show, :edit, :update]
 
-  respond_to :json, :only => [:index, :show, :create, :update]
+  respond_to :json, :except => [:new, :edit]
   respond_to :html
 
   def index

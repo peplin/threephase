@@ -4,7 +4,7 @@ class GeneratorsController < ApplicationController
   before_filter :find_generators, :only => :index
   before_filter :find_generator, :only => [:edit, :show, :update]
 
-  respond_to :json, :only => [:index, :show, :create]
+  respond_to :json, :except => [:new, :edit]
   respond_to :html
 
   def index
@@ -31,7 +31,7 @@ class GeneratorsController < ApplicationController
   end
 
   def edit
-    respond_with @game
+    respond_with @generator
   end
 
   def update

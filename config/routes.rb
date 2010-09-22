@@ -35,7 +35,7 @@ Threephase::Application.routes.draw do
 
   resources :generators, :only => [:show, :edit, :create, :update] do
     collection do
-      resources :types, :controller => :generator_types
+      resources :types, :controller => :generator_types, :as => :generator_types
     end
     resources :bids, :except => [:update, :destroy]
   end
@@ -56,13 +56,14 @@ Threephase::Application.routes.draw do
 
   resources :lines, :except => [:index] do
     collection do
-      resources :types, :controller => :line_types
+      resources :types, :controller => :line_types, :as => :line_types
     end
   end
 
   resources :stores, :controller => :storage_devices, :except => [:index] do
     collection do
-      resources :types, :controller => :storage_device_types
+      resources :types, :controller => :storage_device_types,
+          :as => :storage_device_types
     end
   end
 
