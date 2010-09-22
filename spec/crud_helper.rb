@@ -22,12 +22,6 @@ module CrudSetup
 end
 
 share_as :JSONResponse do
-  include CrudSetup
-
-  before do
-    setup_crud_names
-  end
-
   it { should respond_with_content_type :json }
 end
 
@@ -36,7 +30,6 @@ share_examples_for "GET index" do
 
   before do
     setup_crud_names
-    @template = :index
   end
 
   context "for HTML" do
@@ -45,7 +38,7 @@ share_examples_for "GET index" do
     end
 
     it { should respond_with :success }
-    it { should render_template @template }
+    it { should render_template :index }
 
     it "should assign a collection view variable" do
       should assign_to(@pluralized_assigns_model_name)
@@ -60,6 +53,10 @@ share_examples_for "GET index" do
     it { should respond_with :success }
     it_should_behave_like JSONResponse
   end
+end
+
+share_examples_for "standard GET index" do
+  it_should_behave_like "GET index"
 
   def do_get format='html'
     get :index, :format => format
@@ -67,8 +64,6 @@ share_examples_for "GET index" do
 end
 
 share_examples_for "unauthorized GET index" do
-  include CrudSetup
-
   context "for HTML" do
     before do
       do_get
@@ -90,56 +85,69 @@ share_examples_for "unauthorized GET index" do
   end
 end
 
-share_examples_for "GET show" do
+share_examples_for "successful GET show" do
   include CrudSetup
 
   before do
     setup_crud_names
-    @template = :show
   end
 
-  context "with a valid ID" do
-    before do
-      @instance = Factory @assigns_model_name
-      do_get
-    end
-
-    it { should respond_with :success }
-    it { should render_template @template }
-
-    it { should assign_to(@assigns_model_name).with(@instance) }
-
-    context "should accept JSON" do
-      before do
-        do_get 'json'
-      end
-      it_should_behave_like JSONResponse
-      it { should respond_with :success }
-    end
-
-    def do_get format='html'
-      get 'show', :id => @instance, :format => format
-    end
+  before do
+    @instance = Factory @assigns_model_name
+    do_get
   end
 
-  context "with an invalid ID" do
+  it { should respond_with :success }
+  it { should render_template :show }
+
+  it { should assign_to(@assigns_model_name).with(@instance) }
+
+  context "should accept JSON" do
     before do
-      do_get
-    end
-
-    it { should respond_with :missing }
-    it { should_not render_template @template }
-    it { should_not assign_to(@assigns_model_name) }
-
-    it "should send a 404 if not found via JSON" do
       do_get 'json'
-      should respond_with :missing
     end
-
-    def do_get format = 'html'
-      get 'show', :id => -1, :format => format
-    end
+    it_should_behave_like JSONResponse
+    it { should respond_with :success }
   end
+end
+
+share_examples_for "unsuccessful GET show" do
+  include CrudSetup
+
+  before do
+    setup_crud_names
+    do_get
+  end
+
+  it { should respond_with :missing }
+  it { should_not render_template :show }
+  it { should_not assign_to(@assigns_model_name) }
+
+  it "should send a 404 if not found via JSON" do
+    do_get 'json'
+    should respond_with :missing
+  end
+end
+
+share_examples_for "standard successful GET show" do
+  it_should_behave_like "successful GET show"
+
+  def do_get format='html'
+    get 'show', :id => @instance, :format => format
+  end
+end
+
+share_examples_for "standard unsuccessful GET show" do
+  it_should_behave_like "unsuccessful GET show"
+
+  def do_get format = 'html'
+    get 'show', :id => -1, :format => format
+  end
+end
+
+share_examples_for "standard GET show" do
+  it_should_behave_like "standard successful GET show"
+  it_should_behave_like "standard unsuccessful GET show"
 
 end
 
@@ -182,7 +190,7 @@ share_examples_for "unauthorized POST create" do
   it { should redirect_to login_users_path }
 
   def do_post format = 'html'
-    post 'create', @assigns_model_name => @params, :format => format
+    post 'create', @assigns_model_name => @data, :format => format
   end
 end
 
@@ -191,15 +199,21 @@ share_examples_for "successful POST create" do
 
   before do
     setup_crud_names
-    @params = Factory.attributes_for(@assigns_model_name)
+    if not @data
+      @data = Factory.attributes_for(@assigns_model_name)
+    end
     do_post
   end
 
   it { should set_the_flash }
 
   it "should redirect to the new instance's show page" do
-    @id = assigns(@assigns_model_name).id
-    should redirect_to eval("#{@model_name.underscore}_path @id")
+    if self.respond_to? :redirect_path
+      should redirect_to redirect_path
+    else
+      @instance = assigns(@assigns_model_name)
+      should redirect_to eval("#{@model_name.underscore}_path @instance")
+    end
   end
 
   context "should accept JSON" do
@@ -213,9 +227,13 @@ share_examples_for "successful POST create" do
   it "should create a new instance" do
     proc { do_post }.should change(@model, :count).by(1)
   end
+end
+
+share_examples_for "standard successful POST create" do
+  it_should_behave_like "successful POST create"
 
   def do_post format = 'html'
-    post 'create', @assigns_model_name => @params, :format => format
+    post 'create', @assigns_model_name => @data, :format => format
   end
 end
 
@@ -227,28 +245,22 @@ share_examples_for "unsuccessful POST create" do
     do_post
   end
 
-  it { should respond_with :bad_request }
   it { should set_the_flash }
   it { should render_template :new }
   it { should assign_to(@assigns_model_name).with_kind_of(@model) }
+end
+
+share_examples_for "standard unsuccessful POST create" do
+  it_should_behave_like "unsuccessful POST create"
 
   def do_post format = 'html'
-    # TODO how to get invalid data here for an unknown class?
-    post 'create', @assigns_model_name => Factory.attributes_for(:invalid_game),
-        :format => format
+    post 'create', :format => format
   end
 end
 
-share_examples_for "POST create" do
-  include CrudSetup
-
-  context "with valid data" do
-    it_should_behave_like "successful POST create"
-  end
-
-  context "with invalid data" do
-    it_should_behave_like "unsuccessful POST create"
-  end
+share_examples_for "standard POST create" do
+  it_should_behave_like "standard successful POST create"
+  it_should_behave_like "standard unsuccessful POST create"
 end
 
 share_examples_for "unauthorized PUT update" do
@@ -268,15 +280,13 @@ share_examples_for "unauthorized PUT update" do
   end
 end
 
-share_examples_for "PUT update" do
-  include CrudSetup
-
+share_examples_for "standard PUT update" do
   context "with valid data" do
-    it_should_behave_like "successful PUT update"
+    it_should_behave_like "standard successful PUT update"
   end
 
   context "with invalid data" do
-    it_should_behave_like "unsuccessful PUT update"
+    it_should_behave_like "standard unsuccessful PUT update"
   end
 end
 
@@ -305,6 +315,10 @@ share_examples_for "successful PUT update" do
     it_should_behave_like JSONResponse
     it { should respond_with :success }
   end
+end
+
+share_examples_for "standard successful PUT update" do
+  it_should_behave_like "successful PUT update"
 
   def do_put format = 'html'
     put 'update', :id => @instance, @assigns_model_name => @data,
@@ -328,12 +342,15 @@ share_examples_for "unsuccessful PUT update" do
   it "should not update the instance" do
     @instance.updated_at.should eq(@instance.reload.updated_at)
   end
+end
+
+share_examples_for "standard unsuccessful PUT update" do
+  it_should_behave_like "unsuccessful PUT update"
 
   def do_put format = 'html'
     put 'update', :id => @instance, :format => format
   end
 end
-
 
 share_examples_for "DELETE destroy" do
   include CrudSetup
@@ -385,42 +402,52 @@ share_examples_for "DELETE destroy" do
   end
 end
 
-share_examples_for "GET edit" do
+share_examples_for "successful GET edit" do
   include CrudSetup
 
   before do
     setup_crud_names
-    @template = :edit
+    @instance = Factory @assigns_model_name
+    do_get
   end
 
-  context "with a valid ID" do
-    before do
-      @instance = Factory @assigns_model_name
-      do_get
-    end
+  it { should respond_with :success }
+  it { should render_template :edit }
+  it { should assign_to(@assigns_model_name).with(@instance) }
+end
 
-    it { should respond_with :success }
-    it { should render_template :edit }
-    it { should assign_to(@assigns_model_name).with(@instance) }
+share_examples_for "standard successful GET edit" do
+  it_should_behave_like "successful GET edit"
 
-    def do_get format = 'html'
-      get 'edit', :id => @instance, :format => format
-    end
+  def do_get format = 'html'
+    get 'edit', :id => @instance, :format => format
+  end
+end
+
+share_examples_for "unsuccessful GET edit" do
+  include CrudSetup
+
+  before do
+    setup_crud_names
+    do_get
   end
 
-  context "with an invalid ID" do
-    before do
-      do_get
-    end
+  it { should respond_with :missing }
+  it { should_not render_template :edit }
+  it { should_not assign_to(@assigns_model_name) }
+end
 
-    it { should respond_with :missing }
-    it { should_not render_template @template }
-    it { should_not assign_to(@assigns_model_name) }
+share_examples_for "standard unsuccessful GET edit" do
+  it_should_behave_like "unsuccessful GET edit"
 
-    def do_get format = 'html'
-      get 'edit', :id => -1, :format => format
-    end
+  def do_get format = 'html'
+    get 'edit', :id => -1, :format => format
   end
+end
+
+share_examples_for "standard GET edit" do
+  it_should_behave_like "standard successful GET edit"
+  it_should_behave_like "standard unsuccessful GET edit"
 end
 
 share_examples_for "unauthorized GET edit" do
@@ -439,18 +466,21 @@ share_examples_for "unauthorized GET edit" do
   end
 end
 
-share_examples_for "GET new" do
+share_examples_for "successful GET new" do
   include CrudSetup
 
   before do
     setup_crud_names
-    @template = :new
     do_get
   end
 
   it { should respond_with :success }
   it { should render_template :new }
   it { should assign_to(@assigns_model_name).with_kind_of(@model) }
+end
+
+share_examples_for "standard GET new" do
+  it_should_behave_like "successful GET new"
 
   def do_get format = 'html'
     get 'new', :format => format
@@ -458,8 +488,6 @@ share_examples_for "GET new" do
 end
 
 share_examples_for "unauthorized GET new" do
-  include CrudSetup
-
   before do
     do_get
   end

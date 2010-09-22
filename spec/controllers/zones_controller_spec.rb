@@ -1,84 +1,29 @@
 require 'spec_helper'
 
 describe ZonesController do
+  before :all do
+    @model = Zone
+  end
+
   before do
     @game = Factory :game
-    @zone = Factory :zone
+    @data = Factory(:zone).attributes
   end
 
-  context "on GET to" do
-    context "for HTML" do
-      context ":index with a game" do
-        before do
-          get :index, :game => @game
-        end
-
-        it { should respond_with :success }
-        it { should render_template :index }
-        it { should assign_to(:zones) }
-      end
-
-      context ":index with a game and region" do
-        before do
-          get :index, :game => @game, :region => @region
-        end
-
-        it { should respond_with :success }
-        it { should render_template :index }
-        it { should assign_to(:zones) }
-      end
-
-      context ":show" do
-        before do
-          get :show, :id => @zone
-        end
-
-        it { should respond_with :success }
-        it { should render_template :show }
-        it { should assign_to(:zone).with(@zone) }
-      end
-    end
-
-    context "for JSON" do
-      context ":index" do
-        before do
-          get :index, :game => @game, :format => "json"
-        end
-
-        it { should respond_with :success }
-        it { should respond_with_content_type :json }
-      end
-
-      context ":show" do
-        before do
-          get :show, :id => @zone, :format => "json"
-        end
-
-        it { should respond_with :success }
-        it { should respond_with_content_type :json }
-      end
-    end
-  end
-
-  context "on POST to :create" do
+  context "as an admin" do
     before do
-      @data = Factory.attributes_for :zone
+      Factory :admin_user_session
     end
 
-    context "for HTML" do
-      it "should create an zone" do
-        proc { post :create, :zone => @data }.should change(Zone, :count).by(1)
-        should redirect_to zone_path @zone
-        # TODO check that params are saved
-      end
+    context "on GET to :index with a game" do
+      it_should_behave_like "GET index"
+
+        def do_get format='html'
+          get :index, :game_id => @game, :format => format
+        end
     end
 
-    context "for JSON" do
-      before do
-        post :create, :zone => @data, :format => "json"
-      end
-
-      it { should respond_with :success }
-    end
+    it_should_behave_like "standard POST create"
+    it_should_behave_like "standard GET show"
   end
 end

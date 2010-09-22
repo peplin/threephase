@@ -15,8 +15,13 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create params[:game]
-    respond_with(@game, :location => game_path(@game))
+    @game = Game.new params[:game]
+    if @game.save
+      flash[:notice] = 'Game was successfully created.'
+    else
+      flash[:error] = @game.errors
+    end
+    respond_with @game
   end
 
   def show
@@ -28,8 +33,12 @@ class GamesController < ApplicationController
   end
 
   def update
-    @game.update_attributes! params[:game]
-    respond_with(@game, :location => game_path(@game))
+    if @game.update_attributes params[:game]
+      flash[:notice] = 'Game was successfully updated'
+    else
+      flash[:error] = @game.errors
+    end
+    respond_with @game
   end
 
   private

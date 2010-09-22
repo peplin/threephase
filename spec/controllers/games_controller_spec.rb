@@ -15,18 +15,18 @@ describe GamesController do
       Factory :admin_user_session
     end
 
-    it_should_behave_like "GET index"
-    it_should_behave_like "GET show"
-    it_should_behave_like "GET edit"
-    it_should_behave_like "GET new"
-    it_should_behave_like "POST create"
-    it_should_behave_like "PUT update"
+    it_should_behave_like "standard GET index"
+    it_should_behave_like "standard GET show"
+    it_should_behave_like "standard GET edit"
+    it_should_behave_like "standard GET new"
+    it_should_behave_like "standard POST create"
+    it_should_behave_like "standard PUT update"
 
     context "on POST to :create without data" do
       it_should_behave_like "successful POST create"
 
-      def do_post 
-        post :create
+      def do_post format='html'
+        post :create, :format => format
       end
     end
 
@@ -41,7 +41,7 @@ describe GamesController do
           it_should_behave_like "unsuccessful PUT update"
 
           def do_put format='html'
-            put :update, :id => @started_game, :game => @data
+            put :update, :id => @started_game, :game => @data, :format => format
           end
         end
 
@@ -49,7 +49,7 @@ describe GamesController do
           it_should_behave_like "successful PUT update"
 
           def do_put format='html'
-            put :update, :id => @game, :game => @data
+            put :update, :id => @game, :game => @data, :format => format
           end
         end
       end
@@ -64,8 +64,8 @@ describe GamesController do
   end
 
   share_examples_for "a user with limited access" do
-    it_should_behave_like "GET index"
-    it_should_behave_like "GET show"
+    it_should_behave_like "standard GET index"
+    it_should_behave_like "standard GET show"
     it_should_behave_like "unauthorized GET edit"
     it_should_behave_like "unauthorized GET new"
     it_should_behave_like "unauthorized POST create"

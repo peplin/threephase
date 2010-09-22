@@ -7,7 +7,7 @@ class Zone < ActiveRecord::Base
   has_many :storage_devices
   has_friendly_id :name, :use_slug => true
 
-  validates_presence_of :name
-  validates_presence_of :x
-  validates_presence_of :y
+  validates :name, :presence => true
+  validates :x, :presence => true, :numericality => {:greater_than => -1}
+  validates :y, :presence => true, :numericality => {:greater_than => -1}
 end

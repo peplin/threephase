@@ -340,6 +340,5 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   end
 
   add_index "zones", ["cached_slug"], :name => "index_zones_on_cached_slug", :unique => true
-  add_index "zones", ["x", "y"], :name => "index_zones_on_x_and_y", :unique => true
 
 end
