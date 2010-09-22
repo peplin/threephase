@@ -12,9 +12,15 @@ describe "routing to bids" do
         :game_id => @game, :controller => "bids")
   end
 
-  it "should expose a list of all bids for a generator" do
+  it "should expose a list of all bids for a game's generator" do
     {:get, "/games/#{@game}/generators/#{@generator}/bids"}.should route_to(
         :action => "index", :game_id => @game, :generator_id => @generator,
+        :controller => "bids")
+  end
+
+  it "should expose a list of all bids for a generator" do
+    {:get, "/generators/#{@generator}/bids"}.should route_to(
+        :action => "index", :generator_id => @generator,
         :controller => "bids")
   end
 
@@ -22,6 +28,9 @@ describe "routing to bids" do
     {:get, "/games/#{@game}/generators/#{@generator}/bids/new"
         }.should route_to(:action => "new", :game_id => @game,
         :generator_id => @generator, :controller => "bids")
+    {:get, "/generators/#{@generator}/bids/new"
+        }.should route_to(:action => "new", :generator_id => @generator,
+        :controller => "bids")
   end
 
   it { {:post, "/bids"}.should route_to(:action => "create",
@@ -33,10 +42,16 @@ describe "routing to bids" do
         :controller => "bids")
   end
 
-  it "should expose a hackable URL to a generator's bid" do
+  it "should expose a hackable URL to a game's generator's bid" do
     {:get, "/games/#{@game}/generators/#{@generator}/bids/#{@bid}"
         }.should route_to(:action => "show", :game_id => @game,
         :generator_id => @generator, :id => @bid, :controller => "bids")
+  end
+
+  it "should expose a hackable URL to a generator's bid" do
+    {:get, "/generators/#{@generator}/bids/#{@bid}"
+        }.should route_to(:action => "show", :generator_id => @generator,
+        :id => @bid, :controller => "bids")
   end
 
   it "should expose a direct URL to a bid" do
