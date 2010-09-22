@@ -6,4 +6,5 @@ class TechnicalComponentInstance < ActiveRecord::Base
 
   validates :operating, :presence => true
   validates :operating_level, :presence => true, :percentage => true
+  validates :zone, :presence => true
 end
