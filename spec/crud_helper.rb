@@ -8,11 +8,19 @@ module CrudSetup
     # @pluralized_model_name         => 'Assets'
     # @assigns_model_name            => :asset
     # @pluralized_assigns_model_name => :assets
-    @model_name                    = @model.to_s
-    @model_symbol                  = @model_name.to_sym
-    @pluralized_model_name         = @model_name.humanize.pluralize
-    @assigns_model_name            = @model_name.underscore.to_sym
-    @pluralized_assigns_model_name = @model_name.underscore.pluralize.to_sym
+    @model_name = @model.to_s
+    @model_symbol = @model_name.to_sym
+    @pluralized_model_name = @model_name.humanize.pluralize
+    unless @factory_name
+      @factory_name = @model_name.underscore.to_sym
+    end
+    unless @assigns_model_name
+      @assigns_model_name = @model_name.underscore.to_sym
+    end
+    @pluralized_redirect_name = @model_name.underscore.pluralize.to_sym
+    unless @pluralized_assigns_model_name
+      @pluralized_assigns_model_name = @model_name.underscore.pluralize.to_sym
+    end
   end
 
   def subject
@@ -93,7 +101,7 @@ share_examples_for "successful GET show" do
   end
 
   before do
-    @instance = Factory @assigns_model_name
+    @instance = Factory @factory_name
     do_get
   end
 
@@ -155,7 +163,7 @@ share_examples_for "unauthorized GET show" do
   include CrudSetup
 
   before do
-    @instance = Factory @assigns_model_name
+    @instance = Factory @factory_name
   end
 
   context "for HTML" do
@@ -200,7 +208,7 @@ share_examples_for "successful POST create" do
   before do
     setup_crud_names
     if not @data
-      @data = Factory.attributes_for(@assigns_model_name)
+      @data = Factory.attributes_for(@factory_name)
     end
     do_post
   end
@@ -268,7 +276,7 @@ share_examples_for "unauthorized PUT update" do
 
   before do
     setup_crud_names
-    @instance = Factory @assigns_model_name
+    @instance = Factory @factory_name
     do_put
   end
 
@@ -295,8 +303,8 @@ share_examples_for "successful PUT update" do
 
   before do
     setup_crud_names
-    @instance = Factory @assigns_model_name
-    @data = Factory.attributes_for @assigns_model_name
+    @instance = Factory @factory_name
+    @data = Factory.attributes_for @factory_name
     do_put
   end
 
@@ -331,7 +339,7 @@ share_examples_for "unsuccessful PUT update" do
 
   before do
     setup_crud_names
-    @instance = Factory @assigns_model_name
+    @instance = Factory @factory_name
     do_put
   end
 
@@ -357,12 +365,12 @@ share_examples_for "successful DELETE destroy" do
 
   before do
     setup_crud_names
-    @instance = Factory @assigns_model_name
+    @instance = Factory @factory_name
     do_delete
   end
 
   it "should redirect to the model index when requesting HTML" do
-    should redirect_to eval("#{@pluralized_assigns_model_name}_path")
+    should redirect_to eval("#{@pluralized_redirect_name}_path")
   end
 
   context "should accept JSON" do
@@ -383,7 +391,7 @@ share_examples_for "unsuccessful DELETE destroy" do
   end
 
   it "should redirect to the model index when requesting HTML" do
-    should redirect_to eval("#{@pluralized_assigns_model_name}_path")
+    should redirect_to eval("#{@pluralized_redirect_name}_path")
   end
 
   it "should render a 404 when requesting JSON" do
@@ -396,7 +404,7 @@ share_examples_for "standard successful DELETE destroy" do
   it_should_behave_like "successful DELETE destroy"
 
   def do_delete format = 'html'
-    delete 'destroy', :id => @instance.to_param, :format => format
+    delete 'destroy', :id => @instance, :format => format
   end
 end
 
@@ -418,7 +426,7 @@ share_examples_for "successful GET edit" do
 
   before do
     setup_crud_names
-    @instance = Factory @assigns_model_name
+    @instance = Factory @factory_name
     do_get
   end
 
@@ -466,7 +474,7 @@ share_examples_for "unauthorized GET edit" do
 
   before do
     setup_crud_names
-    @instance = Factory @assigns_model_name
+    @instance = Factory @factory_name
     do_get
   end
 
