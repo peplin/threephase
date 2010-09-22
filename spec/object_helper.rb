@@ -1,3 +1,27 @@
+share_examples_for "show with a game" do
+  include CrudSetup
+
+  context "on GET to :show with a game" do
+    before do
+      @game = Factory :game
+    end
+
+    it_should_behave_like "successful GET show"
+
+    def do_get format='html'
+      get :show, :game_id => @game, :id => @instance, :format => format
+    end
+  end
+
+  context "on GET to :show with an invalid game" do
+    it_should_behave_like "unsuccessful GET show"
+
+    def do_get format='html'
+      get :show, :game_id => @game, :id => -1, :format => format
+    end
+  end
+end
+
 share_examples_for "index with a game" do
   include CrudSetup
 

@@ -31,6 +31,6 @@ describe "routing to market_prices" do
   end
 
   it "does not expose a list of all market_prices" do
-    {:get => "/market_prices"}.should_not be_routable
+    {:get => "/prices"}.should_not be_routable
   end
 end

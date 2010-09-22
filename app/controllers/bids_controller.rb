@@ -48,7 +48,8 @@ class BidsController < ApplicationController
     if @generator
       @bids = @generator.bids
     else
-      @bids = @game.bids
+      # TODO
+      #@bids = @game.bids
     end
   end
 

@@ -27,8 +27,7 @@ Threephase::Application.routes.draw do
         :as => :contract_negotiations
     resources :interstatelines, :controller => :interstate_lines
 
-    resources :prices, :controller => :market_prices,
-        :only => [:index, :show]
+    resources :prices, :controller => :market_prices, :only => [:index, :show]
     resources :repairs
     resources :advancements, :controller => :research_advancements,
         :only => [:create, :index, :show]

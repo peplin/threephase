@@ -170,7 +170,7 @@ share_examples_for "standard successful GET show" do
   it_should_behave_like "successful GET show"
 
   def do_get format='html'
-    get 'show', :id => @instance, :format => format
+    get :show, :id => @instance, :format => format
   end
 end
 
@@ -180,7 +180,7 @@ share_examples_for "standard unsuccessful GET show" do
   it_should_behave_like "unsuccessful GET show"
 
   def do_get format = 'html'
-    get 'show', :id => -1, :format => format
+    get :show, :id => -1, :format => format
   end
 end
 
@@ -216,7 +216,7 @@ share_examples_for "unauthorized GET show" do
   end
 
   def do_get format = 'html'
-    get 'show', :id => @instance, :format => format
+    get :show, :id => @instance, :format => format
   end
 end
 
@@ -510,7 +510,7 @@ share_examples_for "standard successful GET edit" do
   it_should_behave_like "successful GET edit"
 
   def do_get format = 'html'
-    get 'edit', :id => @instance, :format => format
+    get :edit, :id => @instance, :format => format
   end
 end
 
@@ -533,7 +533,7 @@ share_examples_for "standard unsuccessful GET edit" do
   it_should_behave_like "unsuccessful GET edit"
 
   def do_get format = 'html'
-    get 'edit', :id => -1, :format => format
+    get :edit, :id => -1, :format => format
   end
 end
 
@@ -556,7 +556,7 @@ share_examples_for "unauthorized GET edit" do
   it { should redirect_to login_users_path }
 
   def do_get format = 'html'
-    get 'edit', :id => @instance, :format => format
+    get :edit, :id => @instance, :format => format
   end
 end
 
@@ -585,7 +585,7 @@ share_examples_for "standard GET new" do
   it_should_behave_like "successful GET new"
 
   def do_get format = 'html'
-    get 'new', :format => format
+    get :new, :format => format
   end
 end
 
@@ -599,6 +599,6 @@ share_examples_for "unauthorized GET new" do
   it { should redirect_to login_users_path }
 
   def do_get format = 'html'
-    get 'new', :format => format
+    get :new, :format => format
   end
 end
