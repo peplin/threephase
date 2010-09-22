@@ -1,4 +1,6 @@
 share_examples_for "index with a game" do
+  include CrudSetup
+
   context "on GET to :index with a game" do
     before do
       @game = Factory :game
@@ -21,6 +23,8 @@ share_examples_for "index with a game" do
 end
 
 share_examples_for "new with a game" do
+  include CrudSetup
+
   context "on GET to :new with a game" do
     before do
       @game = Factory :game
@@ -43,6 +47,8 @@ share_examples_for "new with a game" do
 end
 
 share_examples_for "a technical component instance" do
+  include CrudSetup
+
   before :all do
     @assigns_model_name = :instance
     @pluralized_assigns_model_name = :instances

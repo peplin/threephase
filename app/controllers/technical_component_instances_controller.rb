@@ -19,7 +19,7 @@ class TechnicalComponentInstancesController < ApplicationController
   def create
     @instance = component_type.new params[:instance]
     if @instance.save
-      flash[:notice] = 'component_type was successfully created.'
+      flash[:notice] = "#{component_type.to_s} was successfully created."
     else
       flash[:error] = @instance.errors
     end
@@ -36,7 +36,7 @@ class TechnicalComponentInstancesController < ApplicationController
 
   def update
     if @instance.update_attributes params[:instance]
-      flash[:notice] = 'component_type was successfully updated'
+      flash[:notice] = "#{component_type.to_s} was successfully updated."
     else
       flash[:error] = @instance.errors
     end

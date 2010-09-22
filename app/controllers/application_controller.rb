@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
 
   rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
-  rescue_from ActiveRecord::UnknownAttributeError, :with => :render_bad_request
   rescue_from ActionController::RoutingError, :with => :render_not_found
   rescue_from ActionController::UnknownController, :with => :render_not_found
   rescue_from ActionController::UnknownAction, :with => :render_not_found
@@ -22,10 +21,6 @@ class ApplicationController < ActionController::Base
 
   def render_not_found(exception)
     render "/errors/404", :status => 404
-  end
-
-  def render_bad_request(exception)
-    render "/errors/400", :status => 400
   end
 
   def admin_only

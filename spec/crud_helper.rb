@@ -241,7 +241,7 @@ share_examples_for "successful POST create" do
   before do
     setup_crud_names
     if not @data
-      @data = Factory.attributes_for(@factory_name)
+      @data = Factory(@factory_name).attributes
     end
     do_post
   end
@@ -345,14 +345,20 @@ share_examples_for "successful PUT update" do
   before do
     setup_crud_names
     @instance = Factory @factory_name
-    @data = Factory.attributes_for @factory_name
+    @data = Factory(@factory_name).attributes
     do_put
   end
 
   it { should set_the_flash }
+
   it "should redirect to the updated instance's show page" do
-    should redirect_to eval("#{@model_name.underscore}_path @instance")
+    if self.respond_to? :redirect_path
+      should redirect_to redirect_path
+    else
+      should redirect_to eval("#{@model_name.underscore}_path @instance")
+    end
   end
+
   it "should update the instance" do
     @instance.updated_at.should_not eq(@instance.reload.updated_at)
   end
@@ -388,7 +394,11 @@ share_examples_for "unsuccessful PUT update" do
 
   it { should set_the_flash }
   it "should redirect to the updated instance's edit page" do
-    should redirect_to eval("#{@model_name.underscore}_path @instance")
+    if self.respond_to? :redirect_path
+      should redirect_to redirect_path
+    else
+      should redirect_to eval("#{@model_name.underscore}_path @instance")
+    end
   end
   it "should not update the instance" do
     @instance.updated_at.should eq(@instance.reload.updated_at)
@@ -415,7 +425,11 @@ share_examples_for "successful DELETE destroy" do
   end
 
   it "should redirect to the model index when requesting HTML" do
-    should redirect_to eval("#{@pluralized_redirect_name}_path")
+    if self.respond_to? :redirect_path
+      should redirect_to redirect_path
+    else
+      should redirect_to eval("#{@pluralized_redirect_name}_path")
+    end
   end
 
   context "should accept JSON" do
@@ -436,7 +450,11 @@ share_examples_for "unsuccessful DELETE destroy" do
   end
 
   it "should redirect to the model index when requesting HTML" do
-    should redirect_to eval("#{@pluralized_redirect_name}_path")
+    if self.respond_to? :redirect_path
+      should redirect_to redirect_path
+    else
+      should redirect_to eval("#{@pluralized_redirect_name}_path")
+    end
   end
 
   it "should render a 404 when requesting JSON" do

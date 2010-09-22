@@ -18,12 +18,13 @@ Threephase::Application.routes.draw do
     resources :generators do 
       resources :bids, :except => [:update, :destroy]
       resources :contracts, :controller => :contract_negotiations,
-          :only => [:index, :show, :new]
+          :only => [:index, :show, :new], :as => :contract_negotiations
       resources :repairs
     end
 
     resources :bids, :only => [:index, :show]
-    resources :contracts, :controller => :contract_negotiations
+    resources :contracts, :controller => :contract_negotiations,
+        :as => :contract_negotiations
     resources :interstatelines, :controller => :interstate_lines
 
     resources :prices, :controller => :market_prices,
@@ -43,14 +44,15 @@ Threephase::Application.routes.draw do
 
   resources :bids, :only => [:show, :create]
 
-  match "/offers/:id" => "contract_negotiations#respond", :via => :put
-  match "/contracts/:contract_id/offers" => "contract_negotiations#offer",
-      :via => :post
   resources :contracts, :controller => :contract_negotiations,
-      :only => [:index, :show, :create] do
-    resources :offers, :controller => :contract_negotiations
+      :only => [:index, :show, :create],:as => :contract_negotiations do
   end
-  resources :offers, :controller => :contract_negotiations
+  resources :offers, :controller => :contract_negotiations, :as => :offers,
+    :only => [:update] do
+    collection do
+      post :offer
+    end
+  end
 
   resources :interstatelines, :controller => :interstate_lines,
       :only => [:index, :show, :create, :update]

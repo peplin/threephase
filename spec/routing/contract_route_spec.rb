@@ -28,11 +28,10 @@ describe "routing to contracts" do
   it { {:post, "/contracts"}.should route_to(:action => "create",
       :controller => "contract_negotiations") }
 
-  it { {:post, "/contracts/#{@contract}/offers"}.should route_to(
-      :action => "offer", :contract_id => @contract,
-      :controller => "contract_negotiations") }
+  it { {:post, "/offers"}.should route_to(:action => "offer",
+      :contract_id => @contract, :controller => "contract_negotiations") }
 
-  it { {:put, "/offers/#{@offer}"}.should route_to(:action => "respond",
+  it { {:put, "/offers/#{@offer}"}.should route_to(:action => "update",
       :id => @offer, :controller => "contract_negotiations") }
 
   it "should expose a hackable URL to a game's contract" do
