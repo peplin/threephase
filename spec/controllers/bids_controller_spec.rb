@@ -16,28 +16,16 @@ describe BidsController do
       Factory :admin_user_session
     end
 
-    context "on GET to" do
-      context "for HTML" do
-        context "on GET to :index with a game" do
-          it_should_behave_like "GET index"
+    it_should_behave_like "index with a game"
+    it_should_behave_like "standard GET show"
+    it_should_behave_like "standard POST create"
 
-            def do_get format='html'
-              get :index, :game_id => @game, :format => format
-            end
-        end
-
-        it_should_behave_like "standard GET show"
-
-        context ":new with a generator" do
-          it_should_behave_like "successful GET new"
-          def do_get format='html'
-            get :new, :generator_id => @generator
-          end
-        end
+    context ":new with a generator" do
+      it_should_behave_like "successful GET new"
+      def do_get format='html'
+        get :new, :generator_id => @generator
       end
     end
-
-    it_should_behave_like "standard POST create"
 
     context "on POST to :create" do
       context "for HTML" do
@@ -51,6 +39,7 @@ describe BidsController do
       end
     end
   end
+
   context "as a player" do
     before do
       Factory :user_session

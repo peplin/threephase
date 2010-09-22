@@ -1,200 +1,47 @@
 require 'spec_helper'
 
 describe ContractNegotiationsController do
+  before :all do
+    @model = ContractNegotiation
+  end
+
   before :each do
     @generator = Factory :generator
     @offer = Factory :contract_offer
     @contract = Factory :contract_negotiation
   end
-
-  context "on GET to" do
-    context "for HTML" do
-      context ":index" do
-        context "with a game" do
-          before do
-            get :index, :game => @game
-          end
-
-          it { should respond_with :success }
-          it { should render_template :index }
-          it { should assign_to(:contracts) }
-          it { should assign_to(:generator) }
-        end
-
-        context "with a game and generator" do
-          before do
-            get :index, :game => @game, :generator => @generator
-          end
-
-          it { should respond_with :success }
-          it { should render_template :index }
-          it { should assign_to(:contracts) }
-          it { should assign_to(:game) }
-          it { should assign_to(:generators) }
-        end
-
-        context "with invalid parameters" do
-          it "should respond with 404"
-        end
-
-        context "with unauthorized objects" do
-          it "should not allow access if user isn't in the game"
-          it "should not allow access if user doesn't own the generator"
-        end
-      end
-
-      context ":show" do
-        context do
-          before do
-            get :show, :contract => @contract
-          end
-
-          it { should respond_with :success }
-          it { should render_template :show }
-          it { should assign_to(:contract) }
-          it { should assign_to(:generator) }
-        end
-
-        context "with a game" do
-          before do
-            get :show, :game => @game, :contract => @contract
-          end
-
-          it { should respond_with :success }
-          it { should render_template :show }
-          it { should assign_to(:contract) }
-          it { should assign_to(:generator) }
-        end
-
-        context "with a game and a generator" do
-          before do
-            get :show, :game => @game, :generator => @generator,
-                :contract => @contract
-          end
-
-          it { should respond_with :success }
-          it { should render_template :show }
-          it { should assign_to(:contract) }
-          it { should assign_to(:generator) }
-        end
-
-        context "with invalid parameters" do
-          it "should respond with 404"
-        end
-      end
-
-      context ":new" do
-        context do
-          before do
-            get :new, :game => @game, :generator => @generator
-          end
-
-          it { should respond_with :success }
-          it { should render_template :new }
-          it { assigns(:contract).should be_a_new(ContractNegotiation) }
-        end
-
-        context "with invalid parameters" do
-          it "should respond with 404"
-        end
-      end
+  context "as an admin" do
+    before do
+      Factory :admin_user_session
     end
+    
+    it_should_behave_like "index with a game"
+    it_should_behave_like "new with a game"
+    it_should_behave_like "standard GET show"
+    it_should_behave_like "standard POST create"
 
-    context "for JSON" do
-      context ":index with a game" do
-        before do
-          get :index, :game => @game, :format => "json"
-        end
-
-        it { should respond_with_content_type :json }
+    context "with an offer" do
+      before do
+        @model = ContractOffer
       end
 
-      context ":show with a contract" do
-        before do
-          get :show, :contract => @contract, :format => "json"
-        end
+      it_should_behave_like "standard POST create"
+      it_should_behave_like "standard PUT update"
 
-        it { should respond_with_content_type :json }
+      def redirect_path
+        generator_contract_path @generator, @contract
       end
     end
   end
 
-  context "on POST" do
+  context "as a player" do
     before do
-      @data =  Factory.attributes_for :contract_negotiation
+      Factory :user_session
     end
 
-    context "to :create" do
-      context "for HTML" do
-        it "should create a contract" do
-          proc { post :create, :contract => @data }.should change(
-              ContractNegotiation, :count)
-          should respond_with :success
-          should redirect_to generator_contract_path @generator, @contract
-        end
-
-        context "with invalid data" do
-          it "should respond with 400"
-        end
-      end
-
-      context "for JSON" do
-        before do
-          post :create, :contract => @data, :format => "json"
-        end
-
-        it { should respond_with :success }
-      end
-    end
-
-    context "to :offer" do
-      before do
-        @data = Factory.attributes_for :contract_offer
-      end
-
-      context "for HTML" do
-        it "should create an offer" do
-          proc { post :create, :id => @contract, :offer => @data
-              }.should change(ContractOffer, :count)
-          should respond_with :success
-          should redirect_to generator_contract_path @generator, @contract
-        end
-
-        context "with invalid data" do
-          it "should respond with 400"
-        end
-      end
-
-      context "for JSON" do
-        before do
-          post :create, :id => @contract, :offer => @data, :format => "json"
-        end
-
-        it { should respond_with :success }
-      end
-    end
-  end
-
-  context "on PUT to :respond" do
-    before do
-      @data = Factory.attributes_for :accepted_offer
-    end
-
-    context "for HTML" do
-      it "should update the offer" do
-        proc { put :respond, :id => @offer, :offer => @data
-            }.should change(ContractOffer, :count)
-        should respond_with :success
-        should redirect_to generator_contract_path @generator, @contract
-      end
-    end
-
-    context "for JSON" do
-      before do
-        put :respond, :id => @data, :format => "json"
-      end
-
-      it { should respond_with :success }
+    context "index with unauthorized objects" do
+      it "should not allow access if user isn't in the game"
+      it "should not allow access if user doesn't own the generator"
     end
   end
 end

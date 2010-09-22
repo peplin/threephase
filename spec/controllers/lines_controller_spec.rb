@@ -1,10 +1,11 @@
 require 'spec_helper'
 
-describe StorageDevicesController do
+describe LinesController do
   before :all do
-    @model = StorageDevice
-    @instance = Factory :storage_device
+    @model = Line
+    @instance = Factory :line
   end
 
   it_should_behave_like "a technical component instance"
 end
+

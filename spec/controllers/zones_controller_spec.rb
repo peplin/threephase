@@ -15,14 +15,7 @@ describe ZonesController do
       Factory :admin_user_session
     end
 
-    context "on GET to :index with a game" do
-      it_should_behave_like "GET index"
-
-        def do_get format='html'
-          get :index, :game_id => @game, :format => format
-        end
-    end
-
+    it_should_behave_like "index with a game"
     it_should_behave_like "standard POST create"
     it_should_behave_like "standard GET show"
   end

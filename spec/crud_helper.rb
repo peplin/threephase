@@ -30,10 +30,33 @@ module CrudSetup
 end
 
 share_as :JSONResponse do
+  include CrudSetup
+
   it { should respond_with_content_type :json }
 end
 
-share_examples_for "GET index" do
+share_examples_for "unsuccessful GET index" do
+  include CrudSetup
+
+  context "for HTML" do
+    before do
+      do_get
+    end
+
+    it { should respond_with :missing }
+  end
+
+  context "for JSON" do
+    before do
+      do_get 'json'
+    end
+
+    it { should respond_with :missing }
+    it_should_behave_like JSONResponse
+  end
+end
+
+share_examples_for "successful GET index" do
   include CrudSetup
 
   before do
@@ -64,7 +87,9 @@ share_examples_for "GET index" do
 end
 
 share_examples_for "standard GET index" do
-  it_should_behave_like "GET index"
+  include CrudSetup
+
+  it_should_behave_like "successful GET index"
 
   def do_get format='html'
     get :index, :format => format
@@ -72,6 +97,8 @@ share_examples_for "standard GET index" do
 end
 
 share_examples_for "unauthorized GET index" do
+  include CrudSetup
+
   context "for HTML" do
     before do
       do_get
@@ -138,6 +165,8 @@ share_examples_for "unsuccessful GET show" do
 end
 
 share_examples_for "standard successful GET show" do
+  include CrudSetup
+
   it_should_behave_like "successful GET show"
 
   def do_get format='html'
@@ -146,6 +175,8 @@ share_examples_for "standard successful GET show" do
 end
 
 share_examples_for "standard unsuccessful GET show" do
+  include CrudSetup
+
   it_should_behave_like "unsuccessful GET show"
 
   def do_get format = 'html'
@@ -154,6 +185,8 @@ share_examples_for "standard unsuccessful GET show" do
 end
 
 share_examples_for "standard GET show" do
+  include CrudSetup
+
   it_should_behave_like "standard successful GET show"
   it_should_behave_like "standard unsuccessful GET show"
 
@@ -238,6 +271,8 @@ share_examples_for "successful POST create" do
 end
 
 share_examples_for "standard successful POST create" do
+  include CrudSetup
+
   it_should_behave_like "successful POST create"
 
   def do_post format = 'html'
@@ -259,6 +294,8 @@ share_examples_for "unsuccessful POST create" do
 end
 
 share_examples_for "standard unsuccessful POST create" do
+  include CrudSetup
+
   it_should_behave_like "unsuccessful POST create"
 
   def do_post format = 'html'
@@ -267,6 +304,8 @@ share_examples_for "standard unsuccessful POST create" do
 end
 
 share_examples_for "standard POST create" do
+  include CrudSetup
+
   it_should_behave_like "standard successful POST create"
   it_should_behave_like "standard unsuccessful POST create"
 end
@@ -289,6 +328,8 @@ share_examples_for "unauthorized PUT update" do
 end
 
 share_examples_for "standard PUT update" do
+  include CrudSetup
+
   context "with valid data" do
     it_should_behave_like "standard successful PUT update"
   end
@@ -326,6 +367,8 @@ share_examples_for "successful PUT update" do
 end
 
 share_examples_for "standard successful PUT update" do
+  include CrudSetup
+
   it_should_behave_like "successful PUT update"
 
   def do_put format = 'html'
@@ -353,6 +396,8 @@ share_examples_for "unsuccessful PUT update" do
 end
 
 share_examples_for "standard unsuccessful PUT update" do
+  include CrudSetup
+
   it_should_behave_like "unsuccessful PUT update"
 
   def do_put format = 'html'
@@ -401,6 +446,8 @@ share_examples_for "unsuccessful DELETE destroy" do
 end
 
 share_examples_for "standard successful DELETE destroy" do
+  include CrudSetup
+
   it_should_behave_like "successful DELETE destroy"
 
   def do_delete format = 'html'
@@ -409,6 +456,8 @@ share_examples_for "standard successful DELETE destroy" do
 end
 
 share_examples_for "standard unsuccessful DELETE destroy" do
+  include CrudSetup
+
   it_should_behave_like "unsuccessful DELETE destroy"
 
   def do_delete format = 'html'
@@ -417,6 +466,8 @@ share_examples_for "standard unsuccessful DELETE destroy" do
 end
 
 share_examples_for "standard DELETE destroy" do
+  include CrudSetup
+
   it_should_behave_like "standard successful DELETE destroy"
   it_should_behave_like "standard unsuccessful DELETE destroy"
 end
@@ -436,6 +487,8 @@ share_examples_for "successful GET edit" do
 end
 
 share_examples_for "standard successful GET edit" do
+  include CrudSetup
+
   it_should_behave_like "successful GET edit"
 
   def do_get format = 'html'
@@ -457,6 +510,8 @@ share_examples_for "unsuccessful GET edit" do
 end
 
 share_examples_for "standard unsuccessful GET edit" do
+  include CrudSetup
+
   it_should_behave_like "unsuccessful GET edit"
 
   def do_get format = 'html'
@@ -465,6 +520,8 @@ share_examples_for "standard unsuccessful GET edit" do
 end
 
 share_examples_for "standard GET edit" do
+  include CrudSetup
+
   it_should_behave_like "standard successful GET edit"
   it_should_behave_like "standard unsuccessful GET edit"
 end
@@ -485,6 +542,12 @@ share_examples_for "unauthorized GET edit" do
   end
 end
 
+share_examples_for "unsuccessful GET new" do
+  include CrudSetup
+
+  it { should respond_with :missing }
+end
+
 share_examples_for "successful GET new" do
   include CrudSetup
 
@@ -499,6 +562,8 @@ share_examples_for "successful GET new" do
 end
 
 share_examples_for "standard GET new" do
+  include CrudSetup
+
   it_should_behave_like "successful GET new"
 
   def do_get format = 'html'
@@ -507,6 +572,8 @@ share_examples_for "standard GET new" do
 end
 
 share_examples_for "unauthorized GET new" do
+  include CrudSetup
+
   before do
     do_get
   end
