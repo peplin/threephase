@@ -1,4 +1,11 @@
-share_examples_for "a technical component instance"
+require 'spec_helper'
+
+share_examples_for "a technical component instance" do
+  before :all do
+    @assigns_model_name = :instance
+    @pluralized_assigns_model_name = :instances
+  end
+
   before :each do
     @game = Factory :game
     @zone = Factory :zone
@@ -68,3 +75,31 @@ share_examples_for "a technical component instance"
     it "should not allow me to create an instance"
   end
 end
+
+describe StorageDevicesController do
+  before :all do
+    @model = StorageDevice
+    @instance = Factory :storage_device
+  end
+
+  it_should_behave_like "a technical component instance"
+end
+
+describe LinesController do
+  before :all do
+    @model = Line
+    @instance = Factory :line
+  end
+
+  it_should_behave_like "a technical component instance"
+end
+
+describe GeneratorsController do
+  before :all do
+    @model = Generator
+    @instance = Factory :generator
+  end
+
+  it_should_behave_like "a technical component instance"
+end
+

@@ -8,12 +8,13 @@ Threephase::Application.routes.draw do
     resources :zones do
       resources :lines
       resources :generators
-      resources :stores, :controller => :storage_devices
+      resources :stores, :controller => :storage_devices,
+          :as => :storage_devices
       resources :prices, :controller => :market_prices, :only => [:index, :show]
     end
 
     resources :lines
-    resources :stores, :controller => :storage_devices
+    resources :stores, :controller => :storage_devices, :as => :storage_devices
     resources :generators do 
       resources :bids, :except => [:update, :destroy]
       resources :contracts, :controller => :contract_negotiations,
@@ -30,7 +31,7 @@ Threephase::Application.routes.draw do
     resources :repairs
     resources :advancements, :controller => :research_advancements,
         :only => [:create, :index, :show]
-    resources :stores, :controller => :storage_devices
+    resources :stores, :controller => :storage_devices, :as => :storage_devices
   end
 
   resources :generators, :only => [:show, :edit, :create, :update] do
@@ -60,7 +61,8 @@ Threephase::Application.routes.draw do
     end
   end
 
-  resources :stores, :controller => :storage_devices, :except => [:index] do
+  resources :stores, :controller => :storage_devices, :except => [:index],
+      :as => :storage_devices do
     collection do
       resources :types, :controller => :storage_device_types,
           :as => :storage_device_types
