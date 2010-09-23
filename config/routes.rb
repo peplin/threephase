@@ -73,7 +73,7 @@ Threephase::Application.routes.draw do
   resources :regions, :only => [:show, :update]
   resources :repairs, :except => [:index, :destroy, :update]
   resources :advancements, :controller => :research_advancements,
-      :only => [:create]
+      :only => [:show, :create]
   resources :zones, :only => [:show, :create]
 
   resources :users, :path_names => {:new => 'signup'}, :except => [:create] do

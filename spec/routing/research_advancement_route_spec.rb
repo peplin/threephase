@@ -10,12 +10,23 @@ describe "routing to research_advancements" do
       :action => "index", :game_id => @game,
       :controller => "research_advancements") }
 
-  it { {:get, "/games/#{@game}/advancements/#{@advancement}"
+  it "should expose a hackable URL to an advancement" do
+    {:get, "/games/#{@game}/advancements/#{@advancement}"
       }.should route_to(:action => "show", :game_id => @game,
-      :id => @advancement, :controller => "research_advancements") }
+      :id => @advancement, :controller => "research_advancements")
+  end
+
+  it "should expose a direct URL to an advancement" do
+    {:get, "/advancements/#{@advancement}"
+      }.should route_to(:action => "show", :id => @advancement,
+      :controller => "research_advancements")
+  end
 
   it { {:post, "/games/#{@game}/advancements"}.should route_to(
       :action => "create", :game_id => @game,
+      :controller => "research_advancements") }
+
+  it { {:post, "/advancements"}.should route_to(:action => "create",
       :controller => "research_advancements") }
 
   it "does not expose a list of all research_advancements" do
