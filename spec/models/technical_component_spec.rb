@@ -4,6 +4,8 @@ describe TechnicalComponent do
   it { should belong_to :user }
   it { should belong_to :buildable }
 
+  it { should validate_presence_of :buildable }
+
   it { should validate_presence_of :name }
 
   it { should validate_presence_of :peak_capacity_min }

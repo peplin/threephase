@@ -12,4 +12,5 @@ class GeneratorType < ActiveRecord::Base
   validates :maintenance_cost_min, :presence => true
   validates :maintenance_cost_max, :presence => true
   validates :tax_credit, :presence => true
+  validates :fuel_type, :presence => true
 end

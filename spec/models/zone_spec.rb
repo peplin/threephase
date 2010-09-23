@@ -8,6 +8,9 @@ describe Zone do
   it { should have_many :lines }
   it { should have_many :storage_devices }
   it { should have_db_index [:x, :y] }
+
+  it { should validate_presence_of :region }
+
   it { should validate_presence_of :name }
   it { should validate_presence_of :x }
   it { should validate_presence_of :y }

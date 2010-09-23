@@ -5,6 +5,8 @@ describe GeneratorType do
   it { should have_many :generators }
   it { should belong_to :fuel_type }
 
+  it { should validate_presence_of :fuel_type }
+
   it { should validate_presence_of :safety_mtbf }
   it { should validate_presence_of :safety_incident_severity }
   it { should validate_presence_of :ramping_speed }

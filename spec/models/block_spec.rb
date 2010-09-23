@@ -12,4 +12,5 @@ describe Block do
   it { should validate_presence_of :sunfall }
   it { should validate_presence_of :natural_gas_index }
   it { should validate_presence_of :coal_index }
+  it { should validate_presence_of :map }
 end

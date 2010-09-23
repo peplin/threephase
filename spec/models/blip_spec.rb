@@ -5,5 +5,6 @@ describe Blip do
   it { should validate_presence_of :x }
   it { should validate_presence_of :y }
   it { should validate_presence_of :power_factor }
+  it { should validate_presence_of :zone }
   it { should belong_to :zone }
 end

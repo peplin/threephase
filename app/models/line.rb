@@ -1,5 +1,9 @@
 class Line < TechnicalComponentInstance
   belongs_to :line_type, :foreign_key => "buildable_id"
+  belongs_to :zone, :class_name => "Zone"
   belongs_to :other_zone, :class_name => "Zone"
-  belongs_to :ending_zone, :class_name => 'Zone', :foreign_key => "other_zone"
+
+  validates :line_type, :presence => true
+  validates :zone, :presence => true
+  validates :other_zone, :presence => true
 end

@@ -4,6 +4,5 @@ class Map < ActiveRecord::Base
   has_many :blocks
   has_friendly_id :name, :use_slug => true
 
-  validates_presence_of :name
-  validates_length_of :name, :maximum => 30
+  validates :name, :presence => true, :length => {:maximum => 30}
 end

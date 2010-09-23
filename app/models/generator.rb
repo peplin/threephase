@@ -3,4 +3,6 @@ class Generator < TechnicalComponentInstance
   has_many :contract_negotiations
   has_many :contract_offers, :through => :contract_negotiations
   has_many :bids
+
+  validates :generator_type, :presence => true
 end

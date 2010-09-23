@@ -10,4 +10,5 @@ class Zone < ActiveRecord::Base
   validates :name, :presence => true
   validates :x, :presence => true, :numericality => {:greater_than => -1}
   validates :y, :presence => true, :numericality => {:greater_than => -1}
+  validates :region, :presence => true
 end
