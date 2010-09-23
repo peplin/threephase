@@ -3,16 +3,11 @@ require 'spec_helper'
 describe BidsController do
   before :all do
     @model = Bid
-  end
-
-  before :each do
     @generator = Factory :generator
-    @bid = Factory :bid
-    @data = Factory(:bid).attributes
   end
 
   context "as an admin" do
-    before do
+    before :all do
       Factory :admin_user_session
     end
 
@@ -22,6 +17,7 @@ describe BidsController do
 
     context ":new with a generator" do
       it_should_behave_like "successful GET new"
+
       def do_get format='html'
         get :new, :generator_id => @generator
       end
@@ -41,7 +37,7 @@ describe BidsController do
   end
 
   context "as a player" do
-    before do
+    before :all do
       Factory :user_session
     end
 

@@ -5,13 +5,8 @@ describe ResearchAdvancementsController do
     @model = ResearchAdvancement
   end
 
-  before :each do
-    @game = Factory :game
-    @advancement = Factory :research_advancement
-  end
-
   context "as an admin" do
-    before do
+    before :all do
       Factory :admin_user_session
     end
 

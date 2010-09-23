@@ -5,13 +5,8 @@ describe ZonesController do
     @model = Zone
   end
 
-  before do
-    @game = Factory :game
-    @data = Factory(:zone).attributes
-  end
-
   context "as an admin" do
-    before do
+    before :all do
       Factory :admin_user_session
     end
 

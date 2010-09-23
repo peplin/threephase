@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to interstate_lines" do
-  before do
+  before :all do
     @line = Factory(:interstate_line).to_param
     @game = Factory(:game).to_param
     @region = Factory(:region).to_param

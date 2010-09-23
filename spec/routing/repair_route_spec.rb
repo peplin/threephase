@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to repairs" do
-  before do
+  before :all do
     @game = Factory(:game).to_param
     @generator = Factory(:generator).to_param
     @repair = Factory(:repair).to_param

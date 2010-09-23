@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to zones" do
-  before :each do
+  before :all do
     @game = Factory(:game).to_param
     @zone = Factory(:zone).to_param
     @region = Factory(:region).to_param

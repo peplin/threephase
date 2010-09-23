@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to storage device types" do
-  before do
+  before :all do
     @type = Factory(:storage_device_type).to_param
   end
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to games" do
-  before do
+  before :all do
     @game = Factory(:game).to_param
     @allowed = Factory(:allowed_generator_type).to_param
   end

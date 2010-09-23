@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to lines" do
-  before :each do
+  before :all do
     @game = Factory(:game).to_param
     @line = Factory(:line).to_param
     @zone = Factory(:zone).to_param

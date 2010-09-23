@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to contracts" do
-  before :each do
+  before :all do
     @game = Factory(:game).to_param
     @generator = Factory(:generator).to_param
     @contract = Factory(:contract_negotiation).to_param

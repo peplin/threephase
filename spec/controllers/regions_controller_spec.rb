@@ -5,14 +5,6 @@ describe RegionsController do
     @model = Region
   end
 
-  before :each do
-    @model = Region
-    @game = Factory :game
-    @map = Factory :map
-    @region = Factory :region, :map => @map, :game => @game
-    @zone = Factory :zone, :region => @region
-  end
-
   context "as an admin" do
     it_should_behave_like "index with a game"
     it_should_behave_like "standard GET show"

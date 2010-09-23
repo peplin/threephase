@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to generator types" do
-  before do
+  before :all do
     @game = Factory(:game).to_param
     @type = Factory(:generator_type).to_param
   end

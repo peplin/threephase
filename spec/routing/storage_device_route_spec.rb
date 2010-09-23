@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to stores" do
-  before :each do
+  before :all do
     @game = Factory(:game).to_param
     @store = Factory(:storage_device).to_param
     @zone = Factory(:zone).to_param

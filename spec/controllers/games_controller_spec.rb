@@ -5,13 +5,8 @@ describe GamesController do
     @model = Game
   end
 
-  before :each do
-    @game = Factory :game
-    @generator_type = Factory :generator_type
-  end
-
   context "as an admin" do
-    before do
+    before :all do
       Factory :admin_user_session
     end
 
@@ -31,7 +26,8 @@ describe GamesController do
     end
 
     context "on PUT to :update" do
-      before do
+      before :all do
+        @game = Factory :game
         @started_game = Factory :started_game
         @data = Factory.attributes_for :huge_game
       end
@@ -58,6 +54,7 @@ describe GamesController do
         before do
           put :update, :id => @game, :game => @data, :format => "json"
         end
+
         it_should_behave_like JSONResponse
       end
     end
@@ -73,7 +70,7 @@ describe GamesController do
   end
 
   context "as a player" do
-    before do
+    before :all do
       Factory :user_session
     end
     it_should_behave_like "a user with limited access"

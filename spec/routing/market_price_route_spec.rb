@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to market_prices" do
-  before :each do
+  before :all do
     @game = Factory(:game).to_param
     @zone = Factory(:zone).to_param
     @market = Factory(:market).to_param

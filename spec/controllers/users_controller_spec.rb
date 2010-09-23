@@ -5,7 +5,7 @@ describe UsersController do
     @model = User
   end
 
-  before :each do
+  before :all do
     @user = Factory :user
   end
 

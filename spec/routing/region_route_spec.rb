@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to regions" do
-  before do
+  before :all do
     @game = Factory(:game).to_param
     @region = Factory(:region).to_param
     @market = Factory(:market).to_param

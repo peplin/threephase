@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to users" do
-  before do
+  before :all do
     @user = Factory(:user).to_param
   end
 

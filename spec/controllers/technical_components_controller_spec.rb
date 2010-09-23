@@ -7,7 +7,7 @@ share_examples_for "a technical component type" do
   end
 
   context "as an admin" do
-    before do
+    before :all do
       Factory :admin_user_session
     end
 

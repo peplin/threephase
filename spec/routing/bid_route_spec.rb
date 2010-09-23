@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "routing to bids" do
-  before :each do
+  before :all do
     @generator = Factory(:generator).to_param
     @game = Factory(:game).to_param
     @bid = Factory(:bid).to_param

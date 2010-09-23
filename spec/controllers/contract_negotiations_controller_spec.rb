@@ -7,15 +7,8 @@ describe ContractNegotiationsController do
     @pluralized_assigns_model_name = :contracts
   end
 
-  before :each do
-    @generator = Factory :generator
-    @offer = Factory :contract_offer
-    @contract = Factory :contract_negotiation
-    @game = Factory :game
-  end
-
   context "as an admin" do
-    before do
+    before :all do
       Factory :admin_user_session
     end
     
@@ -29,6 +22,10 @@ describe ContractNegotiationsController do
         @model = ContractOffer
       end
 
+      before :all do
+        @offer = Factory :contract_offer
+      end
+
       context "to POST" do
         it_should_behave_like "successful POST create"
 
@@ -40,13 +37,13 @@ describe ContractNegotiationsController do
       it_should_behave_like "standard PUT update"
 
       def redirect_path
-        contract_negotiation_path @contract
+        contract_negotiation_path assigns(:contract_negotiation)
       end
     end
   end
 
   context "as a player" do
-    before do
+    before :all do
       Factory :user_session
     end
 
