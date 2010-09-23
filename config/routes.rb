@@ -1,7 +1,8 @@
 Threephase::Application.routes.draw do
   resources :games, :except => [:destroy] do
     resources :regions, :only => [:index, :show] do
-      resources :interstatelines, :controller => :interstate_lines
+      resources :interstatelines, :controller => :interstate_lines,
+          :as => :interstate_lines
       resources :zones, :only => [:index, :show]
     end
 
@@ -25,7 +26,8 @@ Threephase::Application.routes.draw do
     resources :bids, :only => [:index, :show]
     resources :contracts, :controller => :contract_negotiations,
         :as => :contract_negotiations
-    resources :interstatelines, :controller => :interstate_lines
+    resources :interstatelines, :controller => :interstate_lines,
+        :as => :interstate_lines
 
     resources :prices, :controller => :market_prices, :only => [:index, :show]
     resources :repairs
@@ -54,7 +56,7 @@ Threephase::Application.routes.draw do
   end
 
   resources :interstatelines, :controller => :interstate_lines,
-      :only => [:index, :show, :create, :update]
+      :as => :interstate_lines, :only => [:index, :show, :create, :update]
 
   resources :lines, :except => [:index] do
     collection do
@@ -81,7 +83,6 @@ Threephase::Application.routes.draw do
       get 'login', :action => :new, :controller => :user_sessions
       get 'logout', :action => :destroy, :controller => :user_sessions
       post 'authenticate', :action => :create, :controller => :user_sessions
-      get 'reset', :action => :detonate
       put 'connect'
     end
   end

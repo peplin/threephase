@@ -8,4 +8,9 @@ class InterstateLine < ActiveRecord::Base
   #def regions_and_type 
   #  #{incoming_region} #{outgoing_region} #{line_type}
   #end
+  #
+  named_scope :with_region, lambda { |region_id|
+    { :conditions => ["incoming_region_id = ? or outgoing_region_id = ?",
+        region_id, region_id]}
+  }
 end

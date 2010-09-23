@@ -17,13 +17,15 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def create
+    # TODO this doesn't handle associations as IDs in the post data
     @instance = component_type.new params[:instance]
     if @instance.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
+      respond_with @instance.region
     else
       flash[:error] = @instance.errors
+      respond_with @instance
     end
-    respond_with @instance
   end
 
   def show

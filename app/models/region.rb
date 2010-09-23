@@ -12,4 +12,8 @@ class Region < ActiveRecord::Base
   validates :name, :presence => true
   validates :research_budget, :presence => true,
       :numericality => {:greater_than_or_equal_to => 0}
+
+  def interstate_lines
+    InterstateLine.with_region(id)
+  end
 end

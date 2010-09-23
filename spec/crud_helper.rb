@@ -563,6 +563,10 @@ end
 share_examples_for "unsuccessful GET new" do
   include CrudSetup
 
+  before do
+    do_get
+  end
+
   it { should respond_with :missing }
 end
 

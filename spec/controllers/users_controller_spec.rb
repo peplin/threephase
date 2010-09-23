@@ -10,7 +10,6 @@ describe UsersController do
   end
 
   context "as an admin" do
-    it_should_behave_like "standard GET index"
   end
   #TODO lots of work here
 end

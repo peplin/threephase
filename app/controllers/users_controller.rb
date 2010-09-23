@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:show, :edit, :update]
-  before_filter :admin_only, :only => :detonate
   
   def new
     @user = User.new
@@ -43,12 +42,5 @@ class UsersController < ApplicationController
         render :action => :edit
       end
     end
-  end
-  
-  # for debugging...
-  def detonate
-    session.clear
-    User.all.collect(&:destroy)
-    redirect_to login_url
   end
 end

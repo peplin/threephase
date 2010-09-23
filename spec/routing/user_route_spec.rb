@@ -20,9 +20,6 @@ describe "routing to users" do
   it { {:put, "/users/connect"}.should route_to(:action => "connect",
         :controller => "users") }
 
-  it { {:get, "/users/reset"}.should route_to(:action => "detonate",
-        :controller => "users") }
-
   it { {:get, "/users"}.should route_to(:action => "index",
       :controller => "users") }
 
