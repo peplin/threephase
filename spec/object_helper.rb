@@ -1,10 +1,11 @@
 share_examples_for "show with a game" do
   include CrudSetup
 
+  before do
+    @game = Factory :game
+  end
+
   context "on GET to :show with a game" do
-    before do
-      @game = Factory :game
-    end
 
     it_should_behave_like "successful GET show"
 

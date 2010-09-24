@@ -242,7 +242,6 @@ share_examples_for "successful POST create" do
     if not @data
       @data = Factory.attributes_for(@factory_name).update(
           Factory(@factory_name).attributes)
-      puts @data
     end
     do_post
   end
@@ -437,7 +436,6 @@ share_examples_for "successful DELETE destroy" do
     before do
       do_delete 'json'
     end
-    it_should_behave_like JSONResponse
     it { should respond_with :accepted }
   end
 end
