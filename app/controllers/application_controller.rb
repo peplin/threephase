@@ -11,6 +11,31 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def find_generator
+    if params[:generator_id]
+      @generator = Generator.find params[:generator_id]
+    end
+  end
+
+  def find_line
+    if params[:line_id]
+      @line = Line.find params[:line_id]
+    end
+  end
+
+  def find_storage_device
+    if params[:storage_device_id]
+      @storage_device = StorageDevice.find params[:storage_device_id]
+    end
+  end
+
+  def find_game
+    if params[:game_id]
+      @game = Game.find params[:game_id]
+    end
+  end
+
+
   def render_not_found(exception)
     render "/errors/404", :status => 404
   end

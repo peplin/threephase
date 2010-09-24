@@ -62,12 +62,6 @@ class TechnicalComponentInstancesController < ApplicationController
     end
   end
 
-  def find_game
-    if params[:game_id]
-      @game = Game.find params[:game_id]
-    end
-  end
-
   def find_instances
     if @zone
       @instances = @zone.instances

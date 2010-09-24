@@ -4,6 +4,8 @@ describe "routing to repairs" do
   before :all do
     @game = Factory(:game).to_param
     @generator = Factory(:generator).to_param
+    @store = Factory(:storage_device).to_param
+    @line = Factory(:line).to_param
     @repair = Factory(:repair).to_param
   end
 
@@ -15,6 +17,18 @@ describe "routing to repairs" do
   it "should expose a list of a generator's repairs" do
     {:get, "/games/#{@game}/generators/#{@generator}/repairs"}.should route_to(
       :action => "index", :game_id => @game, :generator_id => @generator,
+      :controller => "repairs")
+  end
+
+  it "should expose a list of a storage device's repairs" do
+    {:get, "/games/#{@game}/stores/#{@store}/repairs"}.should route_to(
+      :action => "index", :game_id => @game, :storage_device_id => @store,
+      :controller => "repairs")
+  end
+
+  it "should expose a list of a line's repairs" do
+    {:get, "/games/#{@game}/lines/#{@line}/repairs"}.should route_to(
+      :action => "index", :game_id => @game, :line_id => @line,
       :controller => "repairs")
   end
 

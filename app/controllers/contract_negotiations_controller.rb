@@ -53,12 +53,6 @@ class ContractNegotiationsController < ApplicationController
 
   private
 
-  def find_generator
-    if params[:generator_id]
-      @generator = Generator.find params[:generator_id]
-    end
-  end
-
   def find_game
     if params[:game_id]
       @game = Game.find params[:game_id]

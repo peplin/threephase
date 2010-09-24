@@ -14,4 +14,10 @@ class Zone < ActiveRecord::Base
 
   def demand
   end
+
+  def repairs
+    [generators, lines, storage_devices].collect do |i|
+      i.repairs
+    end
+  end
 end
