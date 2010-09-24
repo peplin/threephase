@@ -2,9 +2,6 @@ require 'spec_helper'
 
 describe TechnicalComponent do
   it { should belong_to :user }
-  it { should belong_to :buildable }
-
-  it { should validate_presence_of :buildable }
 
   it { should validate_presence_of :name }
 
@@ -53,4 +50,6 @@ describe TechnicalComponent do
   it { should_not allow_value(-1).for(:noise) }
 
   it { should validate_presence_of :lifetime }
+  it { should allow_value(100).for(:noise) }
+  it { should_not allow_value(-1).for(:noise) }
 end
