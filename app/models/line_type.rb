@@ -4,9 +4,13 @@ class LineType < ActiveRecord::Base
   has_many :line_capital_costs
   has_many :lines, :foreign_key => "buildable_id"
   has_many :interstate_lines
-  validates_presence_of :ac
-  validates_presence_of :voltage
-  validates_presence_of :resistance
-  validates_presence_of :diameter
-  validates_presence_of :height
+
+  validates :ac, :presence => true
+  validates :voltage, :presence => true, :numericality => {:greater_than => 0}
+  validates :resistance, :presence => true, :numericality => {
+      :greater_than_or_equal_to => 0}
+  validates :diameter, :presence => true, :numericality => {:greater_than => 0,
+      :less_than_or_equal_to => 25}
+  validates :height, :presence => true, :numericality => {
+      :greater_than_or_equal_to => -25, :less_than_or_equal_to => 100}
 end
