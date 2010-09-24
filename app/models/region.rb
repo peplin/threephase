@@ -20,9 +20,23 @@ class Region < ActiveRecord::Base
     InterstateLine.with_region(id)
   end
 
+  # TODO we may not want to actually use these in views - iterate over the
+  # regions instead
   def repairs
     zones.collect do |z|
       z.repairs
+    end
+  end
+
+  def bids
+    zones.collect do |z|
+      z.repairs
+    end
+  end
+
+  def contracts
+    zones.collect do |z|
+      z.contracts
     end
   end
 end

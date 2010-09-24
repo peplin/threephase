@@ -48,8 +48,8 @@ class BidsController < ApplicationController
     if @generator
       @bids = @generator.bids
     else
-      # TODO
-      #@bids = @game.bids
+      @region = current_user.regions.find_by_game(@game)
+      @bids = @region.bids
     end
   end
 

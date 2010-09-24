@@ -13,6 +13,7 @@ class ContractNegotiationsController < ApplicationController
   end
 
   def new
+    @game = Game.find params[:game_id]
     @contract = ContractNegotiation.new :generator => @generator
     respond_with @contract
   end
@@ -53,18 +54,12 @@ class ContractNegotiationsController < ApplicationController
 
   private
 
-  def find_game
-    if params[:game_id]
-      @game = Game.find params[:game_id]
-    end
-  end
-
   def find_contracts
     if @generator
       @contracts = @generator.contracts
     else
-      # TODO
-      #@contracts = @game.contracts
+      @region = current_user.regions.find_by_game(@game)
+      @contracts = @region.contracts
     end
   end
 

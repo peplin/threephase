@@ -9,6 +9,7 @@ describe ContractNegotiationsController do
 
   context "as an admin" do
     before do
+      Region.stubs(:find_by_game).returns(Factory :region)
       login_as_admin
     end
     
@@ -37,7 +38,7 @@ describe ContractNegotiationsController do
       it_should_behave_like "standard PUT update"
 
       def redirect_path
-        contract_negotiation_path assigns(:contract_negotiation)
+        contract_negotiation_path @offer.contract_negotiation
       end
     end
   end

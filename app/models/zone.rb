@@ -20,4 +20,16 @@ class Zone < ActiveRecord::Base
       i.repairs
     end
   end
+
+  def bids
+    generators.collect do |g|
+      g.bids
+    end
+  end
+
+  def contracts
+    generators.collect do |g|
+      g.contracts
+    end
+  end
 end
