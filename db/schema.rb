@@ -87,10 +87,11 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   end
 
   create_table "fuel_types", :force => true do |t|
-    t.string  "name",        :null => false
+    t.string  "name",                           :null => false
     t.text    "description"
     t.string  "cached_slug"
-    t.integer "market_id",   :null => false
+    t.boolean "renewable",   :default => false, :null => false
+    t.integer "market_id",                      :null => false
   end
 
   add_index "fuel_types", ["cached_slug"], :name => "index_fuel_types_on_cached_slug", :unique => true
