@@ -1,4 +1,5 @@
 class ResearchAdvancementsController < ApplicationController
+  before_filter :find_game, :only => :index
   before_filter :find_research_advancements, :only => :index
   before_filter :find_research_advancement, :only => :show
 
@@ -15,10 +16,8 @@ class ResearchAdvancementsController < ApplicationController
   private
 
   def find_research_advancements
-    @game = Game.find params[:game_id]
-    #TODO need a helper method
-    #@region = Region.find_by_game_and_user @game, current_user
-    #@research_advancements = ResearchAdvancement.find_by_region @region
+    @region = current_user.regions.find_by_game(@game)
+    @research_advancements = @region.research_advancements
   end
 
   def find_research_advancement
