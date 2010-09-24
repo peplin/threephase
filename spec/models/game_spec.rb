@@ -34,9 +34,7 @@ describe Game do
   it { should validate_presence_of :water_flow }
 
   it { should validate_presence_of :regulation_type }
-  it { should allow_value(3).for(:regulation_type) }
-  it { should_not allow_value(-1).for(:regulation_type) }
-  it { should_not allow_value(4).for(:regulation_type) }
+  it { should allow_value(:ror).for(:regulation_type) }
 
   it { should validate_presence_of :starting_capital }
   it { should allow_value(1000000).for(:starting_capital) }
@@ -62,7 +60,7 @@ describe Game do
   it { should validate_presence_of :public_support }
 
   it "should have a base time scale factor" do
-    assert Game.TIME_SCALE_FACTOR
+    assert Game::TIME_SCALE_FACTOR
   end
 
   context "A Game instance" do
@@ -84,7 +82,7 @@ describe Game do
       it "with maxiumum speed" do
         @game.speed = 1
         assert_equal @game.time_since(@now),
-            Game.TIME_SCALE_FACTOR * (@now - @game.updated_at)
+            Game::TIME_SCALE_FACTOR * (@now - @game.updated_at)
       end
     end
   end

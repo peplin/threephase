@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer  "wind_speed",             :default => 50,          :null => false
     t.integer  "sunfall",                :default => 50,          :null => false
     t.integer  "water_flow",             :default => 50,          :null => false
-    t.integer  "regulation_type",        :default => 0,           :null => false
+    t.string   "regulation_type",                                 :null => false
     t.float    "starting_capital",       :default => 500000000.0, :null => false
     t.integer  "interest_rate",          :default => 6,           :null => false
     t.integer  "reliability_constraint", :default => 1,           :null => false
