@@ -16,13 +16,4 @@ describe Region do
   it { should_not allow_value(-1000).for(:research_budget) }
 
   it { should respond_to :friendly_id }
-
-  context "A Region instance" do
-    before do
-      @game = Game.all.first
-      @region = Region.create :name => "T'Pol", :game => @game, :map => Map.all.first
-    end
-
-    it { @region.friendly_id.should eq("#{@game}-#{@region.name}".downcase) }
-  end
 end

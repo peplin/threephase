@@ -1,4 +1,5 @@
 Factory.define :game do |g|
+  g.regulation_type :unregulated
 end
 
 Factory.define :invalid_game, :parent => :game do |g|
