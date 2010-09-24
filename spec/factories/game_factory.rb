@@ -16,5 +16,5 @@ Factory.define :started_game, :parent => :game do |g|
 end
 
 def attach_region game
-  game.regions.create Factory(:region).attributes
+  Factory(:region, :game => game)
 end

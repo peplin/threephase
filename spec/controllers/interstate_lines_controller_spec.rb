@@ -5,13 +5,16 @@ describe InterstateLinesController do
     @model = InterstateLine
   end
 
-  before :all do
+  before do
     @region = Factory :region
+    Region.stubs(:find_by_game).returns(Factory :region)
   end
 
   context "as an admin" do
     before do
       login_as_admin
+      # TODO need a better way to attach something for the current user to
+      # objects we build
     end
 
     it_should_behave_like "index with a game"
@@ -30,7 +33,7 @@ describe InterstateLinesController do
       end
 
       def do_get format='html'
-        get :index, :region => @region, :format => format
+        get :index, :region_id => @region, :format => format
       end
     end
   end

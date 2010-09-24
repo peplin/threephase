@@ -73,7 +73,7 @@ class TechnicalComponentInstancesController < ApplicationController
       @instances = @zone.instances
     else
       if current_user.admin?
-        # TODO
+        @instances = @game.regions
       else
         @region = current_user.regions.find_by_game(@game)
         @instances = @region.send(component_type.to_s.underscore.pluralize)

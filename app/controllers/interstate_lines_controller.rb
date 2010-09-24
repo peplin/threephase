@@ -13,6 +13,8 @@ class InterstateLinesController < ApplicationController
   end
 
   def new
+    # TODO need a better way to trigger :missing errors for some functions
+    @game = Game.find params[:game_id]
     @interstate_line = InterstateLine.new :incoming_region => @region
     respond_with @interstate_line
   end
