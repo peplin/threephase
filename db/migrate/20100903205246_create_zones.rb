@@ -10,10 +10,11 @@ class CreateZones < ActiveRecord::Migration
     end
     
     add_index :zones, :cached_slug, :unique => true
+    add_index :zones, [:x, :y, :region_id], :unique => true
   end
 
   def self.down
     drop_table :zones
-    remove_index :zones, [:x, :y]
+    remove_index :zones, [:x, :y, :region_id]
   end
 end

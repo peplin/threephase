@@ -7,7 +7,7 @@ describe Zone do
   it { should have_many :generators }
   it { should have_many :lines }
   it { should have_many :storage_devices }
-  it { should have_db_index [:x, :y] }
+  it { should have_db_index [:x, :y, :region_id] }
 
   it { should validate_presence_of :region }
 
@@ -19,13 +19,16 @@ describe Zone do
 
   context "A Zone instance" do
     before do
-      @zone = Zone.create :name => "Foo"
+      @zone = Factory :zone
     end
 
     it "should know its current demand" do
-      assert @zone.demand
+      @zone.should respond_to(:demand)
     end
 
-    it { @zone.friendly_id.should eq(@zone.name.downcase) }
+    it "should have a positive demand" do
+      pending  "not really, but I want to make sure this method is written"
+      @zone.demand.should be > 0
+    end
   end
 end

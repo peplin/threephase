@@ -289,10 +289,10 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer  "repair_cost",                                 :null => false
     t.integer  "workforce",                                   :null => false
     t.integer  "area",                                        :null => false
-    t.integer  "capital_cost_min",             :default => 0, :null => false
+    t.integer  "capital_cost_min",             :default => 1, :null => false
     t.integer  "capital_cost_max",                            :null => false
     t.integer  "environmental_disruptiveness",                :null => false
-    t.integer  "waste_disposal_cost_min",      :default => 0, :null => false
+    t.integer  "waste_disposal_cost_min",      :default => 1, :null => false
     t.integer  "waste_disposal_cost_max",                     :null => false
     t.integer  "noise",                                       :null => false
     t.integer  "lifetime",                                    :null => false
@@ -341,5 +341,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   end
 
   add_index "zones", ["cached_slug"], :name => "index_zones_on_cached_slug", :unique => true
+  add_index "zones", ["x", "y", "region_id"], :name => "index_zones_on_x_and_y_and_region_id", :unique => true
 
 end
