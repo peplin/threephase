@@ -144,7 +144,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   create_table "interstate_lines", :force => true do |t|
     t.boolean  "accepted"
-    t.string   "cached_slug"
     t.boolean  "operating",          :default => true, :null => false
     t.integer  "operating_level",    :default => 100,  :null => false
     t.integer  "incoming_region_id",                   :null => false
@@ -153,8 +152,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "interstate_lines", ["cached_slug"], :name => "index_interstate_lines_on_cached_slug", :unique => true
 
   create_table "line_costs", :id => false, :force => true do |t|
     t.string  "cost_type",    :null => false
@@ -207,15 +204,14 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   add_index "markets", ["cached_slug"], :name => "index_markets_on_cached_slug", :unique => true
 
   create_table "regions", :force => true do |t|
-    t.string  "name",                                 :null => false
-    t.integer "research_budget", :default => 5000000, :null => false
-    t.string  "cached_slug"
-    t.integer "map_id",                               :null => false
-    t.integer "game_id",                              :null => false
-    t.integer "user_id"
+    t.string   "name",                                 :null => false
+    t.integer  "research_budget", :default => 5000000, :null => false
+    t.integer  "map_id",                               :null => false
+    t.integer  "game_id",                              :null => false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
-
-  add_index "regions", ["cached_slug"], :name => "index_regions_on_cached_slug", :unique => true
 
   create_table "repairs", :force => true do |t|
     t.string   "reason",                             :null => false
@@ -341,6 +337,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   end
 
   add_index "zones", ["cached_slug"], :name => "index_zones_on_cached_slug", :unique => true
-  add_index "zones", ["x", "y", "region_id"], :name => "index_zones_on_x_and_y_and_region_id", :unique => true
+  add_index "zones", ["x", "y", "region_id"], :name => "index_zones_on_x_and_y_and_region_id"
 
 end

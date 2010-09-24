@@ -10,7 +10,7 @@ class CreateZones < ActiveRecord::Migration
     end
     
     add_index :zones, :cached_slug, :unique => true
-    add_index :zones, [:x, :y, :region_id], :unique => true
+    add_index :zones, [:x, :y, :region_id]
   end
 
   def self.down

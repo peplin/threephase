@@ -78,11 +78,6 @@ share_examples_for "a technical component instance" do
     @pluralized_assigns_model_name = :instances
   end
 
-  before :each do
-    @game = Factory :game
-    @zone = Factory :zone
-  end
-
   context "as an admin" do
     it_should_behave_like "index with a game"
     it_should_behave_like "new with a game"
@@ -94,7 +89,7 @@ share_examples_for "a technical component instance" do
         it_should_behave_like "standard successful POST create"
 
         def redirect_path
-          region_path @zone.region
+          region_path assigns(:instance).region
         end
       end
 

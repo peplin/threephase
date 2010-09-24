@@ -52,7 +52,6 @@ share_examples_for "unsuccessful GET index" do
     end
 
     it { should respond_with :missing }
-    it_should_behave_like JSONResponse
   end
 end
 
@@ -241,7 +240,9 @@ share_examples_for "successful POST create" do
   before do
     setup_crud_names
     if not @data
-      @data = Factory(@factory_name).attributes
+      @data = Factory.attributes_for(@factory_name).update(
+          Factory(@factory_name).attributes)
+      puts @data
     end
     do_post
   end

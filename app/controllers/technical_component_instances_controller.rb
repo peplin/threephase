@@ -1,6 +1,6 @@
 class TechnicalComponentInstancesController < ApplicationController
   before_filter :find_zone, :only => [:index, :new]
-  before_filter :find_game, :only => :index
+  before_filter :find_game, :only => [:index, :new]
   before_filter :find_instances, :only => :index
   before_filter :find_instance, :only => [:edit, :show, :update]
 
@@ -12,6 +12,9 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def new
+    if not @game
+      @game = Game.find params[:game_id]
+    end
     @instance = component_type.new :zone => @zone
     respond_with @instance
   end
