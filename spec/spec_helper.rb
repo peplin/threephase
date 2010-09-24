@@ -6,16 +6,10 @@ require 'rspec/rails'
 require 'shoulda'
 require 'factory_girl'
 
-require 'crud_helper'
-require 'object_helper'
-
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
-
-Dir.glob(File.dirname(__FILE__) + "/factories/**/*.rb").each do |factory|
-  require factory
-end
+Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each {|f| require f}
 
 def json_response
   ActiveSupport::JSON.decode @response.body
