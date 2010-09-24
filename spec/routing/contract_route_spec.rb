@@ -29,7 +29,7 @@ describe "routing to contracts" do
       :controller => "contract_negotiations") }
 
   it { {:post, "/offers"}.should route_to(:action => "offer",
-      :contract_id => @contract, :controller => "contract_negotiations") }
+      :controller => "contract_negotiations") }
 
   it { {:put, "/offers/#{@offer}"}.should route_to(:action => "update",
       :id => @offer, :controller => "contract_negotiations") }

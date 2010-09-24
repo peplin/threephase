@@ -48,12 +48,10 @@ Threephase::Application.routes.draw do
   resources :contracts, :controller => :contract_negotiations,
       :only => [:index, :show, :create],:as => :contract_negotiations do
   end
+
+  match "/offers" => "contract_negotiations#offer"
   resources :offers, :controller => :contract_negotiations, :as => :offers,
-    :only => [:update] do
-    collection do
-      post :offer
-    end
-  end
+    :only => [:update]
 
   resources :interstatelines, :controller => :interstate_lines,
       :as => :interstate_lines, :only => [:index, :show, :create, :update]

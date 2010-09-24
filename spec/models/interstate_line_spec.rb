@@ -11,6 +11,4 @@ describe InterstateLine do
 
   it { should validate_presence_of :operating }
   it { should validate_presence_of :operating_level }
-
-  it { should respond_to :friendly_id }
 end
