@@ -6,8 +6,8 @@ describe GamesController do
   end
 
   context "as an admin" do
-    before :all do
-      Factory :admin_user_session
+    before do
+      login_as_admin
     end
 
     it_should_behave_like "standard GET index"
@@ -71,7 +71,7 @@ describe GamesController do
 
   context "as a player" do
     before :all do
-      Factory :user_session
+      login
     end
     it_should_behave_like "a user with limited access"
   end

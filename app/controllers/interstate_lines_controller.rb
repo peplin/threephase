@@ -1,4 +1,5 @@
 class InterstateLinesController < ApplicationController
+  before_filter :login_required
   before_filter :find_region, :only => :index
   before_filter :find_game, :only => :index
   before_filter :find_interstate_lines, :only => :index
@@ -62,8 +63,8 @@ class InterstateLinesController < ApplicationController
     if @region
       @interstate_lines = @region.interstate_lines
     elsif @game
-      # TODO 
-      #@interstate_lines = InterstateLine.find_by_game @game.interstate_lines
+      @region = current_user.regions.find_by_game(@game)
+      @interstate_lines = @region.interstate_lines
     end
   end
 

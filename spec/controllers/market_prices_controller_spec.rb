@@ -6,8 +6,8 @@ describe MarketPricesController do
   end
 
   context "as an admin" do
-    before :all do
-      Factory :admin_user_session
+    before do
+      login_as_admin
     end
 
     it_should_behave_like "index with a game"

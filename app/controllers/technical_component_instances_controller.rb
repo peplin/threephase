@@ -1,4 +1,5 @@
 class TechnicalComponentInstancesController < ApplicationController
+  before_filter :login_required
   before_filter :find_zone, :only => [:index, :new]
   before_filter :find_game, :only => [:index, :new]
   before_filter :find_instances, :only => :index
@@ -20,7 +21,6 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def create
-    # TODO this doesn't handle associations as IDs in the post data
     @instance = component_type.new params[:instance]
     if @instance.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
@@ -72,9 +72,12 @@ class TechnicalComponentInstancesController < ApplicationController
     if @zone
       @instances = @zone.instances
     else
-      # TODO this should load instance's from the user's region in the game,
-      # unless we are an admin
-      #@instances = @game.instances
+      if current_user.admin?
+        # TODO
+      else
+        @region = current_user.regions.find_by_game(@game)
+        @instances = @region.send(component_type.to_s.underscore.pluralize)
+      end
     end
   end
 

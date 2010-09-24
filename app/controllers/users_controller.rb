@@ -20,8 +20,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    puts "SESSION: #{session.inspect}"
-    puts @current_user.access_tokens.inspect
     @user = @current_user
     @profile = @user.profile
   end

@@ -3,5 +3,8 @@ Factory.sequence :email do |n|
 end
 
 Factory.define :user do |u|
-  u.email { Factory.next :email }
+end
+
+Factory.define :admin_user, :class => "User" do |u|
+  u.admin true
 end

@@ -1,4 +1,5 @@
 class RepairsController < ApplicationController
+  before_filter :login_required
   before_filter :find_repairs, :only => :index
   before_filter :find_repair, :only => :show
 

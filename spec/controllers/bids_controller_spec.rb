@@ -7,8 +7,8 @@ describe BidsController do
   end
 
   context "as an admin" do
-    before :all do
-      Factory :admin_user_session
+    before do
+      login_as_admin
     end
 
     it_should_behave_like "index with a game"
@@ -38,7 +38,7 @@ describe BidsController do
 
   context "as a player" do
     before :all do
-      Factory :user_session
+      login
     end
 
     context "POST for a generator not owned by this user" do
