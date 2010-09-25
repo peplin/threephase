@@ -1,0 +1,23 @@
+%h1 A Generator
+
+%dl
+  %dt Region 
+  %dd= @generator.region
+  %dt Zone
+  %dd= @generator.zone
+  %dt Type
+  %dd= @generator.generator_type
+  %dt Operating Level
+  %dd= @generator.operating_level
+  
+%h2 Repairs
+
+= render @generator.repairs
+
+%h2 Bids
+
+= render @generator.bids
+
+%h2 Workforce Contracts
+
+= render @generator.contract_negotiations

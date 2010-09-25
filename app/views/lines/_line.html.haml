@@ -1,0 +1,15 @@
+%h1 A Line
+
+%dl
+  %dt Region 
+  %dd= @line.region
+  %dt Zones
+  %dd= "From #{@line.zone} to #{@line.other_zone}"
+  %dt Type
+  %dd= @line.line_type
+  %dt Operating Level
+  %dd= @line.operating_level
+  
+%h2 Repairs
+
+= render @line.repairs

@@ -8,8 +8,8 @@
   %dt Started?
   %dd= @game.started
 
-
 %h2 Technical Parameters
+
 %dl
   %dt Maximum Line Capacity
   %dd= @game.max_line_capacity
@@ -17,7 +17,7 @@
   %dd= @game.technology_cost
   %dt Technology Reliability
   %dd= @game.technology_reliability
-  %dt Power Factory
+  %dt Power Factor
   %dd= @game.power_factor
   %dt Frequency
   %dd= @game.frequency
@@ -27,6 +27,8 @@
   %dd= @game.sunfall
   %dt Water Flow
   %dd= @game.water_flow
+
+%h2 Economic Parameters
 
 %dl
   %dt Regulation Type
@@ -38,7 +40,7 @@
   %dt Reliability Constraint
   %dd= @game.reliability_constraint
   %dt Fuel Cost
-  %dd= @game.fuel_Cost
+  %dd= @game.fuel_cost
   %dt Fuel Cost Volatility
   %dd= @game.fuel_cost_volatility
   %dt Workforce Reliability
@@ -47,6 +49,8 @@
   %dd= @game.workforce_cost
   %dt Unionized?
   %dd= @game.unionized
+
+%h2 Environmental Parameters
 
 %dl
   %dt Carbon Allowances
@@ -61,3 +65,9 @@
   %dd= @game.political_opposition
   %dt Public Support
   %dd= @game.public_support
+
+%h2 Regions
+
+%a{:href => new_region_url} New Region
+
+= render @game.regions

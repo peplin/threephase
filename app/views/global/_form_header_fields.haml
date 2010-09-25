@@ -1,0 +1,6 @@
+%input{:type => 'hidden', :name => 'authenticity_token', :value => form_authenticity_token}
+- if flash[:failure]
+  %p.failure= flash[:failure]
+- if flash[:notice]
+  %p.notice= flash[:notice]
+=error_messages_for :object => object

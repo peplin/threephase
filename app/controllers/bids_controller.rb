@@ -5,7 +5,7 @@ class BidsController < ApplicationController
   before_filter :find_bid, :only => :show
 
   respond_to :json, :except => [:new, :edit]
-  respond_to :html
+  respond_to :html, :except => [:show]
 
   def index
     respond_with @bids
