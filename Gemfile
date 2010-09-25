@@ -16,6 +16,7 @@ gem "oauth2"
 gem "authlogic-connect"
 gem "enumerated_attribute"
 gem "haml"
+gem "dynamic_form"
 
 # Deploy with Capistrano
 # gem 'capistrano'
