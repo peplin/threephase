@@ -59,6 +59,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def logout_required
+    if current_user
+      store_location
+      redirect_to self_path
+      return false
+    end
+  end
+
   def store_location
     session[:return_to] = request.fullpath
   end

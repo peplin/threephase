@@ -76,14 +76,13 @@ Threephase::Application.routes.draw do
       :only => [:show, :create]
   resources :zones, :only => [:show, :create]
 
-  resources :users, :path_names => {:new => 'signup'}, :except => [:create] do
+  match 'login' => "user_sessions#new"
+  match 'logout' => "user_sessions#destroy"
+  match 'authenticate' => "user_sessions#create"
+  resources :users, :only => [:index, :show, :edit, :update] do
     collection do
-      get 'login', :action => :new, :controller => :user_sessions
-      get 'logout', :action => :destroy, :controller => :user_sessions
-      post 'authenticate', :action => :create, :controller => :user_sessions
-      put 'connect'
+      post 'connect'
     end
   end
-  resource :user
-
+  resource :user, :only => [:show, :edit, :update], :as => :self
 end

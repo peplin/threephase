@@ -5,19 +5,19 @@ describe "routing to users" do
     @user = Factory(:user).to_param
   end
 
-  it { {:get, "/users/login"}.should route_to(:action => "new",
+  it { {:get, "/login"}.should route_to(:action => "new",
         :controller => "user_sessions") }
 
-  it { {:get, "/users/logout"}.should route_to(:action => "destroy",
+  it { {:get, "/logout"}.should route_to(:action => "destroy",
         :controller => "user_sessions") }
 
-  it { {:post, "/users/authenticate"}.should route_to(:action => "create",
+  it { {:post, "/authenticate"}.should route_to(:action => "create",
         :controller => "user_sessions") }
 
-  it { {:get, "/users/signup"}.should route_to(:action => "new",
+  it { {:get, "/signup"}.should route_to(:action => "new",
         :controller => "users") }
 
-  it { {:put, "/users/connect"}.should route_to(:action => "connect",
+  it { {:post, "/users/connect"}.should route_to(:action => "connect",
         :controller => "users") }
 
   it { {:get, "/users"}.should route_to(:action => "index",

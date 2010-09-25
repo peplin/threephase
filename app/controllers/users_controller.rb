@@ -1,27 +1,13 @@
 class UsersController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:show, :edit, :update]
-  
-  def new
-    @user = User.new
-  end
+  before_filter :admin_required, :only => :index
+  before_filter :logout_required, :only => [:new, :create]
+  before_filter :login_required, :only => [:show, :edit, :update]
 
-  def create
-    @user = User.new(params[:user])
-    # block! see user_sessions_controller.rb for description
-    @user.save do |result|
-      if result
-        flash[:notice] = "Account registered!"
-        redirect_back_or_default profile_url(@user)
-      else
-        redirect_to login_url
-      end
-    end
+  def index
   end
 
   def show
     @user = @current_user
-    @profile = @user.profile
   end
 
   def edit
@@ -29,12 +15,16 @@ class UsersController < ApplicationController
   end
 
   def update
+    # TODO
+  end
+
+  def connect
     return create unless @current_user
     @user = @current_user # makes our views "cleaner" and more consistent
     @user.update_attributes(params[:user]) do |result|
       if result
         flash[:notice] = "Account updated!"
-        redirect_to profile_url(@user)
+        redirect_to self_path
       else
         raise @user.errors.inspect
         render :action => :edit

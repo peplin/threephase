@@ -2,8 +2,26 @@
 %html
   %head
     %title Threephase
-    <%= stylesheet_link_tag :all %>
-    <%= javascript_include_tag :defaults %>
-    <%= csrf_meta_tag %>
+    = stylesheet_link_tag :all
+    = javascript_include_tag :defaults
+    = csrf_meta_tag
+
+    - %w(jquery/jquery-1.4.2 jquery/jquery.rails).each do |javascript|
+      = javascript_include_tag "http://cachedcommons.org/javascripts/#{javascript}-min.js"
+    - %w(cufon.yui kievit).each do |javascript|
+      = javascript_include_tag "/javascripts/#{javascript}.js"
+    = javascript_include_tag "application"
+    = yield :javascript_head
   %body
-    <%= yield %>
+    #wrapper
+      = render :partial => "shared/logo"
+      #page-container
+        %ul#page.container
+          %li
+            .content
+              = yield
+        .shadow
+      - if current_user
+        .actions
+          %a.nice{:href => edit_self_url} Edit
+          %a.nice{:href => logout_url} Logout
