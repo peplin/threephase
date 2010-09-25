@@ -83,4 +83,6 @@ Threephase::Application.routes.draw do
   match 'detonate' => "users#detonate"
   resources :users, :only => [:index, :show, :edit, :update]
   resource :user, :only => [:show, :edit, :update], :as => :self
+
+  root :to => 'games#index'
 end
