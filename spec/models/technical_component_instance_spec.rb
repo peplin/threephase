@@ -5,6 +5,5 @@ describe TechnicalComponentInstance do
   it { should belong_to :buildable }
 
   it { should validate_presence_of :zone }
-  it { should validate_presence_of :operating }
   it { should validate_presence_of :operating_level }
 end

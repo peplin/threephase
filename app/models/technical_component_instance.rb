@@ -4,7 +4,6 @@ class TechnicalComponentInstance < ActiveRecord::Base
   belongs_to :buildable, :polymorphic => true
   belongs_to :zone
 
-  validates :operating, :presence => true
   validates :operating_level, :presence => true, :percentage => true
   validates :zone, :presence => true
 

@@ -8,7 +8,6 @@ class InterstateLine < ActiveRecord::Base
         region_id, region_id]}
   }
 
-  validates :operating, :presence => true
   validates :operating_level, :presence => true
   validates :incoming_region, :presence => true
   validates :outgoing_region, :presence => true

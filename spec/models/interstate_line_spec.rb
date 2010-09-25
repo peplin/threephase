@@ -9,6 +9,5 @@ describe InterstateLine do
   it { should validate_presence_of :outgoing_region }
   it { should validate_presence_of :line_type }
 
-  it { should validate_presence_of :operating }
   it { should validate_presence_of :operating_level }
 end
