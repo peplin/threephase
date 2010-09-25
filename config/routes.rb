@@ -79,10 +79,8 @@ Threephase::Application.routes.draw do
   match 'login' => "user_sessions#new"
   match 'logout' => "user_sessions#destroy"
   match 'authenticate' => "user_sessions#create"
-  resources :users, :only => [:index, :show, :edit, :update] do
-    collection do
-      post 'connect'
-    end
-  end
+  match 'connect' => "users#connect"
+  match 'detonate' => "users#detonate"
+  resources :users, :only => [:index, :show, :edit, :update]
   resource :user, :only => [:show, :edit, :update], :as => :self
 end

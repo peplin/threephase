@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Profile
+
   has_many :maps
   has_many :regions
   has_many :games, :through => :regions
