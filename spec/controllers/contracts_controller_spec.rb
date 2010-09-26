@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe ContractNegotiationsController do
+describe ContractsController do
   before :all do
-    @model = ContractNegotiation
+    @model = Contract
     @assigns_model_name = :contract
     @pluralized_assigns_model_name = :contracts
   end
@@ -20,25 +20,25 @@ describe ContractNegotiationsController do
 
     context "with an offer" do
       before :all do
-        @model = ContractOffer
+        @model = Offer
       end
 
       before :all do
-        @offer = Factory :contract_offer
+        @offer = Factory :offer
       end
 
       context "to POST" do
         it_should_behave_like "successful POST create"
 
         def do_post format='html'
-          post :offer, :contract_offer => @offer.attributes, :format => format
+          post :offer, :offer => @offer.attributes, :format => format
         end
       end
 
       it_should_behave_like "standard PUT update"
 
       def redirect_path
-        contract_negotiation_path @offer.contract_negotiation
+        contract_path @offer.contract
       end
     end
   end

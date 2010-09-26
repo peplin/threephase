@@ -1,4 +1,4 @@
-Factory.define :contract_offer do |o|
+Factory.define :offer do |o|
   o.proposed_amount 1 + rand(100)
-  o.association :contract_negotiation
+  o.association :contract
 end

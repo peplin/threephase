@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   add_index "blocks", ["x", "y", "map_id"], :name => "index_blocks_on_x_and_y_and_map_id", :unique => true
 
-  create_table "contract_negotiations", :force => true do |t|
+  create_table "contracts", :force => true do |t|
     t.string   "reason",                          :null => false
     t.integer  "amount",                          :null => false
     t.boolean  "offline",      :default => false, :null => false
@@ -78,10 +78,10 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.datetime "updated_at"
   end
 
-  create_table "contract_offers", :force => true do |t|
+  create_table "offers", :force => true do |t|
     t.integer  "proposed_amount",         :null => false
     t.boolean  "accepted"
-    t.integer  "contract_negotiation_id", :null => false
+    t.integer  "contract_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

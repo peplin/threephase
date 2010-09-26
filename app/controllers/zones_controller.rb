@@ -23,6 +23,10 @@ class ZonesController < ApplicationController
     respond_with @zone
   end
 
+  def update
+    # TODO
+  end
+
   private
 
   def find_zones

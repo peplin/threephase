@@ -1,6 +1,6 @@
-class CreateContractNegotiations < ActiveRecord::Migration
+class CreateContracts < ActiveRecord::Migration
   def self.up
-    create_table :contract_negotiations do |t|
+    create_table :contracts do |t|
       t.string :reason, :null => false
       t.integer :amount, :null => false
       t.boolean :offline, :null => false, :default => false
@@ -12,6 +12,6 @@ class CreateContractNegotiations < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :contract_negotiations
+    drop_table :contracts
   end
 end

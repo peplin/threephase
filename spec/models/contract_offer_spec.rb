@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe ContractOffer do
-  it { should belong_to :contract_negotiation }
+describe Offer do
+  it { should belong_to :contract }
   it { should_not validate_presence_of :accepted }
   it { should validate_presence_of :proposed_amount }
-  it { should validate_presence_of :contract_negotiation }
+  it { should validate_presence_of :contract }
 end
