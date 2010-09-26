@@ -33,12 +33,12 @@ class TechnicalComponentsController < ApplicationController
   end
 
   def destroy
-    if @type.delete
-      flash[:notice] = "#{component_type.to_s} destroyed."
-    else
-      flash[:error] = @type.errors
+    @type.delete
+    flash[:notice] = "#{component_type.to_s} destroyed."
+    respond_to do |format|
+      format.html { redirect_to destroy_redirect_path }
+      format.json { head :accepted }
     end
-    respond_with @type
   end
 
   def update

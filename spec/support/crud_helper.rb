@@ -421,14 +421,19 @@ share_examples_for "successful DELETE destroy" do
   before do
     setup_crud_names
     @instance = Factory @factory_name
-    do_delete
   end
 
-  it "should redirect to the model index when requesting HTML" do
-    if self.respond_to? :redirect_path
-      should redirect_to redirect_path
-    else
-      should redirect_to eval("#{@pluralized_redirect_name}_path")
+  context "for HTML"  do
+    before do
+      do_delete
+    end
+
+    it "should redirect to the model index when requesting HTML" do
+      if self.respond_to? :redirect_path
+        should redirect_to redirect_path
+      else
+        should redirect_to eval("#{@pluralized_redirect_name}_path")
+      end
     end
   end
 
@@ -445,15 +450,11 @@ share_examples_for "unsuccessful DELETE destroy" do
 
   before do
     setup_crud_names
-    do_delete
   end
 
   it "should redirect to the model index when requesting HTML" do
-    if self.respond_to? :redirect_path
-      should redirect_to redirect_path
-    else
-      should redirect_to eval("#{@pluralized_redirect_name}_path")
-    end
+    do_delete
+    should respond_with :missing
   end
 
   it "should render a 404 when requesting JSON" do
@@ -468,7 +469,7 @@ share_examples_for "standard successful DELETE destroy" do
   it_should_behave_like "successful DELETE destroy"
 
   def do_delete format = 'html'
-    delete 'destroy', :id => @instance, :format => format
+    delete :destroy, :id => @instance, :format => format
   end
 end
 
@@ -478,7 +479,7 @@ share_examples_for "standard unsuccessful DELETE destroy" do
   it_should_behave_like "unsuccessful DELETE destroy"
 
   def do_delete format = 'html'
-    delete 'destroy', :id => -1, :format => format
+    delete :destroy, :id => -1, :format => format
   end
 end
 
