@@ -57,6 +57,6 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    profile.name
+    profile[:name]
   end
 end

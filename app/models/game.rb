@@ -55,6 +55,6 @@ class Game < ActiveRecord::Base
   end
 
   def to_s
-    "#{regions.count} confirmed players started #{started}"
+    "#{regions.count} confirmed players, #{started ? "started #{started}" : "not started"}"
   end
 end

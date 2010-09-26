@@ -18,6 +18,10 @@ class RegionsController < ApplicationController
 
   def create
     @region = current_user.regions.build params[:region]
+    if not @region.map
+      # TODO generate a new map
+      @region.map = Map.create :name => "foo"
+    end
     if @region.save
       flash[:notice] = 'Region was successfully created.'
     else

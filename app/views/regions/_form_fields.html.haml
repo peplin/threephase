@@ -9,7 +9,7 @@
   .fieldpair
     %label
     Map
-    =collection_select :region, :map_id, Map.all, :id, :name
+    =collection_select :region, :map_id, Map.all, :id, :name, {:include_blank => 'Random'}
 %input{:type => 'hidden', :name => 'region[game_id]', :value => @game.id}
 %button{:type => 'submit'} Save
 %a.button{:href => game_regions_path(@region.game)} Cancel
