@@ -1,4 +1,4 @@
-class MarketPricesController < ApplicationController
+class MarketsController < ApplicationController
   before_filter :find_zone
   before_filter :find_game
   before_filter :find_markets, :only => :index

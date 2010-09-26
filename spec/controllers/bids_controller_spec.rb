@@ -8,6 +8,7 @@ describe BidsController do
 
   context "as an admin" do
     before do
+      Region.stubs(:find_by_game).returns(Factory :region)
       login_as_admin
     end
 

@@ -3,7 +3,7 @@ class ContractsController < ApplicationController
   before_filter :find_game, :only => :index
   before_filter :find_contracts, :only => :index
   before_filter :find_contract, :only => [:show, :new]
-  before_filter :find_offer, :only => [:update, :respond]
+  before_filter :find_offer, :only => [:respond]
 
   respond_to :json, :except => [:new]
   respond_to :html
@@ -21,7 +21,7 @@ class ContractsController < ApplicationController
     respond_with @contract
   end
 
-  def create
+  def offer
     @offer = Offer.new params[:offer]
     if @offer.save
       flash[:notice] = 'Offer was made succesfully on the contract'
@@ -31,7 +31,7 @@ class ContractsController < ApplicationController
     respond_with @offer.contract
   end
 
-  def update
+  def respond
     @offer.update_attributes params[:offer]
     if @offer.save
       flash[:notice] = 'Offer was updated successfuly'

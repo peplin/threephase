@@ -11,7 +11,6 @@ describe ZonesController do
     end
 
     it_should_behave_like "index with a game"
-    it_should_behave_like "standard POST create"
     it_should_behave_like "standard GET show"
   end
 end

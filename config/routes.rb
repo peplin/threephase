@@ -11,7 +11,7 @@ Threephase::Application.routes.draw do
       resources :generators
       resources "storage-devices", :controller => :storage_devices,
           :as => :storage_devices
-      resources :prices, :controller => :market_prices, :only => [:index, :show]
+      resources :prices, :controller => :markets, :only => [:index, :show]
     end
 
     resources :lines do
@@ -32,7 +32,7 @@ Threephase::Application.routes.draw do
     resources "interstate-lines", :controller => :interstate_lines,
         :as => :interstate_lines
 
-    resources :prices, :controller => :market_prices, :only => [:index, :show]
+    resources :prices, :controller => :markets, :only => [:index, :show]
     resources :repairs, :only => [:index, :show]
     resources :advancements, :controller => :research_advancements,
         :only => [:create, :index, :show]
@@ -48,11 +48,10 @@ Threephase::Application.routes.draw do
 
   resources :bids, :only => [:show, :create]
 
-  resources :contracts, :only => [:index, :show, :create]
-
-  match "/offers" => "contracts#offer"
-  resources :offers, :controller => :contracts, :as => :offers,
-    :only => [:update]
+  resources :contracts, :only => [:index, :show]
+  match "/contracts/:id" => "contracts#offer", :via => :post
+  match "/offers" => "contracts#offer", :via => :post
+  match "/offers/:id" => "contracts#respond", :via => :put
 
   resources "interstate-lines", :controller => :interstate_lines,
       :as => :interstate_lines, :only => [:index, :show, :create, :update]

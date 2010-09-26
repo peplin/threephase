@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MarketPricesController do
+describe MarketsController do
   before :all do
     @model = Market
   end

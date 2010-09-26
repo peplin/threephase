@@ -14,9 +14,7 @@ describe ContractsController do
     end
     
     it_should_behave_like "index with a game"
-    it_should_behave_like "new with a game"
     it_should_behave_like "standard GET show"
-    it_should_behave_like "standard POST create"
 
     context "with an offer" do
       before :all do
@@ -35,7 +33,14 @@ describe ContractsController do
         end
       end
 
-      it_should_behave_like "standard PUT update"
+      context "to PUT" do
+        it_should_behave_like "successful PUT update"
+
+        def do_put format='html'
+          put :respond, :id => @offer, :offer => @offer.attributes,
+              :format => format
+        end
+      end
 
       def redirect_path
         contract_path @offer.contract

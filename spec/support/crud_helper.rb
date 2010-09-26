@@ -103,7 +103,7 @@ share_examples_for "unauthorized GET index" do
       do_get
     end
 
-    it { should redirect_to login_users_path }
+    it { should redirect_to login_path }
   end
 
   context "for JSON" do
@@ -203,7 +203,7 @@ share_examples_for "unauthorized GET show" do
       do_get
     end
 
-    it { should redirect_to login_users_path }
+    it { should redirect_to login_path }
   end
 
   context "for JSON" do
@@ -227,7 +227,7 @@ share_examples_for "unauthorized POST create" do
     do_post
   end
 
-  it { should redirect_to login_users_path }
+  it { should redirect_to login_path }
 
   def do_post format = 'html'
     post 'create', @assigns_model_name => @data, :format => format
@@ -319,7 +319,7 @@ share_examples_for "unauthorized PUT update" do
     do_put
   end
 
-  it { should redirect_to login_users_path }
+  it { should redirect_to login_path }
 
   def do_put format = 'html'
     put 'update', :id => @instance, @assigns_model_name => @data,
@@ -552,7 +552,7 @@ share_examples_for "unauthorized GET edit" do
     do_get
   end
 
-  it { should redirect_to login_users_path }
+  it { should redirect_to login_path }
 
   def do_get format = 'html'
     get :edit, :id => @instance, :format => format
@@ -599,7 +599,7 @@ share_examples_for "unauthorized GET new" do
     do_get
   end
 
-  it { should redirect_to login_users_path }
+  it { should redirect_to login_path }
 
   def do_get format = 'html'
     get :new, :format => format
