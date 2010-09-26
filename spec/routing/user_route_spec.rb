@@ -14,10 +14,7 @@ describe "routing to users" do
   it { {:post, "/authenticate"}.should route_to(:action => "create",
         :controller => "user_sessions") }
 
-  it { {:get, "/signup"}.should route_to(:action => "new",
-        :controller => "users") }
-
-  it { {:post, "/users/connect"}.should route_to(:action => "connect",
+  it { {:post, "/connect"}.should route_to(:action => "connect",
         :controller => "users") }
 
   it { {:get, "/users"}.should route_to(:action => "index",

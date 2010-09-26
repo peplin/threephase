@@ -19,12 +19,6 @@ describe "routing to contracts" do
         :generator_id => @generator, :controller => "contracts")
   end
 
-  it "should expose a form for a new contract for a generator" do
-    {:get, "/games/#{@game}/generators/#{@generator}/contracts/new"
-        }.should route_to(:action => "new", :game_id => @game,
-        :generator_id => @generator, :controller => "contracts")
-  end
-
   it { {:post, "/contracts"}.should route_to(:action => "create",
       :controller => "contracts") }
 

@@ -21,7 +21,7 @@ describe "routing to repairs" do
   end
 
   it "should expose a list of a storage device's repairs" do
-    {:get, "/games/#{@game}/stores/#{@store}/repairs"}.should route_to(
+    {:get, "/games/#{@game}/storage-devices/#{@store}/repairs"}.should route_to(
       :action => "index", :game_id => @game, :storage_device_id => @store,
       :controller => "repairs")
   end

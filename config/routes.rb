@@ -1,7 +1,7 @@
 Threephase::Application.routes.draw do
   resources :games, :except => [:destroy] do
     resources :regions, :only => [:index, :show, :new, :edit] do
-      resources :interstatelines, :controller => :interstate_lines,
+      resources "interstate-lines", :controller => :interstate_lines,
           :as => :interstate_lines
       resources :zones, :only => [:index, :show]
     end
@@ -9,29 +9,34 @@ Threephase::Application.routes.draw do
     resources :zones do
       resources :lines
       resources :generators
-      resources :stores, :controller => :storage_devices,
+      resources "storage-devices", :controller => :storage_devices,
           :as => :storage_devices
       resources :prices, :controller => :market_prices, :only => [:index, :show]
     end
 
-    resources :lines
-    resources :stores, :controller => :storage_devices, :as => :storage_devices
+    resources :lines do
+      resources :repairs, :only => [:index, :show]
+    end
+    resources "storage-devices", :controller => :storage_devices,
+        :as => :storage_devices do
+      resources :repairs, :only => [:index, :show]
+    end
     resources :generators do 
       resources :bids, :except => [:update, :destroy]
       resources :contracts, :only => [:index, :show]
-      resources :repairs
+      resources :repairs, :only => [:index, :show]
     end
 
     resources :bids, :only => [:index, :show]
-    resources :contracts
-    resources :interstatelines, :controller => :interstate_lines,
+    resources :contracts, :only => [:index, :show]
+    resources "interstate-lines", :controller => :interstate_lines,
         :as => :interstate_lines
 
     resources :prices, :controller => :market_prices, :only => [:index, :show]
-    resources :repairs
+    resources :repairs, :only => [:index, :show]
     resources :advancements, :controller => :research_advancements,
         :only => [:create, :index, :show]
-    resources :stores, :controller => :storage_devices, :as => :storage_devices
+    resources "storage-devices", :controller => :storage_devices, :as => :storage_devices
   end
 
   resources :generators, :only => [:show, :edit, :create, :update] do
@@ -49,7 +54,7 @@ Threephase::Application.routes.draw do
   resources :offers, :controller => :contracts, :as => :offers,
     :only => [:update]
 
-  resources :interstatelines, :controller => :interstate_lines,
+  resources "interstate-lines", :controller => :interstate_lines,
       :as => :interstate_lines, :only => [:index, :show, :create, :update]
 
   resources :lines, :except => [:index] do
@@ -58,7 +63,7 @@ Threephase::Application.routes.draw do
     end
   end
 
-  resources :stores, :controller => :storage_devices, :except => [:index],
+  resources "storage-devices", :controller => :storage_devices, :except => [:index],
       :as => :storage_devices do
     collection do
       resources :types, :controller => :storage_device_types,

@@ -32,11 +32,6 @@ describe "routing to regions" do
     {:get => "/regions"}.should_not be_routable
   end
 
-  it "does not allow creating new regions" do
-    {:post => "/games/#{@game}/regions"}.should_not be_routable
-    {:post => "/regions"}.should_not be_routable
-  end
-
   it "does not allow deleting of a region" do
     {:delete => "/regions/#{@region}"}.should_not be_routable
   end

@@ -14,7 +14,7 @@ class ContractsController < ApplicationController
 
   def new
     @offer = @contract.offers.build
-    respond_with @contract
+    respond_with @offer
   end
 
   def show
