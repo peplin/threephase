@@ -11,10 +11,22 @@
     = yield :javascript_head
     = csrf_meta_tag
   %body
-    - if current_user
-      %ul
-        %li
-          %a.nice{:href => edit_self_url} Account
-        %li
-          %a.nice{:href => logout_url} Logout
-    = yield
+    .container_12
+      .grid_2 Threephase
+      .grid_8
+        %ul
+          %li
+            %a{:href => games_path} Games
+      .grid_2
+        - if current_user
+          %ul
+            %li
+              %a.nice{:href => edit_self_url} Account
+            %li
+              %a.nice{:href => logout_url} Logout
+      .clear
+      .grid_7
+        = yield
+      .grid_5 Right
+      .clear
+      .prefix_7.grid_5 Footer
