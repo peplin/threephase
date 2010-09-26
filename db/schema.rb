@@ -97,32 +97,32 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   add_index "fuel_types", ["cached_slug"], :name => "index_fuel_types_on_cached_slug", :unique => true
 
   create_table "games", :force => true do |t|
-    t.integer  "speed",                  :default => 0,           :null => false
-    t.integer  "max_players",            :default => 1,           :null => false
+    t.integer  "speed",                  :default => 0,             :null => false
+    t.integer  "max_players",            :default => 1,             :null => false
     t.datetime "started"
-    t.integer  "max_line_capacity",      :default => 1500,        :null => false
-    t.integer  "technology_cost",        :default => 50,          :null => false
-    t.integer  "technology_reliability", :default => 50,          :null => false
-    t.integer  "power_factor",           :default => 50,          :null => false
-    t.integer  "frequency",              :default => 60,          :null => false
-    t.integer  "wind_speed",             :default => 50,          :null => false
-    t.integer  "sunfall",                :default => 50,          :null => false
-    t.integer  "water_flow",             :default => 50,          :null => false
-    t.string   "regulation_type",                                 :null => false
-    t.float    "starting_capital",       :default => 500000000.0, :null => false
-    t.integer  "interest_rate",          :default => 6,           :null => false
-    t.integer  "reliability_constraint", :default => 1,           :null => false
-    t.integer  "fuel_cost",              :default => 50,          :null => false
-    t.integer  "fuel_cost_volatility",   :default => 50,          :null => false
-    t.integer  "workforce_reliability",  :default => 50,          :null => false
-    t.integer  "workforce_cost",         :default => 50,          :null => false
-    t.boolean  "unionized",              :default => true,        :null => false
-    t.integer  "carbon_allowance",       :default => 50,          :null => false
-    t.integer  "tax_credit",             :default => 50,          :null => false
-    t.integer  "renewable_requirement",  :default => 50,          :null => false
-    t.integer  "political_stability",    :default => 50,          :null => false
-    t.integer  "political_opposition",   :default => 50,          :null => false
-    t.integer  "public_support",         :default => 50,          :null => false
+    t.integer  "max_line_capacity",      :default => 1500,          :null => false
+    t.integer  "technology_cost",        :default => 50,            :null => false
+    t.integer  "technology_reliability", :default => 50,            :null => false
+    t.integer  "power_factor",           :default => 50,            :null => false
+    t.integer  "frequency",              :default => 60,            :null => false
+    t.integer  "wind_speed",             :default => 50,            :null => false
+    t.integer  "sunfall",                :default => 50,            :null => false
+    t.integer  "water_flow",             :default => 50,            :null => false
+    t.string   "regulation_type",        :default => "unregulated", :null => false
+    t.float    "starting_capital",       :default => 500000000.0,   :null => false
+    t.integer  "interest_rate",          :default => 6,             :null => false
+    t.integer  "reliability_constraint", :default => 1,             :null => false
+    t.integer  "fuel_cost",              :default => 50,            :null => false
+    t.integer  "fuel_cost_volatility",   :default => 50,            :null => false
+    t.integer  "workforce_reliability",  :default => 50,            :null => false
+    t.integer  "workforce_cost",         :default => 50,            :null => false
+    t.boolean  "unionized",              :default => true,          :null => false
+    t.integer  "carbon_allowance",       :default => 50,            :null => false
+    t.integer  "tax_credit",             :default => 50,            :null => false
+    t.integer  "renewable_requirement",  :default => 50,            :null => false
+    t.integer  "political_stability",    :default => 50,            :null => false
+    t.integer  "political_opposition",   :default => 50,            :null => false
+    t.integer  "public_support",         :default => 50,            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -144,11 +144,10 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   create_table "interstate_lines", :force => true do |t|
     t.boolean  "accepted"
-    t.boolean  "operating",          :default => true, :null => false
-    t.integer  "operating_level",    :default => 100,  :null => false
-    t.integer  "incoming_region_id",                   :null => false
-    t.integer  "outgoing_region_id",                   :null => false
-    t.integer  "line_type_id",                         :null => false
+    t.integer  "operating_level",    :default => 100, :null => false
+    t.integer  "incoming_region_id",                  :null => false
+    t.integer  "outgoing_region_id",                  :null => false
+    t.integer  "line_type_id",                        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -263,13 +262,12 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   end
 
   create_table "technical_component_instances", :force => true do |t|
-    t.string   "instance_type",                     :null => false
-    t.boolean  "operating",       :default => true, :null => false
-    t.integer  "operating_level", :default => 100,  :null => false
-    t.integer  "zone_id",                           :null => false
+    t.string   "instance_type",                    :null => false
+    t.integer  "operating_level", :default => 100, :null => false
+    t.integer  "zone_id",                          :null => false
     t.integer  "other_zone_id"
-    t.integer  "buildable_id",                      :null => false
-    t.string   "buildable_type",                    :null => false
+    t.integer  "buildable_id",                     :null => false
+    t.string   "buildable_type",                   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

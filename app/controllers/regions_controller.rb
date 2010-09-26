@@ -1,5 +1,6 @@
 class RegionsController < ApplicationController
-  before_filter :find_game, :only => :index
+  before_filter :login_required
+  before_filter :find_game, :only => [:index, :new]
   before_filter :find_regions, :only => :index
   before_filter :find_region, :only => [:show, :edit, :update]
 
@@ -11,18 +12,19 @@ class RegionsController < ApplicationController
   end
 
   def new
-    @region = Region.new #TODO :user => current_user
+    @region = Region.new :user => current_user
     respond_with @region
   end
 
   def create
-    @region = Region.new params[:region]
+    @region = current_user.regions.build params[:region]
     if @region.save
       flash[:notice] = 'Region was successfully created.'
     else
       flash[:error] = @region.errors
+      @game = @region.game
     end
-    respond_with @region
+    respond_with @region.game, @region
   end
 
   def show
@@ -54,5 +56,6 @@ class RegionsController < ApplicationController
 
   def find_region
     @region = Region.find params[:id]
+    @game = @region.game
   end
 end

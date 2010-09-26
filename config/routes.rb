@@ -1,6 +1,6 @@
 Threephase::Application.routes.draw do
   resources :games, :except => [:destroy] do
-    resources :regions, :only => [:index, :show] do
+    resources :regions, :only => [:index, :show, :new, :edit] do
       resources :interstatelines, :controller => :interstate_lines,
           :as => :interstate_lines
       resources :zones, :only => [:index, :show]
@@ -70,7 +70,7 @@ Threephase::Application.routes.draw do
     end
   end
 
-  resources :regions, :only => [:show, :update]
+  resources :regions, :only => [:show, :update, :create]
   resources :repairs, :except => [:index, :destroy, :update]
   resources :advancements, :controller => :research_advancements,
       :only => [:show, :create]

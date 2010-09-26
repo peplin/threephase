@@ -1,1 +1,6 @@
 %a{:href => new_game_url}New Game
+
+%ul
+  - @games.each do |game|
+    %li
+      %a{:href => game_path(game)}= game
