@@ -1,5 +1,4 @@
 $ = jQuery.noConflict();
-Cufon.replace('h2, p, legend');
 
 $(document).ready(function() {
   $form = $(".authentication_form");
@@ -11,6 +10,7 @@ $(document).ready(function() {
     input.css("display", "none");
     li.css("cursor", "pointer");
     li.data("oauth", input);
+
     li.click(function(event) {
       event.preventDefault();
       li.data("oauth").attr("checked", "checked");
@@ -20,10 +20,3 @@ $(document).ready(function() {
     });
   });
 });
-
-function carouselClickHandler(carousel) {
-  $('a.control, a.control2').bind('click', function() {
-      carousel.scroll(jQuery.jcarousel.intval($(this).text()));
-      return false;
-  });
-};

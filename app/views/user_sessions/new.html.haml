@@ -1,5 +1,5 @@
 %h2 Login!
-- form_for @user_session, :url => authenticate_path, :html => { :method => :post, :class => "authentication_form" } do |f|
+= form_for @user_session, :url => authenticate_path, :html => { :method => :post, :class => "authentication_form" } do |f|
   = oauth_login_hidden_input
   %fieldset
     %legend Click your OAuth or OpenID provider
