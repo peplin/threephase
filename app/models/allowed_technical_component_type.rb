@@ -4,6 +4,10 @@ class AllowedTechnicalComponentType < ActiveRecord::Base
   belongs_to :game
 
   validates :game, :presence => true
+
+  def to_s
+    buildable
+  end
 end
 
 class AllowedGeneratorType < AllowedTechnicalComponentType

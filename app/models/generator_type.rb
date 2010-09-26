@@ -28,4 +28,8 @@ class GeneratorType < ActiveRecord::Base
 
   def fuel_amount
   end
+
+  def to_s
+    "#{super} using #{fuel_type}"
+  end
 end

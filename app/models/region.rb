@@ -39,4 +39,8 @@ class Region < ActiveRecord::Base
       z.contracts
     end
   end
+
+  def to_s
+    name
+  end
 end

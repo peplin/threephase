@@ -55,4 +55,8 @@ class User < ActiveRecord::Base
 
     @profile
   end
+
+  def to_s
+    profile.name
+  end
 end

@@ -6,4 +6,8 @@ class FuelType < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :market, :presence => true
+
+  def to_s
+    name
+  end
 end

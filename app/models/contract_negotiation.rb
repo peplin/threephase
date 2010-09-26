@@ -5,4 +5,8 @@ class ContractNegotiation < ActiveRecord::Base
   validates :reason, :presence => true
   validates :amount, :presence => true
   validates :generator, :presence => true
+
+  def to_s
+    "#{reason} with #{contract_offers.count} offers"
+  end
 end

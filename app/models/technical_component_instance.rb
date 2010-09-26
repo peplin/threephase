@@ -10,4 +10,8 @@ class TechnicalComponentInstance < ActiveRecord::Base
   def region
     zone.region
   end
+
+  def to_s
+    "#{buildable} created #{created_at} operating at #{operating_level}%"
+  end
 end

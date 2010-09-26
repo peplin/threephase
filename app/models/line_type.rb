@@ -13,4 +13,8 @@ class LineType < ActiveRecord::Base
       :less_than_or_equal_to => 25}
   validates :height, :presence => true, :numericality => {
       :greater_than_or_equal_to => -25, :less_than_or_equal_to => 100}
+
+  def to_s
+    "#{super}, #{voltage}kV #{(ac ? 'AC' : 'DC')}"
+  end
 end

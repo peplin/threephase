@@ -12,4 +12,8 @@ class Block < ActiveRecord::Base
   validates :type, :presence => true
   enum_attr :type, [:mountain, :water, :plains]
   validates :map, :presence => true
+
+  def to_s
+    "(#{x}, #{y}) #{type}"
+  end
 end

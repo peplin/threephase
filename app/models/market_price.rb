@@ -5,4 +5,8 @@ class MarketPrice < ActiveRecord::Base
   validates :price, :presence => true
   validates :game, :presence => true
   validates :market, :presence => true
+
+  def to_s
+    "$#{price}"
+  end
 end

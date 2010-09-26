@@ -5,4 +5,8 @@ class Map < ActiveRecord::Base
   has_friendly_id :name, :use_slug => true
 
   validates :name, :presence => true, :length => {:maximum => 30}
+
+  def to_s
+    name
+  end
 end

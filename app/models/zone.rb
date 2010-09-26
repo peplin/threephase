@@ -32,4 +32,8 @@ class Zone < ActiveRecord::Base
       g.contracts
     end
   end
+
+  def to_s
+    "#{name} (#{x}, #{y})"
+  end
 end

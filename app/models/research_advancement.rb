@@ -5,4 +5,8 @@ class ResearchAdvancement < ActiveRecord::Base
   validates_presence_of :parameter
   validates_presence_of :adjustment
   validates :region, :presence => true
+
+  def to_s
+    "#{reason} adjusts #{parameter} by #{adjustment}"
+  end
 end

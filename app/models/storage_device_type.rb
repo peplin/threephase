@@ -3,4 +3,8 @@ class StorageDeviceType < ActiveRecord::Base
   has_many :storage_devices, :foreign_key => "buildable_id"
   validates :decay_rate, :presence => true
   validates :efficiency, :presence => true, :percentage => true
+
+  def to_s
+    "#{super}, #{efficiency}% efficiency"
+  end
 end

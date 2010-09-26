@@ -5,4 +5,8 @@ class Repair < ActiveRecord::Base
   validates_presence_of :cost
   validates_presence_of :duration
   validates :repairable, :presence => true
+
+  def to_s
+    "#{reason} for $#{cost}"
+  end
 end

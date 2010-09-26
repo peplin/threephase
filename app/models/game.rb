@@ -53,4 +53,8 @@ class Game < ActiveRecord::Base
   def time_since time
     time
   end
+
+  def to_s
+    "#{regions.count} confirmed players started #{started}"
+  end
 end

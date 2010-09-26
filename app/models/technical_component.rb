@@ -30,4 +30,8 @@ class TechnicalComponent < ActiveRecord::Base
       :greater_than_or_equal_to => 0}
   validates :lifetime, :presence => true, :numericality => {
       :greater_than_or_equal_to => 0}
+
+  def to_s
+    "#{name} (#{average_capacity} average capacity)"
+  end
 end
