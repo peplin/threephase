@@ -9,3 +9,11 @@ Factory.define :generator_type, :class => GeneratorType,
   t.tax_credit rand(1000)
   t.association :fuel_type
 end
+
+Factory.define :another_generator_type, :parent => :generator_type do |t|
+  t.safety_mtbf 10
+end
+
+Factory.define :invalid_generator_type, :parent => :generator_type do |t|
+  t.fuel_efficiency -1
+end
