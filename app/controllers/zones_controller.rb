@@ -1,4 +1,5 @@
 class ZonesController < ApplicationController
+  before_filter :find_game, :only => :index
   before_filter :find_zones, :only => :index
   before_filter :find_zone, :only => [:show, :edit]
 
@@ -16,7 +17,14 @@ class ZonesController < ApplicationController
   private
 
   def find_zones
-    @zones = Zone.all
+    if current_user.admin?
+      @zones = @game.regions.collect do |r|
+        r.zones
+      end
+    else
+      @region = current_user.regions.find_by_game(@game)
+      @zones = @region.zones
+    end
   end
 
   def find_zone

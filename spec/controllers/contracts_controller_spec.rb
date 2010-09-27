@@ -17,11 +17,11 @@ describe ContractsController do
     it_should_behave_like "standard GET show"
 
     context "with an offer" do
-      before :all do
-        @model = Offer
-      end
+      include CrudSetup
 
       before :all do
+        @model = Offer
+        setup_crud_names
         @offer = Factory :offer
       end
 
@@ -37,7 +37,7 @@ describe ContractsController do
         it_should_behave_like "successful PUT update"
 
         def do_put format='html'
-          put :respond, :id => @offer, :offer => @offer.attributes,
+          put :respond, :id => @offer, :offer => {:accepted => true},
               :format => format
         end
       end
