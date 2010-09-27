@@ -19,13 +19,10 @@ describe "routing to contracts" do
         :generator_id => @generator, :controller => "contracts")
   end
 
-  it { {:post, "/contracts"}.should route_to(:action => "create",
-      :controller => "contracts") }
-
   it { {:post, "/offers"}.should route_to(:action => "offer",
       :controller => "contracts") }
 
-  it { {:put, "/offers/#{@offer}"}.should route_to(:action => "update",
+  it { {:put, "/offers/#{@offer}"}.should route_to(:action => "respond",
       :id => @offer, :controller => "contracts") }
 
   it "should expose a hackable URL to a game's contract" do
