@@ -14,6 +14,12 @@ module CrudSetup
     unless @factory_name
       @factory_name = @model_name.underscore.to_sym
     end
+    unless @invalid_factory_name
+      @invalid_factory_name = "invalid_#{@model_name.underscore}".to_sym
+    end
+    unless @another_factory_name
+      @another_factory_name = "another_#{@model_name.underscore}".to_sym
+    end
     unless @assigns_model_name
       @assigns_model_name = @model_name.underscore.to_sym
     end
@@ -285,6 +291,9 @@ share_examples_for "unsuccessful POST create" do
 
   before do
     setup_crud_names
+    if not @data
+      @data = Factory.attributes_for(@invalid_factory_name)
+    end
     do_post
   end
 
@@ -299,7 +308,7 @@ share_examples_for "standard unsuccessful POST create" do
   it_should_behave_like "unsuccessful POST create"
 
   def do_post format = 'html'
-    post 'create', :format => format
+    post 'create', @assigns_model_name => @data, :format => format
   end
 end
 
@@ -345,7 +354,7 @@ share_examples_for "successful PUT update" do
   before do
     setup_crud_names
     @instance = Factory @factory_name
-    @data = Factory(@factory_name).attributes
+    @data = Factory(@another_factory_name).attributes
     do_put
   end
 
@@ -388,7 +397,7 @@ share_examples_for "unsuccessful PUT update" do
 
   before do
     setup_crud_names
-    @instance = Factory @factory_name
+    @instance = Factory @factory_name unless @instance
     do_put
   end
 

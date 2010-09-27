@@ -1,12 +1,12 @@
 class GamesController < ApplicationController
-  before_filter :login_required
-  before_filter :find_games, :only => :index
+  before_filter :login_required, :except => [:index, :show]
   before_filter :find_game, :only => [:show, :edit, :update]
 
   respond_to :json, :except => [:new, :edit]
   respond_to :html
 
   def index
+    @games = Game.all
     respond_with @games
   end
 
@@ -34,19 +34,23 @@ class GamesController < ApplicationController
   end
 
   def update
-    if @game.update_attributes params[:game]
-      flash[:notice] = 'Game was successfully updated'
+    if @game.started
+        flash[:notice] = "Can't update a game that has already started"
+        respond_to do |format|
+          format.html { redirect_to game_path @game }
+          format.json { head :forbidden }
+        end
     else
-      flash[:error] = @game.errors
+      if @game.update_attributes params[:game]
+        flash[:notice] = 'Game was successfully updated'
+      else
+        flash[:error] = @game.errors
+      end
+      respond_with @game
     end
-    respond_with @game
   end
 
   private
-
-  def find_games
-    @games = Game.all
-  end
 
   def find_game
     @game = Game.find params[:id]

@@ -27,56 +27,41 @@ describe GamesController do
 
     context "on PUT to :update" do
       before :all do
-        @game = Factory :game
-        @started_game = Factory :started_game
-        @data = Factory.attributes_for :huge_game
+        @data = Factory.attributes_for :another_game
+        @instance = Factory :started_game
       end
 
-      context "for HTML" do
-        context "when a started game is updated" do
-          it_should_behave_like "unsuccessful PUT update"
+      context "when a started game is updated" do
+        it_should_behave_like "unsuccessful PUT update"
 
-          def do_put format='html'
-            put :update, :id => @started_game, :game => @data, :format => format
-          end
+        def do_put format='html'
+          put :update, :id => @instance, :game => @data, :format => format
         end
-
-        context "when a not started game is updated" do
-          it_should_behave_like "successful PUT update"
-
-          def do_put format='html'
-            put :update, :id => @game, :game => @data, :format => format
-          end
-        end
-      end
-
-      context "for JSON" do
-        before do
-          put :update, :id => @game, :game => @data, :format => "json"
-        end
-
-        it_should_behave_like JSONResponse
       end
     end
   end
 
-  share_examples_for "a user with limited access" do
+  context "as a player" do
+    before do
+      login
+    end
+
+    it_should_behave_like "standard GET index"
+    it_should_behave_like "standard GET show"
+    it_should_behave_like "standard GET edit"
+    it_should_behave_like "standard GET new"
+    it_should_behave_like "standard POST create"
+    it_should_behave_like "standard PUT update"
+
+    pending "something we don't own"
+  end
+
+  context "as an anonymous user" do
     it_should_behave_like "standard GET index"
     it_should_behave_like "standard GET show"
     it_should_behave_like "unauthorized GET edit"
     it_should_behave_like "unauthorized GET new"
     it_should_behave_like "unauthorized POST create"
     it_should_behave_like "unauthorized PUT update"
-  end
-
-  context "as a player" do
-    before :all do
-      login
-    end
-    it_should_behave_like "a user with limited access"
-  end
-
-  context "as an anonymous user" do
-    it_should_behave_like "a user with limited access"
   end
 end

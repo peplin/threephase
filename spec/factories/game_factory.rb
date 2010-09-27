@@ -7,7 +7,7 @@ Factory.define :invalid_game, :parent => :game do |g|
   g.max_players -2
 end
 
-Factory.define :huge_game, :parent => :game do |g|
+Factory.define :another_game, :parent => :game do |g|
   g.max_players 42
 end
 
