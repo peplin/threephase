@@ -1,74 +1,81 @@
-%h1 A Game
+- content_for :right_column do
+  %a{:href => games_url} Switch Game
 
-%dl
-  %dt Maximum Players
-  %dd= game.max_players
-  %dt Speed
-  %dd= game.speed
-  %dt Started?
-  %dd= game.started
+  %h2 A Game
 
-%h2 Technical Parameters
+  %dl
+    %dt Maximum Players
+    %dd= game.max_players
+    %dt Speed
+    %dd= game.speed
+    %dt Started?
+    %dd= game.started
 
-%dl
-  %dt Maximum Line Capacity
-  %dd= game.max_line_capacity
-  %dt Technology Cost
-  %dd= game.technology_cost
-  %dt Technology Reliability
-  %dd= game.technology_reliability
-  %dt Power Factor
-  %dd= game.power_factor
-  %dt Frequency
-  %dd= game.frequency
-  %dt Wind Speed
-  %dd= game.wind_speed
-  %dt Sunfall
-  %dd= game.sunfall
-  %dt Water Flow
-  %dd= game.water_flow
+  %h2 Technical Parameters
 
-%h2 Economic Parameters
+  %dl
+    %dt Maximum Line Capacity
+    %dd= game.max_line_capacity
+    %dt Technology Cost
+    %dd= game.technology_cost
+    %dt Technology Reliability
+    %dd= game.technology_reliability
+    %dt Power Factor
+    %dd= game.power_factor
+    %dt Frequency
+    %dd= game.frequency
+    %dt Wind Speed
+    %dd= game.wind_speed
+    %dt Sunfall
+    %dd= game.sunfall
+    %dt Water Flow
+    %dd= game.water_flow
 
-%dl
-  %dt Regulation Type
-  %dd= game.regulation_type
-  %dt Starting Capital
-  %dd= game.starting_capital
-  %dt Interest Rate
-  %dd= game.interest_rate
-  %dt Reliability Constraint
-  %dd= game.reliability_constraint
-  %dt Fuel Cost
-  %dd= game.fuel_cost
-  %dt Fuel Cost Volatility
-  %dd= game.fuel_cost_volatility
-  %dt Workforce Reliability
-  %dd= game.workforce_reliability
-  %dt Workforce Cost
-  %dd= game.workforce_cost
-  %dt Unionized?
-  %dd= game.unionized
+  %h2 Economic Parameters
 
-%h2 Environmental Parameters
+  %dl
+    %dt Regulation Type
+    %dd= game.regulation_type
+    %dt Starting Capital
+    %dd= game.starting_capital
+    %dt Interest Rate
+    %dd= game.interest_rate
+    %dt Reliability Constraint
+    %dd= game.reliability_constraint
+    %dt Fuel Cost
+    %dd= game.fuel_cost
+    %dt Fuel Cost Volatility
+    %dd= game.fuel_cost_volatility
+    %dt Workforce Reliability
+    %dd= game.workforce_reliability
+    %dt Workforce Cost
+    %dd= game.workforce_cost
+    %dt Unionized?
+    %dd= game.unionized
 
-%dl
-  %dt Carbon Allowances
-  %dd= game.carbon_allowance
-  %dt Tax Credit
-  %dd= game.tax_credit
-  %dt Renewable Requirement
-  %dd= game.renewable_requirement
-  %dt Political Stability
-  %dd= game.political_stability
-  %dt Political Opposition
-  %dd= game.political_opposition
-  %dt Public Support
-  %dd= game.public_support
+  %h2 Environmental Parameters
 
-%h2 Regions
+  %dl
+    %dt Carbon Allowances
+    %dd= game.carbon_allowance
+    %dt Tax Credit
+    %dd= game.tax_credit
+    %dt Renewable Requirement
+    %dd= game.renewable_requirement
+    %dt Political Stability
+    %dd= game.political_stability
+    %dt Political Opposition
+    %dd= game.political_opposition
+    %dt Public Support
+    %dd= game.public_support
 
-%a{:href => new_game_region_url(game)} New Region
+- content_for :left_column do
+  %h2 Regions
 
-- game.regions.each do |region|
-  %a{:href => game_region_path(game, region)}= region.name
+  %a{:href => new_game_region_url(@game)} New Region
+
+  %ul
+    - @game.regions.each do |region|
+      %li
+        %a{:href => game_region_path(@game, region)}= region.name
+

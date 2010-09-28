@@ -1,7 +1,6 @@
 /* Base styles */
 
 body {
-  font-family: "vera-sans-1","vera-sans-2", "Helvetica Neue", Arial, sans-serif;
   background-color: #FFF;
   color: #000;
 }
@@ -23,38 +22,16 @@ em {
   font-style: italic;
 }
 
-h1, h2, h3, h4, h5 {
-  font-family: "anivers-1","anivers-2",Verdana,Arial,Helvetica,Geneva,SunSans-Regular,sans-serif;
+h1, h2, h3, h4, h5, dt {
   margin: .1em 0 .2em 0;
   font-weight: bold;
-  color: #000;
 }
 
-h1 {
-  font-size: 1.7em;
+h1, h2, h3, h4, h5 {
+  margin: .1em 0 .2em 0;
 }
 
-h2 {
-  font-size: 1.6em;
-}
-
-h3 {
-  font-size: 1.5em;
-}
-
-h4 {
-  font-size: 1.1em;
-}
-
-dt {
-  font-weight: bold;
-}
-
-p {
-  font-size: 0.875em;
-}
-
-p, dd, address {
+p, address {
   margin: 0 0 15px 0;
 }
 
@@ -69,11 +46,9 @@ dd {
 ul {
   list-style: none;
   margin: 2px;
-  font-size: 0.875em;
 }
 
 ul.menu {
-  text-align: center;
   margin: 2px 0 2px 0;
 }
 
@@ -86,119 +61,38 @@ ul.menu li {
   display: inline;
 }
 
-.menu a {
-  font-weight: bold;
+#flash_notice, #flash_error, #flash_alert {
+    width: 400px;
+    text-align: center;
+    font-size: 14px;
+    padding: 3px 0;
+}
+
+#flash_notice {
+    background-color: #ccffcc;
+    border: solid 1px #66cc66;
+}
+
+#flash_error, #flash_alert {
+    background-color: #ffcccc;
+    border: solid 1px #cc6666;
 }
 
 /* Site sections */
-#wrapper {
-  margin: 0 auto;
-  overflow: hidden;
-  width: 900px;
-}
 
 #header {
-  border: 2px none #999999;
-  border-bottom-style: solid;
-  background-color: #000;
-  margin-top: 3px;
-  padding: 10px 10px 3px 10px;
-  height: 80px;
 }
 
-#header h2#slogan {
-  font-size: 1em;
-  font-style: normal;
-  color: #999999;
-  padding: 0;
+#logo {
 }
 
-#header .left {
-  float: left;
+#left_column {
 }
 
-#header .right {
-  float: right;
-  text-align: right;
-}
-
-#primary-nav {
-  font-family: "anivers-1","anivers-2",Verdana,Arial,Helvetica,Geneva,SunSans-Regular,sans-serif;
-  background-color: #000000;
-  font-weight: bold;
-  word-spacing: 2.5em;
-  font-size: 1.3em;
-  margin-top: 35px;
-  text-transform: lowercase;
-}
-
-#primary-nav a:link, #primary-nav a:visited {
-  color: #F3F3F3;
-}
-
-img.badge {
-  float: right;
-  clear: right;
-  margin-bottom: 10px;
-  background: white;
-}
-
-img.full {
-  margin: auto;
-  display: block;
-}
-
-#leftcolumn {
-  width: 80%;
-  padding: 5px 8px 5px 8px;
-  background: #3E3E3E;
-  border: 3px solid;
-  border-color: #222;
-}
-
-#leftcolumn h2 {
-  margin-top: .4em;
-}
-
-#content {
-  margin: 5px;
-  height: 100%;
-}
-
-#rightcolumn {
-  float: right;
-  text-align: right;
-  font-size: .9em;
-  padding: 2px 6px;
-  background: #222;
-  border: 3px solid;
-  border-color: #3E3E3E;
-}
-
-#rightcolumn h3.title {
-  margin-bottom: 8px;
-  text-transform: lowercase;
+#right_column {
 }
 
 #footer {
-  font-size: .8em;
-  clear: both;
-  margin: 10px 5px 5px 5px;
-  width: 80%;
-}
-
-#footer ul.menu {
-  text-align: left;
-  word-spacing: 1em;
-}
-
-#footer a, .copyright {
-  color: white;
-  font-weight: normal;
-}
-
-#footer .copyright {
-  float: right;
 }
 
 /* form field properties */
@@ -228,7 +122,6 @@ input[type=checkbox] {
 
 label span {
   color: #888888;
-  font-size: 90%;
 }
 
 fieldset .fieldpair {
@@ -248,8 +141,6 @@ fieldset .fieldpair {
   border-top: 1px solid #eee;
   border-left: 1px solid #eee;
 
-  font-family: Helvetica,Verdana,SunSans-Regular,sans-serif;
-  font-size: .675em;
   text-transform: uppercase;
   text-decoration: none;
   font-weight: bold;

@@ -76,13 +76,15 @@ Threephase::Application.routes.draw do
       :only => [:show, :create]
   resources :zones, :only => [:show, :create]
 
-  match 'login' => "user_sessions#new"
-  match 'logout' => "user_sessions#destroy"
-  match 'authenticate' => "user_sessions#create"
+  match 'login' => "user_sessions#new", :via => :get
+  match 'logout' => "user_sessions#destroy", :via => :get
+  match 'authenticate' => "user_sessions#create", :via => :post
   match 'connect' => "users#connect"
-  match 'detonate' => "users#detonate"
+  match 'detonate' => "users#detonate", :via => :get
   resources :users, :only => [:index, :show, :edit, :update]
   resource :user, :only => [:show, :edit, :update], :as => :self
 
-  root :to => 'games#index'
+  match 'about' => "static_pages#about", :via => :get
+
+  root :to => 'static_pages#index'
 end

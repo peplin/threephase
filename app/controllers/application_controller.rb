@@ -3,11 +3,10 @@ class ApplicationController < ActionController::Base
   layout 'application'
   helper :all
   helper_method :current_user_session, :current_user
+  before_filter :conditional_find_games
+  before_filter :conditional_find_game
 
   rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
-  rescue_from ActionController::RoutingError, :with => :render_not_found
-  rescue_from ActionController::UnknownController, :with => :render_not_found
-  rescue_from ActionController::UnknownAction, :with => :render_not_found
 
   private
 
@@ -29,12 +28,25 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def find_game
+  def conditional_find_game
     if params[:game_id]
-      @game = Game.find params[:game_id]
+      find_game
     end
   end
 
+  def conditional_find_games
+    if not @game
+      find_games
+    end
+  end
+
+  def find_game
+    @game = Game.find params[:game_id]
+  end
+
+  def find_games
+    @games = Game.all
+  end
 
   def render_not_found(exception)
     render "/errors/404", :status => 404
@@ -54,7 +66,7 @@ class ApplicationController < ActionController::Base
     unless current_user
       store_location
       flash[:notice] = "You must be logged in to access this page"
-      redirect_to login_path
+      redirect_to root_path
       return false
     end
   end

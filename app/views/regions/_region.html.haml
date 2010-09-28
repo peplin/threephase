@@ -1,28 +1,33 @@
-%h1= region.name
+- content_for :right_column do
+  %h2= region.name
 
-%a{:href => edit_game_region_path(region.game, region)} Edit
+  %a{:href => edit_game_region_path(region.game, region)} Edit
 
-%dl
-  %dt Game
-  %dd
-    %a{:href => game_path(region.game)}= region.game
-  %dt User
-  %dd
-    %a{:href => user_path(region.user)}= region.user
-  %dt Map
-  %dd= region.map
+  %dl
+    %dt Game
+    %dd
+      %a{:href => game_path(region.game)}= region.game
+    %dt User
+    %dd
+      %a{:href => user_path(region.user)}= region.user
+    %dt Map
+    %dd= region.map
 
-%dl
-  %dt Research Budget
-  %dd= region.research_budget
+  %dl
+    %dt Research Budget
+    %dd= region.research_budget
 
-%h2 Zones
-= render region.zones
+- content_for :left_column do
+  #zones
+    %h2 Zones
+    = render @region.zones
 
-%h2 Research Advancements
-=render region.research_advancements
+  #research_advancements
+    %h2 Research Advancements
+    =render @region.research_advancements
 
-%h2 Interstate Lines
-=render region.interstate_lines
-
-
+  #interstate_lines
+    %h2 Interstate Lines
+    %a{:href => new_game_region_interstate_line_url(@game, @region)}
+      New Interstate Line
+    =render @region.interstate_lines

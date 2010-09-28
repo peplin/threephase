@@ -1,4 +1,6 @@
-%h2= "Hi #{@profile[:name]}!"
+- content_for :page_title do
+  = "#{@profile[:name]}'s Account"
+
 - message = "You have connected to your"
 - message << " #{current_user.authenticated_with.collect(&:titleize).join(" and ")}"
 - message << " #{'account'.send(current_user.authenticated_with.length > 1 ? 'pluralize' : 'singularize')}."

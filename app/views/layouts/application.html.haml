@@ -6,27 +6,48 @@
     = stylesheet_link_tag "text"
     = stylesheet_link_tag "960"
     = stylesheet_link_tag "application"
+    = csrf_meta_tag
+  %body
+    .container_12#wrapper
+      .grid_2#logo
+        %a{:href => root_url} Threephase
+      %header.grid_10
+        %ul.menu.horizontal
+          %li
+            %a{:href => about_path} About
+          %li
+            %a{:href => games_path} Game List
+          - if current_user
+            %li
+              %a{:href => self_url}= current_user.profile[:name]
+            %li
+              %a{:href => logout_url} Logout
+      .clear
+      .grid_7#left_column
+        - flash.each do |name, msg|
+          .flash{:id => "flash_#{name}"}= msg
+        %h2#page_title
+          = yield :page_title
+        = yield
+        = yield :left_column
+      .grid_5#right_column
+        - if not current_user
+          .oauth_providers
+            %ul
+              - %w(facebook twitter google).each do |name|
+                %li.oauth_provider
+                  = form_for :oauth_provider, :url => authenticate_path do |f|
+                    = oauth_login_hidden_input
+                    %input{:name => :oauth_provider, :value => name, :src => "/images/icons/#{name}.png", :type => :image}
+          = form_for :user_session, :url => authenticate_path do |f|
+            %legend Or type in your OpenID address
+            %input{:name => "openid_identifier"}
+            %input{:type => :submit, :value => "Login"}
+        = yield :right_column
+      .clear
+      .prefix_7.grid_5#footer
+        = yield :footer
+
     = javascript_include_tag "http://cachedcommons.org/javascripts/jquery/jquery-1.4.2-min.js"
     = javascript_include_tag :defaults
     = yield :javascript_head
-    = csrf_meta_tag
-  %body
-    .container_12
-      .grid_2 Threephase
-      .grid_8
-        %ul
-          %li
-            %a{:href => games_path} Games
-      .grid_2
-        - if current_user
-          %ul
-            %li
-              %a.nice{:href => edit_self_url} Account
-            %li
-              %a.nice{:href => logout_url} Logout
-      .clear
-      .grid_7
-        = yield
-      .grid_5 Right
-      .clear
-      .prefix_7.grid_5 Footer
