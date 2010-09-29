@@ -4,3 +4,4 @@ log/*.log
 tmp/**/*
 Gemfile.lock
 coverage/
+db/test.sqlite3-journal
