@@ -23,19 +23,34 @@ describe Region do
     end
 
     it "should return all repairs" do
-      @repair = Factory :repair, :repairable => @generator
-      @region.repairs.should include @repair
+      repair = Factory :repair, :repairable => @generator
+      @region.repairs.should include repair
     end
 
     it "should return all bids" do
       bid = Factory :bid, :generator => @generator
-      @bids = @region.bids 
+      @region.bids.should include bid
     end
 
     it "should return all contracts" do
       contract = Factory :contract, :generator => @generator
-      @contracts = @region.contracts 
+      @region.contracts.should include contract
     end
+
+    it "should return free coordinates" do
+      x, y = @region.next_free_coordinates
+      x.should be > -1
+      y.should be > -1
+      @region.zones.each do |zone|
+        next if zone == @zone or not zone.valid?
+        zone.distance(x, y).should be > Region::ZONE_BUFFER
+      end
+    end
+
+    it "should return the nearest zone to a pair of coordinates" do
+      @region.zones.find_nearest(100, 200)
+    end
+
   end
 
   context "when a Region is created" do

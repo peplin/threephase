@@ -15,5 +15,13 @@ describe Map do
     end
 
     it { @map.friendly_id.should eq(@map.name.downcase) }
+
+    it "should have a height" do 
+      @map.height.should be >= 0
+    end
+
+    it "should have a width" do
+      @map.width.should be >= 0
+    end
   end
 end

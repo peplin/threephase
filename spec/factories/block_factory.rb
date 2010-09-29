@@ -9,6 +9,7 @@ end
 Factory.define :block do |b|
   b.x { Factory.next :block_x }
   b.y { Factory.next :block_y }
+  b.type :mountain
   b.association :map
 end
 

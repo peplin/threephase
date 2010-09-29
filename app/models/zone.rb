@@ -12,6 +12,12 @@ class Zone < ActiveRecord::Base
   validates :y, :presence => true, :numericality => {:greater_than => -1}
   validates :region, :presence => true
 
+  attr_readonly :x, :y, :region
+
+  after_create :generate_load_profiles
+  before_validation :generate_name, :on => :create
+  before_validation :generate_coordinates, :on => :create
+
   def demand
   end
 
@@ -20,22 +26,47 @@ class Zone < ActiveRecord::Base
       instances.collect do |i|
         i.repairs
       end
-    end.flatten
+    end.flatten!
   end
 
   def bids
     generators.collect do |g|
       g.bids
-    end
+    end.flatten!
   end
 
   def contracts
     generators.collect do |g|
       g.contracts
-    end
+    end.flatten!
+  end
+
+  def distance other_x, other_y
+    Math.sqrt(((other_x - x) ** 2) + ((other_y - y) ** 2))
+  end
+  
+  def distance_to_zone zone
+    distance zone.x, zone.y
   end
 
   def to_s
     "#{name} (#{x}, #{y})"
+  end
+
+  private
+
+  def generate_load_profiles
+    24.times do |hour|
+      self.load_profiles << LoadProfile.new(:hour => hour)
+    end
+  end
+
+  def generate_name
+    self.name = "A Zone" unless self.name
+  end
+
+  def generate_coordinates
+    self.x, self.y = region.next_free_coordinates unless (
+        self.x and self.y or not region)
   end
 end

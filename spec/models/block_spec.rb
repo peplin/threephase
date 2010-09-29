@@ -13,4 +13,14 @@ describe Block do
   it { should validate_presence_of :natural_gas_index }
   it { should validate_presence_of :coal_index }
   it { should validate_presence_of :map }
+
+  context "A Block instance" do
+    before do
+      @block = Factory :block
+    end
+    
+    it "should have a wind profile for each hour of the day" do
+      @block.wind_profiles.count.should eq 24
+    end
+  end
 end
