@@ -13,6 +13,16 @@ class InterstateLine < ActiveRecord::Base
   validates :outgoing_region, :presence => true
   validates :operating_level, :presence => true
 
+  attr_readonly :incoming_region, :outgoing_region, :line_type
+
+  def accepted= response
+    if new_record? or not accepted
+      write_attribute(:accepted, response)
+    else
+      raise "response cannot be changed once submitted"
+    end
+  end
+
   def to_s
     "#{line_type} from #{incoming_region} to #{outgoing_region} operating at #{operating_level}"
   end

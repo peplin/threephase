@@ -1,7 +1,6 @@
 class InterstateLinesController < ApplicationController
   before_filter :login_required
-  before_filter :find_region, :only => :index
-  before_filter :find_game, :only => :index
+  before_filter :conditional_find_region, :only => :index
   before_filter :find_interstate_lines, :only => :index
   before_filter :find_interstate_line, :only => [:show, :edit, :update]
 
@@ -13,8 +12,6 @@ class InterstateLinesController < ApplicationController
   end
 
   def new
-    # TODO need a better way to trigger :missing errors for some functions
-    @game = Game.find params[:game_id]
     @interstate_line = InterstateLine.new :incoming_region => @region
     respond_with @interstate_line
   end
@@ -38,9 +35,8 @@ class InterstateLinesController < ApplicationController
   end
 
   def update
-    # TODO only allow updating response, and only if not set
     if @interstate_line.update_attributes params[:interstate_line]
-      flash[:notice] = 'Interstate line was successfully updated'
+      flash[:notice] = "Response to the interstate line proposal saved."
     else
       flash[:error] = @interstate_line.errors
     end
@@ -49,16 +45,14 @@ class InterstateLinesController < ApplicationController
 
   private
 
-  def find_region
+  def conditional_find_region
     if params[:region_id]
-      @region = Region.find params[:region_id]
+      find_region
     end
   end
 
-  def find_game
-    if params[:game_id]
-      @game = Game.find params[:game_id]
-    end
+  def find_region
+    @region = Region.find params[:region_id]
   end
 
   def find_interstate_lines

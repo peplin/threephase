@@ -25,6 +25,7 @@ describe InterstateLinesController do
       it_should_behave_like "successful GET index"
 
       it "should only include lines in the region" do
+        do_get
         assigns(:interstate_lines).each do |line|
           line.region.should eq(@region)
         end
