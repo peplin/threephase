@@ -2,7 +2,6 @@ class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
       t.string :login, :null => true
-      t.string :email, :null => true
       t.string :crypted_password, :null => true
       t.string :password_salt, :null => true
       t.string :persistence_token, :null => false
@@ -14,7 +13,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :current_login_ip
       t.integer :active_token_id
 
-      t.boolean  "admin", :null => false, :default => false
+      t.boolean  :admin, :null => false, :default => false
 
       t.timestamps
     end
