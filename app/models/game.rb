@@ -51,7 +51,7 @@ class Game < ActiveRecord::Base
   validates :public_support, :presence => true, :percentage => true
 
   def current_price market
-    @market.current_price @game
+    market.current_price @game
   end
 
   def time_since time
