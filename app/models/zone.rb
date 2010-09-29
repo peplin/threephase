@@ -16,9 +16,11 @@ class Zone < ActiveRecord::Base
   end
 
   def repairs
-    [generators, lines, storage_devices].collect do |i|
-      i.repairs
-    end
+    [generators, lines, storage_devices].collect do |instances|
+      instances.collect do |i|
+        i.repairs
+      end
+    end.flatten
   end
 
   def bids
