@@ -14,21 +14,9 @@ describe "routing to users" do
   it { {:post, "/authenticate"}.should route_to(:action => "create",
         :controller => "user_sessions") }
 
-  it { {:post, "/connect"}.should route_to(:action => "connect",
-        :controller => "users") }
-
   it { {:get, "/users"}.should route_to(:action => "index",
       :controller => "users") }
 
   it { {:get, "/users/#{@user}"}.should route_to(:action => "show",
       :id => @user, :controller => "users") }
-
-  it { {:get, "/users/#{@user}/edit"}.should route_to(:action => "edit",
-      :id => @user, :controller => "users") }
-
-  it { {:get, "/user/edit"}.should route_to(:action => "edit",
-      :controller => "users") }
-
-  it { {:get, "/user"}.should route_to(:action => "show",
-      :controller => "users") }
 end

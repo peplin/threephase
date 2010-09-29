@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :admin_required, :only => :index
-  before_filter :login_required, :only => [:show, :edit, :connect]
+  before_filter :admin_required, :only => [:index, :show]
 
-  respond_to :json, :except => [:new, :edit]
+  respond_to :json, :except => [:new]
   respond_to :html
 
   def index
@@ -17,19 +16,8 @@ class UsersController < ApplicationController
     @profile = @user.profile
   end
 
-  def edit
-    @user = @current_user
-  end
-
-  def connect
-    @user = @current_user # makes our views "cleaner" and more consistent
-    @user.update_attributes(params[:user]) do |result|
-      flash[:notice] = "Account updated!" if result
-      redirect_to self_path
-    end
-  end
-
   def detonate
+    # TODO remove this!
     session.clear
     User.all.collect(&:destroy)
     redirect_to login_url
