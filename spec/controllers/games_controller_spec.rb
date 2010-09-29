@@ -48,12 +48,10 @@ describe GamesController do
 
     it_should_behave_like "standard GET index"
     it_should_behave_like "standard GET show"
-    it_should_behave_like "standard GET edit"
-    it_should_behave_like "standard GET new"
-    it_should_behave_like "standard POST create"
-    it_should_behave_like "standard PUT update"
-
-    pending "something we don't own"
+    it_should_behave_like "unauthorized GET edit"
+    it_should_behave_like "unauthorized GET new"
+    it_should_behave_like "unauthorized POST create"
+    it_should_behave_like "unauthorized PUT update"
   end
 
   context "as an anonymous user" do

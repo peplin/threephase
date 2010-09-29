@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_filter :login_required, :except => [:index, :show]
+  before_filter :admin_required, :except => [:index, :show]
   before_filter :find_game, :only => [:show, :edit, :update]
 
   respond_to :json, :except => [:new, :edit]
@@ -48,11 +48,5 @@ class GamesController < ApplicationController
       end
       respond_with @game
     end
-  end
-
-  private
-
-  def find_game
-    @game = Game.find params[:id]
   end
 end
