@@ -17,9 +17,10 @@ class UsersController < ApplicationController
   end
 
   def detonate
-    # TODO remove this!
-    session.clear
-    User.all.collect(&:destroy)
-    redirect_to login_url
+    if RAILS_ENV == "development"
+      session.clear
+      User.all.collect(&:destroy)
+      redirect_to login_url
+    end
   end
 end

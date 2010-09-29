@@ -79,7 +79,9 @@ Threephase::Application.routes.draw do
   match 'login' => "user_sessions#new", :via => :get
   match 'logout' => "user_sessions#destroy", :via => :get
   match 'authenticate' => "user_sessions#create", :via => :post
-  match 'detonate' => "users#detonate", :via => :get
+  if RAILS_ENV == 'development'
+    match 'detonate' => "users#detonate", :via => :get
+  end
   resources :users, :only => [:index, :show]
 
   match 'about' => "static_pages#about", :via => :get

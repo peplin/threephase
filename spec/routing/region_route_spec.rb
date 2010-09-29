@@ -22,7 +22,8 @@ describe "routing to regions" do
       :controller => "regions")
   end
 
-  # TODO do we need post? how are players added to a game?
+  it { {:post, "/regions"}.should route_to(:action => "create",
+      :controller => "regions") }
 
   it { {:put, "/regions/#{@region}"}.should route_to(
       :action => "update", :id => @region,
