@@ -13,8 +13,6 @@ describe InterstateLinesController do
   context "as an admin" do
     before do
       login_as_admin
-      # TODO need a better way to attach something for the current user to
-      # objects we build
     end
 
     it_should_behave_like "index with a game"

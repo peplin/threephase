@@ -50,7 +50,9 @@ class Game < ActiveRecord::Base
   validates :political_opposition, :presence => true, :percentage => true
   validates :public_support, :presence => true, :percentage => true
 
-  attr_protected :id
+  def current_price market
+    @market.current_price @game
+  end
 
   def time_since time
     time

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   layout 'application'
   helper :all
   helper_method :current_user_session, :current_user
+
   before_filter :conditional_find_games
   before_filter :conditional_find_game
 

@@ -9,9 +9,15 @@ describe Market do
 
   context "A Market instance" do
     before do
-      @market = Market.create :name => "Foo"
+      @market = Factory :market
+      @game = Factory :game
+      @region = Factory :region, :game => @game
+      @zone = Factory :zone, :region => @region
     end
 
-    it { @market.friendly_id.should eq(@market.name.downcase) }
+    it "should have a current price for the overall market" do
+      (@market.current_price @game).should eq(
+          @game.market_prices.find_by_market(@market).first.price)
+    end
   end
 end

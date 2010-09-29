@@ -65,7 +65,12 @@ describe Game do
 
   context "A Game instance" do
     before do
-      @game = Game.new
+      @game = Factory :game
+      @market = Factory :market
+    end
+
+    it "should know the current market price" do
+      (@game.current_price @market).should eq(@market.current_price @game)
     end
 
     context "should know how much game-relative time has passed" do
