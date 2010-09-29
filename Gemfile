@@ -30,4 +30,5 @@ group :test, :development do
   gem 'single_test'
   gem 'mocha'
   gem 'hirb'
+  gem 'autotest'
 end
