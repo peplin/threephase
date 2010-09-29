@@ -8,7 +8,7 @@ describe Market do
   it { should respond_to :friendly_id }
 
   context "A Market instance" do
-    before do
+    before :all do
       @market = Factory :market
       @game = Factory :game
       @region = Factory :region, :game => @game

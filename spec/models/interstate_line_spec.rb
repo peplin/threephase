@@ -12,7 +12,7 @@ describe InterstateLine do
   it { should validate_presence_of :operating_level }
 
   context "an instance of InterstateLine" do
-    before do
+    before :all do
       @line = Factory :interstate_line
     end
 

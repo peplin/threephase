@@ -16,7 +16,7 @@ describe Region do
   it { should_not allow_value(-1000).for(:research_budget) }
 
   context "with an instance of Region" do
-    before do
+    before :all do
       @region = Factory :region
       @zone = Factory :zone, :region => @region
       @generator = Factory :generator, :zone => @zone
@@ -54,7 +54,7 @@ describe Region do
   end
 
   context "when a Region is created" do
-    before do
+    before :all do
       @region = Factory :region
     end
 

@@ -5,9 +5,12 @@ describe InterstateLinesController do
     @model = InterstateLine
   end
 
-  before do
+  before :all do
     @region = Factory :region
-    Region.stubs(:find_by_game).returns(Factory :region)
+  end
+
+  before do
+    Region.stubs(:find_by_game).returns(@region)
   end
 
   context "as an admin" do
@@ -22,6 +25,10 @@ describe InterstateLinesController do
     it_should_behave_like "standard PUT update"
 
     context ":index with a region" do
+      before :all do
+        @region = Factory :region
+      end
+
       it_should_behave_like "successful GET index"
 
       it "should only include lines in the region" do

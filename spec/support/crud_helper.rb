@@ -128,12 +128,12 @@ end
 share_examples_for "successful GET show" do
   include CrudSetup
 
-  before do
+  before :all do
     setup_crud_names
+    @instance = Factory @factory_name
   end
 
   before do
-    @instance = Factory @factory_name
     do_get
   end
 
@@ -200,7 +200,7 @@ end
 share_examples_for "unauthorized GET show" do
   include CrudSetup
 
-  before do
+  before :all do
     setup_crud_names
     @instance = Factory @factory_name
   end
@@ -244,12 +244,15 @@ end
 share_examples_for "successful POST create" do
   include CrudSetup
 
-  before do
-    setup_crud_names
+  before :all do
     if not @data
+      setup_crud_names
       @data = Factory.attributes_for(@factory_name).update(
           Factory(@factory_name).attributes)
     end
+  end
+
+  before do
     do_post
   end
 
@@ -290,11 +293,14 @@ end
 share_examples_for "unsuccessful POST create" do
   include CrudSetup
 
-  before do
-    setup_crud_names
+  before :all do
     if not @data
+      setup_crud_names
       @data = Factory.attributes_for(@invalid_factory_name)
     end
+  end
+
+  before do
     do_post
   end
 
@@ -323,9 +329,12 @@ end
 share_examples_for "unauthorized PUT update" do
   include CrudSetup
 
-  before do
+  before :all do
     setup_crud_names
     @instance = Factory @factory_name
+  end
+
+  before do
     do_put
   end
 
@@ -351,11 +360,14 @@ end
 
 share_examples_for "successful PUT update" do
   include CrudSetup
-
-  before do
+  
+  before :all do
     setup_crud_names
     @instance = Factory @factory_name
     @data = Factory(@another_factory_name).attributes
+  end
+
+  before do
     do_put
   end
 
@@ -396,9 +408,12 @@ end
 share_examples_for "unsuccessful PUT update" do
   include CrudSetup
 
-  before do
+  before :all do
     setup_crud_names
     @instance = Factory @factory_name unless @instance
+  end
+
+  before do
     do_put
   end
 
@@ -428,7 +443,7 @@ end
 share_examples_for "successful DELETE destroy" do
   include CrudSetup
 
-  before do
+  before :all do
     setup_crud_names
     @instance = Factory @factory_name
   end
@@ -503,9 +518,12 @@ end
 share_examples_for "successful GET edit" do
   include CrudSetup
 
-  before do
+  before :all do
     setup_crud_names
     @instance = Factory @factory_name
+  end
+
+  before do
     do_get
   end
 
@@ -557,9 +575,12 @@ end
 share_examples_for "unauthorized GET edit" do
   include CrudSetup
 
-  before do
+  before :all do
     setup_crud_names
     @instance = Factory @factory_name
+  end
+
+  before do
     do_get
   end
 
