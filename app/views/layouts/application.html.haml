@@ -18,8 +18,7 @@
           %li
             %a{:href => games_path} Game List
           - if current_user
-            %li
-              %a{:href => self_url}= current_user.profile[:name]
+            %li= current_user.profile[:name]
             %li
               %a{:href => logout_url} Logout
       .clear

@@ -4,13 +4,14 @@ class UserSessionsController < ApplicationController
   
   def create
     @user_session = UserSession.new(params[:user_session])
+    @user_session.remember_me = true
     @user_session.save do |result|
       if result
         flash[:notice] = "Login successful."
       else
         flash[:notice] = "Registration successful."
       end
-      redirect_to current_user ? profile_url(current_user) : login_path
+      redirect_to current_user ? profile_url(current_user) : root_path
     end
   end
   
