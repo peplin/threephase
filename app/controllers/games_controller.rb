@@ -49,4 +49,10 @@ class GamesController < ApplicationController
       respond_with @game
     end
   end
+
+  private
+  
+  def find_game
+    @game = Game.find params[:id]
+  end
 end

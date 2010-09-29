@@ -7,7 +7,9 @@ class ApplicationController < ActionController::Base
   before_filter :conditional_find_games
   before_filter :conditional_find_game
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
+  if ::Rails.env == 'test'
+    rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
+  end
 
   private
 
