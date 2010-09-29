@@ -58,13 +58,21 @@ class User < ActiveRecord::Base
           :link   => "/images/icons/google.png",
           :title  => "Google"
         }
-      else
+      elsif openid
         {
           :id     => "unknown",
           :name   => openid[:key],
           :photo  => "/images/icons/google.png",
           :link   => "/images/icons/google.png",
           :title  => "OpenID"
+        }
+      else
+        {
+          :id     => "unknown",
+          :name   => "User",
+          :photo  => "/images/icons/google.png",
+          :link   => "/images/icons/google.png",
+          :title  => "Unknown"
         }
       end
     end

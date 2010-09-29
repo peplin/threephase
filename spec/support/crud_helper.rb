@@ -201,6 +201,7 @@ share_examples_for "unauthorized GET show" do
   include CrudSetup
 
   before do
+    setup_crud_names
     @instance = Factory @factory_name
   end
 

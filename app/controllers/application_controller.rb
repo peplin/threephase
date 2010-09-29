@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     unless current_user
       store_location
       flash[:notice] = "You must be logged in to access this page"
-      redirect_to root_path
+      redirect_to login_path
       return false
     end
   end
@@ -76,6 +76,15 @@ class ApplicationController < ActionController::Base
     if current_user
       store_location
       redirect_to self_path
+      return false
+    end
+  end
+
+  def admin_required
+    unless current_user and current_user.admin
+      store_location
+      flash[:notice] = "You must be an administrator to access this page"
+      redirect_to login_path
       return false
     end
   end

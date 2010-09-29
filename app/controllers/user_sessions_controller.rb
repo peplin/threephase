@@ -10,7 +10,7 @@ class UserSessionsController < ApplicationController
       else
         flash[:notice] = "Registration successful."
       end
-      redirect_to current_user ? profile_url(current_user) : root_path
+      redirect_to current_user ? profile_url(current_user) : login_path
     end
   end
   
