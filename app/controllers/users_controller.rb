@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   before_filter :admin_required, :only => :index
-  before_filter :login_required, :only => [:show, :edit, :update, :connect]
+  before_filter :login_required, :only => [:show, :edit, :connect]
+
+  respond_to :json, :except => [:new, :edit]
+  respond_to :html
 
   def index
   end
@@ -16,10 +19,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = @current_user
-  end
-
-  def update
-    # TODO
   end
 
   def connect

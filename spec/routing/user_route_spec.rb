@@ -31,7 +31,4 @@ describe "routing to users" do
 
   it { {:get, "/user"}.should route_to(:action => "show",
       :controller => "users") }
-
-  it { {:put, "/users/#{@user}"}.should route_to(:action => "update",
-      :id => @user, :controller => "users") }
 end
