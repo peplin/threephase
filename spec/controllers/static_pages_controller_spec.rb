@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe StaticPagesController do
+  include CrudSetup
 
   context "GET to about" do
     before do
