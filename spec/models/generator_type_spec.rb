@@ -35,14 +35,9 @@ describe GeneratorType do
       @generator_type = Factory :generator_type
     end
 
-    it "should return its marginal cost" do
-    end
-
-    it "should return its current revenue" do
-    end
-
-    it "should return its availability" do
-    end
+    it "should return its marginal cost"
+    it "should return its current revenue"
+    it "should return its availability"
 
     context "with a renewable fuel" do
       before do
@@ -50,7 +45,7 @@ describe GeneratorType do
       end
 
       it "should know its fuel is renewable" do
-        @generator_type.renewable?.should be(true)
+        @generator_type.renewable?.should eq true
       end
 
       it "should know it doesn't burn any fuel" do

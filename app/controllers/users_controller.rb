@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    respond_with @users
   end
 
   def show
@@ -14,6 +15,7 @@ class UsersController < ApplicationController
       @user = @current_user
     end
     @profile = @user.profile
+    respond_with @user
   end
 
   def detonate

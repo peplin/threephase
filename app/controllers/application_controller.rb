@@ -52,7 +52,11 @@ class ApplicationController < ActionController::Base
   end
 
   def render_not_found(exception)
-    render "/errors/404", :status => 404
+    # TODO does this help or hurt? do 404s work for JSON?
+    respond_to do |format|
+      format.html { render "/errors/404", :status => 404 }
+      format.json { head :missing }
+    end
   end
 
   def current_user_session
@@ -69,7 +73,10 @@ class ApplicationController < ActionController::Base
     unless current_user
       store_location
       flash[:notice] = "You must be logged in to access this page"
-      redirect_to login_path
+      respond_to do |format|
+        format.html { redirect_to login_path }
+        format.json { head :unauthorized }
+      end
       return false
     end
   end
@@ -86,7 +93,10 @@ class ApplicationController < ActionController::Base
     unless current_user and current_user.admin
       store_location
       flash[:notice] = "You must be an administrator to access this page"
-      redirect_to login_path
+      respond_to do |format|
+        format.html { redirect_to login_path }
+        format.json { head :unauthorized }
+      end
       return false
     end
   end
