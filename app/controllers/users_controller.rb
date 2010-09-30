@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   before_filter :admin_required, :only => [:index, :show]
 
-  respond_to :json, :except => [:new]
-  respond_to :html
+  respond_to :json, :html
 
   def index
+    @users = User.all
   end
 
   def show
