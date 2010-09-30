@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 share_examples_for "a technical component type" do
   before :all do
     @assigns_model_name = :type
