@@ -8,7 +8,7 @@ describe LoadProfile do
 
   context "A LoadProfile instance" do
     before do
-      @load_profile = Factory :load_profile
+      @load_profile = Factory :load_profile, :hour => 14
     end
 
     it "should have a demand" do

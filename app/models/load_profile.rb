@@ -5,7 +5,7 @@ class LoadProfile < ActiveRecord::Base
   validates_presence_of :demand
   validates :zone, :presence => true
 
-  before_save :calculate_demand
+  before_validation :calculate_demand, :on => :create
 
   def to_s
     "#{demand} MW @ #{hour}:00"
@@ -14,10 +14,9 @@ class LoadProfile < ActiveRecord::Base
   private
 
   def calculate_demand
-    demand = 0
-    if (8..23).to_a.include? hour:
+    if (8..23).to_a.include? self.hour:
       # oversimplified parabola
-      demand = -0.1 * ((hour - 15) ** 2) + 1
+      self.demand = -0.1 * ((self.hour - 15) ** 2) + 4
     end
   end
 end
