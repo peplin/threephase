@@ -50,4 +50,14 @@ class GamesController < ApplicationController
       respond_with @game
     end
   end
+
+  private
+
+  def find_game
+    if params[:id]
+      @game = Game.find params[:id]
+    else
+      @game = Game.find cookies[:current_game]
+    end
+  end
 end

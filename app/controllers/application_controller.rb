@@ -44,10 +44,10 @@ class ApplicationController < ActionController::Base
   end
 
   def find_game
-    if cookies[:current_game]
-      @game = Game.find cookies[:current_game]
-    else
+    if params[:game_id]
       @game = Game.find params[:id]
+    else
+      @game = Game.find cookies[:current_game]
     end
   end
 
@@ -56,10 +56,9 @@ class ApplicationController < ActionController::Base
   end
 
   def render_not_found(exception)
-    # TODO does this help or hurt? do 404s work for JSON?
     respond_to do |format|
       format.html { render "/errors/404", :status => 404 }
-      format.json { head :missing }
+      format.json { head 404 }
     end
   end
 

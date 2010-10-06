@@ -160,7 +160,7 @@ share_examples_for "unsuccessful GET show" do
   end
 
   it { should respond_with :missing }
-  it { should_not render_template :show }
+  it { should render_template '404' }
   it { should_not assign_to(@assigns_model_name) }
 
   it "should send a 404 if not found via JSON" do
@@ -426,6 +426,7 @@ share_examples_for "unsuccessful PUT update" do
     end
   end
   it "should not update the instance" do
+    # TODO this broke in Ruby 1.9.2
     @instance.updated_at.should eq(@instance.reload.updated_at)
   end
 end
@@ -551,7 +552,7 @@ share_examples_for "unsuccessful GET edit" do
   end
 
   it { should respond_with :missing }
-  it { should_not render_template :edit }
+  it { should render_template '404' }
   it { should_not assign_to(@assigns_model_name) }
 end
 
