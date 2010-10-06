@@ -90,8 +90,10 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   create_table "games", :force => true do |t|
     t.integer  "speed",                  :default => 0,             :null => false
+    t.datetime "updated_at"
     t.integer  "max_players",            :default => 1,             :null => false
     t.datetime "started"
+    t.datetime "ended"
     t.integer  "max_line_capacity",      :default => 1500,          :null => false
     t.integer  "technology_cost",        :default => 50,            :null => false
     t.integer  "technology_reliability", :default => 50,            :null => false
@@ -116,7 +118,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer  "political_opposition",   :default => 50,            :null => false
     t.integer  "public_support",         :default => 50,            :null => false
     t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "generator_types", :force => true do |t|
@@ -299,7 +300,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   create_table "users", :force => true do |t|
     t.string   "login"
-    t.string   "email"
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token",                    :null => false

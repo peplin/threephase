@@ -5,6 +5,7 @@ class CreateGames < ActiveRecord::Migration
       t.datetime :updated_at, :null => false, :default => Time.now
       t.integer :max_players, :null => false, :default => 1
       t.datetime :started
+      t.datetime :ended
 
       t.integer :max_line_capacity, :null => false, :default => 1500
       t.integer :technology_cost, :null => false, :default => 50

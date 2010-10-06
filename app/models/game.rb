@@ -58,6 +58,10 @@ class Game < ActiveRecord::Base
     time
   end
 
+  def in_progress?
+    not ended
+  end
+
   def to_s
     "#{regions.count} confirmed players, #{started ? "started #{started}" : "not started"}"
   end

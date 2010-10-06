@@ -46,8 +46,13 @@ class ApplicationController < ActionController::Base
   def find_game
     if params[:game_id]
       @game = Game.find params[:game_id]
-    else
+    elsif cookies[:current_game]
       @game = Game.find cookies[:current_game]
+    elsif current_user
+      @game = current_user.current_game
+      cookies[:current_game] = @game.id
+    else
+      raise ActiveRecord::RecordNotFound
     end
   end
 

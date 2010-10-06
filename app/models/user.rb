@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
     config.validate_password_field = false
   end
 
+  def current_game
+    games.find_by_ended nil
+  end
+
   def facebook
     if token = authenticated_with?(:facebook)
       @facebook ||= JSON.parse(token.get("/me"))

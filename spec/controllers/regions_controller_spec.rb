@@ -11,6 +11,7 @@ describe RegionsController do
     end
 
     it_should_behave_like "index with a game"
+    it_should_behave_like "standard GET index"
     it_should_behave_like "standard GET show"
     it_should_behave_like "standard PUT update"
   end

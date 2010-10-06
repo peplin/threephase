@@ -11,6 +11,7 @@ describe MarketsController do
     end
 
     it_should_behave_like "index with a game"
+    it_should_behave_like "standard GET index"
     it_should_behave_like "show with a game"
   end
 end

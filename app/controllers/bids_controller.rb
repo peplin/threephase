@@ -38,12 +38,6 @@ class BidsController < ApplicationController
     end
   end
 
-  def find_game
-    if params[:game_id]
-      @game = Game.find params[:game_id]
-    end
-  end
-
   def find_bids
     if @generator
       @bids = @generator.bids
