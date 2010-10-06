@@ -2,34 +2,24 @@ require 'spec_helper'
 
 describe "routing to repairs" do
   before :all do
-    @game = Factory(:game).to_param
     @generator = Factory(:generator).to_param
     @store = Factory(:storage_device).to_param
     @line = Factory(:line).to_param
     @repair = Factory(:repair).to_param
   end
 
-  it "should expose a list of a game's repairs" do
-    {:get => "/games/#{@game}/repairs"}.should route_to(:action => "index",
-      :game_id => @game, :controller => "repairs")
+  it "should expose a list of the current game's repairs" do
+    {:get => "/repairs"}.should route_to(:action => "index", :controller => "repairs")
   end
 
-  it "should expose a list of a generator's repairs" do
-    {:get => "/games/#{@game}/generators/#{@generator}/repairs"}.should route_to(
-      :action => "index", :game_id => @game, :generator_id => @generator,
-      :controller => "repairs")
+  it "should expose a list of a storage device's repairs in the current game" do
+    {:get => "/storage-devices/#{@store}/repairs"}.should route_to(
+      :action => "index", :storage_device_id => @store, :controller => "repairs")
   end
 
-  it "should expose a list of a storage device's repairs" do
-    {:get => "/games/#{@game}/storage-devices/#{@store}/repairs"}.should route_to(
-      :action => "index", :game_id => @game, :storage_device_id => @store,
-      :controller => "repairs")
-  end
-
-  it "should expose a list of a line's repairs" do
-    {:get => "/games/#{@game}/lines/#{@line}/repairs"}.should route_to(
-      :action => "index", :game_id => @game, :line_id => @line,
-      :controller => "repairs")
+  it "should expose a list of a line's repairs in the current game" do
+    {:get => "/lines/#{@line}/repairs"}.should route_to(
+      :action => "index", :line_id => @line, :controller => "repairs")
   end
 
   it { {:post => "/repairs"}.should route_to(:action => "create",
@@ -40,20 +30,15 @@ describe "routing to repairs" do
         :id => @repair, :controller => "repairs")
   end
 
-  it "should expose a hackable URL to a generator's repair" do
-    {:get => "/games/#{@game}/generators/#{@generator}/repairs/#{@repair}"
-        }.should route_to(:action => "show", :game_id => @game,
-        :generator_id => @generator, :id => @repair, :controller => "repairs")
+  it "should expose a hackable URL to a generator's repair in the current game" do
+    {:get => "/generators/#{@generator}/repairs/#{@repair}"
+        }.should route_to(:action => "show", :generator_id => @generator,
+        :id => @repair, :controller => "repairs")
   end
 
-  it "should expose a hackable URL to a game's repair" do
-    {:get => "/games/#{@game}/repairs/#{@repair}"}.should route_to(
-        :action => "show", :game_id => @game, :id => @repair,
-        :controller => "repairs")
-  end
-
-  it "does not expose a list of all repairs" do
-    {:get => "/repairs"}.should_not be_routable
+  it "should expose a hackable URL to the current game's repair" do
+    {:get => "/repairs/#{@repair}"}.should route_to(
+        :action => "show", :id => @repair, :controller => "repairs")
   end
 
   it "does not allow editing of a repair" do

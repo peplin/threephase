@@ -10,6 +10,10 @@ describe "routing to regions" do
   it { {:get => "/games/#{@game}/regions"}.should route_to(:action => "index",
       :game_id => @game, :controller => "regions") }
 
+  it "should expose a hackable URL to the current game's regions" do
+    {:get => "/regions"}.should route_to(:action => "index", :controller => "regions")
+  end
+
   it "should expose a hackable URL to a game's region" do
     {:get => "/games/#{@game}/regions/#{@region}"}.should route_to(
       :action => "show", :game_id => @game, :id => @region,
@@ -22,16 +26,21 @@ describe "routing to regions" do
       :controller => "regions")
   end
 
+  it "should expose a direct URL to edit a game's region" do
+    {:get => "/regions/#{@region}/edit"}.should route_to(
+      :action => "edit", :id => @region, :controller => "regions")
+  end
+
+  it "should expose a direct URL to a new region form for the current game" do
+    {:get => "/regions/new"}.should route_to(:action => "new", :controller => "regions")
+  end
+
   it { {:post => "/regions"}.should route_to(:action => "create",
       :controller => "regions") }
 
   it { {:put => "/regions/#{@region}"}.should route_to(
       :action => "update", :id => @region,
       :controller => "regions") }
-
-  it "does not expose a list of all regions" do
-    {:get => "/regions"}.should_not be_routable
-  end
 
   it "does not allow deleting of a region" do
     {:delete => "/regions/#{@region}"}.should_not be_routable

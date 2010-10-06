@@ -72,10 +72,10 @@
 - content_for :left_column do
   %h2 Regions
 
-  %a{:href => new_game_region_url(@game)} New Region
+  %a{:href => new_region_url} New Region
 
   %ul
     - @game.regions.each do |region|
       %li
-        %a{:href => game_region_path(@game, region)}= region.name
+        %a{:href => region_url(region)}= region.name
 

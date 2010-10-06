@@ -47,7 +47,9 @@ class ContractsController < ApplicationController
     if @generator
       @contracts = @generator.contracts
     else
-      @region = current_user.regions.find_by_game(@game)
+      @region = current_user.regions.find_by_game_id(@game.id)
+      raise ActiveRecord::RecordNotFound if not @region
+        
       @contracts = @region.contracts
     end
   end

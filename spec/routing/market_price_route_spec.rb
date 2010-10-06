@@ -12,10 +12,13 @@ describe "routing to market_prices" do
       :game_id => @game, :controller => "markets")
   end
 
-  it "should expose a list of a zone's market prices" do
-    {:get => "/games/#{@game}/zones/#{@zone}/prices"}.should route_to(
-      :action => "index", :game_id => @game, :zone_id => @zone,
-      :controller => "markets")
+  it "should expose a list of the current game's market prices" do
+    {:get => "/prices"}.should route_to(:action => "index", :controller => "markets")
+  end
+
+  it "should expose a direct URL to a list of a zone's market prices" do
+    {:get => "/zones/#{@zone}/prices"}.should route_to(
+      :action => "index", :zone_id => @zone, :controller => "markets")
   end
 
   it "should expose a hackable URL to a game's market price" do
@@ -24,13 +27,13 @@ describe "routing to market_prices" do
       :controller => "markets")
   end
 
-  it "should expose a hackable URL to zone's market price" do
-    {:get => "/games/#{@game}/zones/#{@zone}/prices/#{@market}"
-      }.should route_to(:action => "show", :game_id => @game, :zone_id => @zone,
-      :id => @market, :controller => "markets")
+  it "should expose a direct URL to the current game's market price" do
+    {:get => "/prices/#{@market}"}.should route_to(
+      :action => "show", :id => @market, :controller => "markets")
   end
 
-  it "does not expose a list of all market_prices" do
-    {:get => "/prices"}.should_not be_routable
+  it "should expose a direct URL to zone's market price" do
+    {:get => "/zones/#{@zone}/prices/#{@market}" }.should route_to(
+      :action => "show", :zone_id => @zone, :id => @market, :controller => "markets")
   end
 end

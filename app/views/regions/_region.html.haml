@@ -1,7 +1,7 @@
 - content_for :right_column do
   %h2= region.name
 
-  %a{:href => edit_game_region_path(region.game, region)} Edit
+  %a{:href => edit_region_path(region)} Edit
 
   %dl
     %dt Game
@@ -28,6 +28,6 @@
 
   #interstate_lines
     %h2 Interstate Lines
-    %a{:href => new_game_region_interstate_line_url(@game, @region)}
+    %a{:href => new_region_interstate_line_url(@region)}
       New Interstate Line
     =render @region.interstate_lines

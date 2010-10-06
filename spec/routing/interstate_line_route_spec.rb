@@ -3,26 +3,24 @@ require 'spec_helper'
 describe "routing to interstate_lines" do
   before :all do
     @line = Factory(:interstate_line).to_param
-    @game = Factory(:game).to_param
     @region = Factory(:region).to_param
   end
 
-  it "should expose a list of a game's interstate lines" do
-    {:get => "/games/#{@game}/interstate-lines"
-      }.should route_to(:action => "index", :game_id => @game,
-      :controller => "interstate_lines")
+  it "should expose a list of the current game's interstate lines" do
+    {:get => "/interstate-lines"
+      }.should route_to(:action => "index", :controller => "interstate_lines")
   end
 
   it "should expose a list of a region's interstate lines" do
-    {:get => "/games/#{@game}/regions/#{@region}/interstate-lines"
-      }.should route_to(:action => "index", :game_id => @game,
-      :region_id => @region, :controller => "interstate_lines")
+    {:get => "/regions/#{@region}/interstate-lines"
+      }.should route_to(:action => "index", :region_id => @region,
+      :controller => "interstate_lines")
   end
 
   it "should expose a hackable URL to a form for a new interstate line" do
-    {:get => "/games/#{@game}/regions/#{@region}/interstate-lines/new"
-        }.should route_to(:action => "new", :game_id => @game,
-        :region_id => @region, :controller => "interstate_lines")
+    {:get => "/regions/#{@region}/interstate-lines/new"
+        }.should route_to(:action => "new", :region_id => @region,
+        :controller => "interstate_lines")
   end
 
   it { {:post => "/interstate-lines"}.should route_to(:action => "create",
@@ -33,9 +31,9 @@ describe "routing to interstate_lines" do
       :controller => "interstate_lines") }
 
   it "should expose a hackable URL to a region's interstate line" do
-    {:get => "/games/#{@game}/regions/#{@region}/interstate-lines/#{@line}"
-        }.should route_to(:action => "show", :game_id => @game,
-        :region_id => @region, :id => @line, :controller => "interstate_lines")
+    {:get => "/regions/#{@region}/interstate-lines/#{@line}"
+        }.should route_to(:action => "show", :region_id => @region, :id => @line,
+        :controller => "interstate_lines")
   end
 
   it "should expose a direct URL to an interstate line" do

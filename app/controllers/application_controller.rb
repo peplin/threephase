@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
 
   def find_game
     if params[:game_id]
-      @game = Game.find params[:id]
+      @game = Game.find params[:game_id]
     else
       @game = Game.find cookies[:current_game]
     end

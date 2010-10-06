@@ -2,21 +2,19 @@ require 'spec_helper'
 
 describe "routing to contracts" do
   before :all do
-    @game = Factory(:game).to_param
     @generator = Factory(:generator).to_param
     @contract = Factory(:contract).to_param
     @offer = Factory(:offer).to_param
   end
 
   it "should expose a list of all contracts for a game" do
-    {:get => "/games/#{@game}/contracts"}.should route_to(:action => "index",
-        :game_id => @game, :controller => "contracts")
+    {:get => "/contracts"}.should route_to(:action => "index",
+        :controller => "contracts")
   end
 
   it "should expose a list of all contracts for a generator" do
-    {:get => "/games/#{@game}/generators/#{@generator}/contracts"
-        }.should route_to(:action => "index", :game_id => @game,
-        :generator_id => @generator, :controller => "contracts")
+    {:get => "/generators/#{@generator}/contracts"}.should route_to(
+        :action => "index", :generator_id => @generator, :controller => "contracts")
   end
 
   it { {:post => "/offers"}.should route_to(:action => "offer",
@@ -25,16 +23,9 @@ describe "routing to contracts" do
   it { {:put => "/offers/#{@offer}"}.should route_to(:action => "respond",
       :id => @offer, :controller => "contracts") }
 
-  it "should expose a hackable URL to a game's contract" do
-    {:get => "/games/#{@game}/contracts/#{@contract}"}.should route_to(
-      :action => "show", :game_id => @game, :id => @contract,
-      :controller => "contracts")
-  end
-
   it "should expose a hackable URL to a generator's contract" do
-    {:get => "/games/#{@game}/generators/#{@generator}/contracts/#{@contract}"
-        }.should route_to(:action => "show", :game_id => @game,
-        :generator_id => @generator, :id => @contract,
+    {:get => "/generators/#{@generator}/contracts/#{@contract}" }.should route_to(
+        :action => "show", :generator_id => @generator, :id => @contract,
         :controller => "contracts")
   end
 
