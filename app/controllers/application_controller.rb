@@ -44,7 +44,11 @@ class ApplicationController < ActionController::Base
   end
 
   def find_game
-    @game = Game.find params[:game_id]
+    if cookies[:current_game]
+      @game = Game.find cookies[:current_game]
+    else
+      @game = Game.find params[:id]
+    end
   end
 
   def find_games

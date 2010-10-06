@@ -26,6 +26,7 @@ class GamesController < ApplicationController
   end
 
   def show
+    cookies[:current_game] = @game.id
     respond_with @game
   end
 
@@ -48,11 +49,5 @@ class GamesController < ApplicationController
       end
       respond_with @game
     end
-  end
-
-  private
-  
-  def find_game
-    @game = Game.find params[:id]
   end
 end
