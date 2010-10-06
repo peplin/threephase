@@ -3,6 +3,10 @@ class Line < TechnicalComponentInstance
   belongs_to :city, :class_name => "City"
   belongs_to :other_city, :class_name => "City"
 
+  scope :with_city, lambda { |city_id|
+    { :conditions => ["city_id = ? or other_city_id = ?", city_id, city_id]}
+  }
+
   validates :line_type, :presence => true
   validates :city, :presence => true
   validates :other_city, :presence => true

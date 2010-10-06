@@ -3,7 +3,8 @@ class City < ActiveRecord::Base
   has_many :blips
   has_many :load_profiles
   has_many :generators
-  has_many :lines
+  has_many :outgoing_lines, :class_name => "Line", :foreign_key => "city_id"
+  has_many :incoming_lines, :class_name => "Line", :foreign_key => "other_city_id"
   has_many :storage_devices
   has_friendly_id :name, :use_slug => true
 
@@ -17,6 +18,10 @@ class City < ActiveRecord::Base
   after_create :generate_load_profiles
   before_validation :generate_name, :on => :create
   before_validation :generate_coordinates, :on => :create
+
+  def lines
+    Line.with_city(id)
+  end
 
   def demand
   end
