@@ -19,8 +19,6 @@ class GamesController < ApplicationController
     @game = Game.new params[:game]
     if @game.save
       flash[:notice] = 'Game was successfully created.'
-    else
-      flash[:error] = @game.errors
     end
     respond_with @game
   end
@@ -44,8 +42,6 @@ class GamesController < ApplicationController
     else
       if @game.update_attributes params[:game]
         flash[:notice] = 'Game was successfully updated'
-      else
-        flash[:error] = @game.errors
       end
       respond_with @game
     end

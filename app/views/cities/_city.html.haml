@@ -1,0 +1,30 @@
+%h3= city.name
+  
+%h4 Generators
+%a{:href => new_city_generator_path(city)} New Generator
+%ul
+  - city.generators.each do |generator|
+    %li
+      %a{:href => city_generator_path(city, generator)}
+        = generator
+
+%h4 Transmission Lines
+%a{:href => new_city_line_path(city)} New Transmission Line
+%ul
+  - city.lines.each do |line|
+    %li
+      %a{:href => city_line_path(city, line)}
+        = line
+
+%h4 Storage Devices
+%a{:href => new_city_storage_device_path(city)} New Storage Device
+%ul
+  - city.storage_devices.each do |storage_device|
+    %li
+      %a{:href => city_storage_device_path(city, storage_device)}
+        = line
+
+%h5 Load Profile
+%ul
+  - city.load_profiles.each do |profile|
+    %li= profile

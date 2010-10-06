@@ -1,5 +1,6 @@
-- if flash[:failure]
-  %p.failure= flash[:failure]
-- if flash[:notice]
-  %p.notice= flash[:notice]
-=error_messages_for :object => object
+- if object.errors.any?
+  %label
+    The following errors prohibited this form from being saved
+    %ul
+      - object.errors.full_messages.each do |msg|
+        %li.error= msg

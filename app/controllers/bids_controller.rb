@@ -20,8 +20,6 @@ class BidsController < ApplicationController
     @bid = Bid.new params[:bid]
     if @bid.save
       flash[:notice] = 'Bid was successfully created.'
-    else
-      flash[:error] = @bid.errors
     end
     respond_with @bid
   end

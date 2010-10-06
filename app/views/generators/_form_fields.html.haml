@@ -1,0 +1,10 @@
+=render :partial => 'global/form_header_fields', :locals => {:object => generator}
+%fieldset 
+  .fieldpair
+    %label
+      Type
+      =collection_select :generator, :buildable_id, GeneratorType.all, :id, :to_s
+%input{:type => 'hidden', :name => 'generator[city_id]', :value => generator.city.id}
+%input{:type => 'hidden', :name => 'generator[buildable_type]', :value => "GeneratorType"}
+%button{:type => 'submit'} Save
+%a.button{:href => generators_path} Cancel

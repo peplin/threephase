@@ -25,7 +25,6 @@ class StatesController < ApplicationController
     if @state.save
       flash[:notice] = 'State was successfully created.'
     else
-      flash[:error] = @state.errors
       @game = @state.game
     end
     respond_with @state.game, @state
@@ -42,8 +41,6 @@ class StatesController < ApplicationController
   def update
     if @state.update_attributes params[:state]
       flash[:notice] = 'State was successfully updated'
-    else
-      flash[:error] = @state.errors
     end
     respond_with @state
   end

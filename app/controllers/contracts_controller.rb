@@ -25,8 +25,6 @@ class ContractsController < ApplicationController
     @offer = Offer.new params[:offer]
     if @offer.save
       flash[:notice] = 'Offer was made succesfully on the contract'
-    else
-      flash[:error] = @offer.errors
     end
     respond_with @offer.contract
   end
@@ -35,8 +33,6 @@ class ContractsController < ApplicationController
     @offer.update_attributes params[:offer]
     if @offer.save
       flash[:notice] = 'Offer was updated successfuly'
-    else
-      flash[:error] = @offer.errors
     end
     respond_with @offer.contract
   end

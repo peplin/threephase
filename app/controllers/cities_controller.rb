@@ -1,7 +1,7 @@
 class CitiesController < ApplicationController
   before_filter :find_game, :only => :index
   before_filter :find_cities, :only => :index
-  before_filter :find_city, :only => [:show, :edit]
+  before_filter :find_city, :only => [:show]
 
   respond_to :json, :only => [:index, :show]
   respond_to :html

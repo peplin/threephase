@@ -18,8 +18,6 @@ class TechnicalComponentsController < ApplicationController
     @type = component_type.new params[:type]
     if @type.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
-    else
-      flash[:error] = @type.errors
     end
     respond_with @type
   end
@@ -44,8 +42,6 @@ class TechnicalComponentsController < ApplicationController
   def update
     if @type.update_attributes params[:type]
       flash[:notice] = "#{component_type.to_s} was successfully updated."
-    else
-      flash[:error] = @type.errors
     end
     respond_with @type
   end

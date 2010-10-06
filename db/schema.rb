@@ -69,6 +69,17 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   add_index "blocks", ["x", "y", "map_id"], :name => "index_blocks_on_x_and_y_and_map_id", :unique => true
 
+  create_table "cities", :force => true do |t|
+    t.string  "name",        :null => false
+    t.integer "x",           :null => false
+    t.integer "y",           :null => false
+    t.string  "cached_slug"
+    t.integer "state_id",    :null => false
+  end
+
+  add_index "cities", ["cached_slug"], :name => "index_cities_on_cached_slug", :unique => true
+  add_index "cities", ["x", "y", "state_id"], :name => "index_cities_on_x_and_y_and_state_id"
+
   create_table "contracts", :force => true do |t|
     t.string   "reason",                          :null => false
     t.integer  "amount",                          :null => false
@@ -137,10 +148,10 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   create_table "interstate_lines", :force => true do |t|
     t.boolean  "accepted"
-    t.integer  "operating_level",    :default => 100, :null => false
+    t.integer  "operating_level",   :default => 100, :null => false
     t.integer  "incoming_state_id",                  :null => false
     t.integer  "outgoing_state_id",                  :null => false
-    t.integer  "line_type_id",                        :null => false
+    t.integer  "line_type_id",                       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -203,16 +214,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.datetime "updated_at"
   end
 
-  create_table "states", :force => true do |t|
-    t.string   "name",                                 :null => false
-    t.integer  "research_budget", :default => 5000000, :null => false
-    t.integer  "map_id",                               :null => false
-    t.integer  "game_id",                              :null => false
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "repairs", :force => true do |t|
     t.string   "reason",                             :null => false
     t.integer  "cost",                               :null => false
@@ -228,7 +229,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.string   "reason",     :null => false
     t.string   "parameter",  :null => false
     t.float    "adjustment", :null => false
-    t.integer  "state_id",  :null => false
+    t.integer  "state_id",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -254,6 +255,16 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   add_index "slugs", ["name", "sluggable_type", "sequence", "scope"], :name => "index_slugs_on_n_s_s_and_s", :unique => true
   add_index "slugs", ["sluggable_id"], :name => "index_slugs_on_sluggable_id"
+
+  create_table "states", :force => true do |t|
+    t.string   "name",                                 :null => false
+    t.integer  "research_budget", :default => 5000000, :null => false
+    t.integer  "map_id",                               :null => false
+    t.integer  "game_id",                              :null => false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "storage_device_types", :force => true do |t|
     t.float    "decay_rate",                 :null => false
@@ -325,16 +336,5 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.float   "speed",    :default => 0.0, :null => false
     t.integer "block_id",                  :null => false
   end
-
-  create_table "cities", :force => true do |t|
-    t.string  "name",        :null => false
-    t.integer "x",           :null => false
-    t.integer "y",           :null => false
-    t.string  "cached_slug"
-    t.integer "state_id",   :null => false
-  end
-
-  add_index "cities", ["cached_slug"], :name => "index_cities_on_cached_slug", :unique => true
-  add_index "cities", ["x", "y", "state_id"], :name => "index_cities_on_x_and_y_and_state_id"
 
 end

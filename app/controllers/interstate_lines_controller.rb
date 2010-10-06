@@ -20,8 +20,6 @@ class InterstateLinesController < ApplicationController
     @interstate_line = InterstateLine.new params[:interstate_line]
     if @interstate_line.save
       flash[:notice] = 'Interstate line was successfully created.'
-    else
-      flash[:error] = @interstate_line.errors
     end
     respond_with @interstate_line
   end
@@ -37,8 +35,6 @@ class InterstateLinesController < ApplicationController
   def update
     if @interstate_line.update_attributes params[:interstate_line]
       flash[:notice] = "Response to the interstate line proposal saved."
-    else
-      flash[:error] = @interstate_line.errors
     end
     respond_with @interstate_line
   end

@@ -61,19 +61,21 @@ ul.menu li {
   display: inline;
 }
 
-#flash_notice, #flash_error, #flash_alert {
+#flash_notice, #flash_error, #flash_alert, .error {
     width: 400px;
     text-align: center;
     font-size: 14px;
     padding: 3px 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
-#flash_notice {
+#flash_notice, .notice {
     background-color: #ccffcc;
     border: solid 1px #66cc66;
 }
 
-#flash_error, #flash_alert {
+#flash_error, #flash_alert, .error {
     background-color: #ffcccc;
     border: solid 1px #cc6666;
 }

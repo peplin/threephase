@@ -21,12 +21,12 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def create
-    @instance = component_type.new params[:instance]
+    @instance = component_type.new params[param_symbol]
+    debugger # TODO
     if @instance.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
       respond_with @instance.state
     else
-      flash[:error] = @instance.errors
       respond_with @instance
     end
   end
@@ -40,10 +40,8 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def update
-    if @instance.update_attributes params[:instance]
+    if @instance.update_attributes params[param_symbol]
       flash[:notice] = "#{component_type.to_s} was successfully updated."
-    else
-      flash[:error] = @instance.errors
     end
     respond_with @game, @instance
   end
@@ -57,8 +55,9 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def find_instance
-    if params[:instance_id]
-      @instance = component_type.find params[:instance_id]
+    key = "#{param_symbol}_id"
+    if params[key]
+      @instance = component_type.find params[key]
     end
   end
 
@@ -77,5 +76,11 @@ class TechnicalComponentInstancesController < ApplicationController
 
   def find_instance
     @instance = component_type.find params[:id]
+  end
+
+  private
+  
+  def param_symbol
+    component_type.name.underscore.to_sym
   end
 end
