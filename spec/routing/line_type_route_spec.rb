@@ -6,24 +6,24 @@ describe "routing to line types" do
     @type = Factory(:line_type).to_param
   end
 
-  it { {:get, "/lines/types"}.should route_to(:action => "index",
+  it { {:get => "/lines/types"}.should route_to(:action => "index",
         :controller => "line_types") }
 
-  it { {:get, "/lines/types/new"}.should route_to(:action => "new",
+  it { {:get => "/lines/types/new"}.should route_to(:action => "new",
       :controller => "line_types") }
 
-  it { {:post, "/lines/types"}.should route_to(:action => "create",
+  it { {:post => "/lines/types"}.should route_to(:action => "create",
       :controller => "line_types") }
 
-  it { {:get, "/lines/types/#{@type}"}.should route_to(:action => "show",
+  it { {:get => "/lines/types/#{@type}"}.should route_to(:action => "show",
         :id => @type, :controller => "line_types") }
 
-  it { {:get, "/lines/types/#{@type}/edit"}.should route_to(:action => "edit",
+  it { {:get => "/lines/types/#{@type}/edit"}.should route_to(:action => "edit",
         :id => @type, :controller => "line_types") }
 
-  it { {:put, "/lines/types/#{@type}"}.should route_to(:action => "update",
+  it { {:put => "/lines/types/#{@type}"}.should route_to(:action => "update",
         :id => @type, :controller => "line_types") }
 
-  it { {:delete, "/lines/types/#{@type}"}.should route_to(:action => "destroy",
+  it { {:delete => "/lines/types/#{@type}"}.should route_to(:action => "destroy",
         :id => @type, :controller => "line_types") }
 end

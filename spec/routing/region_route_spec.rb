@@ -7,25 +7,25 @@ describe "routing to regions" do
     @market = Factory(:market).to_param
   end
 
-  it { {:get, "/games/#{@game}/regions"}.should route_to(:action => "index",
+  it { {:get => "/games/#{@game}/regions"}.should route_to(:action => "index",
       :game_id => @game, :controller => "regions") }
 
   it "should expose a hackable URL to a game's region" do
-    {:get, "/games/#{@game}/regions/#{@region}"}.should route_to(
+    {:get => "/games/#{@game}/regions/#{@region}"}.should route_to(
       :action => "show", :game_id => @game, :id => @region,
       :controller => "regions")
   end
 
   it "should expose a direct URL to a region" do
-    {:get, "/regions/#{@region}"}.should route_to(
+    {:get => "/regions/#{@region}"}.should route_to(
       :action => "show", :id => @region,
       :controller => "regions")
   end
 
-  it { {:post, "/regions"}.should route_to(:action => "create",
+  it { {:post => "/regions"}.should route_to(:action => "create",
       :controller => "regions") }
 
-  it { {:put, "/regions/#{@region}"}.should route_to(
+  it { {:put => "/regions/#{@region}"}.should route_to(
       :action => "update", :id => @region,
       :controller => "regions") }
 

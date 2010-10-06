@@ -9,37 +9,37 @@ describe "routing to contracts" do
   end
 
   it "should expose a list of all contracts for a game" do
-    {:get, "/games/#{@game}/contracts"}.should route_to(:action => "index",
+    {:get => "/games/#{@game}/contracts"}.should route_to(:action => "index",
         :game_id => @game, :controller => "contracts")
   end
 
   it "should expose a list of all contracts for a generator" do
-    {:get, "/games/#{@game}/generators/#{@generator}/contracts"
+    {:get => "/games/#{@game}/generators/#{@generator}/contracts"
         }.should route_to(:action => "index", :game_id => @game,
         :generator_id => @generator, :controller => "contracts")
   end
 
-  it { {:post, "/offers"}.should route_to(:action => "offer",
+  it { {:post => "/offers"}.should route_to(:action => "offer",
       :controller => "contracts") }
 
-  it { {:put, "/offers/#{@offer}"}.should route_to(:action => "respond",
+  it { {:put => "/offers/#{@offer}"}.should route_to(:action => "respond",
       :id => @offer, :controller => "contracts") }
 
   it "should expose a hackable URL to a game's contract" do
-    {:get, "/games/#{@game}/contracts/#{@contract}"}.should route_to(
+    {:get => "/games/#{@game}/contracts/#{@contract}"}.should route_to(
       :action => "show", :game_id => @game, :id => @contract,
       :controller => "contracts")
   end
 
   it "should expose a hackable URL to a generator's contract" do
-    {:get, "/games/#{@game}/generators/#{@generator}/contracts/#{@contract}"
+    {:get => "/games/#{@game}/generators/#{@generator}/contracts/#{@contract}"
         }.should route_to(:action => "show", :game_id => @game,
         :generator_id => @generator, :id => @contract,
         :controller => "contracts")
   end
 
   it "should expose a direct URL to a contract" do
-    {:get, "/contracts/#{@contract}"}.should route_to(:action => "show",
+    {:get => "/contracts/#{@contract}"}.should route_to(:action => "show",
       :id => @contract, :controller => "contracts")
   end
 
