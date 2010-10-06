@@ -10,6 +10,7 @@ describe Game do
   it { should have_many(:generator_types).through(:allowed_generator_types) }
 
   it { should validate_presence_of :speed}
+  it { should validate_presence_of :updated_at}
 
   it { should validate_presence_of :max_players}
   it { should allow_value(3).for(:max_players) }

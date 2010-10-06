@@ -17,6 +17,7 @@ class Game < ActiveRecord::Base
   end
   validates :regulation_type, :presence => true
 
+  validates :updated_at, :presence => true
   validates :speed, :presence => true, :percentage => true
   validates :max_players, :presence => true,
       :numericality => {:greater_than_or_equal_to => 1}
