@@ -1,0 +1,16 @@
+=render :partial => 'global/form_header_fields', :locals => {:object => line}
+%fieldset 
+  .fieldpair
+    %label
+      Type
+      =collection_select :line, :line_type_id, LineType.all, :id, :to_s
+  .fieldpair
+    %label
+      Starting City
+      =collection_select :line, :city_id, City.all, :id, :to_s
+  .fieldpair
+    %label
+      Ending City
+      =collection_select :line, :other_city_id, City.all, :id, :to_s
+%button{:type => 'submit'} Save
+%a.button{:href => lines_path} Cancel

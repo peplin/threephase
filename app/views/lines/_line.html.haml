@@ -2,14 +2,14 @@
 
 %dl
   %dt State 
-  %dd= @line.state
+  %dd= line.state
   %dt Cities
-  %dd= "From #{@line.city} to #{@line.other_city}"
+  %dd= "From #{line.city} to #{line.other_city}"
   %dt Type
-  %dd= @line.line_type
+  %dd= line.line_type
   %dt Operating Level
-  %dd= @line.operating_level
+  %dd= line.operating_level
   
 %h2 Repairs
 
-= render @line.repairs
+= render line.repairs

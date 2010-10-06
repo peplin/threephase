@@ -21,8 +21,12 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def create
+    type_id_key = "#{component_type.name.underscore}_type_id"
+    params[param_symbol][:buildable_id] = params[param_symbol][type_id_key]
+    params[param_symbol][:buildable_type] = "#{component_type.name}Type"
+    params[param_symbol].delete type_id_key
+
     @instance = component_type.new params[param_symbol]
-    debugger # TODO
     if @instance.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
       respond_with @instance.state
