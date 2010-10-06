@@ -1,15 +1,7 @@
 %h1 A Storage Device
 
 %dl
-  %dt State 
-  %dd= storage_device.state
   %dt City
   %dd= storage_device.city
-  %dt Type
-  %dd= storage_device.storage_device_type
-  %dt Operating Level
-  %dd= storage_device.operating_level
-  
-%h2 Repairs
 
-= render storage_device.repairs
+= render :partial => 'technical_component_instances/technical_component_instance', :locals => {:instance => generator}
