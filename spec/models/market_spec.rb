@@ -11,8 +11,8 @@ describe Market do
     before :all do
       @market = Factory :market
       @game = Factory :game
-      @region = Factory :region, :game => @game
-      @zone = Factory :zone, :region => @region
+      @state = Factory :state, :game => @game
+      @zone = Factory :zone, :state => @state
     end
 
     it "should have a current price for the overall market" do

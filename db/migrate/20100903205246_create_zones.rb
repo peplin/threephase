@@ -6,15 +6,15 @@ class CreateZones < ActiveRecord::Migration
       t.integer :y, :null => false
       t.string :cached_slug
 
-      t.references :region, :null => false
+      t.references :state, :null => false
     end
     
     add_index :zones, :cached_slug, :unique => true
-    add_index :zones, [:x, :y, :region_id]
+    add_index :zones, [:x, :y, :state_id]
   end
 
   def self.down
     drop_table :zones
-    remove_index :zones, [:x, :y, :region_id]
+    remove_index :zones, [:x, :y, :state_id]
   end
 end

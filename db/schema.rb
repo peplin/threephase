@@ -138,8 +138,8 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "interstate_lines", :force => true do |t|
     t.boolean  "accepted"
     t.integer  "operating_level",    :default => 100, :null => false
-    t.integer  "incoming_region_id",                  :null => false
-    t.integer  "outgoing_region_id",                  :null => false
+    t.integer  "incoming_state_id",                  :null => false
+    t.integer  "outgoing_state_id",                  :null => false
     t.integer  "line_type_id",                        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -203,7 +203,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.datetime "updated_at"
   end
 
-  create_table "regions", :force => true do |t|
+  create_table "states", :force => true do |t|
     t.string   "name",                                 :null => false
     t.integer  "research_budget", :default => 5000000, :null => false
     t.integer  "map_id",                               :null => false
@@ -228,7 +228,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.string   "reason",     :null => false
     t.string   "parameter",  :null => false
     t.float    "adjustment", :null => false
-    t.integer  "region_id",  :null => false
+    t.integer  "state_id",  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -331,10 +331,10 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer "x",           :null => false
     t.integer "y",           :null => false
     t.string  "cached_slug"
-    t.integer "region_id",   :null => false
+    t.integer "state_id",   :null => false
   end
 
   add_index "zones", ["cached_slug"], :name => "index_zones_on_cached_slug", :unique => true
-  add_index "zones", ["x", "y", "region_id"], :name => "index_zones_on_x_and_y_and_region_id"
+  add_index "zones", ["x", "y", "state_id"], :name => "index_zones_on_x_and_y_and_state_id"
 
 end

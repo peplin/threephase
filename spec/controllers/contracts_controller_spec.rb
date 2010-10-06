@@ -9,11 +9,11 @@ describe ContractsController do
 
   context "as an admin" do
     before :all do
-      @region = Factory :region
+      @state = Factory :state
     end
 
     before do
-      Region.stubs(:find_by_game).returns(@region)
+      State.stubs(:find_by_game).returns(@state)
       login_as_admin
     end
     

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "routing to interstate_lines" do
   before :all do
     @line = Factory(:interstate_line).to_param
-    @region = Factory(:region).to_param
+    @state = Factory(:state).to_param
   end
 
   it "should expose a list of the current game's interstate lines" do
@@ -11,15 +11,15 @@ describe "routing to interstate_lines" do
       }.should route_to(:action => "index", :controller => "interstate_lines")
   end
 
-  it "should expose a list of a region's interstate lines" do
-    {:get => "/regions/#{@region}/interstate-lines"
-      }.should route_to(:action => "index", :region_id => @region,
+  it "should expose a list of a state's interstate lines" do
+    {:get => "/states/#{@state}/interstate-lines"
+      }.should route_to(:action => "index", :state_id => @state,
       :controller => "interstate_lines")
   end
 
   it "should expose a hackable URL to a form for a new interstate line" do
-    {:get => "/regions/#{@region}/interstate-lines/new"
-        }.should route_to(:action => "new", :region_id => @region,
+    {:get => "/states/#{@state}/interstate-lines/new"
+        }.should route_to(:action => "new", :state_id => @state,
         :controller => "interstate_lines")
   end
 
@@ -30,9 +30,9 @@ describe "routing to interstate_lines" do
       :action => "update", :id => @line,
       :controller => "interstate_lines") }
 
-  it "should expose a hackable URL to a region's interstate line" do
-    {:get => "/regions/#{@region}/interstate-lines/#{@line}"
-        }.should route_to(:action => "show", :region_id => @region, :id => @line,
+  it "should expose a hackable URL to a state's interstate line" do
+    {:get => "/states/#{@state}/interstate-lines/#{@line}"
+        }.should route_to(:action => "show", :state_id => @state, :id => @line,
         :controller => "interstate_lines")
   end
 

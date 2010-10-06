@@ -2,7 +2,7 @@ class Map < ActiveRecord::Base
   WIDTH = 600
   HEIGHT = 400
   belongs_to :user
-  has_many :regions
+  has_many :states
   has_many :blocks
   has_friendly_id :name, :use_slug => true
 

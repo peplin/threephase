@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe RegionsController do
+describe StatesController do
   before :all do
-    @model = Region
+    @model = State
   end
 
   context "as an admin" do
@@ -17,6 +17,6 @@ describe RegionsController do
   end
 
   context "as a player" do
-    it "should not allow me to update regions not mine"
+    it "should not allow me to update states not mine"
   end
 end

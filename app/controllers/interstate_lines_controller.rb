@@ -1,6 +1,6 @@
 class InterstateLinesController < ApplicationController
   before_filter :login_required
-  before_filter :conditional_find_region, :only => :index
+  before_filter :conditional_find_state, :only => :index
   before_filter :find_interstate_lines, :only => :index
   before_filter :find_interstate_line, :only => [:show, :edit, :update]
 
@@ -12,7 +12,7 @@ class InterstateLinesController < ApplicationController
   end
 
   def new
-    @interstate_line = InterstateLine.new :incoming_region => @region
+    @interstate_line = InterstateLine.new :incoming_state => @state
     respond_with @interstate_line
   end
 
@@ -45,22 +45,22 @@ class InterstateLinesController < ApplicationController
 
   private
 
-  def conditional_find_region
-    if params[:region_id]
-      find_region
+  def conditional_find_state
+    if params[:state_id]
+      find_state
     end
   end
 
-  def find_region
-    @region = Region.find params[:region_id]
+  def find_state
+    @state = State.find params[:state_id]
   end
 
   def find_interstate_lines
-    if @region
-      @interstate_lines = @region.interstate_lines
+    if @state
+      @interstate_lines = @state.interstate_lines
     elsif @game
-      @region = current_user.regions.find_by_game(@game)
-      @interstate_lines = @region.interstate_lines
+      @state = current_user.states.find_by_game(@game)
+      @interstate_lines = @state.interstate_lines
     end
   end
 

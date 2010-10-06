@@ -4,7 +4,7 @@ describe "routing to zones" do
   before :all do
     @game = Factory(:game).to_param
     @zone = Factory(:zone).to_param
-    @region = Factory(:region).to_param
+    @state = Factory(:state).to_param
   end
 
   it "should expose a list of a game's zones" do
@@ -16,15 +16,15 @@ describe "routing to zones" do
     {:get => "/zones"}.should route_to(:action => "index", :controller => "zones")
   end
 
-  it "should expose a list of a region's zones" do
-    {:get => "/games/#{@game}/regions/#{@region}/zones"}.should route_to(
-        :action => "index", :game_id => @game, :region_id => @region,
+  it "should expose a list of a state's zones" do
+    {:get => "/games/#{@game}/states/#{@state}/zones"}.should route_to(
+        :action => "index", :game_id => @game, :state_id => @state,
         :controller => "zones")
   end
 
-  it "should expose a list of a region's zones in the current game" do
-    {:get => "/regions/#{@region}/zones"}.should route_to(
-        :action => "index", :region_id => @region, :controller => "zones")
+  it "should expose a list of a state's zones in the current game" do
+    {:get => "/states/#{@state}/zones"}.should route_to(
+        :action => "index", :state_id => @state, :controller => "zones")
   end
 
   it "should expose a hackable URL to a game's zone" do
@@ -37,15 +37,15 @@ describe "routing to zones" do
         :controller => "zones")
   end
 
-  it "should expose a hackable URL to a region's zone" do
-    {:get => "/games/#{@game}/regions/#{@region}/zones/#{@zone}"
+  it "should expose a hackable URL to a state's zone" do
+    {:get => "/games/#{@game}/states/#{@state}/zones/#{@zone}"
         }.should route_to(:action => "show", :game_id => @game,
-        :region_id => @region, :id => @zone, :controller => "zones")
+        :state_id => @state, :id => @zone, :controller => "zones")
   end
 
-  it "should expose a hackable URL to a region's zone in the current game" do
-    {:get => "/regions/#{@region}/zones/#{@zone}"
-        }.should route_to(:action => "show", :region_id => @region, :id => @zone,
+  it "should expose a hackable URL to a state's zone in the current game" do
+    {:get => "/states/#{@state}/zones/#{@zone}"
+        }.should route_to(:action => "show", :state_id => @state, :id => @zone,
         :controller => "zones")
   end
 

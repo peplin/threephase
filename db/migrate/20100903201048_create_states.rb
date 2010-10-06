@@ -1,6 +1,6 @@
-class CreateRegions < ActiveRecord::Migration
+class CreateStates < ActiveRecord::Migration
   def self.up
-    create_table :regions do |t|
+    create_table :states do |t|
       t.string :name, :null => false
       t.integer :research_budget, :null => false, :default => 5000000
 
@@ -13,6 +13,6 @@ class CreateRegions < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :regions
+    drop_table :states
   end
 end

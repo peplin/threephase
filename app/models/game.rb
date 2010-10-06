@@ -8,9 +8,9 @@ class Game < ActiveRecord::Base
   has_many :generator_types, :through => :allowed_generator_types
   has_many :line_types, :through => :allowed_line_types
   has_many :storage_device_types, :through => :allowed_storage_device_types
-  has_many :regions
-  has_many :users, :through => :regions
-  has_many :maps, :through => :regions
+  has_many :states
+  has_many :users, :through => :states
+  has_many :maps, :through => :states
 
   enum_attr :regulation_type, [:unregulated, :ror, :auction] do
     label :ror => "Rate of Return"
@@ -63,6 +63,6 @@ class Game < ActiveRecord::Base
   end
 
   def to_s
-    "#{regions.count} confirmed players, #{started ? "started #{started}" : "not started"}"
+    "#{states.count} confirmed players, #{started ? "started #{started}" : "not started"}"
   end
 end

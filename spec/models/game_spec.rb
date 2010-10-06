@@ -4,9 +4,9 @@ require 'time'
 describe Game do
   it { should have_many :market_prices }
   it { should have_many(:markets).through(:market_prices) }
-  it { should have_many :regions }
-  it { should have_many(:users).through(:regions) }
-  it { should have_many(:maps).through(:regions) }
+  it { should have_many :states }
+  it { should have_many(:users).through(:states) }
+  it { should have_many(:maps).through(:states) }
   it { should have_many(:generator_types).through(:allowed_generator_types) }
 
   it { should validate_presence_of :speed}

@@ -7,8 +7,8 @@ class TechnicalComponentInstance < ActiveRecord::Base
   validates :operating_level, :presence => true, :percentage => true
   validates :zone, :presence => true
 
-  def region
-    zone.region
+  def state
+    zone.state
   end
 
   def to_s

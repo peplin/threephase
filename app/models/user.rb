@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_many :maps
-  has_many :regions
-  has_many :games, :through => :regions
+  has_many :states
+  has_many :games, :through => :states
   acts_as_authentic do |config|
     config.validate_email_field = false
     config.validate_login_field = false

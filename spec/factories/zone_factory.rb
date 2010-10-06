@@ -1,6 +1,6 @@
 Factory.define :zone do |z|
   z.name "A Zone"
-  z.association :region
+  z.association :state
 end
 
 Factory.define :invalid_zone, :parent => :zone do |z|

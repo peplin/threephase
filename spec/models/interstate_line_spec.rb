@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe InterstateLine do
-  it { should belong_to :incoming_region }
-  it { should belong_to :outgoing_region }
+  it { should belong_to :incoming_state }
+  it { should belong_to :outgoing_state }
   it { should belong_to :line_type }
 
-  it { should validate_presence_of :incoming_region }
-  it { should validate_presence_of :outgoing_region }
+  it { should validate_presence_of :incoming_state }
+  it { should validate_presence_of :outgoing_state }
   it { should validate_presence_of :line_type }
 
   it { should validate_presence_of :operating_level }
@@ -16,13 +16,13 @@ describe InterstateLine do
       @line = Factory :interstate_line
     end
 
-    it "should not allow modification of incoming_region" do
-      @line.incoming_region = Factory :region
+    it "should not allow modification of incoming_state" do
+      @line.incoming_state = Factory :state
       @line.save!.should raise_error
     end
 
-    it "should not allow modification of outgoing_region" do
-      @line.outgoing_region = Factory :region
+    it "should not allow modification of outgoing_state" do
+      @line.outgoing_state = Factory :state
       @line.save!.should raise_error
     end
 

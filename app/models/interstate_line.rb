@@ -1,19 +1,19 @@
 class InterstateLine < ActiveRecord::Base
-  belongs_to :incoming_region, :class_name => "Region"
-  belongs_to :outgoing_region, :class_name => "Region"
+  belongs_to :incoming_state, :class_name => "State"
+  belongs_to :outgoing_state, :class_name => "State"
   belongs_to :line_type
   
-  scope :with_region, lambda { |region_id|
-    { :conditions => ["incoming_region_id = ? or outgoing_region_id = ?",
-        region_id, region_id]}
+  scope :with_state, lambda { |state_id|
+    { :conditions => ["incoming_state_id = ? or outgoing_state_id = ?",
+        state_id, state_id]}
   }
 
   validates :line_type, :presence => true
-  validates :incoming_region, :presence => true
-  validates :outgoing_region, :presence => true
+  validates :incoming_state, :presence => true
+  validates :outgoing_state, :presence => true
   validates :operating_level, :presence => true
 
-  attr_readonly :incoming_region, :outgoing_region, :line_type
+  attr_readonly :incoming_state, :outgoing_state, :line_type
 
   def accepted= response
     if new_record? or not accepted
@@ -24,6 +24,6 @@ class InterstateLine < ActiveRecord::Base
   end
 
   def to_s
-    "#{line_type} from #{incoming_region} to #{outgoing_region} operating at #{operating_level}"
+    "#{line_type} from #{incoming_state} to #{outgoing_state} operating at #{operating_level}"
   end
 end

@@ -24,7 +24,7 @@ class TechnicalComponentInstancesController < ApplicationController
     @instance = component_type.new params[:instance]
     if @instance.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
-      respond_with @instance.region
+      respond_with @instance.state
     else
       flash[:error] = @instance.errors
       respond_with @instance
@@ -67,10 +67,10 @@ class TechnicalComponentInstancesController < ApplicationController
       @instances = @zone.instances
     else
       if current_user.admin?
-        @instances = @game.regions
+        @instances = @game.states
       else
-        @region = current_user.regions.find_by_game(@game)
-        @instances = @region.send(component_type.to_s.underscore.pluralize)
+        @state = current_user.states.find_by_game(@game)
+        @instances = @state.send(component_type.to_s.underscore.pluralize)
       end
     end
   end

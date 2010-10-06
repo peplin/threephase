@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
       @game = Game.find params[:game_id]
     elsif cookies[:current_game]
       @game = Game.find cookies[:current_game]
-    elsif current_user
+    elsif current_user and current_user.current_game
       @game = current_user.current_game
       cookies[:current_game] = @game.id
     else

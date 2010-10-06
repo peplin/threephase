@@ -6,11 +6,11 @@ describe InterstateLinesController do
   end
 
   before :all do
-    @region = Factory :region
+    @state = Factory :state
   end
 
   before do
-    Region.stubs(:find_by_game).returns(@region)
+    State.stubs(:find_by_game).returns(@state)
   end
 
   context "as an admin" do
@@ -24,22 +24,22 @@ describe InterstateLinesController do
     it_should_behave_like "standard POST create"
     it_should_behave_like "standard PUT update"
 
-    context ":index with a region" do
+    context ":index with a state" do
       before :all do
-        @region = Factory :region
+        @state = Factory :state
       end
 
       it_should_behave_like "successful GET index"
 
-      it "should only include lines in the region" do
+      it "should only include lines in the state" do
         do_get
         assigns(:interstate_lines).each do |line|
-          line.region.should eq(@region)
+          line.state.should eq(@state)
         end
       end
 
       def do_get format='html'
-        get :index, :region_id => @region, :format => format
+        get :index, :state_id => @state, :format => format
       end
     end
   end

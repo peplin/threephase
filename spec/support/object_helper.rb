@@ -94,7 +94,7 @@ share_examples_for "a technical component instance" do
         it_should_behave_like "standard successful POST create"
 
         def redirect_path
-          region_path assigns(:instance).region
+          state_path assigns(:instance).state
         end
       end
 

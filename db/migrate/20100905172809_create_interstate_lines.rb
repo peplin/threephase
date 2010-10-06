@@ -4,8 +4,8 @@ class CreateInterstateLines < ActiveRecord::Migration
       t.boolean :accepted
       t.integer :operating_level, :null => false, :default => 100
       
-      t.integer :incoming_region_id, :null => false
-      t.integer :outgoing_region_id, :null => false
+      t.integer :incoming_state_id, :null => false
+      t.integer :outgoing_state_id, :null => false
       t.references :line_type, :null => false
 
       t.timestamps

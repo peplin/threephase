@@ -1,0 +1,15 @@
+=render :partial => 'global/form_header_fields', :locals => {:object => @state}
+%fieldset 
+  .fieldpair
+    %label Name
+    %input{:name => 'state[name]', :value => @state.name}
+  .fieldpair
+    %label Research Budget
+    %input{:name => 'state[research_budget]', :value => @state.research_budget}
+  .fieldpair
+    %label
+    Map
+    =collection_select :state, :map_id, Map.all, :id, :name, {:include_blank => 'Random'}
+%input{:type => 'hidden', :name => 'state[game_id]', :value => @game.id}
+%button{:type => 'submit'} Save
+%a.button{:href => states_path} Cancel

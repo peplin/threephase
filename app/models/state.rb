@@ -17,15 +17,15 @@ module FindNearestZoneExtension
   end
 end
 
-class Region < ActiveRecord::Base
+class State < ActiveRecord::Base
   # Don't place zones any closer than this
   ZONE_BUFFER = 50
 
   has_many :research_advancements
   has_many :outgoing_interstate_lines, :class_name => "InterstateLine",
-      :foreign_key => "outgoing_region_id"
+      :foreign_key => "outgoing_state_id"
   has_many :incoming_interstate_lines, :class_name => "InterstateLine",
-      :foreign_key => "incoming_region_id"
+      :foreign_key => "incoming_state_id"
   has_many :zones, :extend => FindNearestZoneExtension
   belongs_to :map
   belongs_to :game
@@ -41,7 +41,7 @@ class Region < ActiveRecord::Base
   after_create :generate_starting_zones
 
   def interstate_lines
-    InterstateLine.with_region(id)
+    InterstateLine.with_state(id)
   end
 
   def repairs

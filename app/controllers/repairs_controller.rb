@@ -27,8 +27,8 @@ class RepairsController < ApplicationController
     elsif @storage_device
       @repairs = @storage_device.repairs
     elsif @game
-      @region = current_user.regions.find_by_game(@game)
-      @repairs = @region.repairs
+      @state = current_user.states.find_by_game(@game)
+      @repairs = @state.repairs
     end
   end
 

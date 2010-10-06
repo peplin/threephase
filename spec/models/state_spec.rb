@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Region do
+describe State do
   it { should belong_to :map }
   it { should belong_to :game }
   it { should belong_to :user }
@@ -15,51 +15,51 @@ describe Region do
   it { should allow_value(1000).for(:research_budget) }
   it { should_not allow_value(-1000).for(:research_budget) }
 
-  context "with an instance of Region" do
+  context "with an instance of State" do
     before :all do
-      @region = Factory :region
-      @zone = Factory :zone, :region => @region
+      @state = Factory :state
+      @zone = Factory :zone, :state => @state
       @generator = Factory :generator, :zone => @zone
     end
 
     it "should return all repairs" do
       repair = Factory :repair, :repairable => @generator
-      @region.repairs.should include repair
+      @state.repairs.should include repair
     end
 
     it "should return all bids" do
       bid = Factory :bid, :generator => @generator
-      @region.bids.should include bid
+      @state.bids.should include bid
     end
 
     it "should return all contracts" do
       contract = Factory :contract, :generator => @generator
-      @region.contracts.should include contract
+      @state.contracts.should include contract
     end
 
     it "should return free coordinates" do
-      x, y = @region.next_free_coordinates
+      x, y = @state.next_free_coordinates
       x.should be > -1
       y.should be > -1
-      @region.zones.each do |zone|
+      @state.zones.each do |zone|
         next if zone == @zone or not zone.valid?
-        zone.distance(x, y).should be > Region::ZONE_BUFFER
+        zone.distance(x, y).should be > State::ZONE_BUFFER
       end
     end
 
     it "should return the nearest zone to a pair of coordinates" do
-      @region.zones.find_nearest(100, 200)
+      @state.zones.find_nearest(100, 200)
     end
 
   end
 
-  context "when a Region is created" do
+  context "when a State is created" do
     before :all do
-      @region = Factory :region
+      @state = Factory :state
     end
 
     it "should create a few zones" do
-      @region.zones.count.should be > 0
+      @state.zones.count.should be > 0
     end
   end
 end

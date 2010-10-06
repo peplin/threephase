@@ -70,12 +70,12 @@
     %dd= game.public_support
 
 - content_for :left_column do
-  %h2 Regions
+  %h2 States
 
-  %a{:href => new_region_url} New Region
+  %a{:href => new_state_url} New State
 
   %ul
-    - @game.regions.each do |region|
+    - @game.states.each do |state|
       %li
-        %a{:href => region_url(region)}= region.name
+        %a{:href => state_url(state)}= state.name
 

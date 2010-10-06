@@ -1,5 +1,5 @@
 class Zone < ActiveRecord::Base
-  belongs_to :region
+  belongs_to :state
   has_many :blips
   has_many :load_profiles
   has_many :generators
@@ -10,9 +10,9 @@ class Zone < ActiveRecord::Base
   validates :name, :presence => true
   validates :x, :presence => true, :numericality => {:greater_than => -1}
   validates :y, :presence => true, :numericality => {:greater_than => -1}
-  validates :region, :presence => true
+  validates :state, :presence => true
 
-  attr_readonly :x, :y, :region
+  attr_readonly :x, :y, :state
 
   after_create :generate_load_profiles
   before_validation :generate_name, :on => :create
@@ -66,7 +66,7 @@ class Zone < ActiveRecord::Base
   end
 
   def generate_coordinates
-    self.x, self.y = region.next_free_coordinates unless (
-        self.x and self.y or not region)
+    self.x, self.y = state.next_free_coordinates unless (
+        self.x and self.y or not state)
   end
 end

@@ -1,2 +1,0 @@
-module RegionHelper
-end

@@ -18,12 +18,12 @@ class ZonesController < ApplicationController
 
   def find_zones
     if current_user.admin?
-      @zones = @game.regions.collect do |r|
+      @zones = @game.states.collect do |r|
         r.zones
       end
     else
-      @region = current_user.regions.find_by_game(@game)
-      @zones = @region.zones
+      @state = current_user.states.find_by_game(@game)
+      @zones = @state.zones
     end
   end
 

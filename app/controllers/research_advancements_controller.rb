@@ -16,8 +16,8 @@ class ResearchAdvancementsController < ApplicationController
   private
 
   def find_research_advancements
-    @region = current_user.regions.find_by_game(@game)
-    @research_advancements = @region.research_advancements
+    @state = current_user.states.find_by_game(@game)
+    @research_advancements = @state.research_advancements
   end
 
   def find_research_advancement
