@@ -5,14 +5,14 @@ class CreateBlips < ActiveRecord::Migration
       t.integer :y, :null => false
       t.integer :power_factor, :null => false
 
-      t.references :zone, :null => false
+      t.references :city, :null => false
     end
 
-    add_index :blips, [:x, :y, :zone_id], :unique => true
+    add_index :blips, [:x, :y, :city_id], :unique => true
   end
 
   def self.down
     drop_table :blips
-    remove_index :blips, [:x, :y, :zone_id]
+    remove_index :blips, [:x, :y, :city_id]
   end
 end

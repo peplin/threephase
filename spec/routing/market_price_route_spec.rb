@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "routing to market_prices" do
   before :all do
     @game = Factory(:game).to_param
-    @zone = Factory(:zone).to_param
+    @city = Factory(:city).to_param
     @market = Factory(:market).to_param
   end
 
@@ -16,9 +16,9 @@ describe "routing to market_prices" do
     {:get => "/prices"}.should route_to(:action => "index", :controller => "markets")
   end
 
-  it "should expose a direct URL to a list of a zone's market prices" do
-    {:get => "/zones/#{@zone}/prices"}.should route_to(
-      :action => "index", :zone_id => @zone, :controller => "markets")
+  it "should expose a direct URL to a list of a city's market prices" do
+    {:get => "/cities/#{@city}/prices"}.should route_to(
+      :action => "index", :city_id => @city, :controller => "markets")
   end
 
   it "should expose a hackable URL to a game's market price" do
@@ -32,8 +32,8 @@ describe "routing to market_prices" do
       :action => "show", :id => @market, :controller => "markets")
   end
 
-  it "should expose a direct URL to zone's market price" do
-    {:get => "/zones/#{@zone}/prices/#{@market}" }.should route_to(
-      :action => "show", :zone_id => @zone, :id => @market, :controller => "markets")
+  it "should expose a direct URL to city's market price" do
+    {:get => "/cities/#{@city}/prices/#{@market}" }.should route_to(
+      :action => "show", :city_id => @city, :id => @market, :controller => "markets")
   end
 end

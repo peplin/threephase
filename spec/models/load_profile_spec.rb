@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe LoadProfile do
-  it { should belong_to :zone }
-  it { should validate_presence_of :zone }
+  it { should belong_to :city }
+  it { should validate_presence_of :city }
   it { should validate_presence_of :hour }
   it { should validate_presence_of :demand }
 

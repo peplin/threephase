@@ -5,7 +5,7 @@ class Market < ActiveRecord::Base
 
   validates :name, :presence => true
 
-  def current_price game, zone=nil
+  def current_price game, city=nil
     0
   end
 

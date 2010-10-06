@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe ZonesController do
+describe CitiesController do
   before :all do
-    @model = Zone
+    @model = City
   end
 
   context "as an admin" do

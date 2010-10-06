@@ -1,32 +1,32 @@
-module FindNearestZoneExtension
+module FindNearestCityExtension
   def find_nearest x, y
     shortest_distance = nil
     nearest = nil
-    find(:all).each do |zone|
-      distance = zone.distance x, y
+    find(:all).each do |city|
+      distance = city.distance x, y
       if shortest_distance == nil or distance < shortest_distance
         shortest_distance = distance
-        nearest = zone
+        nearest = city
       end
     end
     nearest
   end
 
-  def find_nearest_to_zone zone
-    find_nearest zone.x, zone.y
+  def find_nearest_to_city city
+    find_nearest city.x, city.y
   end
 end
 
 class State < ActiveRecord::Base
-  # Don't place zones any closer than this
-  ZONE_BUFFER = 50
+  # Don't place cities any closer than this
+  CITY_BUFFER = 50
 
   has_many :research_advancements
   has_many :outgoing_interstate_lines, :class_name => "InterstateLine",
       :foreign_key => "outgoing_state_id"
   has_many :incoming_interstate_lines, :class_name => "InterstateLine",
       :foreign_key => "incoming_state_id"
-  has_many :zones, :extend => FindNearestZoneExtension
+  has_many :cities, :extend => FindNearestCityExtension
   belongs_to :map
   belongs_to :game
   belongs_to :user
@@ -38,26 +38,26 @@ class State < ActiveRecord::Base
   validates :game, :presence => true
   validates :user, :presence => true
 
-  after_create :generate_starting_zones
+  after_create :generate_starting_cities
 
   def interstate_lines
     InterstateLine.with_state(id)
   end
 
   def repairs
-    zones.collect do |z|
+    cities.collect do |z|
       z.repairs
     end.flatten
   end
 
   def bids
-    zones.collect do |z|
+    cities.collect do |z|
       z.bids
     end.flatten
   end
 
   def contracts
-    zones.collect do |z|
+    cities.collect do |z|
       z.contracts
     end.flatten
   end
@@ -66,8 +66,8 @@ class State < ActiveRecord::Base
     begin
       x = rand(map.width)
       y = rand(map.height)
-    end while (zones.count > 0 and
-        zones.find_nearest(x, y).distance(x, y) < ZONE_BUFFER)
+    end while (cities.count > 0 and
+        cities.find_nearest(x, y).distance(x, y) < CITY_BUFFER)
     [x, y]
   end
 
@@ -77,9 +77,9 @@ class State < ActiveRecord::Base
 
   private
 
-  def generate_starting_zones
+  def generate_starting_cities
     (1 + rand(4)).times do
-      self.zones << Zone.new
+      self.cities << City.new
     end
   end
 end

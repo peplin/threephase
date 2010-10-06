@@ -1,10 +1,10 @@
 class Blip < ActiveRecord::Base
-  belongs_to :zone
+  belongs_to :city
 
   validates :x, :presence => true
   validates :y, :presence => true
   validates :power_factor, :presence => true
-  validates :zone, :presence => true
+  validates :city, :presence => true
 
   def to_s
     "(#{x}, #{y}), p.f. #{power_factor}"

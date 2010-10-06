@@ -1,4 +1,4 @@
-class Zone < ActiveRecord::Base
+class City < ActiveRecord::Base
   belongs_to :state
   has_many :blips
   has_many :load_profiles
@@ -45,8 +45,8 @@ class Zone < ActiveRecord::Base
     Math.sqrt(((other_x - x) ** 2) + ((other_y - y) ** 2))
   end
   
-  def distance_to_zone zone
-    distance zone.x, zone.y
+  def distance_to_city city
+    distance city.x, city.y
   end
 
   def to_s
@@ -62,7 +62,7 @@ class Zone < ActiveRecord::Base
   end
 
   def generate_name
-    self.name = "A Zone" unless self.name
+    self.name = "A City" unless self.name
   end
 
   def generate_coordinates

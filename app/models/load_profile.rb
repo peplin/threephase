@@ -1,9 +1,9 @@
 class LoadProfile < ActiveRecord::Base
-  belongs_to :zone
+  belongs_to :city
 
   validates_presence_of :hour
   validates_presence_of :demand
-  validates :zone, :presence => true
+  validates :city, :presence => true
 
   before_validation :calculate_demand, :on => :create
 

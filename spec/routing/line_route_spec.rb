@@ -3,20 +3,20 @@ require 'spec_helper'
 describe "routing to lines" do
   before :all do
     @line = Factory(:line).to_param
-    @zone = Factory(:zone).to_param
+    @city = Factory(:city).to_param
   end
 
   it "should expose a list of a game's lines" do
     {:get => "/lines"}.should route_to(:action => "index", :controller => "lines")
   end
 
-  it "should expose a list of a zone's lines" do
-    {:get => "/zones/#{@zone}/lines"}.should route_to(
-        :action => "index", :zone_id => @zone, :controller => "lines")
+  it "should expose a list of a city's lines" do
+    {:get => "/cities/#{@city}/lines"}.should route_to(
+        :action => "index", :city_id => @city, :controller => "lines")
   end
 
-  it { {:get => "/zones/#{@zone}/lines/new"}.should route_to(
-      :action => "new", :zone_id => @zone, :controller => "lines") }
+  it { {:get => "/cities/#{@city}/lines/new"}.should route_to(
+      :action => "new", :city_id => @city, :controller => "lines") }
 
   it { {:post => "/lines"}.should route_to(:action => "create", :controller => "lines") }
 
@@ -25,9 +25,9 @@ describe "routing to lines" do
         :id => @line, :controller => "lines")
   end
 
-  it "should expose a hackable URL to a zone's line" do
-    {:get => "/zones/#{@zone}/lines/#{@line}"}.should route_to(
-        :action => "show", :zone_id => @zone, :id => @line, :controller => "lines")
+  it "should expose a hackable URL to a city's line" do
+    {:get => "/cities/#{@city}/lines/#{@line}"}.should route_to(
+        :action => "show", :city_id => @city, :id => @line, :controller => "lines")
   end
 
   it "should expose a direct URL to edit a line" do
@@ -35,9 +35,9 @@ describe "routing to lines" do
         :id => @line, :controller => "lines")
   end
 
-  it "should expose a hackable URL to edit a zone's line" do
-    {:get => "/zones/#{@zone}/lines/#{@line}/edit" }.should route_to(
-        :action => "edit", :zone_id => @zone, :id => @line, :controller => "lines")
+  it "should expose a hackable URL to edit a city's line" do
+    {:get => "/cities/#{@city}/lines/#{@line}/edit" }.should route_to(
+        :action => "edit", :city_id => @city, :id => @line, :controller => "lines")
   end
 
   it { {:put => "/lines/#{@line}"}.should route_to(:action => "update",

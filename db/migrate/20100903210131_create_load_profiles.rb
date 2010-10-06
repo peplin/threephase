@@ -4,7 +4,7 @@ class CreateLoadProfiles < ActiveRecord::Migration
       t.integer :hour, :null => false
       t.integer :demand, :null => false, :default => 0
 
-      t.references :zone, :null => false
+      t.references :city, :null => false
     end
   end
 

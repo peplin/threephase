@@ -1,6 +1,6 @@
 class TechnicalComponentInstancesController < ApplicationController
   before_filter :login_required
-  before_filter :find_zone, :only => [:index, :new]
+  before_filter :find_city, :only => [:index, :new]
   before_filter :find_game, :only => [:index, :new]
   before_filter :find_instances, :only => :index
   before_filter :find_instance, :only => [:edit, :show, :update]
@@ -16,7 +16,7 @@ class TechnicalComponentInstancesController < ApplicationController
     if not @game
       @game = Game.find params[:game_id]
     end
-    @instance = component_type.new :zone => @zone
+    @instance = component_type.new :city => @city
     respond_with @instance
   end
 
@@ -50,9 +50,9 @@ class TechnicalComponentInstancesController < ApplicationController
 
   private
 
-  def find_zone
-    if params[:zone_id]
-      @zone = Zone.find params[:zone_id]
+  def find_city
+    if params[:city_id]
+      @city = City.find params[:city_id]
     end
   end
 
@@ -63,8 +63,8 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def find_instances
-    if @zone
-      @instances = @zone.instances
+    if @city
+      @instances = @city.instances
     else
       if current_user.admin?
         @instances = @game.states

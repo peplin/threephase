@@ -10,5 +10,5 @@ Factory.define :blip do |b|
   b.x { Factory.next :blip_x }
   b.y { Factory.next :blip_y }
   b.power_factor rand(1)
-  b.association :zone
+  b.association :city
 end

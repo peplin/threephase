@@ -2,13 +2,13 @@ class TechnicalComponentInstance < ActiveRecord::Base
   self.inheritance_column = :instance_type
   has_many :repairs, :as => :repairable, :dependent => :destroy
   belongs_to :buildable, :polymorphic => true
-  belongs_to :zone
+  belongs_to :city
 
   validates :operating_level, :presence => true, :percentage => true
-  validates :zone, :presence => true
+  validates :city, :presence => true
 
   def state
-    zone.state
+    city.state
   end
 
   def to_s

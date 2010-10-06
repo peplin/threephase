@@ -12,7 +12,7 @@ describe Market do
       @market = Factory :market
       @game = Factory :game
       @state = Factory :state, :game => @game
-      @zone = Factory :zone, :state => @state
+      @city = Factory :city, :state => @state
     end
 
     it "should have a current price for the overall market" do

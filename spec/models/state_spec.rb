@@ -18,8 +18,8 @@ describe State do
   context "with an instance of State" do
     before :all do
       @state = Factory :state
-      @zone = Factory :zone, :state => @state
-      @generator = Factory :generator, :zone => @zone
+      @city = Factory :city, :state => @state
+      @generator = Factory :generator, :city => @city
     end
 
     it "should return all repairs" do
@@ -41,14 +41,14 @@ describe State do
       x, y = @state.next_free_coordinates
       x.should be > -1
       y.should be > -1
-      @state.zones.each do |zone|
-        next if zone == @zone or not zone.valid?
-        zone.distance(x, y).should be > State::ZONE_BUFFER
+      @state.cities.each do |city|
+        next if city == @city or not city.valid?
+        city.distance(x, y).should be > State::CITY_BUFFER
       end
     end
 
-    it "should return the nearest zone to a pair of coordinates" do
-      @state.zones.find_nearest(100, 200)
+    it "should return the nearest city to a pair of coordinates" do
+      @state.cities.find_nearest(100, 200)
     end
 
   end
@@ -58,8 +58,8 @@ describe State do
       @state = Factory :state
     end
 
-    it "should create a few zones" do
-      @state.zones.count.should be > 0
+    it "should create a few cities" do
+      @state.cities.count.should be > 0
     end
   end
 end

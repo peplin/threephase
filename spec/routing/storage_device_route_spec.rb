@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "routing to storage-devices" do
   before :all do
     @store = Factory(:storage_device).to_param
-    @zone = Factory(:zone).to_param
+    @city = Factory(:city).to_param
   end
 
   it "should expose a list of the current game's storage devices" do
@@ -11,21 +11,21 @@ describe "routing to storage-devices" do
         :controller => "storage_devices") 
   end
 
-  it "should expose a list of a zone's storage devices" do
-    {:get => "/zones/#{@zone}/storage-devices"}.should route_to(
-      :action => "index", :zone_id => @zone, :controller => "storage_devices") 
+  it "should expose a list of a city's storage devices" do
+    {:get => "/cities/#{@city}/storage-devices"}.should route_to(
+      :action => "index", :city_id => @city, :controller => "storage_devices") 
   end
 
-  it { {:get => "/zones/#{@zone}/storage-devices/new"
-      }.should route_to(:action => "new", :zone_id => @zone,
+  it { {:get => "/cities/#{@city}/storage-devices/new"
+      }.should route_to(:action => "new", :city_id => @city,
       :controller => "storage_devices") }
 
   it { {:post => "/storage-devices"}.should route_to(:action => "create",
       :controller => "storage_devices") }
 
-  it "should expose a hackable URL to a zone's storage device" do
-    {:get => "/zones/#{@zone}/storage-devices/#{@store}"
-        }.should route_to(:action => "show", :zone_id => @zone, :id => @store,
+  it "should expose a hackable URL to a city's storage device" do
+    {:get => "/cities/#{@city}/storage-devices/#{@store}"
+        }.should route_to(:action => "show", :city_id => @city, :id => @store,
         :controller => "storage_devices") 
   end
 
@@ -34,9 +34,9 @@ describe "routing to storage-devices" do
         :id => @store, :controller => "storage_devices")
   end
 
-  it "should expose a hackable URL to edit a zone's storage device" do
-    {:get => "/zones/#{@zone}/storage-devices/#{@store}/edit"
-        }.should route_to(:action => "edit", :zone_id => @zone, :id => @store,
+  it "should expose a hackable URL to edit a city's storage device" do
+    {:get => "/cities/#{@city}/storage-devices/#{@store}/edit"
+        }.should route_to(:action => "edit", :city_id => @city, :id => @store,
         :controller => "storage_devices")
   end
 

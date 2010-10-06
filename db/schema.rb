@@ -47,10 +47,10 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer "x",            :null => false
     t.integer "y",            :null => false
     t.integer "power_factor", :null => false
-    t.integer "zone_id",      :null => false
+    t.integer "city_id",      :null => false
   end
 
-  add_index "blips", ["x", "y", "zone_id"], :name => "index_blips_on_x_and_y_and_zone_id", :unique => true
+  add_index "blips", ["x", "y", "city_id"], :name => "index_blips_on_x_and_y_and_city_id", :unique => true
 
   create_table "blocks", :force => true do |t|
     t.integer  "x",                                   :null => false
@@ -167,7 +167,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "load_profiles", :force => true do |t|
     t.integer "hour",                   :null => false
     t.integer "demand",  :default => 0, :null => false
-    t.integer "zone_id",                :null => false
+    t.integer "city_id",                :null => false
   end
 
   create_table "maps", :force => true do |t|
@@ -265,8 +265,8 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "technical_component_instances", :force => true do |t|
     t.string   "instance_type",                    :null => false
     t.integer  "operating_level", :default => 100, :null => false
-    t.integer  "zone_id",                          :null => false
-    t.integer  "other_zone_id"
+    t.integer  "city_id",                          :null => false
+    t.integer  "other_city_id"
     t.integer  "buildable_id",                     :null => false
     t.string   "buildable_type",                   :null => false
     t.datetime "created_at"
@@ -326,7 +326,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer "block_id",                  :null => false
   end
 
-  create_table "zones", :force => true do |t|
+  create_table "cities", :force => true do |t|
     t.string  "name",        :null => false
     t.integer "x",           :null => false
     t.integer "y",           :null => false
@@ -334,7 +334,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.integer "state_id",   :null => false
   end
 
-  add_index "zones", ["cached_slug"], :name => "index_zones_on_cached_slug", :unique => true
-  add_index "zones", ["x", "y", "state_id"], :name => "index_zones_on_x_and_y_and_state_id"
+  add_index "cities", ["cached_slug"], :name => "index_cities_on_cached_slug", :unique => true
+  add_index "cities", ["x", "y", "state_id"], :name => "index_cities_on_x_and_y_and_state_id"
 
 end
