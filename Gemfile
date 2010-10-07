@@ -25,7 +25,13 @@ group :test, :development do
   gem 'shoulda'
   gem 'rcov'
   gem 'rspec-rails', ">= 2.0.0.beta.20"
-  gem 'ruby-debug19', :require => 'ruby-debug'
+
+  if RUBY_VERSION < '1.9'
+    gem "ruby-debug"
+  else
+    gem 'ruby-debug19', :require => 'ruby-debug'
+  end
+
   gem 'factory_girl'
   gem 'single_test'
   gem 'mocha'
