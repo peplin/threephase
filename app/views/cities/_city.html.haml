@@ -1,27 +1,29 @@
 %h3= city.name
+
+%a{:href => edit_city_url(city)} Edit
   
 %h4 Generators
-%a{:href => new_city_generator_path(city)} New Generator
+%a{:href => new_city_generator_url(city)} New Generator
 %ul
   - city.generators.each do |generator|
     %li
-      %a{:href => city_generator_path(city, generator)}
+      %a{:href => city_generator_url(city, generator)}
         = generator
 
 %h4 Transmission Lines
-%a{:href => new_city_line_path(city)} New Transmission Line
+%a{:href => new_city_line_url(city)} New Transmission Line
 %ul
   - city.lines.each do |line|
     %li
-      %a{:href => city_line_path(city, line)}
+      %a{:href => city_line_url(city, line)}
         = line
 
 %h4 Storage Devices
-%a{:href => new_city_storage_device_path(city)} New Storage Device
+%a{:href => new_city_storage_device_url(city)} New Storage Device
 %ul
   - city.storage_devices.each do |storage_device|
     %li
-      %a{:href => city_storage_device_path(city, storage_device)}
+      %a{:href => city_storage_device_url(city, storage_device)}
         = storage_device
 
 %h5 Load Profile
