@@ -32,6 +32,6 @@ class TechnicalComponent < ActiveRecord::Base
       :greater_than_or_equal_to => 0}
 
   def to_s
-    "#{name} (#{average_capacity} average capacity)"
+    "#{name} (#{average_capacity} MW average capacity)"
   end
 end

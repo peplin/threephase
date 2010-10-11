@@ -30,6 +30,6 @@ class GeneratorType < ActiveRecord::Base
   end
 
   def to_s
-    "#{name} using #{fuel_type}"
+    "#{technical_component} using #{fuel_type}"
   end
 end

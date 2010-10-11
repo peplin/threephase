@@ -25,7 +25,7 @@ class TechnicalComponentInstancesController < ApplicationController
     @instance = component_type.new params[param_symbol]
     if @instance.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
-      respond_with @instance.state
+      respond_with @instance.city
     else
       respond_with @instance
     end

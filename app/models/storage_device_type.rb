@@ -5,6 +5,6 @@ class StorageDeviceType < ActiveRecord::Base
   validates :efficiency, :presence => true, :percentage => true
 
   def to_s
-    "#{super}, #{efficiency}% efficiency"
+    "#{technical_component}, #{efficiency}% efficiency"
   end
 end
