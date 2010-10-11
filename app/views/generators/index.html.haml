@@ -1,0 +1,9 @@
+- content_for :right_column do
+  %ul 
+    - if @state
+      =render :partial => "generator_list", :collection => @state.generators, :as => :generator
+    - else
+      =render :partial => "generator_list", :collection => @generators, :as => :generator
+
+- content_for :left_column do
+  =render @instances

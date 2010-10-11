@@ -1,33 +1,19 @@
 %h3= city.name
 
-%dl
-  %dt State
-  %dd
-    %a{:href => city_url(city.state)}= city.state
-
 %h4 Generators
 %a{:href => new_city_generator_url(city)} New Generator
 %ul
-  - city.generators.each do |generator|
-    %li
-      %a{:href => city_generator_url(city, generator)}
-        = generator
+  =render :partial => "generators/generator_list", :collection => city.generators, :as => :generator
 
 %h4 Transmission Lines
 %a{:href => new_city_line_url(city)} New Transmission Line
 %ul
-  - city.lines.each do |line|
-    %li
-      %a{:href => city_line_url(city, line)}
-        = line
+  =render :partial => "lines/line_list", :collection => city.lines, :as => :line
 
 %h4 Storage Devices
 %a{:href => new_city_storage_device_url(city)} New Storage Device
 %ul
-  - city.storage_devices.each do |storage_device|
-    %li
-      %a{:href => city_storage_device_url(city, storage_device)}
-        = storage_device
+  =render :partial => "storage_devices/storage_device_list", :collection => city.storage_devices, :as => :storage_device
 
 %h5 Load Profile
 .load-profile{:id => "#{city.id}-load-profile", :rel => city.id}

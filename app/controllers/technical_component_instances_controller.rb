@@ -67,12 +67,8 @@ class TechnicalComponentInstancesController < ApplicationController
     if @city
       @instances = @city.instances
     else
-      if current_user.admin?
-        @instances = @game.states
-      else
-        @state = current_user.states.find_by_game(@game)
-        @instances = @state.send(component_type.to_s.underscore.pluralize)
-      end
+      @state = current_user.states.find_by_game_id(@game)
+      @instances = @state.send(component_type.to_s.underscore.pluralize)
     end
   end
 

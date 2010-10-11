@@ -1,81 +1,78 @@
-- content_for :right_column do
-  %a{:href => games_url} Switch Game
+%a{:href => games_url} Switch Game
 
-  %h2 A Game
+%h2 A Game
 
-  %dl
-    %dt Maximum Players
-    %dd= game.max_players
-    %dt Speed
-    %dd= game.speed
-    %dt Started?
-    %dd= game.started
+%h2 States
 
-  %h2 Technical Parameters
+%a{:href => new_state_url} New State
 
-  %dl
-    %dt Maximum Line Capacity
-    %dd= game.max_line_capacity
-    %dt Technology Cost
-    %dd= game.technology_cost
-    %dt Technology Reliability
-    %dd= game.technology_reliability
-    %dt Power Factor
-    %dd= game.power_factor
-    %dt Frequency
-    %dd= game.frequency
-    %dt Wind Speed
-    %dd= game.wind_speed
-    %dt Sunfall
-    %dd= game.sunfall
-    %dt Water Flow
-    %dd= game.water_flow
+%ul
+  - @game.states.each do |state|
+    %li
+      %a{:href => state_url(state)}= state.name
 
-  %h2 Economic Parameters
+%dl
+  %dt Maximum Players
+  %dd= game.max_players
+  %dt Speed
+  %dd= game.speed
+  %dt Started?
+  %dd= game.started
 
-  %dl
-    %dt Regulation Type
-    %dd= game.regulation_type
-    %dt Starting Capital
-    %dd= game.starting_capital
-    %dt Interest Rate
-    %dd= game.interest_rate
-    %dt Reliability Constraint
-    %dd= game.reliability_constraint
-    %dt Fuel Cost
-    %dd= game.fuel_cost
-    %dt Fuel Cost Volatility
-    %dd= game.fuel_cost_volatility
-    %dt Workforce Reliability
-    %dd= game.workforce_reliability
-    %dt Workforce Cost
-    %dd= game.workforce_cost
-    %dt Unionized?
-    %dd= game.unionized
+%h2 Technical Parameters
 
-  %h2 Environmental Parameters
+%dl
+  %dt Maximum Line Capacity
+  %dd= game.max_line_capacity
+  %dt Technology Cost
+  %dd= game.technology_cost
+  %dt Technology Reliability
+  %dd= game.technology_reliability
+  %dt Power Factor
+  %dd= game.power_factor
+  %dt Frequency
+  %dd= game.frequency
+  %dt Wind Speed
+  %dd= game.wind_speed
+  %dt Sunfall
+  %dd= game.sunfall
+  %dt Water Flow
+  %dd= game.water_flow
 
-  %dl
-    %dt Carbon Allowances
-    %dd= game.carbon_allowance
-    %dt Tax Credit
-    %dd= game.tax_credit
-    %dt Renewable Requirement
-    %dd= game.renewable_requirement
-    %dt Political Stability
-    %dd= game.political_stability
-    %dt Political Opposition
-    %dd= game.political_opposition
-    %dt Public Support
-    %dd= game.public_support
+%h2 Economic Parameters
 
-- content_for :left_column do
-  %h2 States
+%dl
+  %dt Regulation Type
+  %dd= game.regulation_type
+  %dt Starting Capital
+  %dd= game.starting_capital
+  %dt Interest Rate
+  %dd= game.interest_rate
+  %dt Reliability Constraint
+  %dd= game.reliability_constraint
+  %dt Fuel Cost
+  %dd= game.fuel_cost
+  %dt Fuel Cost Volatility
+  %dd= game.fuel_cost_volatility
+  %dt Workforce Reliability
+  %dd= game.workforce_reliability
+  %dt Workforce Cost
+  %dd= game.workforce_cost
+  %dt Unionized?
+  %dd= game.unionized
 
-  %a{:href => new_state_url} New State
+%h2 Environmental Parameters
 
-  %ul
-    - @game.states.each do |state|
-      %li
-        %a{:href => state_url(state)}= state.name
-
+%dl
+  %dt Carbon Allowances
+  %dd= game.carbon_allowance
+  %dt Tax Credit
+  %dd= game.tax_credit
+  %dt Renewable Requirement
+  %dd= game.renewable_requirement
+  %dt Political Stability
+  %dd= game.political_stability
+  %dt Political Opposition
+  %dd= game.political_opposition
+  %dt Public Support
+  %dd= game.public_support

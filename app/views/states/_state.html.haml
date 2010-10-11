@@ -1,4 +1,5 @@
-%h2= state.name
+%h2
+  %a{:href => state_url(state)}= state.name
 
 %a{:href => edit_state_path(state)} Edit
 

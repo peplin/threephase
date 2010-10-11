@@ -48,15 +48,31 @@ class ApplicationController < ActionController::Base
   end
 
   def find_game
+    game_required if not current_game
+    @game = current_game
+  end
+
+  def current_game
+    return @current_game if defined?(@current_game)
     if params[:game_id]
-      @game = Game.find params[:game_id]
+      @current_game = Game.find params[:game_id]
     elsif cookies[:current_game]
-      @game = Game.find cookies[:current_game]
+      @current_game = Game.find cookies[:current_game]
     elsif current_user and current_user.current_game
       @game = current_user.current_game
       cookies[:current_game] = @game.id
-    else
-      raise ActiveRecord::RecordNotFound
+    end
+  end
+
+  def game_required
+    unless current_game
+      store_location
+      flash[:notice] = "You must have an active game to access this page"
+      respond_to do |format|
+        format.html { redirect_to games_path }
+        format.json { head :bad_request }
+      end
+      return false
     end
   end
 

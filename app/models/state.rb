@@ -62,6 +62,24 @@ class State < ActiveRecord::Base
     end.flatten
   end
 
+  def generators
+    cities.collect do |z|
+      z.generators
+    end.flatten
+  end
+
+  def lines
+    cities.collect do |z|
+      z.lines
+    end.flatten
+  end
+
+  def storage_devices
+    cities.collect do |z|
+      z.storage_devices
+    end.flatten
+  end
+
   def next_free_coordinates
     begin
       x = rand(map.width)

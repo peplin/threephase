@@ -37,6 +37,21 @@ describe State do
       @state.contracts.should include contract
     end
 
+    it "should return all generators" do
+      generator = Factory :generator, :city => @city
+      @state.generators.should include generator
+    end
+
+    it "should return all lines" do
+      line = Factory :line, :city => @city
+      @state.lines.should include line
+    end
+
+    it "should return all storage devices" do
+      storage_device = Factory :storage_device, :city => @city
+      @state.storage_devices.should include storage_device
+    end
+
     it "should return free coordinates" do
       x, y = @state.next_free_coordinates
       x.should be > -1
