@@ -12,7 +12,7 @@ class InterstateLinesController < ApplicationController
   end
 
   def new
-    @interstate_line = InterstateLine.new :incoming_state => @state
+    @interstate_line = InterstateLine.new :outgoing_state => @state
     respond_with @interstate_line
   end
 
@@ -54,8 +54,8 @@ class InterstateLinesController < ApplicationController
   def find_interstate_lines
     if @state
       @interstate_lines = @state.interstate_lines
-    elsif @game
-      @state = current_user.states.find_by_game(@game)
+    else
+      @state = current_game.states.find_by_user_id(current_user)
       @interstate_lines = @state.interstate_lines
     end
   end

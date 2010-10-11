@@ -23,10 +23,10 @@
 
 #research_advancements
   %h2 Research Advancements
-  =render state.research_advancements
+  = render :partial => "research_advancements/research_advancement_list", :collection => state.research_advancements, :as => :research_advancement
 
 #interstate_lines
   %h2 Interstate Lines
   %a{:href => new_state_interstate_line_url(state)}
     New Interstate Line
-  =render state.interstate_lines
+  = render :partial => "interstate_lines/interstate_line_list", :collection => state.interstate_lines, :as => :interstate_line

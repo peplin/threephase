@@ -1,0 +1,13 @@
+=render :partial => 'global/form_header_fields', :locals => {:object => interstate_line}
+%fieldset 
+  .fieldpair
+    %label
+      Type
+      =collection_select :interstate_line, :line_type_id, LineType.all, :id, :to_s
+  .fieldpair
+    %label
+      To
+      =collection_select :interstate_line, :incoming_state_id, current_game.states, :id, :to_s
+%input{:type => :hidden, :name => "interstate_line[outgoing_state_id]", :value => interstate_line.outgoing_state_id}
+%button{:type => 'submit'} Save
+%a.button{:href => lines_path} Cancel
