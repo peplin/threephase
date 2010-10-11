@@ -1,1 +1,5 @@
-=render @instance, :locals => {:generatot => @instance}
+- content_for :right_column do
+  = render @instance.city
+
+- content_for :left_column do
+  =render @instance, :locals => {:generator => @instance}

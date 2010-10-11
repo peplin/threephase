@@ -1,5 +1,10 @@
 %h3= city.name
 
+%dl
+  %dt State
+  %dd
+    %a{:href => city_url(city.state)}= city.state
+
 %h4 Generators
 %a{:href => new_city_generator_url(city)} New Generator
 %ul

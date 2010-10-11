@@ -1,33 +1,31 @@
-- content_for :right_column do
-  %h2= state.name
+%h2= state.name
 
-  %a{:href => edit_state_path(state)} Edit
+%a{:href => edit_state_path(state)} Edit
 
-  %dl
-    %dt Game
-    %dd
-      %a{:href => game_path(state.game)}= state.game
-    %dt User
-    %dd
-      %a{:href => user_path(state.user)}= state.user
-    %dt Map
-    %dd= state.map
+%dl
+  %dt Game
+  %dd
+    %a{:href => game_path(state.game)}= state.game
+  %dt User
+  %dd
+    %a{:href => user_path(state.user)}= state.user
+  %dt Map
+  %dd= state.map
 
-  %dl
-    %dt Research Budget
-    %dd= state.research_budget
+%dl
+  %dt Research Budget
+  %dd= state.research_budget
 
-- content_for :left_column do
-  #cities
-    %h2 Cities
-    = render @state.cities
+#cities
+  %h2 Cities
+  = render :partial => "cities/city_summary", :collection => state.cities, :as => :city
 
-  #research_advancements
-    %h2 Research Advancements
-    =render @state.research_advancements
+#research_advancements
+  %h2 Research Advancements
+  =render state.research_advancements
 
-  #interstate_lines
-    %h2 Interstate Lines
-    %a{:href => new_state_interstate_line_url(@state)}
-      New Interstate Line
-    =render @state.interstate_lines
+#interstate_lines
+  %h2 Interstate Lines
+  %a{:href => new_state_interstate_line_url(state)}
+    New Interstate Line
+  =render state.interstate_lines

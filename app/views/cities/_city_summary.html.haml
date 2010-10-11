@@ -1,0 +1,7 @@
+%h3
+  %a{:href => city_url(city)}= city.name
+
+%ul
+  %li= "#{city.generators.count} generators"
+  %li= "#{city.lines.count} transmission lines"
+  %li= "#{city.storage_devices.count} storage devices"
