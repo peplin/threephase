@@ -1,4 +1,5 @@
 - content_for :right_column do
   = render @instance.city
 
-=render @instance, :locals => {:storage_device => @instance}
+- content_for :left_column do
+  =render @instance, :locals => {:storage_device => @instance}

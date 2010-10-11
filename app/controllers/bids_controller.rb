@@ -5,7 +5,7 @@ class BidsController < ApplicationController
   before_filter :find_bid, :only => :show
 
   respond_to :json, :except => [:new, :edit]
-  respond_to :html
+  respond_to :html, :except => [:show]
 
   def index
     respond_with @bids
@@ -21,7 +21,9 @@ class BidsController < ApplicationController
     if @bid.save
       flash[:notice] = 'Bid was successfully created.'
     end
-    respond_with @bid
+    respond_with @bid do |format|
+      format.html { redirect_to generator_path @bid.generator }
+    end
   end
 
   def show

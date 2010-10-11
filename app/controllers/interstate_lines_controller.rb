@@ -1,7 +1,7 @@
 class InterstateLinesController < ApplicationController
   before_filter :login_required
   before_filter :conditional_find_state, :only => :index
-  before_filter :find_interstate_lines, :only => :index
+  before_filter :find_interstate_lines, :only => [:index, :edit, :new, :show]
   before_filter :find_interstate_line, :only => [:show, :edit, :update]
 
   respond_to :json, :except => [:new, :edit]

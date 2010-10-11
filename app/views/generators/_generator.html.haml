@@ -10,7 +10,13 @@
 
 %h2 Bids
 
-= render generator.bids
+%a{:href => new_generator_bid_url(generator)} Bid In
+
+.bids{:id => "#{generator.id}-bids", :rel => generator.id}
+  %noscript
+    %ul
+      - generator.bids.each do |bid|
+        %li= bid
 
 %h2 Workforce Contracts
 

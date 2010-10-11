@@ -1,0 +1,9 @@
+=render :partial => 'global/form_header_fields', :locals => {:object => bid}
+%fieldset 
+  .fieldpair
+    %label
+      Bid Price
+    %input{:name => 'bid[price]'}
+%input{:type => 'hidden', :name => 'bid[generator_id]', :value => bid.generator.id}
+%button{:type => 'submit'} Bid
+%a.button{:href => generator_url(bid.generator)} Cancel

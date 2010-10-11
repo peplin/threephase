@@ -1,12 +1,12 @@
 class GamesController < ApplicationController
   before_filter :admin_required, :except => [:index, :show]
   before_filter :find_game, :only => [:show, :edit, :update]
+  before_filter :find_games, :only => [:index, :show]
 
   respond_to :json, :except => [:new, :edit]
   respond_to :html
 
   def index
-    @games = Game.all
     respond_with @games
   end
 
@@ -55,5 +55,9 @@ class GamesController < ApplicationController
     else
       @game = Game.find cookies[:current_game]
     end
+  end
+  
+  def find_games
+    @games = Game.all
   end
 end
