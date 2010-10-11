@@ -45,7 +45,6 @@ class ContractsController < ApplicationController
     else
       @state = current_user.states.find_by_game_id(@game.id)
       raise ActiveRecord::RecordNotFound if not @state
-        
       @contracts = @state.contracts
     end
   end

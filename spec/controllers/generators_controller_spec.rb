@@ -8,4 +8,3 @@ describe GeneratorsController do
 
   it_should_behave_like "a technical component instance"
 end
-

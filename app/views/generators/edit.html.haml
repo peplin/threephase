@@ -1,2 +1,2 @@
-= form_for @generator do |f|
-  = render 'form_fields'
+= form_for @instance do |f|
+  = render :partial => 'form_fields', :locals => {:generator => @instance}

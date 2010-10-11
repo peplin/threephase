@@ -77,6 +77,7 @@ share_examples_for "a technical component instance" do
   before :all do
     @assigns_model_name = :instance
     @pluralized_assigns_model_name = :instances
+    @param_symbol = @instance.class.name.underscore.to_sym
   end
 
   context "as an admin" do
@@ -91,25 +92,33 @@ share_examples_for "a technical component instance" do
 
     context "on POST to :create" do
       context "with valid data" do
-        it_should_behave_like "standard successful POST create"
+        it_should_behave_like "successful POST create"
 
         def redirect_path
           state_path assigns(:instance).state
         end
+
+        def do_post format = 'html'
+          post 'create', @param_symbol => @data, :format => format
+        end
       end
 
       context "with invalid data" do
-        it_should_behave_like "standard unsuccessful POST create"
+        it_should_behave_like "unsuccessful POST create"
+
+        def do_post format = 'html'
+          post 'create', @param_symbol => @data, :format => format
+        end
       end
     end
 
     context "on PUT to :update" do
       context "with valid data" do
-        it_should_behave_like "standard successful PUT update"
+        it_should_behave_like "successful PUT update"
 
         def do_put format='html'
-          symbol = @instance.class.to_s.underscore.to_sym
-          put :update, :id => @instance, symbol => @data, :format => format
+          put :update, :id => @instance, @param_symbol => @data,
+              :format => format
         end
       end
 

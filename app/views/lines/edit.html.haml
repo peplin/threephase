@@ -1,2 +1,2 @@
 = form_for @line do |f|
-  = render 'form_fields'
+  = render :partial => 'form_fields', :locals => {:line => @instance}

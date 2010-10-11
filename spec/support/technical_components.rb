@@ -1,10 +1,9 @@
 share_examples_for "a technical component type" do
-  before :all do
-    @assigns_model_name = :type
-    @pluralized_assigns_model_name = :types
-  end
-
   context "as an admin" do
+    before :all do
+      @assigns_model_name = :type
+      @pluralized_assigns_model_name = :types
+    end
     before do
       login_as_admin
     end

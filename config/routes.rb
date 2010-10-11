@@ -15,7 +15,7 @@ Threephase::Application.routes.draw do
   resources :advancements, :controller => :research_advancements,
       :only => [:index, :show, :create]
   resources "interstate-lines", :controller => :interstate_lines,
-      :as => :interstate_lines, :only => [:index, :show, :create, :update]
+      :as => :interstate_lines, :only => [:index, :show, :create, :update, :new]
 
   resources :cities, :only => [:index, :show] do
     resources :lines

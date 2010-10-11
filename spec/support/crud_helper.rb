@@ -304,7 +304,6 @@ share_examples_for "unsuccessful POST create" do
     do_post
   end
 
-  it { should set_the_flash }
   it { should render_template :new }
   it { should assign_to(@assigns_model_name).with_kind_of(@model) }
 end

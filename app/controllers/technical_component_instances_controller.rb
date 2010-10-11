@@ -21,11 +21,7 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def create
-    type_id_key = "#{component_type.name.underscore}_type_id"
-    params[param_symbol][:buildable_id] = params[param_symbol][type_id_key]
-    params[param_symbol][:buildable_type] = "#{component_type.name}Type"
-    params[param_symbol].delete type_id_key
-
+    massage_params unless not params[param_symbol]
     @instance = component_type.new params[param_symbol]
     if @instance.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
@@ -44,6 +40,8 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def update
+    massage_params unless not params[param_symbol]
+
     if @instance.update_attributes params[param_symbol]
       flash[:notice] = "#{component_type.to_s} was successfully updated."
     end
@@ -83,6 +81,17 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   private
+
+  def massage_params
+    type_id_key = "#{component_type.name.underscore}_type_id"
+    if not params[param_symbol][:buildable_id]
+      params[param_symbol][:buildable_id] = params[param_symbol][type_id_key]
+      params[param_symbol].delete type_id_key
+    end
+    if not params[param_symbol][:buildable_type]
+      params[param_symbol][:buildable_type] = "#{component_type.name}Type"
+    end
+  end
   
   def param_symbol
     component_type.name.underscore.to_sym

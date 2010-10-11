@@ -18,7 +18,7 @@ describe InterstateLinesController do
       login_as_admin
     end
 
-    it_should_behave_like "standard GET index"
+    it_should_behave_like "index with a game"
     it_should_behave_like "standard GET new"
     it_should_behave_like "standard GET show"
     it_should_behave_like "standard POST create"
