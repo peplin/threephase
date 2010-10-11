@@ -52,7 +52,7 @@ Threephase::Application.routes.draw do
     resources :repairs, :only => [:index, :show]
   end
 
-  resources :bids, :only => [:index, :show, :create]
+  resources :bids, :only => [:show, :create]
   resources :repairs, :except => [:destroy, :update]
   resources :contracts, :only => [:index, :show]
   match "/contracts/:id" => "contracts#offer", :via => :post

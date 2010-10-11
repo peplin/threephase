@@ -3,6 +3,7 @@ class Generator < TechnicalComponentInstance
   has_many :contracts
   has_many :offers, :through => :contracts
   has_many :bids
+  has_many :accepted_bids, :conditions => "accepted = TRUE"
 
   validates :generator_type, :presence => true
 end

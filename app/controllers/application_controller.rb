@@ -13,10 +13,14 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def find_generator
+  def conditional_find_generator
     if params[:generator_id]
-      @generator = Generator.find params[:generator_id]
+      find_generator
     end
+  end
+
+  def find_generator
+    @generator = Generator.find params[:generator_id]
   end
 
   def find_line

@@ -1,6 +1,5 @@
 class BidsController < ApplicationController
   before_filter :find_generator, :only => [:index, :new]
-  before_filter :find_game, :only => :index
   before_filter :find_bids, :only => :index
   before_filter :find_bid, :only => :show
 
@@ -41,9 +40,6 @@ class BidsController < ApplicationController
   def find_bids
     if @generator
       @bids = @generator.bids
-    else
-      @state = current_user.states.find_by_game(@game)
-      @bids = @state.bids
     end
   end
 

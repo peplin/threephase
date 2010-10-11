@@ -8,7 +8,6 @@ $(document).ready(function() {
       type : "GET",
       url: '/cities/' + $(this).attr('rel') + '/load-profile',
       success : function(data){
-
         var hours = [];
         for(var i = 1; i < 25; i++) {
           hours.push(i);
@@ -19,11 +18,11 @@ $(document).ready(function() {
           demand.push(value.load_profile.demand);
         });
 
-        var raphael = Raphael(city_id + "-load-profile");
-        var graph = raphael.g.linechart(10, 0, 500, 150, hours, demand,
+        var r = Raphael(city_id + "-load-profile");
+        var graph = r.g.linechart(10, 0, 500, 150, hours, demand,
             {nostroke: false, axis: "0 0 1 1", smooth: true});
-        raphael.g.text(250, 130, "Hour");
-        raphael.g.text(40, 75, "MW");
+        r.g.text(250, 130, "Hour");
+        r.g.text(40, 75, "MW");
       }
     });
   });
@@ -34,24 +33,34 @@ $(document).ready(function() {
 
     $.ajax({
       type : "GET",
-      url: '/cities/' + $(this).attr('rel') + '/load-profile',
+      url: '/generators/' + $(this).attr('rel') + '/bids',
       success : function(data){
-
-        var hours = [];
-        for(var i = 1; i < 25; i++) {
-          hours.push(i);
+        var count = [];
+        for(var i = 1; i <= data.length; i++) {
+          count.push(i);
         }
 
-        var demand = [];
+        var prices = [];
         $.each(data, function(key, value) {
-          demand.push(value.load_profile.demand);
+          prices.push(value.bid.price);
         });
 
-        var raphael = Raphael(city_id + "-load-profile");
-        var graph = raphael.g.linechart(10, 0, 500, 150, hours, demand,
-            {nostroke: false, axis: "0 0 1 1", smooth: true});
-        raphael.g.text(250, 130, "Hour");
-        raphael.g.text(40, 75, "MW");
+        var r = Raphael(generator_id + "-bids");
+        var graph = r.g.linechart(10, 0, 500, 150, count, prices,
+            {nostroke: false, axis: "0 0 0 1", symbol: "o", smooth: true}
+            ).hoverColumn(function() {
+              this.tags = r.set();
+              for (var i = 0, ii = this.y.length; i < ii; i++) {
+                this.tags.push(
+                    r.g.tag(this.x, this.y[i], this.values[i], 160, 10
+                    ).insertBefore(this).attr([{fill: "#fff"},
+                    {fill: this.symbols[i].attr("fill")}]));
+              }
+            }, function() {
+              this.tags && this.tags.remove();
+          }); 
+        r.g.text(40, 75, "$/MW");
+        graph.symbols.attr({r: 3}); 
       }
     });
   });
