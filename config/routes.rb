@@ -17,6 +17,7 @@ Threephase::Application.routes.draw do
   resources "interstate-lines", :controller => :interstate_lines,
       :as => :interstate_lines, :only => [:index, :show, :create, :update, :new]
 
+  match "/cities/:id/load-profile" => "cities#load_profile", :via => :get
   resources :cities, :only => [:index, :show] do
     resources :lines
     resources :generators

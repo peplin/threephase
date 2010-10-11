@@ -1,10 +1,9 @@
 class CitiesController < ApplicationController
   before_filter :find_game, :only => :index
   before_filter :find_cities, :only => :index
-  before_filter :find_city, :only => [:show]
+  before_filter :find_city, :except => :index
 
-  respond_to :json, :only => [:index, :show]
-  respond_to :html
+  respond_to :json, :html
 
   def index
     respond_with @cities
@@ -12,6 +11,10 @@ class CitiesController < ApplicationController
 
   def show
     respond_with @city
+  end
+
+  def load_profile
+    respond_with @city.load_profiles
   end
 
   private
@@ -28,6 +31,6 @@ class CitiesController < ApplicationController
   end
 
   def find_city
-    @city = City.find params[:id]
+    @city = City.find params[:id], :include => :load_profiles
   end
 end

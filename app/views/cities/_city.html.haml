@@ -30,6 +30,8 @@
         = storage_device
 
 %h5 Load Profile
-%ul
-  - city.load_profiles.each do |profile|
-    %li= profile
+#load-profile.load-profile{:rel => city.id}
+  %noscript
+    %ul
+      - city.load_profiles.each do |profile|
+        %li= profile
