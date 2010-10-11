@@ -48,17 +48,11 @@ Threephase::Application.routes.draw do
       resources :types, :controller => :generator_types, :as => :generator_types
     end
     resources :bids, :except => [:update, :destroy]
-    resources :contracts, :only => [:index, :show]
     resources :repairs, :only => [:index, :show]
   end
 
   resources :bids, :only => [:show, :create]
   resources :repairs, :except => [:destroy, :update]
-  resources :contracts, :only => [:index, :show]
-  match "/contracts/:id" => "contracts#offer", :via => :post
-  match "/offers" => "contracts#offer", :via => :post
-  match "/offers/:id" => "contracts#respond", :via => :put
-
 
   match 'login' => "user_sessions#new", :via => :get
   match 'logout' => "user_sessions#destroy", :via => :get

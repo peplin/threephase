@@ -40,12 +40,6 @@ class City < ActiveRecord::Base
     end.flatten!
   end
 
-  def contracts
-    generators.collect do |g|
-      g.contracts
-    end.flatten!
-  end
-
   def distance other_x, other_y
     Math.sqrt(((other_x - x) ** 2) + ((other_y - y) ** 2))
   end

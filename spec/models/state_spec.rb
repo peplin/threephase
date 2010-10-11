@@ -32,11 +32,6 @@ describe State do
       @state.bids.should include bid
     end
 
-    it "should return all contracts" do
-      contract = Factory :contract, :generator => @generator
-      @state.contracts.should include contract
-    end
-
     it "should return all generators" do
       generator = Factory :generator, :city => @city
       @state.generators.should include generator

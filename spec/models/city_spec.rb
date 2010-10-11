@@ -29,11 +29,6 @@ describe City do
       @city.bids.should include bid
     end
 
-    it "should return all contracts" do
-      contract = Factory :contract, :generator => @generator
-      @city.contracts.should include contract
-    end
-
     it "should know its current demand" do
       @city.should respond_to(:demand)
     end

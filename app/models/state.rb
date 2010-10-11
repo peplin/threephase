@@ -56,12 +56,6 @@ class State < ActiveRecord::Base
     end.flatten
   end
 
-  def contracts
-    cities.collect do |z|
-      z.contracts
-    end.flatten
-  end
-
   def generators
     cities.collect do |z|
       z.generators

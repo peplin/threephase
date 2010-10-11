@@ -80,15 +80,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   add_index "cities", ["cached_slug"], :name => "index_cities_on_cached_slug", :unique => true
   add_index "cities", ["x", "y", "state_id"], :name => "index_cities_on_x_and_y_and_state_id"
 
-  create_table "contracts", :force => true do |t|
-    t.string   "reason",                          :null => false
-    t.integer  "amount",                          :null => false
-    t.boolean  "offline",      :default => false, :null => false
-    t.integer  "generator_id",                    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "fuel_types", :force => true do |t|
     t.string  "name",                           :null => false
     t.text    "description"
@@ -205,14 +196,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   end
 
   add_index "markets", ["cached_slug"], :name => "index_markets_on_cached_slug", :unique => true
-
-  create_table "offers", :force => true do |t|
-    t.integer  "proposed_amount", :null => false
-    t.boolean  "accepted"
-    t.integer  "contract_id",     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "repairs", :force => true do |t|
     t.string   "reason",                             :null => false
