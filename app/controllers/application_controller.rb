@@ -59,9 +59,10 @@ class ApplicationController < ActionController::Base
     elsif cookies[:current_game]
       @current_game = Game.find cookies[:current_game]
     elsif current_user and current_user.current_game
-      @game = current_user.current_game
-      cookies[:current_game] = @game.id
+      @current_game = current_user.current_game
+      cookies[:current_game] = @current_game.id unless cookies[:current_game] == @current_game.id
     end
+    @current_game
   end
 
   def game_required

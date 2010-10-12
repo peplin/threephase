@@ -56,7 +56,7 @@ class InterstateLinesController < ApplicationController
     if @state
       @interstate_lines = @state.interstate_lines
     else
-      @state = current_game.states.find_by_user_id(current_user)
+      @state = current_user.states.find_by_game(current_game)
       @interstate_lines = @state.interstate_lines
     end
   end

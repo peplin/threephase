@@ -11,6 +11,7 @@ describe InterstateLinesController do
 
   before do
     State.stubs(:find_by_game).returns(@state)
+    User.any_instance.stubs(:current_game).returns(@state.game)
   end
 
   context "as an admin" do
