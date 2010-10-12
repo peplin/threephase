@@ -1,4 +1,4 @@
-class Blip < ActiveRecord::Base
+class Customer < ActiveRecord::Base
   belongs_to :city
 
   validates :x, :presence => true

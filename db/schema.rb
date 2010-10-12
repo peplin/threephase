@@ -43,15 +43,6 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.datetime "updated_at"
   end
 
-  create_table "blips", :force => true do |t|
-    t.integer "x",            :null => false
-    t.integer "y",            :null => false
-    t.integer "power_factor", :null => false
-    t.integer "city_id",      :null => false
-  end
-
-  add_index "blips", ["x", "y", "city_id"], :name => "index_blips_on_x_and_y_and_city_id", :unique => true
-
   create_table "blocks", :force => true do |t|
     t.integer  "x",                                   :null => false
     t.integer  "y",                                   :null => false
@@ -79,6 +70,15 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   add_index "cities", ["cached_slug"], :name => "index_cities_on_cached_slug", :unique => true
   add_index "cities", ["x", "y", "state_id"], :name => "index_cities_on_x_and_y_and_state_id"
+
+  create_table "customers", :force => true do |t|
+    t.integer "x",            :null => false
+    t.integer "y",            :null => false
+    t.integer "power_factor", :null => false
+    t.integer "city_id",      :null => false
+  end
+
+  add_index "customers", ["x", "y", "city_id"], :name => "index_customers_on_x_and_y_and_city_id", :unique => true
 
   create_table "fuel_types", :force => true do |t|
     t.string  "name",                           :null => false

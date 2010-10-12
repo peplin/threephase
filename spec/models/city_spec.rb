@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe City do
   it { should belong_to :state }
-  it { should have_many :blips }
+  it { should have_many :customers }
   it { should have_many :load_profiles }
   it { should have_many :generators }
   it { should have_many :storage_devices }

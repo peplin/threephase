@@ -1,6 +1,6 @@
 class City < ActiveRecord::Base
   belongs_to :state
-  has_many :blips
+  has_many :customers
   has_many :load_profiles
   has_many :generators
   has_many :outgoing_lines, :class_name => "Line", :foreign_key => "city_id"
