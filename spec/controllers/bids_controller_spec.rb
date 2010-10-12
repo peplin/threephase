@@ -16,9 +16,13 @@ describe BidsController do
       login_as_admin
     end
 
-    it_should_behave_like "index with a game"
-    it_should_behave_like "standard GET show"
-    it_should_behave_like "standard POST create"
+    context "POST" do
+      it_should_behave_like "standard POST create"
+
+      def redirect_path
+        generator_path assigns(:bid).generator
+      end
+    end
 
     context ":new with a generator" do
       it_should_behave_like "successful GET new"

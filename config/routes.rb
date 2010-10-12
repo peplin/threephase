@@ -43,7 +43,7 @@ Threephase::Application.routes.draw do
     end
   end
 
-  resources :generators, :except => [:delete] do
+  resources :generators, :except => [:destroy] do
     collection do
       resources :types, :controller => :generator_types, :as => :generator_types
     end
