@@ -425,8 +425,7 @@ share_examples_for "unsuccessful PUT update" do
     end
   end
   it "should not update the instance" do
-    # TODO this broke in Ruby 1.9.2
-    @instance.updated_at.should eq(@instance.reload.updated_at)
+    @instance.updated_at.should be_close(@instance.reload.updated_at, 0.1)
   end
 end
 
