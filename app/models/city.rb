@@ -40,6 +40,13 @@ class City < ActiveRecord::Base
     end.flatten!
   end
 
+  def power_factor
+    power_factors = customers.collect do |c|
+      c.power_factor
+    end
+    power_factors.inject(0.0) { |sum, el| sum + el } / power_factors.size
+  end
+
   def distance other_x, other_y
     Math.sqrt(((other_x - x) ** 2) + ((other_y - y) ** 2))
   end

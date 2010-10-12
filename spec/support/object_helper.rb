@@ -95,7 +95,7 @@ share_examples_for "a technical component instance" do
         it_should_behave_like "successful POST create"
 
         def redirect_path
-          state_path assigns(:instance).state
+          city_path assigns(:instance).city
         end
 
         def do_post format = 'html'

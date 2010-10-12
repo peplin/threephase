@@ -42,6 +42,15 @@ describe City do
       @city.load_profiles.count.should eq 24
     end
 
+    it "should have an average power factor of its customers" do
+      power_factors = @city.customers.collect do |c|
+        c.power_factor
+      end
+      average_pf = power_factors.inject(0.0) { |sum, el| sum + el
+          } / power_factors.size
+      @city.power_factor.should eq average_pf
+    end
+
     context "with coordinates" do
       it "should know the distance between itself and a set of coordinates" do
         @city.distance(200, 200).should be_close 141.42, 0.5
