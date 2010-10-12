@@ -35,8 +35,7 @@ describe InterstateLine do
       @line.accepted = true
       @line.save!
 
-      @line.accepted = false
-      @line.save!.should raise_error
+      lambda { @line.accepted = false }.should raise_error
     end
   end
 end
