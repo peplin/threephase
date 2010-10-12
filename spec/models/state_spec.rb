@@ -20,6 +20,8 @@ describe State do
       @state = Factory :state
       @city = Factory :city, :state => @state
       @generator = Factory :generator, :city => @city
+      @line = Factory :line, :city => @city
+      @storage_device = Factory :storage_device, :city => @city
     end
 
     it "should return all repairs" do
@@ -33,18 +35,15 @@ describe State do
     end
 
     it "should return all generators" do
-      generator = Factory :generator, :city => @city
-      @state.generators.should include generator
+      @state.generators.should include @generator
     end
 
     it "should return all lines" do
-      line = Factory :line, :city => @city
-      @state.lines.should include line
+      @state.lines.should include @line
     end
 
     it "should return all storage devices" do
-      storage_device = Factory :storage_device, :city => @city
-      @state.storage_devices.should include storage_device
+      @state.storage_devices.should include @storage_device
     end
 
     it "should return free coordinates" do
