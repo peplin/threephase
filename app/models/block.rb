@@ -1,5 +1,7 @@
 class Block < ActiveRecord::Base
   belongs_to :map
+  has_many :wind_profiles
+
   validates_presence_of :x
   validates_presence_of :y
   validates_presence_of :elevation

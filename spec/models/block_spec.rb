@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Block do
   it { should have_db_index [:x, :y, :map_id] }
   it { should belong_to :map }
+  it { should have_many :wind_profiles }
   it { should validate_presence_of :x }
   it { should validate_presence_of :y }
   it { should validate_presence_of :elevation }
