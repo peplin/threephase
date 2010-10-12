@@ -1,9 +1,9 @@
 class RepairsController < ApplicationController
   before_filter :login_required
-  before_filter :find_game, :only => :index
-  before_filter :find_generator, :only => :index
-  before_filter :find_line, :only => :index
-  before_filter :find_storage_device, :only => :index
+  before_filter :game_required
+  before_filter :conditional_find_generator, :only => :index
+  before_filter :conditional_find_line, :only => :index
+  before_filter :conditional_find_storage_device, :only => :index
   before_filter :find_repairs, :only => :index
   before_filter :find_repair, :only => :show
 
@@ -26,8 +26,8 @@ class RepairsController < ApplicationController
       @repairs = @line.repairs
     elsif @storage_device
       @repairs = @storage_device.repairs
-    elsif @game
-      @state = current_user.states.find_by_game(@game)
+    elsif current_game
+      @state = current_user.states.find_by_game(current_game)
       @repairs = @state.repairs
     end
   end

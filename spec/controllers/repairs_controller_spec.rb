@@ -3,15 +3,13 @@ require 'spec_helper'
 describe RepairsController do
   before :all do
     @model = Repair
+    @state = Factory :state
   end
 
   context "as an admin" do
-    before :all do
-      @state = Factory :state
-    end
-
     before do
       State.stubs(:find_by_game).returns(@state)
+      User.any_instance.stubs(:current_game).returns(@state.game)
       login_as_admin
     end
 

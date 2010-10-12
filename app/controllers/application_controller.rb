@@ -23,16 +23,24 @@ class ApplicationController < ActionController::Base
     @generator = Generator.find params[:generator_id]
   end
 
-  def find_line
+  def conditional_find_line
     if params[:line_id]
-      @line = Line.find params[:line_id]
+      find_line
+    end
+  end
+  
+  def find_line
+    @line = Line.find params[:line_id]
+  end
+
+  def conditional_find_storage_device
+    if params[:storage_device_id]
+      find_storage_device
     end
   end
 
   def find_storage_device
-    if params[:storage_device_id]
-      @storage_device = StorageDevice.find params[:storage_device_id]
-    end
+    @storage_device = StorageDevice.find params[:storage_device_id]
   end
 
   def conditional_find_game

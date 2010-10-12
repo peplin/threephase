@@ -6,15 +6,6 @@ describe "routing to bids" do
     @bid = Factory(:bid).to_param
   end
 
-  it "should expose a list of all bids in a game" do
-    {:get => "/bids"}.should route_to(:action => "index", :controller => "bids")
-  end
-
-  it "should expose a list of all bids for a generator" do
-    {:get => "/generators/#{@generator}/bids"}.should route_to(
-        :action => "index", :generator_id => @generator, :controller => "bids")
-  end
-
   it "should expose a new bid form for a generator" do
     {:get => "/generators/#{@generator}/bids/new" }.should route_to(
         :action => "new", :generator_id => @generator, :controller => "bids")
@@ -48,5 +39,9 @@ describe "routing to bids" do
   it "does not allow bid deleting" do
     {:delete => "/generators/#{@generator}/bids/#{@bid}"}.should_not be_routable
     {:delete => "/bids/#{@bid}"}.should_not be_routable
+  end
+
+  it "should not expose a list of all bids in a game" do
+    {:get => "/bids"}.should_not be_routable
   end
 end
