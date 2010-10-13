@@ -40,17 +40,17 @@ class User < ActiveRecord::Base
     unless @profile
       @profile = if facebook
         {
-          :id     => facebook[:id],
-          :name   => facebook[:name],
-          :photo  => "https://graph.facebook.com/#{facebook[:id]}/picture",
+          :id     => facebook["id"],
+          :name   => facebook["name"],
+          :photo  => "https://graph.facebook.com/#{facebook["id"]}/picture",
           :link   => facebook["link"],
           :title  => "Facebook"
         }
       elsif twitter
         {
-          :id     => twitter[:id],
-          :name   => twitter[:name],
-          :photo  => twitter[:profile_image_url],
+          :id     => twitter["id"],
+          :name   => twitter["name"],
+          :photo  => twitter["profile_image_url"],
           :link   => "http://twitter.com/#{twitter["screen_name"]}",
           :title  => "Twitter"
         }
@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
       elsif openid
         {
           :id     => "unknown",
-          :name   => openid[:key],
+          :name   => openid["key"],
           :photo  => "/images/icons/google.png",
           :link   => "/images/icons/google.png",
           :title  => "OpenID"
