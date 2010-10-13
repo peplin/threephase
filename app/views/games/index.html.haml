@@ -1,11 +1,10 @@
 - content_for :left_column do
-  Pick a game, please.
+  - if current_user
+    Pick a game, please.
 
 - content_for :right_column do
-  - if current_user
+  - if current_user and current_user.admin
     %a{:href => new_game_url}New Game
 
   %ul
-    - @games.each do |game|
-      %li
-        %a{:href => game_path(game)}= game
+    = render :partial => 'games/game_list', :collection => @games, :as => :game

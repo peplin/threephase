@@ -1,5 +1,7 @@
 - content_for :right_column do
-  =render @games
+  %h3 Public Games
+  %ul
+    = render :partial => 'games/game_list', :collection => @games, :as => :game
 
 - content_for :left_column do
   =render @game

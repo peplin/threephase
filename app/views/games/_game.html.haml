@@ -1,10 +1,16 @@
-%a{:href => games_url} Switch Game
-
 %h2 A Game
 
-%h2 States
+- if current_game
+  - if current_game != game
+    %a{:href => new_game_state_url(game)} Switch to this game
+  - else
+    %p
+      You are playing in this game.
+      %a{:href => games_url} Leave this game
+- else
+  %a{:href => new_game_state_url(game)} Switch to this game
 
-%a{:href => new_state_url} New State
+%h2 States
 
 %ul
   - @game.states.each do |state|
