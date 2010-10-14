@@ -22,9 +22,10 @@ em {
   font-style: italic;
 }
 
-h1, h2, h3, h4, h5, dt {
+h1, h2, h3, h4, h5 {
   margin: .1em 0 .2em 0;
   font-weight: bold;
+  clear: both;
 }
 
 h1, h2, h3, h4, h5 {
@@ -39,8 +40,23 @@ address span {
   display: block;
 }
 
-dd {
-  padding-left: 30px;
+dl {
+  margin: 10px 0;
+}
+
+dl dt {
+  font-weight: bold;
+}
+
+dl.attributes dt {
+  float: left;
+  clear: left;
+  width: 150px;
+  text-align: right;
+}
+
+dl.attributes dd {
+  margin: 0 0 0 160px;
 }
 
 ul {
@@ -176,9 +192,10 @@ fieldset legend {
 
 label {
   padding: 5px 0;
+  font-weight: bold;
 }
 
-label, input, textarea {
+textarea {
   display: block;
 }
 
@@ -269,4 +286,18 @@ button.positive, .controls a.positive, a.button.positive {
   background-color: #d12f19;
   border: 1px solid #d12f19;
   color: #fff;
+}
+
+/* Sliders */
+
+input.label {
+  border: 0;
+}
+
+.percentage {
+  width: 200px;
+}
+
+.ui-slider {
+  margin: 5px;
 }

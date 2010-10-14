@@ -6,8 +6,10 @@
     = stylesheet_link_tag "text"
     - if ::Rails.env == "production"
       = stylesheet_link_tag "http://cachedcommons.org/cache/960/0.0.0/stylesheets/960-min.css"
+      = stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/south-street/jquery-ui.css"
     - else
-      = stylesheet_link_tag "960"
+      = stylesheet_link_tag "uncompressed/960"
+      = stylesheet_link_tag "uncompressed/jquery-ui"
     = stylesheet_link_tag "application"
     = csrf_meta_tag
   %body
@@ -67,8 +69,10 @@
       = javascript_include_tag "http://cachedcommons.org/javascripts/jquery/jquery-1.4.2-min.js"
       = javascript_include_tag "http://cachedcommons.org/cache/raphael/1.4.7/javascripts/raphael-min.js"
       = javascript_include_tag "http://cachedcommons.org/cache/g-raphael/0.4.1/javascripts/g-raphael-min.js"
+      = javascript_include_tag "http://cachedcommons.org/cache/jquery-ui/1.8.4/javascripts/jquery-ui-min.js"
     - else
       = javascript_include_tag "jquery-1.4.2"
+      = javascript_include_tag "jquery-ui-1.8.4"
       = javascript_include_tag "raphael"
       = javascript_include_tag "g-raphael"
     = javascript_include_tag "g.line-min"

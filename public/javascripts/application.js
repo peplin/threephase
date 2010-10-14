@@ -1,9 +1,9 @@
 $ = jQuery.noConflict();
 
-$(document).ready(function() {
+function drawGraphs() {
   $(".load-profile").each(function() {
     var element = this;
-    var city_id = $(this).attr('rel');
+    var cityId = $(this).attr('rel');
     $.ajax({
       type : "GET",
       url: '/cities/' + $(this).attr('rel') + '/load-profile',
@@ -18,7 +18,7 @@ $(document).ready(function() {
           demand.push(value.load_profile.demand);
         });
 
-        var r = Raphael(city_id + "-load-profile", 500, 155);
+        var r = Raphael(cityId + "-load-profile", 500, 155);
         var graph = r.g.linechart(20, 0, 480, 130, hours, demand,
             {nostroke: false, axis: "0 0 1 1", smooth: true});
         r.g.text(250, 145, "Hour");
@@ -29,7 +29,7 @@ $(document).ready(function() {
 
   $(".bids").each(function() {
     var element = this;
-    var generator_id = $(this).attr('rel');
+    var generatorId = $(this).attr('rel');
 
     $.ajax({
       type : "GET",
@@ -46,7 +46,7 @@ $(document).ready(function() {
         });
 
         if(data.length > 0) {
-          var r = Raphael(generator_id + "-bids", 500, 155);
+          var r = Raphael(generatorId + "-bids", 500, 155);
           var graph = r.g.linechart(10, 0, 480, 130, count, prices,
               {nostroke: false, axis: "0 0 0 1", symbol: "o", smooth: true}
               ).hoverColumn(function() {
@@ -59,11 +59,52 @@ $(document).ready(function() {
                 }
               }, function() {
                 this.tags && this.tags.remove();
-            }); 
+            });
           r.g.text(10, 75, "$/MW");
-          graph.symbols.attr({r: 3}); 
+          graph.symbols.attr({r: 3});
         }
       }
     });
   });
+}
+
+function drawPercentageSlider(element, value) {
+    drawSlider(element, value, 1, 100, '%');
+}
+
+function drawSlider(element, value, min, max, unit, range) {
+  var value = typeof(value) != 'undefined' ? value :
+      parseInt($('#' + $(element).attr('rel')).attr('value'));
+  var min = typeof(min) != 'undefined' ? min :
+      parseInt($(element).attr('data-min'));
+  var max = typeof(max) != 'undefined' ? max :
+      parseInt($(element).attr('data-max'));
+  var unit = typeof(unit) != 'undefined' ? unit :
+      ' ' + $(element).attr('data-unit');
+  var range = typeof(range) != 'undefined' ? range : 'min';
+
+  $(element).slider({
+      range: range,
+      value: value,
+      min: min,
+      max: max,
+      slide: function(event, ui) {
+          $('#' + $(element).attr('rel')).val(ui.value + ' ' + unit);
+      }
+  });
+}
+
+function drawSliders() {
+  $(".percentage").each(function() {
+      drawPercentageSlider(this);
+  });
+
+  $(".slider").each(function() {
+      drawSlider(this);
+  });
+}
+
+$(document).ready(function() {
+  drawGraphs();
+  drawSliders();
 });
