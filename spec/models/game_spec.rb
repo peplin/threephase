@@ -73,21 +73,26 @@ describe Game do
       (@game.current_price @market).should eq(@market.current_price @game)
     end
 
-    context "should know how much game-relative time has passed" do
+    context "that has been updated" do
       before do
         @game.updated_at = Time.now - 60
         @now = Time.now
+        Time.stubs(:now).returns(@now)
       end
 
-      it "with a real-time speed" do
+      it "should scale time passed based on game speed" do
         @game.speed = 0
-        assert_equal @game.time_since(@now), @now - @game.updated_at
+        real_time = @game.time_since_update
+        @game.speed = 1
+        fast_time = @game.time_since_update
+        real_time.should be > (@now - @game.updated_at)
+        fast_time.should be > (@now - @game.updated_at)
+        real_time.should be < fast_time
       end
 
-      it "with maxiumum speed" do
+      it "should know how much time has passed with maxiumum speed" do
         @game.speed = 1
-        assert_equal @game.time_since(@now),
-            Game::TIME_SCALE_FACTOR * (@now - @game.updated_at)
+        @game.time_since_update.should be > (@now - @game.updated_at)
       end
     end
   end

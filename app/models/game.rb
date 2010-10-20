@@ -1,5 +1,9 @@
+require 'simple'
+
 class Game < ActiveRecord::Base
-  TIME_SCALE_FACTOR = 1 / 0.2
+  include SimpleExtensions
+
+  TIME_SCALE_FACTOR = [1 / 0.8, 1 / 0.2]
 
   acts_as_limited
   has_many :market_prices
@@ -56,15 +60,22 @@ class Game < ActiveRecord::Base
     market.current_price @game
   end
 
-  def time_since time
-    TIME_SCALE_FACTOR * speed * (Time.now - time)
-  end
-
   def in_progress?
     not ended
   end
 
+  def time_since_update
+    time_since updated_at
+  end
+
   def to_s
     "#{states.count} confirmed players, #{started ? "started #{started}" : "not started"}"
+  end
+
+  private
+
+  def time_since time
+    range_map(speed, 0, 100, TIME_SCALE_FACTOR[0],
+        TIME_SCALE_FACTOR[1]) * (Time.now - time)
   end
 end
