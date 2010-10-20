@@ -20,7 +20,7 @@ class Game < ActiveRecord::Base
 
   validates :speed, :presence => true, :percentage => true
   validates :max_players, :numericality => {:greater_than_or_equal_to => 1},
-      :if => :max_players
+      :allow_nil => true
 
   validates :max_line_capacity, :presence => true, :numericality => {
       :greater_than_or_equal_to => 25, :less_than_or_equal_to => 2000}
