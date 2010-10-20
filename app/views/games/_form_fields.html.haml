@@ -1,83 +1,39 @@
 =render :partial => 'global/form_header_fields', :locals => {:object => game}
 %fieldset 
   %legend General Options
-  .fieldpair
-    - percentage_slider "Speed", :speed, game
+  - percentage_slider :speed, game
 %fieldset 
   %legend Technical Options
-  .fieldpair
-    - slider "Maximum Line Capacity", :max_line_capacity, game, "MW"
-  .fieldpair
-    %label Technology Cost
-    %input{:name => 'game[technology_cost]', :value => game.technology_cost}
-  .fieldpair
-    %label Technology Reliability
-    %input{:name => 'game[technology_reliability]', :value => game.technology_reliability}
-  .fieldpair
-    %label Power Factor
-    %input{:name => 'game[power_factor]', :value => game.power_factor}
-  .fieldpair
-    %label Frequency
-    %input{:name => 'game[frequency]', :value => game.frequency}
-  .fieldpair
-    %label Wind Speed
-    %input{:name => 'game[wind_speed]', :value => game.wind_speed}
-  .fieldpair
-    %label Sunfall
-    %input{:name => 'game[sunfall]', :value => game.sunfall}
-  .fieldpair
-    %label Water Flow
-    %input{:name => 'game[water_flow]', :value => game.water_flow}
+  - slider :max_line_capacity, game, {:unit => "MW", :display_name => "Maximum Line Capacity"}
+  - percentage_slider :technology_cost, game
+  - percentage_slider :technology_reliability, game
+  - percentage_slider :power_factor, game
+  - percentage_slider :wind_speed, game
+  - percentage_slider :sunfall, game
+  - percentage_slider :water_flow, game
+  - slider :frequency, game, {:unit => "Hz"}
 %fieldset 
   %legend Economic Options
   .fieldpair
     %label Regulation Type
     = enum_select :game, :regulation_type
-  .fieldpair
-    %label Starting Capitol
-    %input{:name => 'game[starting_capital]', :value => game.starting_capital}
-  .fieldpair
-    %label Interest Rate
-    %input{:name => 'game[interest_rate]', :value => game.interest_rate}
-  .fieldpair
-    %label Reliability Constraint
-    %input{:name => 'game[reliability_constraint]', :value => game.reliability_constraint}
-  .fieldpair
-    %label Fuel Cost
-    %input{:name => 'game[fuel_cost]', :value => game.fuel_cost}
-  .fieldpair
-    %label Fuel Cost Volatility
-    %input{:name => 'game[fuel_cost_volatility]', :value => game.fuel_cost_volatility}
-  .fieldpair
-    %label Workforce Reliability
-    %input{:name => 'game[workforce_reliability]', :value => game.workforce_reliability}
-  .fieldpair
-    %label
-      Workforce Cost
-      %input{:name => 'game[workforce_cost]', :value => game.workforce_cost}
+  - slider :starting_capital, game, {:unit => "$", :prepend => true}
+  - slider :reliability_constraint, game, {:unit => "n - ", :prepend => true}
+  - percentage_slider :fuel_cost, game
+  - percentage_slider :fuel_cost_volatility, game
+  - percentage_slider :workforce_reliability, game
+  - percentage_slider :workforce_cost, game
   .fieldpair
     %label
       Unionized?
       %input{:name => 'game[unionized]', :type => :checkbox, :value => game.unionized}
 %fieldset 
   %legend Environmental Options
-  .fieldpair
-    %label Carbon Allowances
-    %input{:name => 'game[carbon_allowance]', :value => game.carbon_allowance}
-  .fieldpair
-    %label Tax Credit
-    %input{:name => 'game[tax_credit]', :value => game.tax_credit}
-  .fieldpair
-    %label Renewable Requirement
-    %input{:name => 'game[renewable_requirement]', :value => game.renewable_requirement}
-  .fieldpair
-    %label Political Stability
-    %input{:name => 'game[political_stability]', :value => game.political_stability}
-  .fieldpair
-    %label Political Opposition
-    %input{:name => 'game[political_opposition]', :value => game.political_opposition}
-  .fieldpair
-    %label Public Support
-    %input{:name => 'game[public_support]', :value => game.public_support}
+  - percentage_slider :carbon_allowance, game
+  - percentage_slider :tax_credit, game
+  - percentage_slider :renewable_requirement, game
+  - percentage_slider :political_stability, game
+  - percentage_slider :political_opposition, game
+  - percentage_slider :public_support, game
 %button{:type => 'submit'} Save
 %a.button{:href => games_path} Cancel
