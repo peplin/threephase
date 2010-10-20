@@ -12,7 +12,7 @@ describe InterstateLine do
   it { should validate_presence_of :operating_level }
 
   context "an instance of InterstateLine" do
-    before :all do
+    before do
       @line = Factory :interstate_line
     end
 
@@ -36,6 +36,13 @@ describe InterstateLine do
       @line.save!
 
       lambda { @line.accepted = false }.should raise_error
+    end
+
+    it "should validate that the incoming and outgoing states are different" do
+      line = Factory.build :interstate_line
+      line.incoming_state = @line.incoming_state
+      line.outgoing_state = line.incoming_state
+      line.save.should raise_error
     end
   end
 end

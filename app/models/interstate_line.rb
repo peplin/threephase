@@ -12,6 +12,8 @@ class InterstateLine < ActiveRecord::Base
   validates :incoming_state, :presence => true
   validates :outgoing_state, :presence => true
   validates :operating_level, :presence => true
+  validates_with LineEndpointValidator, :start => :incoming_state,
+      :end => :outgoing_state
 
   attr_readonly :incoming_state, :outgoing_state, :line_type
 

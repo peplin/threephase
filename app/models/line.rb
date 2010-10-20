@@ -10,4 +10,5 @@ class Line < TechnicalComponentInstance
   validates :line_type, :presence => true
   validates :city, :presence => true
   validates :other_city, :presence => true
+  validates_with LineEndpointValidator, :start => :city, :end => :other_city
 end
