@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
-  TIME_SCALE_FACTOR = 0.2
+  TIME_SCALE_FACTOR = 1 / 0.2
+
   acts_as_limited
   has_many :market_prices
   has_many :markets, :through => :market_prices
@@ -56,7 +57,7 @@ class Game < ActiveRecord::Base
   end
 
   def time_since time
-    time
+    TIME_SCALE_FACTOR * speed * (Time.now - time)
   end
 
   def in_progress?

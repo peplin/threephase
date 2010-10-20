@@ -7,7 +7,7 @@ describe Block do
   it { should validate_presence_of :x }
   it { should validate_presence_of :y }
   it { should validate_presence_of :elevation }
-  it { should validate_presence_of :type }
+  it { should validate_presence_of :block_type }
   it { should validate_presence_of :wind_speed }
   it { should validate_presence_of :water_flow }
   it { should validate_presence_of :sunfall }

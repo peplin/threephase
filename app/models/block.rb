@@ -11,11 +11,21 @@ class Block < ActiveRecord::Base
   validates_presence_of :natural_gas_index
   validates_presence_of :coal_index
 
-  validates :type, :presence => true
-  enum_attr :type, [:mountain, :water, :plains]
+  validates :block_type, :presence => true
+  enum_attr :block_type, [:mountain, :water, :plains]
   validates :map, :presence => true
 
+  after_create :generate_wind_profiles
+
   def to_s
-    "(#{x}, #{y}) #{type}"
+    "(#{x}, #{y}) #{block_type}"
+  end
+
+  private
+
+  def generate_wind_profiles
+    (0..23).each do |hour|
+      self.wind_profiles << WindProfile.new(:hour => hour)
+    end
   end
 end

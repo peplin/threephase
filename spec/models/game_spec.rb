@@ -75,7 +75,7 @@ describe Game do
 
     context "should know how much game-relative time has passed" do
       before do
-        @game.updated_at = Time.parse("1 minute ago")
+        @game.updated_at = Time.now - 60
         @now = Time.now
       end
 

@@ -9,26 +9,26 @@ end
 Factory.define :block do |b|
   b.x { Factory.next :block_x }
   b.y { Factory.next :block_y }
-  b.type :mountain
+  b.block_type :mountain
   b.association :map
 end
 
 Factory.define :mountain_block, :parent => :block do |b|
-  b.type :mountain
+  b.block_type :mountain
   b.elevation 100 + rand(600)
 end
 
 Factory.define :water_block, :parent => :block do |b|
-  b.type :water
+  b.block_type :water
   b.water_flow rand(20)
 end
 
 Factory.define :sunny_block, :parent => :block do |b|
-  b.type :plains
+  b.block_type :plains
   b.sunfall 3000 + rand(4000)
 end
 
 Factory.define :windy_block, :parent => :block do |b|
-  b.type :plains
+  b.block_type :plains
   b.wind_speed rand(30)
 end
