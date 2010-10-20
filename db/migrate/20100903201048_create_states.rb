@@ -3,6 +3,7 @@ class CreateStates < ActiveRecord::Migration
     create_table :states do |t|
       t.string :name, :null => false
       t.integer :research_budget, :null => false, :default => 5000000
+      t.integer :cash, :null => false
 
       t.references :map, :null => false
       t.references :game, :null => false

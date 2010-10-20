@@ -1,5 +1,6 @@
 Factory.define :state do |r|
   r.name "A State"
+  r.cash 100
   r.association :map
   r.association :game
   r.association :user

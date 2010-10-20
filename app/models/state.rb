@@ -34,6 +34,8 @@ class State < ActiveRecord::Base
   validates :name, :presence => true
   validates :research_budget, :presence => true,
       :numericality => {:greater_than_or_equal_to => 0}
+  validates :cash, :presence => true,
+      :numericality => {:greater_than_or_equal_to => 0}
   validates :map, :presence => true
   validates :game, :presence => true
   validates :user, :presence => true

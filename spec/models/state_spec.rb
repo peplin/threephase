@@ -12,8 +12,11 @@ describe State do
   it { should have_many :outgoing_interstate_lines }
   it { should validate_presence_of :name }
   it { should validate_presence_of :research_budget }
+  it { should validate_presence_of :cash }
   it { should allow_value(1000).for(:research_budget) }
   it { should_not allow_value(-1000).for(:research_budget) }
+  it { should allow_value(1000).for(:research_budget) }
+  it { should_not allow_value(-1).for(:cash) }
 
   context "with an instance of State" do
     before :all do

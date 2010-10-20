@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "games", :force => true do |t|
     t.integer  "speed",                  :default => 0,             :null => false
     t.datetime "updated_at"
-    t.integer  "max_players",            :default => 1,             :null => false
+    t.integer  "max_players"
     t.datetime "started"
     t.datetime "ended"
     t.integer  "max_line_capacity",      :default => 1500,          :null => false
@@ -242,6 +242,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "states", :force => true do |t|
     t.string   "name",                                 :null => false
     t.integer  "research_budget", :default => 5000000, :null => false
+    t.integer  "cash",                                 :null => false
     t.integer  "map_id",                               :null => false
     t.integer  "game_id",                              :null => false
     t.integer  "user_id"
