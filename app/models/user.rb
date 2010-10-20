@@ -2,14 +2,16 @@ class User < ActiveRecord::Base
   has_many :maps
   has_many :states
   has_many :games, :through => :states
+  has_one :current_game, :through => :states, :source => :game,
+      :conditions => {:ended => nil}
   acts_as_authentic do |config|
     config.validate_email_field = false
     config.validate_login_field = false
     config.validate_password_field = false
   end
 
-  def current_game
-    games.find_by_ended nil
+  def current_state
+    states.find_by_game_id current_game
   end
 
   def facebook
