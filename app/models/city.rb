@@ -62,7 +62,7 @@ class City < ActiveRecord::Base
   private
 
   def generate_load_profiles
-    24.times do |hour|
+    (0..23).each do |hour|
       self.load_profiles << LoadProfile.new(:hour => hour)
     end
   end
