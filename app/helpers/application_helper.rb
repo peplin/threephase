@@ -9,26 +9,28 @@ module ApplicationHelper
     prepend = params[:prepend] or false
 
     value = instance.send(attribute)
+    unitized_value = value
     if unit
       if unit == "%"
-        value = "#{value}%"
+        unitized_value = "#{value}%"
       else
-        value = "#{unit}#{value}" if prepend
-        value = "#{value} #{unit}" if not prepend
+        unitized_value = "#{unit}#{value}" if prepend
+        unitized_value = "#{value} #{unit}" if not prepend
       end
     end
 
     haml_tag ".fieldpair" do
       haml_tag :label, (display_name or titlecase(attribute.to_s.humanize)),
           :for => attribute
-      haml_tag "span.label", value, :id => attribute
+      haml_tag "span.label", unitized_value, :name => attribute
       haml_tag "input.label", :id => attribute, :type => :hidden,
           :name => "#{instance.class.name.underscore}[#{attribute}]",
           :value => value
       haml_tag ".slider", :rel => attribute,
           "data-min" => instance.class.minimum_for(attribute),
           "data-max" => instance.class.maximum_for(attribute),
-          "data-unit" => unit
+          "data-unit" => unit,
+          "data-prepend" => prepend ? 1 : 0
     end
   end
 

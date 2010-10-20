@@ -34,10 +34,10 @@ class Game < ActiveRecord::Base
   validates :water_flow, :presence => true, :percentage => true
 
   validates :starting_capital, :presence => true, :numericality => {
-      :greater_than_or_equal_to => 0}
+      :greater_than_or_equal_to => 0, :less_than_or_equal_to => 500000000000}
   validates :interest_rate, :presence => true, :percentage => true
   validates :reliability_constraint, :presence => true, :numericality => {
-      :greater_than_or_equal_to => 0}
+      :greater_than_or_equal_to => 0, :less_than_or_equal_to => 10}
   validates :fuel_cost, :presence => true, :percentage => true
   validates :fuel_cost_volatility, :presence => true, :percentage => true
   validates :workforce_reliability, :presence => true, :percentage => true

@@ -81,6 +81,8 @@ function drawSlider(element, value, min, max, unit, range) {
       parseInt($(element).attr('data-max'));
   var unit = typeof(unit) != 'undefined' ? unit : $(element).attr('data-unit');
   var range = typeof(range) != 'undefined' ? range : 'min';
+  var prepend = typeof(prepend) != 'undefined' ? prepend :
+      $(element).attr('data-prepend');
 
   $(element).slider({
       range: range,
@@ -88,13 +90,18 @@ function drawSlider(element, value, min, max, unit, range) {
       min: min,
       max: max,
       slide: function(event, ui) {
+          var unitized_value = ui.value;
           if(unit == "%") {
-              ui.value += unit; 
+              unitized_value += unit; 
           } else {
-              ui.value += " " + unit; 
+              if(prepend == "1") {
+                unitized_value = unit + ui.value; 
+              } else {
+                unitized_value += " " + unit; 
+              }
           }
           $('input#' + $(element).attr('rel')).val(ui.value);
-          $('span#' + $(element).attr('rel')).text(ui.value);
+          $('span[name=' + $(element).attr('rel') + ']').text(unitized_value);
       }
   });
 }
