@@ -2,15 +2,11 @@
 %fieldset 
   %legend General Options
   .fieldpair
-    %label{:for => 'speed'} Speed
-    %input.label{:id => 'speed', :name => 'game[speed]', :value => game.speed}
-    .percentage{:rel => 'speed'}
+    - percentage_slider "Speed", :speed, game
 %fieldset 
   %legend Technical Options
   .fieldpair
-    %label{:for => 'max_line_capacity'} Maximum Line Capacity
-    %input.label{:id => 'max_line_capacity', :name => 'game[max_line_capacity]', :value => game.max_line_capacity}
-    .slider{:rel => "max_line_capacity", "data-min" => 500, "data-max" => 2000, "data-unit" => "MW"}
+    - slider "Maximum Line Capacity", :max_line_capacity, game, "MW"
   .fieldpair
     %label Technology Cost
     %input{:name => 'game[technology_cost]', :value => game.technology_cost}

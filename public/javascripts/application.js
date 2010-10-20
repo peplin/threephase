@@ -74,13 +74,12 @@ function drawPercentageSlider(element, value) {
 
 function drawSlider(element, value, min, max, unit, range) {
   var value = typeof(value) != 'undefined' ? value :
-      parseInt($('#' + $(element).attr('rel')).attr('value'));
+      parseInt($('input#' + $(element).attr('rel')).attr('value'));
   var min = typeof(min) != 'undefined' ? min :
       parseInt($(element).attr('data-min'));
   var max = typeof(max) != 'undefined' ? max :
       parseInt($(element).attr('data-max'));
-  var unit = typeof(unit) != 'undefined' ? unit :
-      ' ' + $(element).attr('data-unit');
+  var unit = typeof(unit) != 'undefined' ? unit : $(element).attr('data-unit');
   var range = typeof(range) != 'undefined' ? range : 'min';
 
   $(element).slider({
@@ -89,7 +88,13 @@ function drawSlider(element, value, min, max, unit, range) {
       min: min,
       max: max,
       slide: function(event, ui) {
-          $('#' + $(element).attr('rel')).val(ui.value + ' ' + unit);
+          if(unit == "%") {
+              ui.value += unit; 
+          } else {
+              ui.value += " " + unit; 
+          }
+          $('input#' + $(element).attr('rel')).val(ui.value);
+          $('span#' + $(element).attr('rel')).text(ui.value);
       }
   });
 }

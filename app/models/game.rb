@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
   TIME_SCALE_FACTOR = 0.2
+  acts_as_limited
   has_many :market_prices
   has_many :markets, :through => :market_prices
   has_many :allowed_generator_types
