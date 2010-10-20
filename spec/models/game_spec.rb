@@ -11,7 +11,7 @@ describe Game do
 
   it { should validate_presence_of :speed}
 
-  it { should validate_presence_of :max_players}
+  it { should_not validate_presence_of :max_players}
   it { should allow_value(3).for(:max_players) }
   it { should_not allow_value(0).for(:max_players) }
 
