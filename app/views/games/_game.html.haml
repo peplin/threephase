@@ -17,4 +17,4 @@
     %li
       %a{:href => state_url(state)}= state.name
 
-= render :partial => 'form_fields', :locals => {:game => game}
+= render :partial => 'form_fields', :locals => {:game => game, :disabled => true}

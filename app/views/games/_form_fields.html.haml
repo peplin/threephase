@@ -1,37 +1,38 @@
 =render :partial => 'global/form_header_fields', :locals => {:object => game}
+- disabled |= false
 %fieldset 
   %legend General Options
-  - percentage_slider :speed, game
+  - percentage_slider :speed, game, {:disabled => disabled}
 %fieldset 
   %legend Technical Options
-  - slider :max_line_capacity, game, {:unit => "MW", :display_name => "Maximum Line Capacity"}
-  - percentage_slider :technology_cost, game
-  - percentage_slider :technology_reliability, game
-  - percentage_slider :power_factor, game
-  - percentage_slider :wind_speed, game
-  - percentage_slider :sunfall, game
-  - percentage_slider :water_flow, game
-  - slider :frequency, game, {:unit => "Hz"}
+  - slider :max_line_capacity, game, {:unit => "MW", :display_name => "Maximum Line Capacity", :step => 10, :disabled => disabled}
+  - percentage_slider :technology_cost, game, {:disabled => disabled}
+  - percentage_slider :technology_reliability, game, {:disabled => disabled}
+  - percentage_slider :power_factor, game, {:disabled => disabled}
+  - percentage_slider :wind_speed, game, {:disabled => disabled}
+  - percentage_slider :sunfall, game, {:disabled => disabled}
+  - percentage_slider :water_flow, game, {:disabled => disabled}
+  - slider :frequency, game, {:unit => "Hz", :disabled => disabled}
 %fieldset 
   %legend Economic Options
   .fieldpair
     %label Regulation Type
     = enum_select :game, :regulation_type
-  - slider :starting_capital, game, {:unit => "$", :prepend => true}
-  - slider :reliability_constraint, game, {:unit => "n - ", :prepend => true}
-  - percentage_slider :fuel_cost, game
-  - percentage_slider :fuel_cost_volatility, game
-  - percentage_slider :workforce_reliability, game
-  - percentage_slider :workforce_cost, game
+  - slider :starting_capital, game, {:unit => "$", :prepend => true, :step => 10000000, :disabled => disabled}
+  - slider :reliability_constraint, game, {:unit => "n - ", :prepend => true, :disabled => disabled}
+  - percentage_slider :fuel_cost, game, {:disabled => disabled}
+  - percentage_slider :fuel_cost_volatility, game, {:disabled => disabled}
+  - percentage_slider :workforce_reliability, game, {:disabled => disabled}
+  - percentage_slider :workforce_cost, game, {:disabled => disabled}
   .fieldpair
     %label
       Unionized?
       = check_box :game, :unionized
 %fieldset 
   %legend Environmental Options
-  - percentage_slider :carbon_allowance, game
-  - percentage_slider :tax_credit, game
-  - percentage_slider :renewable_requirement, game
-  - percentage_slider :political_stability, game
-  - percentage_slider :political_opposition, game
-  - percentage_slider :public_support, game
+  - percentage_slider :carbon_allowance, game, {:disabled => disabled}
+  - percentage_slider :tax_credit, game, {:disabled => disabled}
+  - percentage_slider :renewable_requirement, game, {:disabled => disabled}
+  - percentage_slider :political_stability, game, {:disabled => disabled}
+  - percentage_slider :political_opposition, game, {:disabled => disabled}
+  - percentage_slider :public_support, game, {:disabled => disabled}

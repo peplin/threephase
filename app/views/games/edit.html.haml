@@ -1,4 +1,4 @@
 = form_for @game do |f|
-  =render 'form_fields'
+  =render :partial => 'form_fields', :locals => {:game => @game}
   %button{:type => 'submit'} Save
   %a.button{:href => games_path} Cancel

@@ -81,14 +81,20 @@ function drawSlider(element, value, min, max, unit, range) {
       parseInt($(element).attr('data-max'));
   var unit = typeof(unit) != 'undefined' ? unit : $(element).attr('data-unit');
   var range = typeof(range) != 'undefined' ? range : 'min';
+  var step = typeof(step) != 'undefined' ? step :
+      parseInt($(element).attr('data-step'));
   var prepend = typeof(prepend) != 'undefined' ? prepend :
       $(element).attr('data-prepend');
+  var disabled = typeof(disabled) != 'undefined' ? disabled :
+      $(element).attr('data-disabled');
 
   $(element).slider({
       range: range,
       value: value,
       min: min,
       max: max,
+      step: step,
+      disabled: disabled == "1",
       slide: function(event, ui) {
           var unitized_value = ui.value;
           if(unit == "%") {

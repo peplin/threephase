@@ -7,6 +7,8 @@ module ApplicationHelper
     unit = params[:unit] or nil
     display_name = params[:display_name] or nil
     prepend = params[:prepend] or false
+    disabled = params[:disabled] or false
+    step = params[:step] or 1
 
     value = instance.send(attribute)
     unitized_value = value
@@ -30,11 +32,14 @@ module ApplicationHelper
           "data-min" => instance.class.minimum_for(attribute),
           "data-max" => instance.class.maximum_for(attribute),
           "data-unit" => unit,
-          "data-prepend" => prepend ? 1 : 0
+          "data-prepend" => prepend ? 1 : 0,
+          "data-disabled" => disabled ? 1 : 0,
+          "data-step" => step
     end
   end
 
-  def percentage_slider(attribute, instance, display_name=nil)
-    slider attribute, instance, {:unit => "%", :display_name => display_name}
+  def percentage_slider(attribute, instance, display_name=nil, params)
+    slider attribute, instance,
+        params.update({:unit => "%", :display_name => display_name})
   end
 end
