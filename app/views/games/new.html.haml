@@ -1,3 +1,5 @@
 %h2 Create a Game
 = form_for @game do |f|
   = render :partial => 'form_fields', :locals => {:game => @game}
+  %button{:type => 'submit'} Create
+  %a.button{:href => games_path} Cancel

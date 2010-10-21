@@ -26,7 +26,7 @@
   .fieldpair
     %label
       Unionized?
-      %input{:name => 'game[unionized]', :type => :checkbox, :value => game.unionized}
+      = check_box :game, :unionized
 %fieldset 
   %legend Environmental Options
   - percentage_slider :carbon_allowance, game
@@ -35,5 +35,3 @@
   - percentage_slider :political_stability, game
   - percentage_slider :political_opposition, game
   - percentage_slider :public_support, game
-%button{:type => 'submit'} Save
-%a.button{:href => games_path} Cancel
