@@ -1,2 +1,0 @@
-module ResearchAdvancementHelper
-end
