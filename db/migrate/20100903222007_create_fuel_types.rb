@@ -6,7 +6,7 @@ class CreateFuelTypes < ActiveRecord::Migration
       t.string :cached_slug
       t.boolean :renewable, :null => false, :default => false
 
-      t.references :market, :null => false
+      t.references :market
     end
     add_index :fuel_types, :cached_slug, :unique => true
   end
