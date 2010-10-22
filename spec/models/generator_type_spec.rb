@@ -33,15 +33,21 @@ describe GeneratorType do
   context "A GeneratorType instance" do
     before do
       @generator_type = Factory :generator_type
+      @game = Factory :game
     end
 
-    it "should return its marginal cost"
-    it "should return its current revenue"
-    it "should return its availability"
+    it "should return its marginal cost" do
+      @generator_type.marginal_cost(@game).should be > 0
+    end
+
+    it "should have a marginal cost dependent on operating level" do
+      @generator_type.marginal_cost(@game, 15).should be < (
+          @generator_type.marginal_cost(@game))
+    end
 
     context "with a renewable fuel" do
       before do
-        @generator_type.fuel_type = Factory :fuel_type, :renewable => :true
+        @generator_type.fuel_type = Factory :fuel_type, :renewable => true
       end
 
       it "should know its fuel is renewable" do
@@ -49,19 +55,13 @@ describe GeneratorType do
       end
 
       it "should know it doesn't burn any fuel" do
-        @generator_type.fuel_amount.should eq(0)
-      end
-
-      it "should return a marginal cost independent of fuel price" do
-        original_mc = @generator_type.marginal_cost
-        pending "update market price....of what?"
-        @generator_type.marginal_cost.should eq(original_mc)
+        @generator_type.marginal_fuel.should eq(0)
       end
     end
 
     context "with a nonrenewable fuel" do
       before do
-        @generator_type.fuel_type = Factory :fuel_type, :renewable => :false
+        @generator_type.fuel_type = Factory :fuel_type, :renewable => false
       end
 
       it "should know its fuel is renewable" do
@@ -69,14 +69,15 @@ describe GeneratorType do
       end
 
       it "should return the amount of fuel it burns" do
-        @generator_type.fuel_amount.should eq(
+        @generator_type.marginal_fuel.should eq(
             @generator_type.average_capacity * @generator_type.fuel_efficiency)
       end
 
       it "should return a marginal cost dependent on fuel price" do
-        original_mc = @generator_type.marginal_cost
-        pending "update market price"
-        assert_not_equal original_mc, @generator_type.marginal_cost
+        original_mc = @generator_type.marginal_cost(@game)
+        @generator_type.fuel_type.market.market_prices.create(:price => 42,
+            :game => @game)
+        assert_not_equal original_mc, @generator_type.marginal_cost(@game)
       end
     end
   end
