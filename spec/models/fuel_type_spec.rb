@@ -5,7 +5,6 @@ describe FuelType do
   it { should have_many(:market_prices).through(:market) }
   it { should have_many :generator_types }
   it { should validate_presence_of :name }
-  it { should validate_presence_of :market }
 
   it { should respond_to :friendly_id }
 
