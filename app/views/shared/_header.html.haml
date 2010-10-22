@@ -1,0 +1,18 @@
+.nav
+  - if current_user
+    .avatarname
+      - if current_user.authenticated_with.include? "twitter"
+        %img{:src => '/images/icons/twitter-mini.png'}
+      - elsif current_user.authenticated_with.include? "facebook"
+        %img{:src => '/images/icons/facebook-mini.png'}
+      %a{:href => user_path(current_user)}= current_user.profile[:name]
+  %ul
+    - if current_game
+      %li
+        %a{:href => game_path(current_game)}= "$#{number_to_human(current_state.cash)}"
+    - else
+      %li
+        %a{:href => games_path} Join a Game
+    - if current_user
+      %li
+        %a{:href => logout_url} Logout

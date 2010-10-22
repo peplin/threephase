@@ -1,0 +1,30 @@
+!!! 5
+%html
+  %head
+    %title Threephase
+    =render "shared/stylesheets"
+    = yield :extra_stylesheets
+    =render "shared/head"
+    = yield :extra_head
+  %body
+    #wrapper
+      .container_12
+        .grid_2#logo
+          %a{:href => root_url}
+            %img{:src => '/images/logo.png'}
+          %a{:href => root_url}
+            Threephase
+        %header.prefix_5.grid_5#header
+          =render "shared/header"
+          = yield :extra_header
+        .clear
+        .grid_12#center_column
+          =render :partial => "shared/flash", :locals => {:flash => flash}
+          %h2#page_title
+            = yield :page_title
+          = yield
+        .clear
+        .prefix_7.grid_5#footer
+          = yield :footer
+    =render "shared/javascript"
+    = yield :extra_javascript

@@ -2,16 +2,10 @@
 %html
   %head
     %title Threephase
-    = stylesheet_link_tag "reset"
-    = stylesheet_link_tag "text"
-    - if ::Rails.env == "production"
-      = stylesheet_link_tag "http://cachedcommons.org/cache/960/0.0.0/stylesheets/960-min.css"
-      = stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/south-street/jquery-ui.css"
-    - else
-      = stylesheet_link_tag "uncompressed/960"
-      = stylesheet_link_tag "uncompressed/jquery-ui"
-    = stylesheet_link_tag "application"
-    = csrf_meta_tag
+    =render "shared/stylesheets"
+    = yield :extra_stylesheets
+    =render "shared/head"
+    = yield :extra_head
   %body
     #wrapper
       .container_12
@@ -21,28 +15,10 @@
           %a{:href => root_url}
             Threephase
         %header.prefix_5.grid_5#header
-          .nav
-            - if current_user
-              .avatarname
-                - if current_user.authenticated_with.include? "twitter"
-                  %img{:src => '/images/icons/twitter-mini.png'}
-                - elsif current_user.authenticated_with.include? "facebook"
-                  %img{:src => '/images/icons/facebook-mini.png'}
-                %a{:href => user_path(current_user)}= current_user.profile[:name]
-            %ul
-              - if current_game
-                %li
-                  %a{:href => game_path(current_game)}= "$#{number_to_human(current_state.cash)}"
-              - else
-                %li
-                  %a{:href => games_path} Join a Game
-              - if current_user
-                %li
-                  %a{:href => logout_url} Logout
+          =render "shared/header"
         .clear
         .grid_6#left_column
-          - flash.each do |name, msg|
-            .flash{:id => "flash_#{name}"}= msg
+          =render :partial => "shared/flash", :locals => {:flash => flash}
           %h2#page_title
             = yield :page_title
           = yield
@@ -64,18 +40,5 @@
         .clear
         .prefix_7.grid_5#footer
           = yield :footer
-
-    - if ::Rails.env == "production"
-      = javascript_include_tag "http://cachedcommons.org/javascripts/jquery/jquery-1.4.2-min.js"
-      = javascript_include_tag "http://cachedcommons.org/cache/raphael/1.4.7/javascripts/raphael-min.js"
-      = javascript_include_tag "http://cachedcommons.org/cache/g-raphael/0.4.1/javascripts/g-raphael-min.js"
-      = javascript_include_tag "http://cachedcommons.org/cache/jquery-ui/1.8.4/javascripts/jquery-ui-min.js"
-    - else
-      = javascript_include_tag "jquery-1.4.2"
-      = javascript_include_tag "jquery-ui-1.8.4"
-      = javascript_include_tag "raphael"
-      = javascript_include_tag "g-raphael"
-    = javascript_include_tag "g.line-min"
-    = javascript_include_tag "sortable"
-    = javascript_include_tag :defaults
-    = yield :javascript_head
+    =render "shared/javascript"
+    = yield :extra_javascript

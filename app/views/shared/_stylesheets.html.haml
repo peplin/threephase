@@ -1,0 +1,9 @@
+= stylesheet_link_tag "reset"
+= stylesheet_link_tag "text"
+- if ::Rails.env == "production"
+  = stylesheet_link_tag "http://cachedcommons.org/cache/960/0.0.0/stylesheets/960-min.css"
+  = stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/south-street/jquery-ui.css"
+- else
+  = stylesheet_link_tag "uncompressed/960"
+  = stylesheet_link_tag "uncompressed/jquery-ui"
+= stylesheet_link_tag "application"
