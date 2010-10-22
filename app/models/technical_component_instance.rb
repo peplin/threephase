@@ -11,6 +11,10 @@ class TechnicalComponentInstance < ActiveRecord::Base
     city.state
   end
 
+  def operated_hours time
+    Float(Time.now - time) / 1.hour
+  end
+
   def to_s
     "#{buildable} created #{created_at} operating at #{operating_level}%"
   end
