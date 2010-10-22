@@ -17,6 +17,7 @@ gem "authlogic-connect"
 gem "enumerated_attribute"
 gem "haml"
 gem "dynamic_form"
+gem "seed-fu", :git => "git://github.com/peplin/seed-fu.git", :branch => "rails3"
 
 # Deploy with Capistrano
 # gem 'capistrano'
