@@ -66,6 +66,43 @@ ul li {
   padding: 3px 0;
 }
 
+table {
+  border-bottom:3px solid #B2B2B2;
+  margin:0 0 2em;
+}
+
+caption {
+  padding: 0.75em; font: 1.5em Georgia, Times, serif;
+  border: 1px solid #B2B2B2; border-width: 1px 0 2px;
+  background: #EEE;
+}
+
+th, td {
+  padding: 0.5em 1em;
+  border: 1px solid #CCC;
+  border-width: 0 1px 1px 1px;
+}
+
+thead th {
+  text-transform: uppercase; text-align: left;
+}
+
+tbody th {
+  width: 20%;
+}
+
+tfoot {
+  display: none;
+}
+
+tbody tr.even td {
+  background-color: #eee;
+}
+
+tbody tr.odd  td {
+  background-color: #fff;
+}
+
 .nav ul {
   margin: 2px 0 2px 0;
   font-weight: bold;

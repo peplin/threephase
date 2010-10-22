@@ -1,0 +1,19 @@
+%tr
+  - type.technical_component.attributes.each do |attribute, value|
+    %td= type.send(attribute)
+  %td= type.name
+  %td= type.peak_capacity_min
+  %td= type.peak_capacity_max
+  %td= type.average_capacity
+  %td= type.mtbf
+  %td= type.mttr
+  %td= type.repair_cost
+  %td= type.workforce
+  %td= type.area
+  %td= type.capital_cost_min
+  %td= type.capital_cost_max
+  %td= type.environmental_disruptiveness
+  %td= type.waste_disposal_cost_min
+  %td= type.waste_disposal_cost_max
+  %td= type.noise
+  %td= type.lifetime

@@ -1,0 +1,7 @@
+%table
+  %thead
+    %tr
+      - TechnicalComponent.attr_accessible.each do |attribute|
+        %th= attribute.humanize
+  %tbody
+    =render :partial => "technical_components/technical_component_list", :collection => @types, :as => :type

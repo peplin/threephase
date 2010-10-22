@@ -6,12 +6,16 @@ class TechnicalComponentsController < ApplicationController
   respond_to :html
 
   def index
-    respond_with @types
+    respond_with @types do |format|
+      format.html { render 'technical_components/index' }
+    end
   end
 
   def new
     @type = component_type.new
-    respond_with @type
+    respond_with @type do |format|
+      format.html { render 'technical_components/new' }
+    end
   end
 
   def create
@@ -23,11 +27,15 @@ class TechnicalComponentsController < ApplicationController
   end
 
   def show
-    respond_with @type
+    respond_with @type do |format|
+      format.html { render 'technical_components/show' }
+    end
   end
 
   def edit
-    respond_with @type
+    respond_with @type do |format|
+      format.html { render 'technical_components/edit' }
+    end
   end
 
   def destroy

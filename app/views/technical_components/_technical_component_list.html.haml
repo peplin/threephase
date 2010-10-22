@@ -1,0 +1,3 @@
+%tr{:class => cycle("even", "odd")}
+  - TechnicalComponent.attr_accessible.each do |attribute|
+    %td= type.send(attribute)
