@@ -8,9 +8,7 @@ module LimitLoader
     MINIMUM_OPTIONS = [:greater_than_or_equal_to, :greater_than]
 
     def maximum_for attribute
-      validators.each do |validator|
-        next unless validator.attributes.include? attribute
-
+      validators_on(attribute).each do |validator|
         if validator.class == PercentageValidator
           return 100
         end
@@ -23,9 +21,7 @@ module LimitLoader
     end
 
     def minimum_for attribute
-      validators.each do |validator|
-        next unless validator.attributes.include? attribute
-
+      validators_on(attribute).each do |validator|
         if validator.class == PercentageValidator
           return 0
         end
