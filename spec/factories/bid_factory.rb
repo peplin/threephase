@@ -1,6 +1,6 @@
 Factory.define :bid do |b|
   b.price 1 + rand(10)
-  b.association :generator
+  b.association :generator, :factory => :auction_generator
 end
 
 Factory.define :another_bid, :parent => :bid do |b|

@@ -13,3 +13,7 @@ end
 Factory.define :invalid_state, :parent => :state do |r|
   r.name nil
 end
+
+Factory.define :auction_state, :parent => :state do |r|
+  r.association :game, :factory => :auction_game
+end
