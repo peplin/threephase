@@ -10,6 +10,10 @@ Factory.define :generator_type, :class => GeneratorType,
   t.association :fuel_type
 end
 
+Factory.define :renewable_generator_type, :parent => :generator_type do |t|
+  t.association :fuel_type, :factory => :renewable_fuel_type
+end
+
 Factory.define :another_generator_type, :parent => :generator_type do |t|
   t.safety_mtbf 10
 end

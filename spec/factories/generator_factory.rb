@@ -11,3 +11,7 @@ end
 Factory.define :auction_generator, :parent => :generator do |g|
   g.association :city, :factory => :auction_city
 end
+
+Factory.define :renewable_generator, :parent => :generator do |g|
+  g.association :generator_type, :factory => :renewable_generator_type
+end
