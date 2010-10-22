@@ -7,7 +7,7 @@ class TechnicalComponentsController < ApplicationController
 
   def index
     respond_with @types do |format|
-      format.html { render 'technical_components/index' }
+      format.html { render 'technical_components/index', :layout => "wide" }
     end
   end
 
