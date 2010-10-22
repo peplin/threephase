@@ -18,8 +18,8 @@ function drawGraphs() {
           demand.push(value.load_profile.demand);
         });
 
-        var r = Raphael(cityId + "-load-profile", 500, 155);
-        var graph = r.g.linechart(20, 0, 480, 130, hours, demand,
+        var r = Raphael(cityId + "-load-profile", 450, 155);
+        var graph = r.g.linechart(20, 0, 430, 130, hours, demand,
             {nostroke: false, axis: "0 0 1 1", smooth: true});
         r.g.text(250, 145, "Hour");
         r.g.text(10, 75, "MW");
@@ -46,8 +46,8 @@ function drawGraphs() {
         });
 
         if(data.length > 0) {
-          var r = Raphael(generatorId + "-bids", 500, 155);
-          var graph = r.g.linechart(10, 0, 480, 130, count, prices,
+          var r = Raphael(generatorId + "-bids", 450, 155);
+          var graph = r.g.linechart(10, 0, 380, 130, count, prices,
               {nostroke: false, axis: "0 0 0 1", symbol: "o", smooth: true}
               ).hoverColumn(function() {
                 this.tags = r.set();
