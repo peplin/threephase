@@ -18,7 +18,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new params[:game]
     if @game.save
-      flash[:notice] = 'Game was successfully created.'
+      flash[:notice] = "Game was successfully created."
     end
     respond_with @game
   end

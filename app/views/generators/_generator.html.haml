@@ -8,12 +8,13 @@
 
 = render :partial => 'technical_component_instances/technical_component_instance', :locals => {:instance => generator}
 
-%h2 Bids
+- if generator.takes_bids?
+  %h2 Bids
 
-%a{:href => new_generator_bid_url(generator)} Bid In
+  %a{:href => new_generator_bid_url(generator)} Bid In
 
-.bids{:id => "#{generator.id}-bids", :rel => generator.id}
-  %noscript
-    %ul
-      - generator.bids.each do |bid|
-        %li= bid
+  .bids{:id => "#{generator.id}-bids", :rel => generator.id}
+    %noscript
+      %ul
+        - generator.bids.each do |bid|
+          %li= bid

@@ -4,4 +4,8 @@ class Generator < TechnicalComponentInstance
   has_many :accepted_bids, :conditions => "accepted = TRUE"
 
   validates :generator_type, :presence => true
+
+  def takes_bids?
+    city.state.game.regulation_type == :auction
+  end
 end
