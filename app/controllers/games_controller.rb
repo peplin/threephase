@@ -53,11 +53,7 @@ class GamesController < ApplicationController
     if params[:id]
       @game = Game.find params[:id]
     else
-      @game = Game.find cookies[:current_game]
+      @game = current_game
     end
-  end
-  
-  def find_games
-    @games = Game.all
   end
 end

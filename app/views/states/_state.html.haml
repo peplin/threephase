@@ -4,18 +4,15 @@
 %a{:href => edit_state_path(state)} Edit
 
 %dl.attributes
-  %dt Game
-  %dd
-    %a{:href => game_path(state.game)}= state.game
   %dt User
   %dd
     %a{:href => user_path(state.user)}= state.user
   %dt Map
   %dd= state.map
-
-%dl
+  %dt Cash
+  %dd= number_to_currency(state.cash, :precision => 0)
   %dt Research Budget
-  %dd= state.research_budget
+  %dd= number_to_currency(state.research_budget, :precision => 0)
 
 #cities
   %h2 Cities

@@ -11,8 +11,7 @@ class StatesController < ApplicationController
   end
 
   def new
-    @state = State.new :user => current_user
-    respond_with @state
+    respond_with @state = State.new(:user => current_user)
   end
 
   def create
@@ -20,7 +19,7 @@ class StatesController < ApplicationController
     # TODO generate a new map
     @state.map = Map.create :name => "foo" unless @state.map
     flash[:notice] = 'State was successfully created.' if @state.save
-    respond_with @state.game, @state
+    respond_with @state
   end
 
   def show

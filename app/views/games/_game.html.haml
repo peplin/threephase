@@ -13,8 +13,8 @@
 %h2 States
 
 %ul
-  - @game.states.each do |state|
+  - game.states.each do |state|
     %li
       %a{:href => state_url(state)}= state.name
 
-= render :partial => 'form_fields', :locals => {:game => game, :disabled => true}
+= render :partial => 'games/form_fields', :locals => {:game => game, :disabled => true}

@@ -52,7 +52,6 @@ dl.attributes dt {
   float: left;
   clear: left;
   width: 150px;
-  text-align: right;
 }
 
 dl.attributes dd {
