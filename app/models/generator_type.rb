@@ -28,12 +28,12 @@ class GeneratorType < ActiveRecord::Base
     fuel_type.renewable
   end
 
-  def marginal_cost game, operating_level=100
-    marginal_fuel_cost(game, operating_level)
+  def marginal_cost city, operating_level=100
+    marginal_fuel_cost(city, operating_level)
   end
 
-  def marginal_fuel_cost game, operating_level=100
-    marginal_fuel(operating_level) * game.current_price(fuel_type.market)
+  def marginal_fuel_cost city, operating_level=100
+    marginal_fuel(operating_level) * city.current_price(fuel_type.market)
   end
 
   def marginal_fuel operating_level=100

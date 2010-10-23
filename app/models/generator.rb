@@ -10,11 +10,11 @@ class Generator < TechnicalComponentInstance
   end
 
   def marginal_cost
-    generator_type.marginal_cost(state.game, operating_level)
+    generator_type.marginal_cost(city, operating_level)
   end
 
   def marginal_fuel_cost
-    generator_type.marginal_fuel_cost(state.game, operating_level)
+    generator_type.marginal_fuel_cost(city, operating_level)
   end
 
   def cost_since time

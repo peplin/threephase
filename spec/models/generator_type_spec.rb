@@ -34,15 +34,16 @@ describe GeneratorType do
     before do
       @generator_type = Factory :generator_type
       @game = Factory :game
+      @city = Factory :city, :game => @game
     end
 
     it "should return its marginal cost" do
-      @generator_type.marginal_cost(@game).should be > 0
+      @generator_type.marginal_cost(@city).should be > 0
     end
 
     it "should have a marginal cost dependent on operating level" do
-      @generator_type.marginal_cost(@game, 15).should be < (
-          @generator_type.marginal_cost(@game))
+      @generator_type.marginal_cost(@city, 15).should be < (
+          @generator_type.marginal_cost(@city))
     end
 
     context "with a renewable fuel" do
@@ -74,10 +75,10 @@ describe GeneratorType do
       end
 
       it "should return a marginal cost dependent on fuel price" do
-        original_mc = @generator_type.marginal_cost(@game)
+        original_mc = @generator_type.marginal_cost(@city)
         @generator_type.fuel_type.market.market_prices.create(:price => 42,
             :game => @game)
-        assert_not_equal original_mc, @generator_type.marginal_cost(@game)
+        assert_not_equal original_mc, @generator_type.marginal_cost(@city)
       end
     end
   end

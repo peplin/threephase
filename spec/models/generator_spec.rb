@@ -17,6 +17,18 @@ describe Generator do
       it "should return its current revenue"
       it "should return its availability"
 
+      it "should have a marginal cost shortcut" do
+        @generator.marginal_cost.should eq(
+            @generator.generator_type.marginal_cost(
+              @generator.city, @generator.operating_level))
+      end
+      
+      it "should have a marginal fuel cost shortcut" do
+        @generator.marginal_fuel_cost.should eq(
+            @generator.generator_type.marginal_fuel_cost(
+              @generator.city, @generator.operating_level))
+      end
+
       context "when the simulation is stepped" do
         before do
           cost = @generator.cost_since(1.hour.ago)
