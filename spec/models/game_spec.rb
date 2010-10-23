@@ -69,6 +69,13 @@ describe Game do
       @market = Factory :market
     end
 
+    it "should have initialized market prices" do
+      Market.all.each do |market|
+        market.market_prices.length.should be > 0
+        market.market_prices.find_by_game_id(@game).count.should eq(1)
+      end
+    end
+
     it "should know the current market price" do
       (@game.current_price @market).should eq(@market.current_price @game)
     end

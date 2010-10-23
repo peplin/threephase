@@ -56,6 +56,8 @@ class Game < ActiveRecord::Base
   validates :political_opposition, :presence => true, :percentage => true
   validates :public_support, :presence => true, :percentage => true
 
+  after_create :initialize_markets
+
   def current_price market
     market.current_price @game
   end
@@ -77,5 +79,11 @@ class Game < ActiveRecord::Base
   def time_since time
     range_map(speed, 0, 100, TIME_SCALE_FACTOR[0],
         TIME_SCALE_FACTOR[1]) * (Time.now - time)
+  end
+
+  def initialize_markets
+    Market.all.each do |market|
+      market.initialize_for(self)
+    end
   end
 end

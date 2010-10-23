@@ -11,11 +11,18 @@ class Market < ActiveRecord::Base
 
   def current_price game, city=nil
     market_price = market_prices.order(:created_at).find_by_game_id(game)
-    market_price.price if market_price
-    0.0
+    if market_price
+      market_price.price
+    else
+      0.0
+    end
   end
 
   def initialize_for game
+    positive = rand >= 0.5
+    deviation = rand * standard_deviation
+    deviation *= -1 if not positive
+    market_prices.create :game => game, :price => (average_price + deviation)
   end
 
   def to_s
