@@ -4,8 +4,8 @@ describe Market do
   it { should have_many :market_prices }
   it { should have_many :fuel_types }
   it { should validate_presence_of :name }
-  it { should validate_presence_of :average_price }
-  it { should validate_presence_of :standard_deviation }
+  it { should validate_presence_of :initial_average_price }
+  it { should validate_presence_of :initial_standard_deviation }
 
   it { should respond_to :friendly_id }
 
@@ -29,8 +29,8 @@ describe Market do
       proc { market.initialize_for(game) }.should change(
           MarketPrice, :count).by(1)
       price = market.market_prices.find_by_game_id(game)
-      price.price.should be >= market.average_price - market.standard_deviation
-      price.price.should be <= market.average_price + market.standard_deviation
+      price.price.should be >= market.initial_average_price - market.initial_standard_deviation
+      price.price.should be <= market.initial_average_price + market.initial_standard_deviation
     end
   end
 end

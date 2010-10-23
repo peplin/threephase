@@ -3,8 +3,8 @@ class CreateMarkets < ActiveRecord::Migration
     create_table :markets do |t|
       t.string :name, :null => false
       t.string :cached_slug
-      t.float :average_price, :null => false
-      t.float :standard_deviation, :null => false
+      t.float :initial_average_price, :null => false
+      t.float :initial_standard_deviation, :null => false
     end
     add_index :markets, :cached_slug, :unique => true
   end

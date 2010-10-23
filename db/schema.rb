@@ -61,11 +61,12 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   add_index "blocks", ["x", "y", "map_id"], :name => "index_blocks_on_x_and_y_and_map_id", :unique => true
 
   create_table "cities", :force => true do |t|
-    t.string  "name",        :null => false
-    t.integer "x",           :null => false
-    t.integer "y",           :null => false
-    t.string  "cached_slug"
-    t.integer "state_id",    :null => false
+    t.string   "name",        :null => false
+    t.integer  "x",           :null => false
+    t.integer  "y",           :null => false
+    t.datetime "stepped_at"
+    t.string   "cached_slug"
+    t.integer  "state_id",    :null => false
   end
 
   add_index "cities", ["cached_slug"], :name => "index_cities_on_cached_slug", :unique => true
@@ -191,10 +192,10 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   end
 
   create_table "markets", :force => true do |t|
-    t.string "name",               :null => false
+    t.string "name",                       :null => false
     t.string "cached_slug"
-    t.float  "average_price",      :null => false
-    t.float  "standard_deviation", :null => false
+    t.float  "initial_average_price",      :null => false
+    t.float  "initial_standard_deviation", :null => false
   end
 
   add_index "markets", ["cached_slug"], :name => "index_markets_on_cached_slug", :unique => true
@@ -245,6 +246,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.string   "name",                                 :null => false
     t.integer  "research_budget", :default => 5000000, :null => false
     t.integer  "cash",                                 :null => false
+    t.datetime "stepped_at"
     t.integer  "map_id",                               :null => false
     t.integer  "game_id",                              :null => false
     t.integer  "user_id"
@@ -262,6 +264,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "technical_component_instances", :force => true do |t|
     t.string   "instance_type",                    :null => false
     t.integer  "operating_level", :default => 100, :null => false
+    t.datetime "stepped_at"
     t.integer  "city_id",                          :null => false
     t.integer  "other_city_id"
     t.integer  "buildable_id",                     :null => false
