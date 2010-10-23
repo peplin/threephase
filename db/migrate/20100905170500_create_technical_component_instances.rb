@@ -3,6 +3,7 @@ class CreateTechnicalComponentInstances < ActiveRecord::Migration
     create_table :technical_component_instances do |t|
       t.string :instance_type, :null => false
       t.integer :operating_level, :null => false, :default => 100
+      t.datetime :stepped_at
 
       t.references :city, :null => false
       t.references :other_city # only for lines

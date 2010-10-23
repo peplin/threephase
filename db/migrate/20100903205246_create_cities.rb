@@ -4,6 +4,7 @@ class CreateCities < ActiveRecord::Migration
       t.string :name, :null => false
       t.integer :x, :null => false
       t.integer :y, :null => false
+      t.datetime :stepped_at
       t.string :cached_slug
 
       t.references :state, :null => false
