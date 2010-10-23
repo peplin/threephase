@@ -62,6 +62,10 @@ class Game < ActiveRecord::Base
     market.current_price self
   end
 
+  def state_for user
+    states.find_by_user(user)
+  end
+
   def in_progress?
     not ended
   end
