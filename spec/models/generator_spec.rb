@@ -18,11 +18,16 @@ describe Generator do
       it "should return its availability"
 
       context "when the simulation is stepped" do
+        before do
+          cost = @generator.cost_since(1.hour.ago)
+          Generator.any_instance.stubs(:cost_since).returns(cost)
+        end
+
         it "should deduct the marginal cost for that time from the state" do
           original_cash = @generator.state.cash
           @generator.step 1.hour.ago
-          @generator.state.cash.should eq(original_cash -
-              @generator.cost_since(1.hour.ago))
+          @generator.state.cash.should be_close(original_cash -
+              @generator.cost_since(1.hour.ago), 1)
         end
       end
 
