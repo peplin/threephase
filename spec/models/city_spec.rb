@@ -55,6 +55,11 @@ describe City do
 
     it "should be able to step"
 
+    it "should know the current local price" do
+      market = Factory :market
+      @city.current_price(market).should eq(market.current_local_price(@city))
+    end
+
     context "with coordinates" do
       it "should know the distance between itself and a set of coordinates" do
         @city.distance(200, 200).should be_close 141.42, 0.5
