@@ -24,6 +24,7 @@ class City < ActiveRecord::Base
   end
 
   def demand
+    0
   end
 
   def repairs

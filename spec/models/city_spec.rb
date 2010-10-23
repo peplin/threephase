@@ -37,7 +37,6 @@ describe City do
     end
 
     it "should have a positive demand" do
-      pending  "not really, but I want to make sure this method is written"
       @city.demand.should be > 0
     end
 
