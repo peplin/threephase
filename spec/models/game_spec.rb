@@ -80,6 +80,8 @@ describe Game do
       (@game.current_price(@market)).should eq(@market.current_price(@game))
     end
 
+    it "should be able to step"
+
     context "that has been updated" do
       before do
         @game.updated_at = Time.now - 60

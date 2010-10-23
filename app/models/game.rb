@@ -70,6 +70,9 @@ class Game < ActiveRecord::Base
     not ended
   end
 
+  def step
+  end
+
   def time_since_update
     time_since updated_at
   end
