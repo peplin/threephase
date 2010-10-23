@@ -5,11 +5,14 @@ describe StatesController do
     @model = State
   end
 
+  before do
+    @game = Factory :game
+    User.any_instance.stubs(:current_game).returns(@game)
+  end
+
   context "as an admin" do
     before do
       login_as_admin
-      @game = Factory :game
-      User.any_instance.stubs(:current_game).returns(@game)
     end
 
     it_should_behave_like "index with a game"
@@ -18,6 +21,12 @@ describe StatesController do
   end
 
   context "as a player" do
-    it "should not allow me to update states not mine"
+    before do
+      login
+    end
+
+    context "for a state not mine" do 
+      it_should_behave_like "standard unsuccessful PUT update"
+    end
   end
 end
