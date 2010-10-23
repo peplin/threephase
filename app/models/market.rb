@@ -1,6 +1,7 @@
 class Market < ActiveRecord::Base
   has_many :market_prices
   has_many :fuel_types
+  has_many :games, :through => :market_prices
   has_friendly_id :name, :use_slug => true
 
   validates :name, :presence => true
@@ -16,6 +17,11 @@ class Market < ActiveRecord::Base
     else
       0.0
     end
+  end
+
+  def average_price
+    sum = games.inject(0) {|sum, game| sum + game.current_price(self) }
+    sum / games.length
   end
 
   def initialize_for game
