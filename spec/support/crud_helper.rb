@@ -234,6 +234,10 @@ share_examples_for "unauthorized POST create" do
 
   before do
     setup_crud_names
+    if not @data
+      @data = Factory.attributes_for(@factory_name).update(
+          Factory(@factory_name).attributes)
+    end
     do_post
   end
 

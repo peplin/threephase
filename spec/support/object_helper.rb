@@ -118,8 +118,7 @@ share_examples_for "a technical component instance" do
   context "as an authorized player" do
     before do
       login
-      @instance.state.user = @current_user
-      @instance.state.save
+      State.any_instance.stubs(:user).returns(@current_user)
     end
 
     context "create" do
@@ -136,6 +135,8 @@ share_examples_for "a technical component instance" do
   context "as an unauthorized player" do
     before do
       login
+      @another_user = Factory :user
+      State.any_instance.stubs(:user).returns(@another_user)
     end
 
     it_should_behave_like "unauthorized POST create"

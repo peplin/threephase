@@ -23,8 +23,10 @@ class TechnicalComponentInstancesController < ApplicationController
   def create
     massage_params unless not params[param_symbol]
     @instance = component_type.new params[param_symbol]
-    return if @instance.city_id and check_ownership(
-        current_user == City.find(@instance.city_id).state.user)
+    if @instance.city_id
+      return if not check_ownership(
+          current_user == City.find(@instance.city_id).state.user)
+    end
     if @instance.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
       respond_with @instance.city
@@ -42,7 +44,7 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def update
-    return if check_ownership(current_user == @instance.state.user)
+    return if not check_ownership(current_user == @instance.state.user)
     massage_params unless not params[param_symbol]
     if @instance.update_attributes params[param_symbol]
       flash[:notice] = "#{component_type.to_s} was successfully updated."
@@ -81,15 +83,15 @@ class TechnicalComponentInstancesController < ApplicationController
   private
 
   def check_ownership valid
-    unless current_user.admin or not valid
+    if not current_user.admin and not valid
       flash[:notice] = "You can't change something you don't own."
       respond_to do |format|
         format.html { redirect_to login_path }
         format.json { head :unauthorized }
       end
-      return true
+      return false
     end
-    return false
+    return true
   end
 
   def massage_params
