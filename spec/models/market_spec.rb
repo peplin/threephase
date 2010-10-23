@@ -38,6 +38,13 @@ describe Market do
           @game.market_prices.find_by_market_id(@market).price)
     end
 
+    it "should have a current price a specific city" do
+      (@market.current_local_price(@city)).should eq(
+          @game.market_prices.find_by_market_id(@market).price)
+    end
+
+    it "should have a lower coal price in a city with coal"
+
     it "should average the price over all games" do
       sum = @market.games.inject(0) {|sum, game|
         sum + @market.current_price(game)

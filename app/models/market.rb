@@ -10,13 +10,17 @@ class Market < ActiveRecord::Base
   validates :initial_standard_deviation, :presence => true,
       :numericality => {:greater_than_or_equal_to => 0}
 
-  def current_price game, city=nil
+  def current_price game
     market_price = market_prices.order(:created_at).find_by_game_id(game)
     if market_price
       market_price.price
     else
       0.0
     end
+  end
+
+  def current_local_price city
+    current_price city.state.game
   end
 
   def average_price
