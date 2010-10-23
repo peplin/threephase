@@ -92,34 +92,21 @@ share_examples_for "a technical component instance" do
 
     context "on POST to :create" do
       context "with valid data" do
-        it_should_behave_like "successful POST create"
+        it_should_behave_like "standard successful POST create"
 
         def redirect_path
           city_path assigns(:instance).city
         end
-
-        def do_post format = 'html'
-          post 'create', @param_symbol => @data, :format => format
-        end
       end
 
       context "with invalid data" do
-        it_should_behave_like "unsuccessful POST create"
-
-        def do_post format = 'html'
-          post 'create', @param_symbol => @data, :format => format
-        end
+        it_should_behave_like "standard unsuccessful POST create"
       end
     end
 
     context "on PUT to :update" do
       context "with valid data" do
-        it_should_behave_like "successful PUT update"
-
-        def do_put format='html'
-          put :update, :id => @instance, @param_symbol => @data,
-              :format => format
-        end
+        it_should_behave_like "standard successful PUT update"
       end
 
       context "with invalid data" do
@@ -129,17 +116,34 @@ share_examples_for "a technical component instance" do
   end
 
   context "as an authorized player" do
-    it "should allow me to create an instance for my game"
-    it "should allow me to update a instance"
+    before do
+      login
+      @instance.state.user = @current_user
+      @instance.state.save
+    end
+
+    context "create" do
+      it_should_behave_like "standard successful POST create"
+
+      def redirect_path
+        city_path assigns(:instance).city
+      end
+    end
+
+    it_should_behave_like "standard successful PUT update"
   end
   
   context "as an unauthorized player" do
-    it "should not allow me to create an instance for someone else's game"
-    it "should not allow me to update someone else's instance"
+    before do
+      login
+    end
+
+    it_should_behave_like "unauthorized POST create"
+    it_should_behave_like "unauthorized PUT update"
   end
 
   context "as an anonymous user" do
-    it "should not allow me to create an instance"
+    it_should_behave_like "unauthorized POST create"
   end
 end
 

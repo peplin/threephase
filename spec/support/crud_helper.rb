@@ -23,6 +23,9 @@ module CrudSetup
     unless @assigns_model_name
       @assigns_model_name = @model_name.underscore.to_sym
     end
+    unless @param_symbol
+      @param_symbol = @assigns_model_name
+    end
     @pluralized_redirect_name = @model_name.underscore.pluralize.to_sym
     unless @pluralized_assigns_model_name
       @pluralized_assigns_model_name = @model_name.underscore.pluralize.to_sym
@@ -237,7 +240,7 @@ share_examples_for "unauthorized POST create" do
   it { should redirect_to login_path }
 
   def do_post format = 'html'
-    post 'create', @assigns_model_name => @data, :format => format
+    post 'create', @param_symbol => @data, :format => format
   end
 end
 
@@ -288,7 +291,7 @@ share_examples_for "standard successful POST create" do
   it_should_behave_like "successful POST create"
 
   def do_post format = 'html'
-    post 'create', @assigns_model_name => @data, :format => format
+    post 'create', @param_symbol => @data, :format => format
   end
 end
 
@@ -316,7 +319,7 @@ share_examples_for "standard unsuccessful POST create" do
   it_should_behave_like "unsuccessful POST create"
 
   def do_post format = 'html'
-    post 'create', @assigns_model_name => @data, :format => format
+    post 'create', @param_symbol => @data, :format => format
   end
 end
 
@@ -342,7 +345,7 @@ share_examples_for "unauthorized PUT update" do
   it { should redirect_to login_path }
 
   def do_put format = 'html'
-    put 'update', :id => @instance, @assigns_model_name => @data,
+    put 'update', :id => @instance, @param_symbol => @data,
         :format => format
   end
 end
@@ -401,7 +404,7 @@ share_examples_for "standard successful PUT update" do
   it_should_behave_like "successful PUT update"
 
   def do_put format = 'html'
-    put 'update', :id => @instance, @assigns_model_name => @data,
+    put 'update', :id => @instance, @param_symbol => @data,
         :format => format
   end
 end
