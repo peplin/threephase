@@ -46,7 +46,21 @@ describe BidsController do
     end
 
     context "POST for a generator not owned by this user" do
-      it "should return not authorized"
+      before do
+        @generator.bids.each do |bid|
+          bid.delete
+        end
+      end
+
+      before :all do
+        @generator.bids.each do |bid|
+          bid.delete
+        end
+        @data = Factory.attributes_for(:bid, :generator => @generator).update(
+            Factory(:bid, :generator => @generator).attributes)
+      end
+
+      it_should_behave_like "unauthorized POST create"
     end
   end
 end
