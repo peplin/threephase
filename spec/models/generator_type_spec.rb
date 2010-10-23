@@ -34,7 +34,8 @@ describe GeneratorType do
     before do
       @generator_type = Factory :generator_type
       @game = Factory :game
-      @city = Factory :city, :game => @game
+      @state = Factory :state, :game => @game
+      @city = Factory :city, :state => @state
     end
 
     it "should return its marginal cost" do
