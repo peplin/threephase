@@ -23,7 +23,15 @@ class TechnicalComponentsController < ApplicationController
     if @type.save
       flash[:notice] = "#{component_type.to_s} was successfully created."
     end
-    respond_with @type
+    respond_with @type do |format|
+      format.html { 
+        if @type.valid?
+          redirect_to @type
+        else
+          render 'technical_components/new'
+        end
+      }
+    end
   end
 
   def show

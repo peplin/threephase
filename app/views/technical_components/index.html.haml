@@ -1,7 +1,7 @@
 %table#generator_types.sortable
   %thead
     %tr
-      - (TechnicalComponent.attr_accessible + @types.first.class.attr_accessible).each do |attribute|
+      - @types.first.class.attr_accessible.each do |attribute|
         %th= attribute.humanize
   %tbody
     =render :partial => "technical_components/technical_component_list", :collection => @types, :as => :type

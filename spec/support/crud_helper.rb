@@ -245,25 +245,27 @@ share_examples_for "successful POST create" do
   include CrudSetup
 
   before :all do
+    setup_crud_names
     if not @data
-      setup_crud_names
       @data = Factory.attributes_for(@factory_name).update(
           Factory(@factory_name).attributes)
     end
   end
 
-  before do
-    do_post
-  end
+  context "normal post" do
+    before do
+      do_post
+    end
 
-  it { should set_the_flash }
+    it { should set_the_flash }
 
-  it "should redirect to the new instance's show page" do
-    if self.respond_to? :redirect_path
-      should redirect_to redirect_path
-    else
-      @instance = assigns(@assigns_model_name)
-      should redirect_to eval("#{@model_name.underscore}_path @instance")
+    it "should redirect to the new instance's show page" do
+      if self.respond_to? :redirect_path
+        should redirect_to redirect_path
+      else
+        @instance = assigns(@assigns_model_name)
+        should redirect_to eval("#{@model_name.underscore}_path @instance")
+      end
     end
   end
 
@@ -294,8 +296,8 @@ share_examples_for "unsuccessful POST create" do
   include CrudSetup
 
   before :all do
+    setup_crud_names
     if not @data
-      setup_crud_names
       @data = Factory.attributes_for(@invalid_factory_name)
     end
   end

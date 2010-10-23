@@ -6,7 +6,8 @@ class TechnicalComponent < ActiveRecord::Base
   attr_accessible :name, :peak_capacity_min, :peak_capacity_max,
       :average_capacity, :mtbf, :mttr, :repair_cost, :workforce, :area,
       :capital_cost_min, :capital_cost_max, :environmental_disruptiveness,
-      :waste_disposal_cost_min, :waste_disposal_cost_max, :noise, :lifetime
+      :waste_disposal_cost_min, :waste_disposal_cost_max, :noise, :lifetime,
+      :buildable, :user
 
   validates :name, :presence => true
   validates :peak_capacity_min, :presence => true, :numericality => {

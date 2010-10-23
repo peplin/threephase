@@ -11,7 +11,7 @@ end
 class Bid < ActiveRecord::Base
   belongs_to :generator
 
-  validates :price, :presence => true
+  validates :price, :presence => true, :numericality => {:greater_than => 0}
   validates :generator, :presence => true
   validate :must_be_auction_regulation, :once_per_day
 

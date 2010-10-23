@@ -25,7 +25,10 @@ describe City do
     end
 
     it "should return all bids" do
-      bid = Factory :bid, :generator => @generator
+      bid = Factory :bid
+      bid.generator.city = @city
+      bid.generator.save
+      @city.reload
       @city.bids.should include bid
     end
 

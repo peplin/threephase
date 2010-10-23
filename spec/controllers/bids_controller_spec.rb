@@ -3,7 +3,11 @@ require 'spec_helper'
 describe BidsController do
   before :all do
     @model = Bid
-    @generator = Factory :generator
+    @generator = Factory :auction_generator
+  end
+
+  before do
+    @generator.bids.delete
   end
 
   context "as an admin" do
@@ -17,7 +21,18 @@ describe BidsController do
     end
 
     context "POST" do
-      it_should_behave_like "standard POST create"
+      before :all do
+        @data = Factory.attributes_for(:bid, :generator => @generator).update(
+            Factory(:bid, :generator => @generator).attributes)
+      end
+
+      before do
+        Generator.find(@data["generator_id"]).bids.each do |bid|
+          bid.delete
+        end
+      end
+
+      it_should_behave_like "standard successful POST create"
 
       def redirect_path
         generator_path assigns(:bid).generator

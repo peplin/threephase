@@ -3,9 +3,10 @@ class GeneratorType < ActiveRecord::Base
   has_many :generators, :foreign_key => "buildable_id"
   belongs_to :fuel_type
 
+  attr_accessible *TechnicalComponent.attr_accessible
   attr_accessible :safety_mtbf, :safety_incident_severity, :ramping_speed,
       :fuel_efficiency, :air_emissions, :water_emissions, :maintenance_cost_min,
-      :maintenance_cost_max, :tax_credit
+      :maintenance_cost_max, :tax_credit, :fuel_type_id
 
   validates :safety_mtbf, :presence => true
   validates :safety_incident_severity, :presence => true, :percentage => true

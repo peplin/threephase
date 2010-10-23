@@ -5,6 +5,9 @@ class LineType < ActiveRecord::Base
   has_many :lines, :foreign_key => "buildable_id"
   has_many :interstate_lines
 
+  attr_accessible *TechnicalComponent.attr_accessible
+  attr_accessible :ac, :voltage, :resistance, :diameter, :height
+
   validates :ac, :presence => true
   validates :voltage, :presence => true, :numericality => {:greater_than => 0}
   validates :resistance, :presence => true, :numericality => {
