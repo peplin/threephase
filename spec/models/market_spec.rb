@@ -4,6 +4,8 @@ describe Market do
   it { should have_many :market_prices }
   it { should have_many :fuel_types }
   it { should validate_presence_of :name }
+  it { should validate_presence_of :average_price }
+  it { should validate_presence_of :standard_deviation }
 
   it { should respond_to :friendly_id }
 

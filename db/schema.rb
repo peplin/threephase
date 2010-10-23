@@ -191,8 +191,10 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   end
 
   create_table "markets", :force => true do |t|
-    t.string "name",        :null => false
+    t.string "name",               :null => false
     t.string "cached_slug"
+    t.float  "average_price",      :null => false
+    t.float  "standard_deviation", :null => false
   end
 
   add_index "markets", ["cached_slug"], :name => "index_markets_on_cached_slug", :unique => true
