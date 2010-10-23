@@ -4,6 +4,9 @@ Factory.define :generator, :class => Generator do |g|
   g.buildable_type "GeneratorType"
 end
 
+Factory.define :another_generator, :parent => :generator do |g|
+end
+
 Factory.define :invalid_generator, :parent => :generator do |g|
   g.city_id nil
 end
