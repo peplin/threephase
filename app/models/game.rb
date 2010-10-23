@@ -59,7 +59,7 @@ class Game < ActiveRecord::Base
   after_create :initialize_markets
 
   def current_price market
-    market.current_price @game
+    market.current_price self
   end
 
   def in_progress?
