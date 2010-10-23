@@ -15,6 +15,9 @@ class TechnicalComponentInstance < ActiveRecord::Base
     Float(Time.now - time) / 1.hour
   end
 
+  def step
+  end
+
   def to_s
     "#{buildable} created #{created_at} operating at #{operating_level}%"
   end

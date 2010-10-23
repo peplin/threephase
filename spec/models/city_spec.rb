@@ -53,6 +53,8 @@ describe City do
       @city.power_factor.should eq average_pf
     end
 
+    it "should be able to step"
+
     context "with coordinates" do
       it "should know the distance between itself and a set of coordinates" do
         @city.distance(200, 200).should be_close 141.42, 0.5

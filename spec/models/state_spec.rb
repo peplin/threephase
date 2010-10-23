@@ -66,6 +66,7 @@ describe State do
       @state.cities.find_nearest(100, 200)
     end
 
+    it "should be able to step"
   end
 
   context "when a State is created" do

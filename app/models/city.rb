@@ -56,6 +56,9 @@ class City < ActiveRecord::Base
     distance city.x, city.y
   end
 
+  def step
+  end
+
   def to_s
     "#{name} (#{x}, #{y})"
   end

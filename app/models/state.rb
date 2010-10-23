@@ -85,6 +85,9 @@ class State < ActiveRecord::Base
     [x, y]
   end
 
+  def step
+  end
+
   def to_s
     name
   end
