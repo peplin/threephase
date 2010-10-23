@@ -6,6 +6,10 @@ class BidsController < ApplicationController
 
   def create
     @bid = Bid.new params[:bid]
+    if @bid.generator_id
+      return if not check_ownership(
+          current_user == Generator.find(@bid.generator_id).state.user)
+    end
     if @bid.save
       flash[:notice] = "Bid was successfully created."
     end

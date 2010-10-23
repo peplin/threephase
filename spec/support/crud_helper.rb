@@ -238,6 +238,10 @@ share_examples_for "unauthorized POST create" do
       @data = Factory.attributes_for(@factory_name).update(
           Factory(@factory_name).attributes)
     end
+    if not @another_user
+      @another_user = Factory :user
+    end
+    State.any_instance.stubs(:user).returns(@another_user)
     do_post
   end
 

@@ -50,14 +50,11 @@ describe BidsController do
         @generator.bids.each do |bid|
           bid.delete
         end
-      end
-
-      before :all do
+        @data = Factory.attributes_for(:bid, :generator => @generator).update(
+            Factory(:bid, :generator => @generator).attributes)
         @generator.bids.each do |bid|
           bid.delete
         end
-        @data = Factory.attributes_for(:bid, :generator => @generator).update(
-            Factory(:bid, :generator => @generator).attributes)
       end
 
       it_should_behave_like "unauthorized POST create"

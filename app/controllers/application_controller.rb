@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   layout 'application'
   helper :all
   helper_method :current_user_session, :current_user, :current_game, 
-      :current_state
+      :current_state, :check_ownership
 
   before_filter :conditional_find_games
   before_filter :conditional_find_game
@@ -13,6 +13,19 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def check_ownership valid
+    if not current_user.admin and not valid
+      flash[:notice] = "You can't change something you don't own."
+      respond_to do |format|
+        format.html { redirect_to login_path }
+        format.json { head :unauthorized }
+      end
+      return false
+    end
+    return true
+  end
+
 
   def conditional_find_generator
     if params[:generator_id]

@@ -82,18 +82,6 @@ class TechnicalComponentInstancesController < ApplicationController
 
   private
 
-  def check_ownership valid
-    if not current_user.admin and not valid
-      flash[:notice] = "You can't change something you don't own."
-      respond_to do |format|
-        format.html { redirect_to login_path }
-        format.json { head :unauthorized }
-      end
-      return false
-    end
-    return true
-  end
-
   def massage_params
     type_id_key = "#{component_type.name.underscore}_type_id"
     if not params[param_symbol][:buildable_id]
