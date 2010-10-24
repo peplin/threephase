@@ -1,14 +1,13 @@
 %h2 A Game
 
-- if current_game
-  - if current_game != game
-    %a{:href => new_game_state_url(game)} Switch to this game
-  - else
-    %p
-      You are playing in this game.
-      %a{:href => games_url} Leave this game
-- else
+- if not current_state
+  %a{:href => new_game_state_url(game)} Join this game
+- elsif current_state.game != game
   %a{:href => new_game_state_url(game)} Switch to this game
+- else
+  %p
+    You are playing in this game.
+    %a{:href => games_url} Leave this game
 
 %h2 States
 

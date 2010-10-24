@@ -7,7 +7,7 @@
         %img{:src => '/images/icons/facebook-mini.png'}
       %a{:href => user_path(current_user)}= current_user.profile[:name]
   %ul
-    - if current_game
+    - if current_state
       %li
         %a{:href => game_path(current_game)}= "$#{number_to_human(current_state.cash)}"
     - else

@@ -101,7 +101,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_state
-    current_user.current_state
+    current_user.current_state if current_user
   end
 
   def game_required
