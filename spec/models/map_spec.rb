@@ -24,7 +24,7 @@ describe Map do
       @map.width.should be >= 0
     end
 
-    it "should have initailized blocks" do
+    it "should have initialized blocks" do
       @map.blocks.count.should be > 0
     end
   end

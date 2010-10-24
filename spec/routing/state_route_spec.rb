@@ -31,8 +31,9 @@ describe "routing to states" do
       :action => "edit", :id => @state, :controller => "states")
   end
 
-  it "should expose a direct URL to a new state form for the current game" do
-    {:get => "/states/new"}.should route_to(:action => "new", :controller => "states")
+  it "should expose a direct URL to a new state form for a game" do
+    {:get => "/games/#{@game}/states/new"}.should route_to(
+        :action => "new", :game_id => @game, :controller => "states")
   end
 
   it { {:post => "/states"}.should route_to(:action => "create",
