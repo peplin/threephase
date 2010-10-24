@@ -1,6 +1,7 @@
 class TechnicalComponentInstance < ActiveRecord::Base
   self.inheritance_column = :instance_type
   has_many :repairs, :as => :repairable, :dependent => :destroy
+  has_many :average_operating_levels
   belongs_to :buildable, :polymorphic => true
   belongs_to :city
 
