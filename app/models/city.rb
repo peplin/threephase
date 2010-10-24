@@ -11,8 +11,8 @@ class City < ActiveRecord::Base
   validates :x, :presence => true, :numericality => {:greater_than => -1}
   validates :y, :presence => true, :numericality => {:greater_than => -1}
   validates :state, :presence => true
-  validates :customers, :presence => true,
-      :numericality => {:greater_than => 0}
+  validates :customers, :numericality => {:greater_than => 0},
+      :allow_nil => :true
 
   attr_readonly :x, :y, :state
 

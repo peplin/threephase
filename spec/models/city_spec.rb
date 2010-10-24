@@ -8,7 +8,6 @@ describe City do
   it { should have_db_index [:x, :y, :state_id] }
 
   it { should validate_presence_of :state }
-  it { should validate_presence_of :customers }
   it { should_not allow_value(-1).for(:customers) }
 
   it { should respond_to :friendly_id }
