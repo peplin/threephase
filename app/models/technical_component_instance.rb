@@ -7,10 +7,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
 
   validates :operating_level, :presence => true, :percentage => true
   validates :city, :presence => true
-
-  def state
-    city.state
-  end
+  has_one :state, :through => :city
 
   def game
     state.game
