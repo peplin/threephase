@@ -22,7 +22,6 @@ describe Game do
 
   it { should validate_presence_of :technology_cost}
   it { should validate_presence_of :technology_reliability}
-  it { should validate_presence_of :power_factor}
 
   it { should validate_presence_of :frequency}
   it { should allow_value(60).for(:frequency) }

@@ -2,13 +2,14 @@ require 'spec_helper'
 
 describe City do
   it { should belong_to :state }
-  it { should have_many :customers }
   it { should have_many :load_profiles }
   it { should have_many :generators }
   it { should have_many :storage_devices }
   it { should have_db_index [:x, :y, :state_id] }
 
   it { should validate_presence_of :state }
+  it { should validate_presence_of :customers }
+  it { should_not allow_value(-1).for(:customers) }
 
   it { should respond_to :friendly_id }
   it { should respond_to :lines }
@@ -42,15 +43,6 @@ describe City do
 
     it "should have a load profile for each hour of the day" do
       @city.load_profiles.count.should eq 24
-    end
-
-    it "should have an average power factor of its customers" do
-      power_factors = @city.customers.collect do |c|
-        c.power_factor
-      end
-      average_pf = power_factors.inject(0.0) { |sum, el| sum + el
-          } / power_factors.size
-      @city.power_factor.should eq average_pf
     end
 
     it "should be able to step"

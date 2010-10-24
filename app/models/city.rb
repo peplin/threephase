@@ -1,6 +1,5 @@
 class City < ActiveRecord::Base
   belongs_to :state
-  has_many :customers
   has_many :load_profiles
   has_many :generators
   has_many :outgoing_lines, :class_name => "Line", :foreign_key => "city_id"
@@ -12,6 +11,7 @@ class City < ActiveRecord::Base
   validates :x, :presence => true, :numericality => {:greater_than => -1}
   validates :y, :presence => true, :numericality => {:greater_than => -1}
   validates :state, :presence => true
+  validates :customers, :presence => true, :numericality => {:greater_thanj => 0}
 
   attr_readonly :x, :y, :state
 
@@ -39,13 +39,6 @@ class City < ActiveRecord::Base
     generators.collect do |g|
       g.bids
     end.flatten!
-  end
-
-  def power_factor
-    power_factors = customers.collect do |c|
-      c.power_factor
-    end
-    power_factors.inject(0.0) { |sum, el| sum + el } / power_factors.size
   end
 
   def distance other_x, other_y
