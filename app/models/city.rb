@@ -17,6 +17,7 @@ class City < ActiveRecord::Base
   attr_readonly :x, :y, :state
 
   after_create :generate_load_profiles
+  before_create :add_customers
   before_validation :generate_name, :on => :create
   before_validation :generate_coordinates, :on => :create
 
@@ -76,5 +77,9 @@ class City < ActiveRecord::Base
   def generate_coordinates
     self.x, self.y = state.next_free_coordinates unless (
         self.x and self.y or not state)
+  end
+
+  def add_customers
+    customers = rand(1000)
   end
 end
