@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
     t.string   "name",        :null => false
     t.integer  "x",           :null => false
     t.integer  "y",           :null => false
+    t.integer  "customers"
     t.datetime "stepped_at"
     t.string   "cached_slug"
     t.integer  "state_id",    :null => false
