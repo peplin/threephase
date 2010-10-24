@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100917220041) do
+ActiveRecord::Schema.define(:version => 20101024180804) do
 
   create_table "access_tokens", :force => true do |t|
     t.integer  "user_id"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
 
   add_index "allowed_technical_component_types", ["buildable_id"], :name => "index_allowed_technical_component_types_on_buildable_id"
   add_index "allowed_technical_component_types", ["game_id"], :name => "index_allowed_technical_component_types_on_game_id"
+
+  create_table "average_operating_levels", :force => true do |t|
+    t.integer  "technical_component_instance_id", :null => false
+    t.integer  "operating_level",                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bids", :force => true do |t|
     t.integer  "price",        :null => false
@@ -236,7 +243,7 @@ ActiveRecord::Schema.define(:version => 20100917220041) do
   create_table "states", :force => true do |t|
     t.string   "name",                                 :null => false
     t.integer  "research_budget", :default => 5000000, :null => false
-    t.integer  "cash",                                 :null => false
+    t.integer  "cash"
     t.datetime "stepped_at"
     t.integer  "map_id",                               :null => false
     t.integer  "game_id",                              :null => false

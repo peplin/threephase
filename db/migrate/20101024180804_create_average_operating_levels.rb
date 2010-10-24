@@ -1,8 +1,8 @@
 class CreateAverageOperatingLevels < ActiveRecord::Migration
   def self.up
     create_table :average_operating_levels do |t|
-      t.references :technical_component_instances, :null => false
-      t.integer :opearting_level, :null => false
+      t.references :technical_component_instance, :null => false
+      t.integer :operating_level, :null => false
 
       t.timestamps
     end
