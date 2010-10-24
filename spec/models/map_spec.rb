@@ -11,10 +11,8 @@ describe Map do
 
   context "A Map instance" do
     before do
-      @map = Map.create :name => "Foo"
+      @map = Factory :map
     end
-
-    it { @map.friendly_id.should eq(@map.name.downcase) }
 
     it "should have a height" do 
       @map.height.should be >= 0
@@ -25,7 +23,7 @@ describe Map do
     end
 
     it "should have initialized blocks" do
-      @map.blocks.count.should be > 0
+      @map.blocks.length.should be > 0
     end
   end
 end

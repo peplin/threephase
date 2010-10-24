@@ -29,7 +29,7 @@ class Map < ActiveRecord::Base
       next unless x % 50 == 0
       (0..height).each do |y|
         next unless y % 50 == 0
-        self.blocks << Block.new(:x => x, :y => y)
+        self.blocks.create(:x => x, :y => y)
       end
     end
   end
