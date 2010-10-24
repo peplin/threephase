@@ -94,7 +94,7 @@ class State < ActiveRecord::Base
   private
 
   def generate_starting_cash
-    cash = game.starting_capital
+    self.cash = game.starting_capital
   end
 
   def generate_starting_cities

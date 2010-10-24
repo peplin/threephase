@@ -75,6 +75,6 @@ class City < ActiveRecord::Base
   end
 
   def add_customers
-    customers = rand(1000)
+    self.customers = rand(1000)
   end
 end
