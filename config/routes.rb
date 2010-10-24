@@ -1,13 +1,13 @@
 Threephase::Application.routes.draw do
   resources :games, :except => [:destroy] do
-    resources :states, :only => [:index, :show] do
+    resources :states, :only => [:index, :show, :new] do
       resources :cities, :only => [:index, :show]
     end
     resources :prices, :controller => :markets, :only => [:index, :show]
     resources :cities, :only => [:index, :show]
   end
 
-  resources :states, :only => [:index, :show, :update, :create, :edit, :new] do
+  resources :states, :only => [:index, :show, :update, :create, :edit] do
     resources :cities, :only => [:index, :show]
     resources "interstate-lines", :controller => :interstate_lines,
         :as => :interstate_lines, :only => [:index, :show, :create, :update, :new]

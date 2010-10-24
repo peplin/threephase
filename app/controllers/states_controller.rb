@@ -11,7 +11,7 @@ class StatesController < ApplicationController
   end
 
   def new
-    respond_with @state = State.new(:user => current_user)
+    respond_with @state = State.new(:user => current_user, :game => @game)
   end
 
   def create
