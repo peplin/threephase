@@ -12,8 +12,12 @@ class TechnicalComponentInstance < ActiveRecord::Base
     city.state
   end
 
+  def game
+    state.game
+  end
+
   def operated_hours time
-    Float(Time.now - time) / 1.hour
+    game.time_since(time) / 1.hour
   end
 
   def step

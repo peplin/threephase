@@ -90,12 +90,12 @@ class Game < ActiveRecord::Base
     "#{states.count} confirmed players, #{started ? "started #{started}" : "not started"}"
   end
 
-  private
-
   def time_since time
     range_map(speed, 0, 100, TIME_SCALE_FACTOR[0],
-        TIME_SCALE_FACTOR[1]) * (Time.now - time)
+        TIME_SCALE_FACTOR[1]) * Float(Time.now - time)
   end
+
+  private
 
   def initialize_markets
     Market.all.each do |market|
