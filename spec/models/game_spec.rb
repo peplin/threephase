@@ -81,6 +81,21 @@ describe Game do
 
     it "should be able to step"
 
+    it "should return all generators" do
+      generators = @game.states.collect do |state|
+        state.generators
+      end.flatten
+      @game.generators.should eq(generators)
+    end
+
+    it "should return all generators using a specific fuel" do
+      fuel_type = Factory :fuel_type
+      generators = @game.states.collect do |state|
+        state.generators(fuel_type)
+      end.flatten
+      @game.generators.should eq(generators)
+    end
+
     context "that has been updated" do
       before do
         @game.updated_at = Time.now - 60

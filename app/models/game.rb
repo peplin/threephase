@@ -72,6 +72,16 @@ class Game < ActiveRecord::Base
   def step
   end
 
+  def generators fuel_type=nil
+    states.collect do |state|
+      if fuel_type
+        state.generators.find_by_fuel_type(fuel_type)
+      else
+        state.generators
+      end
+    end.flatten
+  end
+
   def time_since_update
     time_since updated_at
   end
