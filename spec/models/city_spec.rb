@@ -5,6 +5,7 @@ describe City do
   it { should have_many :load_profiles }
   it { should have_many :generators }
   it { should have_many :storage_devices }
+  it { should have_many(:bids).through(:generators) }
   it { should have_db_index [:x, :y, :state_id] }
 
   it { should validate_presence_of :state }

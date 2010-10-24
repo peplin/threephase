@@ -2,6 +2,7 @@ class City < ActiveRecord::Base
   belongs_to :state
   has_many :load_profiles
   has_many :generators
+  has_many :bids, :through => :generators
   has_many :outgoing_lines, :class_name => "Line", :foreign_key => "city_id"
   has_many :incoming_lines, :class_name => "Line", :foreign_key => "other_city_id"
   has_many :storage_devices
@@ -34,12 +35,6 @@ class City < ActiveRecord::Base
       instances.collect do |i|
         i.repairs
       end
-    end.flatten!
-  end
-
-  def bids
-    generators.collect do |g|
-      g.bids
     end.flatten!
   end
 
