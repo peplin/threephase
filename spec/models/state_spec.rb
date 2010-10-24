@@ -12,7 +12,6 @@ describe State do
   it { should have_many :outgoing_interstate_lines }
   it { should validate_presence_of :name }
   it { should validate_presence_of :research_budget }
-  it { should validate_presence_of :cash }
   it { should allow_value(1000).for(:research_budget) }
   it { should_not allow_value(-1000).for(:research_budget) }
   it { should allow_value(1000).for(:research_budget) }
@@ -50,6 +49,10 @@ describe State do
 
     it "should return all storage devices" do
       @state.storage_devices.should include @storage_device
+    end
+
+    it "should generate starting cash" do 
+      @state.cash.should eq(@state.game.starting_capital)
     end
 
     it "should return free coordinates" do

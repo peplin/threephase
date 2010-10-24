@@ -34,12 +34,13 @@ class State < ActiveRecord::Base
   validates :name, :presence => true
   validates :research_budget, :presence => true,
       :numericality => {:greater_than_or_equal_to => 0}
-  validates :cash, :presence => true,
-      :numericality => {:greater_than_or_equal_to => 0}
+  validates :cash, :numericality => {:greater_than_or_equal_to => 0},
+      :allow_nil => true
   validates :map, :presence => true
   validates :game, :presence => true
   validates :user, :presence => true
 
+  before_create :generate_starting_cash
   after_create :generate_starting_cities
 
   def interstate_lines
@@ -93,6 +94,10 @@ class State < ActiveRecord::Base
   end
 
   private
+
+  def generate_starting_cash
+    cash = game.starting_capital
+  end
 
   def generate_starting_cities
     (1 + rand(4)).times do
