@@ -1,6 +1,10 @@
 class City < ActiveRecord::Base
   belongs_to :state
-  has_many :load_profiles
+  has_many :load_profiles do
+    def find_at_time time
+      find_by_hour(time.hour)
+    end
+  end
   has_many :generators
   has_many :bids, :through => :generators
   has_many :outgoing_lines, :class_name => "Line", :foreign_key => "city_id"
@@ -26,8 +30,9 @@ class City < ActiveRecord::Base
     Line.with_city(id)
   end
 
-  def demand
-    0
+  def demand time=nil
+    time ||= Time.now
+    load_profiles.find_at_time(time).demand
   end
 
   def repairs
