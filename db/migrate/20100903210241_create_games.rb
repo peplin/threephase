@@ -10,7 +10,6 @@ class CreateGames < ActiveRecord::Migration
       t.integer :max_line_capacity, :null => false, :default => 1500
       t.integer :technology_cost, :null => false, :default => 50
       t.integer :technology_reliability, :null => false, :default => 50
-      t.integer :power_factor, :null => false, :default => 50
       t.integer :frequency, :null => false, :default => 60
       t.integer :wind_speed, :null => false, :default => 50
       t.integer :sunfall, :null => false, :default => 50

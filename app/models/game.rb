@@ -31,7 +31,6 @@ class Game < ActiveRecord::Base
       :greater_than_or_equal_to => 25, :less_than_or_equal_to => 2000}
   validates :technology_cost, :presence => true, :percentage => true
   validates :technology_reliability, :presence => true, :percentage => true
-  validates :power_factor, :presence => true, :percentage => true
   validates :frequency, :presence => true, :numericality => {
       :greater_than_or_equal_to => 10, :less_than_or_equal_to => 120}
   validates :wind_speed, :presence => true, :percentage => true
