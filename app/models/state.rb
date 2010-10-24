@@ -27,6 +27,16 @@ class State < ActiveRecord::Base
   has_many :incoming_interstate_lines, :class_name => "InterstateLine",
       :foreign_key => "incoming_state_id"
   has_many :cities, :extend => FindNearestCityExtension
+  has_many :lines, :through => :cities
+  has_many :storage_devices, :through => :cities
+  has_many :generators, :through => :cities do
+    def find_by_fuel_type fuel_type
+      # Raw SQL to get around the fact that rails doesn't create the double
+      # join here properly. 
+      find(:all, :joins => "INNER JOIN generator_types ON technical_component_instances.buildable_id = generator_types.id",
+          :conditions => {:generator_types => {:fuel_type_id => fuel_type}})
+    end
+  end
   belongs_to :map
   belongs_to :game
   belongs_to :user
@@ -48,32 +58,20 @@ class State < ActiveRecord::Base
   end
 
   def repairs
-    cities.collect do |z|
-      z.repairs
+    cities.collect do |city|
+      city.repairs
     end.flatten
   end
 
   def bids
-    cities.collect do |z|
-      z.bids
-    end.flatten
-  end
-
-  def generators
-    cities.collect do |z|
-      z.generators
+    cities.collect do |city|
+      city.bids
     end.flatten
   end
 
   def lines
-    cities.collect do |z|
-      z.lines
-    end.flatten
-  end
-
-  def storage_devices
-    cities.collect do |z|
-      z.storage_devices
+    cities.collect do |city|
+      city.lines
     end.flatten
   end
 

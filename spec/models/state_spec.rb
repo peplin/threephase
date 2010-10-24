@@ -10,6 +10,8 @@ describe State do
   it { should have_many :research_advancements }
   it { should have_many :incoming_interstate_lines }
   it { should have_many :outgoing_interstate_lines }
+  it { should have_many(:generators).through(:cities) }
+  it { should have_many(:storage_devices).through(:cities) }
   it { should validate_presence_of :name }
   it { should validate_presence_of :research_budget }
   it { should allow_value(1000).for(:research_budget) }
@@ -39,16 +41,18 @@ describe State do
       @state.bids.should include bid
     end
 
-    it "should return all generators" do
-      @state.generators.should include @generator
+    it "should have a fuel type finder on generators" do
+      @state.generators.find_by_fuel_type(
+          @generator.fuel_type).should include @generator
+      another_generator = Factory :renewable_generator, :city => @city
+      @state.generators.find_by_fuel_type(
+          @generator.fuel_type).should_not include another_generator
+      @state.generators.find_by_fuel_type(
+          another_generator.fuel_type).should include another_generator
     end
 
     it "should return all lines" do
       @state.lines.should include @line
-    end
-
-    it "should return all storage devices" do
-      @state.storage_devices.should include @storage_device
     end
 
     it "should generate starting cash" do 
