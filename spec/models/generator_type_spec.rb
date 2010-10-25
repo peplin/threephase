@@ -9,10 +9,13 @@ describe GeneratorType do
 
   it { should validate_presence_of :safety_mtbf }
   it { should validate_presence_of :safety_incident_severity }
+
   it { should validate_presence_of :ramping_speed }
+  it { should allow_value(0).for(:ramping_speed) }
+  it { should_not allow_value(-1).for(:ramping_speed) }
 
   it { should validate_presence_of :fuel_efficiency }
-  it { should_not allow_value(101).for(:fuel_efficiency) }
+  it { should allow_value(0).for(:fuel_efficiency) }
   it { should_not allow_value(-1).for(:fuel_efficiency) }
 
   it { should validate_presence_of :air_emissions }

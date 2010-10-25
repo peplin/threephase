@@ -10,8 +10,10 @@ class GeneratorType < ActiveRecord::Base
 
   validates :safety_mtbf, :presence => true
   validates :safety_incident_severity, :presence => true, :percentage => true
-  validates :ramping_speed, :presence => true
-  validates :fuel_efficiency, :presence => true, :percentage => true
+  validates :ramping_speed, :presence => true,
+      :numericality => {:greater_than_or_equal_to => 0}
+  validates :fuel_efficiency, :presence => true,
+      :numericality => {:greater_than_or_equal_to => 0}
   validates :air_emissions, :presence => true, :numericality => {
       :greater_than_or_equal_to => 0}
   validates :water_emissions, :presence => true, :numericality => {
