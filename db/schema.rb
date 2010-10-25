@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
     t.integer  "safety_mtbf",                              :null => false
     t.integer  "safety_incident_severity", :default => 50, :null => false
     t.integer  "ramping_speed",                            :null => false
-    t.float    "fuel_efficiency",                          :null => false
+    t.float    "marginal_fuel_burn_rate",                  :null => false
     t.integer  "air_emissions",                            :null => false
     t.integer  "water_emissions",                          :null => false
     t.integer  "maintenance_cost_min",     :default => 0,  :null => false

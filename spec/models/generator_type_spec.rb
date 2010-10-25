@@ -14,9 +14,9 @@ describe GeneratorType do
   it { should allow_value(0).for(:ramping_speed) }
   it { should_not allow_value(-1).for(:ramping_speed) }
 
-  it { should validate_presence_of :fuel_efficiency }
-  it { should allow_value(0).for(:fuel_efficiency) }
-  it { should_not allow_value(-1).for(:fuel_efficiency) }
+  it { should validate_presence_of :marginal_fuel_burn_rate }
+  it { should allow_value(0).for(:marginal_fuel_burn_rate) }
+  it { should_not allow_value(-1).for(:marginal_fuel_burn_rate) }
 
   it { should validate_presence_of :air_emissions }
   it { should_not allow_value(-1).for(:air_emissions) }
@@ -45,14 +45,14 @@ describe GeneratorType do
       @generator_type.marginal_cost(@city).should be > 0
     end
 
-    it "should have a marginal cost dependent on operating level" do
-      @generator_type.marginal_cost(@city, 15).should be < (
-          @generator_type.marginal_cost(@city))
+    it "should have a operating cost" do
+      @generator_type.operating_cost(@city, 15).should be < (
+          @generator_type.operating_cost(@city))
     end
 
     context "with a renewable fuel" do
       before do
-        @generator_type.fuel_efficiency = 0
+        @generator_type.marginal_fuel_burn_rate = 0
       end
 
       it "should know its fuel is renewable" do
@@ -71,7 +71,7 @@ describe GeneratorType do
 
       it "should return the amount of fuel it burns" do
         @generator_type.marginal_fuel.should eq(
-            @generator_type.capacity * @generator_type.fuel_efficiency)
+            @generator_type.capacity * @generator_type.marginal_fuel_burn_rate)
       end
 
       it "should return a marginal cost dependent on fuel price" do

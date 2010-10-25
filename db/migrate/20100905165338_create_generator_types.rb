@@ -4,7 +4,7 @@ class CreateGeneratorTypes < ActiveRecord::Migration
       t.integer :safety_mtbf, :null => false
       t.integer :safety_incident_severity, :null => false, :default => 50
       t.integer :ramping_speed, :null => false
-      t.float :fuel_efficiency, :null => false
+      t.float :marginal_fuel_burn_rate, :null => false
       t.integer :air_emissions, :null => false
       t.integer :water_emissions, :null => false
       t.integer :maintenance_cost_min, :null => false, :default => 0
