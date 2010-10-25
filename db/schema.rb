@@ -81,10 +81,9 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
   add_index "cities", ["x", "y", "state_id"], :name => "index_cities_on_x_and_y_and_state_id"
 
   create_table "fuel_types", :force => true do |t|
-    t.string  "name",                           :null => false
+    t.string  "name",        :null => false
     t.text    "description"
     t.string  "cached_slug"
-    t.boolean "renewable",   :default => false, :null => false
     t.integer "market_id"
   end
 

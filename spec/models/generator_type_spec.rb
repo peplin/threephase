@@ -52,7 +52,7 @@ describe GeneratorType do
 
     context "with a renewable fuel" do
       before do
-        @generator_type.fuel_type = Factory :fuel_type, :renewable => true
+        @generator_type.fuel_efficiency = 0
       end
 
       it "should know its fuel is renewable" do
@@ -65,10 +65,6 @@ describe GeneratorType do
     end
 
     context "with a nonrenewable fuel" do
-      before do
-        @generator_type.fuel_type = Factory :fuel_type, :renewable => false
-      end
-
       it "should know its fuel is renewable" do
         @generator_type.renewable?.should be(false)
       end

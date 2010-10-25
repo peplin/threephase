@@ -4,7 +4,6 @@ class CreateFuelTypes < ActiveRecord::Migration
       t.string :name, :null => false
       t.text :description
       t.string :cached_slug
-      t.boolean :renewable, :null => false, :default => false
 
       t.references :market
     end

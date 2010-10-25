@@ -27,7 +27,7 @@ class GeneratorType < ActiveRecord::Base
   validates :fuel_type, :presence => true
 
   def renewable?
-    fuel_type.renewable
+    fuel_efficiency == 0
   end
 
   def marginal_cost city, operating_level=100
@@ -39,7 +39,6 @@ class GeneratorType < ActiveRecord::Base
   end
 
   def marginal_fuel operating_level=100
-    return 0 if renewable?
     operating_level * fuel_efficiency
   end
 
