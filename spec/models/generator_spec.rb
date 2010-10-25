@@ -21,14 +21,12 @@ describe Generator do
 
       it "should have a marginal cost shortcut" do
         @generator.marginal_cost.should eq(
-            @generator.generator_type.marginal_cost(
-              @generator.city, @generator.operating_level))
+            @generator.generator_type.marginal_cost(@generator.city))
       end
       
       it "should have a marginal fuel cost shortcut" do
         @generator.marginal_fuel_cost.should eq(
-            @generator.generator_type.marginal_fuel_cost(
-              @generator.city, @generator.operating_level))
+            @generator.generator_type.marginal_fuel_cost(@generator.city))
       end
 
       context "when the simulation is stepped" do
@@ -48,8 +46,8 @@ describe Generator do
       it "should know how much fuel it has used since a point in time" do
         time = 2.hours.ago
         @generator.fuel_used_since(time).should eq(
-            @generator.generator_type.marginal_fuel(@generator.operating_level) *
-            @generator.operated_hours(time))
+            @generator.generator_type.operating_fuel(
+              @generator.operating_level) * @generator.operated_hours(time))
       end
 
       it "should use more fuel over time" do

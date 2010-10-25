@@ -11,24 +11,25 @@ class Generator < TechnicalComponentInstance
   end
 
   def marginal_cost
-    generator_type.marginal_cost(city, operating_level)
+    generator_type.marginal_cost(city)
   end
 
   def marginal_fuel_cost
-    generator_type.marginal_fuel_cost(city, operating_level)
+    generator_type.marginal_fuel_cost(city)
   end
 
   def cost_since time
     fuel_cost_since(time) + (marginal_cost * operated_hours(time))
   end
 
-  def fuel_cost_since time
-    marginal_fuel_cost * fuel_used_since(time)
+  def fuel_cost_since time, level=nil
+    level ||= operating_level
+    generator_type.operating_fuel_cost(city, level) * operated_hours(time)
   end
 
   def fuel_used_since time, level=nil
-    level = operating_level if not level
-    generator_type.marginal_fuel(level) * operated_hours(time)
+    level ||= operating_level
+    generator_type.operating_fuel(city, level) * operated_hours(time)
   end
 
   def fuel_burn_rate level=nil
