@@ -34,7 +34,7 @@ class FuelMarket < ActiveRecord::Base
   end
 
   def current_price game
-    market_price = market_prices.order(:created_at).find_by_game_id(game)
+    market_price = market_prices.order("created_at DESC").find_by_game_id(game)
     if market_price
       market_price.price
     else

@@ -61,12 +61,21 @@ describe FuelMarket do
 
     it "should have a current price for the overall market in a game" do
       (@market.current_price(@game)).should eq(
-          @game.market_prices.find_by_fuel_market_id(@market).price)
+          @game.market_prices.find_by_fuel_market_id(@market,
+              :order => "created_at DESC").price)
     end
 
     it "should have a current price a specific city" do
       (@market.current_local_price(@city)).should eq(
-          @game.market_prices.find_by_fuel_market_id(@market).price)
+          @game.market_prices.find_by_fuel_market_id(@market,
+              :order => "created_at DESC").price)
+      # TODO multiple by city factors
+    end
+
+    it "should grab the most recent price for current price" do
+      new_price = 42
+      @market.market_prices.create(:price => new_price, :game => @game)
+      @market.current_price(@game).should eq(new_price)
     end
 
     it "should have a lower coal price in a city with coal"
@@ -83,6 +92,7 @@ describe FuelMarket do
         @market.clear @game
         @original_price = @market.current_price @game
       end
+
       it "should recalculate prices based on supply of fuel" do 
         @market.supply_slope *= 2
         @market.clear(@game)
