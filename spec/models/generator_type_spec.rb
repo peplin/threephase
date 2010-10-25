@@ -45,7 +45,7 @@ describe GeneratorType do
       @generator_type.marginal_cost(@city).should be > 0
     end
 
-    it "should have a operating cost" do
+    it "should have a operating cost dependent on operating level" do
       @generator_type.operating_cost(@city, 15).should be < (
           @generator_type.operating_cost(@city))
     end
@@ -60,7 +60,7 @@ describe GeneratorType do
       end
 
       it "should know it doesn't burn any fuel" do
-        @generator_type.marginal_fuel.should eq(0)
+        @generator_type.marginal_fuel_cost(@city).should eq(0)
       end
     end
 
@@ -70,8 +70,9 @@ describe GeneratorType do
       end
 
       it "should return the amount of fuel it burns" do
-        @generator_type.marginal_fuel.should eq(
-            @generator_type.capacity * @generator_type.marginal_fuel_burn_rate)
+        @generator_type.marginal_fuel_cost(@city).should eq(
+            @city.current_price(@generator_type.fuel_market) *
+              @generator_type.marginal_fuel_burn_rate)
       end
 
       it "should return a marginal cost dependent on fuel price" do
