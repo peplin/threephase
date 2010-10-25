@@ -4,7 +4,6 @@ describe "routing to states" do
   before :all do
     @game = Factory(:game).to_param
     @state = Factory(:state).to_param
-    @market = Factory(:market).to_param
   end
 
   it { {:get => "/games/#{@game}/states"}.should route_to(:action => "index",

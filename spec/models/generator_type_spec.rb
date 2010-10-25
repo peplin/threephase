@@ -3,9 +3,9 @@ require 'spec_helper'
 describe GeneratorType do
   it { should have_one :technical_component }
   it { should have_many :generators }
-  it { should belong_to :fuel_type }
+  it { should belong_to :fuel_market }
 
-  it { should validate_presence_of :fuel_type }
+  it { should validate_presence_of :fuel_market }
 
   it { should validate_presence_of :safety_mtbf }
   it { should validate_presence_of :safety_incident_severity }
@@ -76,7 +76,7 @@ describe GeneratorType do
 
       it "should return a marginal cost dependent on fuel price" do
         original_mc = @generator_type.marginal_cost(@city)
-        @generator_type.fuel_type.market.market_prices.create(:price => 42,
+        @generator_type.fuel_market.market_prices.create(:price => 42,
             :game => @game)
         assert_not_equal original_mc, @generator_type.marginal_cost(@city)
       end

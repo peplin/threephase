@@ -27,14 +27,13 @@ class State < ActiveRecord::Base
   has_many :incoming_interstate_lines, :class_name => "InterstateLine",
       :foreign_key => "incoming_state_id"
   has_many :cities, :extend => FindNearestCityExtension
-  has_many :lines, :through => :cities
   has_many :storage_devices, :through => :cities
   has_many :generators, :through => :cities do
-    def find_by_fuel_type fuel_type
+    def find_by_fuel_market fuel_market
       # Raw SQL to get around the fact that rails doesn't create the double
       # join here properly. 
       find(:all, :joins => "INNER JOIN generator_types ON technical_component_instances.buildable_id = generator_types.id",
-          :conditions => {:generator_types => {:fuel_type_id => fuel_type}})
+          :conditions => {:generator_types => {:fuel_market_id => fuel_market}})
     end
   end
   belongs_to :map

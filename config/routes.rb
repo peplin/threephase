@@ -3,14 +3,15 @@ Threephase::Application.routes.draw do
     resources :states, :only => [:index, :show, :new] do
       resources :cities, :only => [:index, :show]
     end
-    resources :prices, :controller => :markets, :only => [:index, :show]
+    resources :prices, :controller => :fuel_markets, :only => [:index, :show]
     resources :cities, :only => [:index, :show]
   end
 
   resources :states, :only => [:index, :show, :update, :create, :edit] do
     resources :cities, :only => [:index, :show]
     resources "interstate-lines", :controller => :interstate_lines,
-        :as => :interstate_lines, :only => [:index, :show, :create, :update, :new]
+        :as => :interstate_lines,
+        :only => [:index, :show, :create, :update, :new]
   end
   resources :advancements, :controller => :research_advancements,
       :only => [:index, :show, :create]
@@ -23,10 +24,10 @@ Threephase::Application.routes.draw do
     resources :generators
     resources "storage-devices", :controller => :storage_devices,
         :as => :storage_devices
-    resources :prices, :controller => :markets, :only => [:index, :show]
+    resources :prices, :controller => :fuel_markets, :only => [:index, :show]
   end
 
-  resources :prices, :controller => :markets, :only => [:index, :show]
+  resources :prices, :controller => :fuel_markets, :only => [:index, :show]
   resources :lines do
     resources :repairs, :only => [:index, :show]
     collection do

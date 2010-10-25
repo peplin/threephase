@@ -11,7 +11,7 @@ class CreateGeneratorTypes < ActiveRecord::Migration
       t.integer :maintenance_cost_max, :null => false
       t.float :tax_credit, :null => false
 
-      t.references :fuel_type
+      t.references :fuel_market
 
       t.timestamps
     end

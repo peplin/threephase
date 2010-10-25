@@ -48,8 +48,9 @@ describe City do
     it "should be able to step"
 
     it "should know the current local price" do
-      market = Factory :market
-      @city.current_price(market).should eq(market.current_local_price(@city))
+      fuel_market = Factory :fuel_market
+      @city.current_price(fuel_market).should eq(
+          fuel_market.current_local_price(@city))
     end
 
     context "with coordinates" do

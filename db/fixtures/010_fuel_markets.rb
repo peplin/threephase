@@ -1,4 +1,4 @@
-FuelType.seed_many([
+FuelMarket.seed_many([
   {:id => 1, :name => "Wind",
       :description => "The movement of air."},
   {:id => 2, :name => "Sun",
@@ -6,18 +6,13 @@ FuelType.seed_many([
   {:id => 3, :name => "Water",
       :description => "The movement of water."},
   {:id => 4, :name => "Natural Gas",
-      :description => "TODO",
-      :market => Market.find(1)},
+      :description => "TODO"},
   {:id => 5, :name => "Coal",
-      :description => "TODO",
-      :market => Market.find(2)},
+      :description => "TODO"},
   {:id => 6, :name => "Gasoline",
-      :description => "TODO",
-      :market => Market.find(3)},
+      :description => "TODO"},
   {:id => 7, :name => "Low-enriched Uranium",
-      :description => "TODO",
-      :market => Market.find(4)},
+      :description => "TODO"},
   {:id => 8, :name => "Highly-enriched Uranium",
-      :description => "TODO",
-      :market => Market.find(5)}
+      :description => "TODO"},
 ])

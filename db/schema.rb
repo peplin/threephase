@@ -80,14 +80,16 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
   add_index "cities", ["cached_slug"], :name => "index_cities_on_cached_slug", :unique => true
   add_index "cities", ["x", "y", "state_id"], :name => "index_cities_on_x_and_y_and_state_id"
 
-  create_table "fuel_types", :force => true do |t|
-    t.string  "name",        :null => false
-    t.text    "description"
-    t.string  "cached_slug"
-    t.integer "market_id"
+  create_table "fuel_markets", :force => true do |t|
+    t.string "name",                                        :null => false
+    t.text   "description"
+    t.string "cached_slug"
+    t.float  "initial_average_price",                       :null => false
+    t.float  "initial_standard_deviation",                  :null => false
+    t.float  "supply_slope",               :default => 1.0, :null => false
   end
 
-  add_index "fuel_types", ["cached_slug"], :name => "index_fuel_types_on_cached_slug", :unique => true
+  add_index "fuel_markets", ["cached_slug"], :name => "index_fuel_markets_on_cached_slug", :unique => true
 
   create_table "games", :force => true do |t|
     t.integer  "speed",                  :default => 0,             :null => false
@@ -130,7 +132,7 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
     t.integer  "maintenance_cost_min",     :default => 0,  :null => false
     t.integer  "maintenance_cost_max",                     :null => false
     t.float    "tax_credit",                               :null => false
-    t.integer  "fuel_type_id"
+    t.integer  "fuel_market_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -181,21 +183,12 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
   add_index "maps", ["cached_slug"], :name => "index_maps_on_cached_slug", :unique => true
 
   create_table "market_prices", :force => true do |t|
-    t.float    "price",      :null => false
-    t.integer  "market_id",  :null => false
-    t.integer  "game_id",    :null => false
+    t.float    "price",          :null => false
+    t.integer  "fuel_market_id", :null => false
+    t.integer  "game_id",        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "markets", :force => true do |t|
-    t.string "name",                       :null => false
-    t.string "cached_slug"
-    t.float  "initial_average_price",      :null => false
-    t.float  "initial_standard_deviation", :null => false
-  end
-
-  add_index "markets", ["cached_slug"], :name => "index_markets_on_cached_slug", :unique => true
 
   create_table "repairs", :force => true do |t|
     t.string   "reason",                             :null => false

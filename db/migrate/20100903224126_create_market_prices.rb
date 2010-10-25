@@ -3,7 +3,7 @@ class CreateMarketPrices < ActiveRecord::Migration
     create_table :market_prices do |t|
       t.float :price, :null => false
 
-      t.references :market, :null => false
+      t.references :fuel_market, :null => false
       t.references :game, :null => false
 
       t.timestamps

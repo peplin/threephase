@@ -1,12 +1,12 @@
 class GeneratorType < ActiveRecord::Base
   acts_as_technical_component
   has_many :generators, :foreign_key => "buildable_id"
-  belongs_to :fuel_type
+  belongs_to :fuel_market
 
   attr_accessible *TechnicalComponent.attr_accessible
   attr_accessible :safety_mtbf, :safety_incident_severity, :ramping_speed,
       :marginal_fuel_burn_rate, :air_emissions, :water_emissions, :maintenance_cost_min,
-      :maintenance_cost_max, :tax_credit, :fuel_type_id
+      :maintenance_cost_max, :tax_credit, :fuel_market_id
 
   validates :safety_mtbf, :presence => true
   validates :safety_incident_severity, :presence => true, :percentage => true
@@ -24,7 +24,7 @@ class GeneratorType < ActiveRecord::Base
       :greater_than_or_equal_to => 1}
   validates :tax_credit, :presence => true, :numericality => {
       :greater_than_or_equal_to => 0}
-  validates :fuel_type, :presence => true
+  validates :fuel_market, :presence => true
 
   def renewable?
     marginal_fuel_burn_rate == 0
@@ -47,10 +47,10 @@ class GeneratorType < ActiveRecord::Base
   end
 
   def marginal_fuel_cost city
-    marginal_fuel_burn_rate * city.current_price(fuel_type.market)
+    marginal_fuel_burn_rate * city.current_price(fuel_market)
   end
 
   def to_s
-    "#{technical_component} using #{fuel_type}"
+    "#{technical_component} using #{fuel_market}"
   end
 end

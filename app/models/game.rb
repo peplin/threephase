@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
 
   acts_as_limited
   has_many :market_prices
-  has_many :markets, :through => :market_prices
+  has_many :fuel_markets, :through => :market_prices
   has_many :allowed_generator_types
   has_many :allowed_line_types
   has_many :allowed_storage_device_types
@@ -72,10 +72,10 @@ class Game < ActiveRecord::Base
   def step
   end
 
-  def generators fuel_type=nil
+  def generators fuel_market=nil
     states.collect do |state|
-      if fuel_type
-        state.generators.find_by_fuel_type(fuel_type)
+      if fuel_market
+        state.generators.find_by_fuel_market(fuel_market)
       else
         state.generators
       end
@@ -98,7 +98,7 @@ class Game < ActiveRecord::Base
   private
 
   def initialize_markets
-    Market.all.each do |market|
+    FuelMarket.all.each do |market|
       market.initialize_for(self)
     end
   end

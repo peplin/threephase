@@ -1,4 +1,4 @@
-class MarketsController < ApplicationController
+class FuelMarketsController < ApplicationController
   before_filter :find_game
   before_filter :find_markets
   respond_to :json, :html
@@ -8,13 +8,13 @@ class MarketsController < ApplicationController
   end
 
   def show
-    @market = Market.find params[:id]
-    respond_with @market.current_price @game
+    @market = FuelMarket.find params[:id]
+    respond_with @fuel_market.current_price @game
   end
 
   private
 
   def find_markets
-    @markets = Market.all
+    @markets = FuelMarket.all
   end
 end

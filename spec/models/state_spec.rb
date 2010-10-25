@@ -42,13 +42,13 @@ describe State do
     end
 
     it "should have a fuel type finder on generators" do
-      @state.generators.find_by_fuel_type(
-          @generator.fuel_type).should include @generator
+      @state.generators.find_by_fuel_market(
+          @generator.fuel_market).should include @generator
       another_generator = Factory :renewable_generator, :city => @city
-      @state.generators.find_by_fuel_type(
-          @generator.fuel_type).should_not include another_generator
-      @state.generators.find_by_fuel_type(
-          another_generator.fuel_type).should include another_generator
+      @state.generators.find_by_fuel_market(
+          @generator.fuel_market).should_not include another_generator
+      @state.generators.find_by_fuel_market(
+          another_generator.fuel_market).should include another_generator
     end
 
     it "should return all lines" do

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe MarketsController do
+describe FuelMarketsController do
   before :all do
-    @model = Market
+    @model = FuelMarket
   end
 
   context "as an admin" do

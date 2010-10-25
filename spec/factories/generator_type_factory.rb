@@ -7,7 +7,7 @@ Factory.define :generator_type, :class => GeneratorType,
   t.water_emissions rand(100)
   t.maintenance_cost_max 1000 + rand(1000)
   t.tax_credit rand(1000)
-  t.association :fuel_type
+  t.association :fuel_market
 end
 
 Factory.define :renewable_generator_type, :parent => :generator_type do |t|

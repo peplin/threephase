@@ -3,7 +3,7 @@ require 'time'
 
 describe Game do
   it { should have_many :market_prices }
-  it { should have_many(:markets).through(:market_prices) }
+  it { should have_many(:fuel_markets).through(:market_prices) }
   it { should have_many :states }
   it { should have_many(:users).through(:states) }
   it { should have_many(:maps).through(:states) }
@@ -64,19 +64,20 @@ describe Game do
 
   context "A Game instance" do
     before do
-      @market = Factory :market
+      @fuel_market = Factory :fuel_market
       @game = Factory :game
     end
 
     it "should have initialized market prices" do
-      Market.all.each do |market|
-        market.market_prices.length.should be > 0
-        market.market_prices.find_all_by_game_id(@game).count.should eq(1)
+      FuelMarket.all.each do |fuel_market|
+        fuel_market.market_prices.length.should be > 0
+        fuel_market.market_prices.find_all_by_game_id(@game).count.should eq(1)
       end
     end
 
     it "should know the current market price" do
-      (@game.current_price(@market)).should eq(@market.current_price(@game))
+      (@game.current_price(@fuel_market)).should eq(
+          @fuel_market.current_price(@game))
     end
 
     it "should be able to step"
@@ -89,9 +90,9 @@ describe Game do
     end
 
     it "should return all generators using a specific fuel" do
-      fuel_type = Factory :fuel_type
+      fuel_market = Factory :fuel_market
       generators = @game.states.collect do |state|
-        state.generators(fuel_type)
+        state.generators(fuel_market)
       end.flatten
       @game.generators.should eq(generators)
     end
