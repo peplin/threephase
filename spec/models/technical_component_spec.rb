@@ -5,16 +5,11 @@ describe TechnicalComponent do
 
   it { should validate_presence_of :name }
 
-  it { should validate_presence_of :peak_capacity_min }
-  it { should allow_value(10).for(:peak_capacity_min) }
-  it { should_not allow_value(-1).for(:peak_capacity_min) }
+  it { should validate_presence_of :capacity }
+  it { should allow_value(10).for(:capacity) }
+  it { should_not allow_value(0).for(:capacity) }
+  it { should_not allow_value(-1).for(:capacity) }
 
-  it { should validate_presence_of :peak_capacity_max }
-  it { should allow_value(10).for(:peak_capacity_max) }
-  it { should_not allow_value(0).for(:peak_capacity_max) }
-  it { should_not allow_value(-1).for(:peak_capacity_max) }
-
-  it { should validate_presence_of :average_capacity }
   it { should validate_presence_of :mtbf }
   it { should validate_presence_of :mttr }
   it { should validate_presence_of :repair_cost }

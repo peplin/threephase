@@ -72,7 +72,7 @@ describe GeneratorType do
 
       it "should return the amount of fuel it burns" do
         @generator_type.marginal_fuel.should eq(
-            @generator_type.average_capacity * @generator_type.fuel_efficiency)
+            @generator_type.capacity * @generator_type.fuel_efficiency)
       end
 
       it "should return a marginal cost dependent on fuel price" do
