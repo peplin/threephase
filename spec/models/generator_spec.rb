@@ -64,12 +64,12 @@ describe Generator do
       context "fuel burn rate" do
         it "should have an hourly burn rate" do
           @generator.fuel_burn_rate.should eq(
-              @generator.fuel_used_since(1.hour.ago))
+              @generator.generator_type.operating_fuel(@generator.city))
         end
 
         it "should have a level adjusted hourly burn rate" do
           @generator.fuel_burn_rate(50).should eq(
-              @generator.fuel_used_since(1.hour.ago, 50))
+              @generator.generator_type.operating_fuel(@generator.city, 50))
         end
 
         it "should have an average fuel burn rate for the day" do

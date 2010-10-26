@@ -28,12 +28,12 @@ class Generator < TechnicalComponentInstance
   end
 
   def fuel_used_since time, level=nil
-    level ||= operating_level
-    generator_type.operating_fuel(city, level) * operated_hours(time)
+    fuel_burn_rate(level) * operated_hours(time)
   end
 
   def fuel_burn_rate level=nil
-    fuel_used_since(1.hour.ago, level)
+    level ||= operating_level
+    generator_type.operating_fuel(city, level)
   end
 
   def average_fuel_burn_rate time=nil
@@ -41,10 +41,9 @@ class Generator < TechnicalComponentInstance
   end
 
   def average_operating_level time=nil
-    time = Time.now if not time
+    time ||= Time.now
     level = average_operating_levels.find(:all, :conditions => {
-        :created_at => time.at_beginning_of_day..time.end_of_day}
-        ).first
+        :created_at => time.at_beginning_of_day..time.end_of_day}).first
     if not level
       level = average_operating_levels.create(
           :operating_level => operating_level, :created_at => time)
