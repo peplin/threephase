@@ -84,6 +84,12 @@ class State < ActiveRecord::Base
     }
   end
 
+  def demand
+    @state.cities.inject(0) {|sum, city|
+      demand + city.demand
+    }
+  end
+
   def next_free_coordinates
     begin
       x = rand(map.width)
@@ -91,6 +97,9 @@ class State < ActiveRecord::Base
     end while (cities.count > 0 and
         cities.find_nearest(x, y).distance(x, y) < CITY_BUFFER)
     [x, y]
+  end
+
+  def set_operating_levels
   end
 
   def step

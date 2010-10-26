@@ -76,14 +76,35 @@ describe State do
       }
       @state.capacity.should eq(capacity)
     end
+    
+    it "should have demand equal to the sum of the demand of the cities" do
+      @state.demand.should eq(@state.cities.inject(0) {|demand, city|
+        demand + city.demand
+      })
+    end
 
     it "should set all generator operating levels based on the MC curve" do
       another_generator = Factory :generator, :city => @city
       another_generator.fuel_market.initialize_for @state.game
-      # assign demand to be just under the first, set op. levels
-      # assign demand to be just over the first, set op. levels
-      # assign demand to be just over the second, set op. levels
+      @state.stubs(:demand).returns(@generator.capacity - 1)
       @state.set_operating_levels
+      @generator.operating_level.should be < 100
+      another_generator.operating_level.should eq(0)
+
+      @state.stubs(:demand).returns(@generator.capacity)
+      @state.set_operating_levels
+      @generator.operating_level.should eq(100)
+      another_generator.operating_level.should eq(0)
+
+      @state.stubs(:demand).returns(@generator.capacity + 1)
+      @state.set_operating_levels
+      @generator.operating_level.should eq(100)
+      another_generator.operating_level.should be > 0
+
+      @state.stubs(:demand).returns(another_generator.capacity + 2)
+      @state.set_operating_levels
+      @generator.operating_level.should eq(100)
+      another_generator.operating_level.should eq(100)
     end
 
     it "should return free coordinates" do
