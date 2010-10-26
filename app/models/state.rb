@@ -78,6 +78,12 @@ class State < ActiveRecord::Base
     end.flatten
   end
 
+  def capacity
+    generators.inject(0) {|total, generator|
+      generator.capacity
+    }
+  end
+
   def next_free_coordinates
     begin
       x = rand(map.width)

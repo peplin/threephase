@@ -70,6 +70,22 @@ describe State do
       @state.cash.should eq(@state.game.starting_capital)
     end
 
+    it "should expose a total generation capacity" do
+      capacity = @state.generators.inject(0) {|generation, generator|
+        generation + generator.capacity
+      }
+      @state.capacity.should eq(capacity)
+    end
+
+    it "should set all generator operating levels based on the MC curve" do
+      another_generator = Factory :generator, :city => @city
+      another_generator.fuel_market.initialize_for @state.game
+      # assign demand to be just under the first, set op. levels
+      # assign demand to be just over the first, set op. levels
+      # assign demand to be just over the second, set op. levels
+      @state.set_operating_levels
+    end
+
     it "should return free coordinates" do
       x, y = @state.next_free_coordinates
       x.should be > -1
