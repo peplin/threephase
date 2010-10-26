@@ -10,6 +10,10 @@ class Generator < TechnicalComponentInstance
     state.game.regulation_type == :auction
   end
 
+  def capacity
+    generator_type.capacity
+  end
+
   def marginal_cost
     generator_type.marginal_cost(city)
   end

@@ -22,6 +22,10 @@ describe Generator do
         @generator.marginal_cost.should eq(
             @generator.generator_type.marginal_cost(@generator.city))
       end
+
+      it "should have a capacity shortcut" do
+        @generator.capacity.should eq(@generator.generator_type.capacity)
+      end
       
       it "should have a marginal fuel cost shortcut" do
         @generator.marginal_fuel_cost.should eq(
