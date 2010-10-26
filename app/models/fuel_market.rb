@@ -1,4 +1,6 @@
 class FuelMarket < ActiveRecord::Base
+  FUEL_UNIT_SCALE = 1000000
+
   has_many :market_prices do
     def find_current(game)
       price = find(:all, :conditions => {:game_id => game},
@@ -51,7 +53,8 @@ class FuelMarket < ActiveRecord::Base
     if old_demand == 0
       new_price = last_price.price
     else
-      new_price = last_price.price + (supply_slope * (new_demand - old_demand))
+      new_price = last_price.price + (
+          supply_slope * (new_demand - old_demand) / FUEL_UNIT_SCALE)
     end
     market_prices.create :price => new_price, :game => game
   end

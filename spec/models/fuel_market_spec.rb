@@ -119,7 +119,17 @@ describe FuelMarket do
             :generator_type => @another_generator_type
       end
 
-      it "should recalculate prices based on supply of fuel" do 
+      it "should not recalculate price the first time the market clears" do
+        @another_market.clear(@game)
+        @another_market.current_price(@game).should eq(@original_price)
+      end
+
+      it "should recalculate prices based on supply of fuel" do
+        @another_generator.created_at = 1.day.ago
+        @another_generator.save
+        another_generator = Factory :generator, :city => @city,
+            :generator_type => @another_generator_type
+        @another_market.reload
         @another_market.clear(@game)
         @another_market.current_price(@game).should be > @original_price
       end
