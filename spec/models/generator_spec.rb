@@ -12,8 +12,7 @@ describe Generator do
     context "with non-renewable fuel" do
       before do
         @generator = Factory :generator
-        time = Time.now
-        Time.stubs(:now).returns(time)
+        stub_time
       end
 
       it "should return its current revenue"

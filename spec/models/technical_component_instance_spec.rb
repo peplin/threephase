@@ -17,9 +17,8 @@ describe TechnicalComponentInstance do
     end
 
     it "should calculate the number of operated hours" do
-      time = Time.now
-      Time.stubs(:now).returns(time)
-      @instance.operated_hours(time).should eq(0)
+      stub_time
+      @instance.operated_hours(Time.now).should eq(0)
       @instance.operated_hours(1.hour.ago).should be > 0
     end
 
