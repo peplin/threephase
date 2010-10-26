@@ -15,7 +15,7 @@ class FuelMarket < ActiveRecord::Base
   has_many :generators, :through => :generator_types do
     def find_by_game game
       # Raw SQL to get around the fact that rails doesn't create the double
-      # join here properly. 
+      # join here properly.
       find(:all, :joins => "INNER JOIN cities ON technical_component_instances.city_id = cities.id INNER JOIN states ON cities.state_id = states.id",
           :conditions => {:states => {:game_id => game}})
     end
@@ -48,7 +48,11 @@ class FuelMarket < ActiveRecord::Base
     last_price = market_prices.find_current(game)
     old_demand = average_demand(game, last_price.created_at)
     new_demand = average_demand(game)
-    new_price = last_price.price + (supply_slope * (new_demand - old_demand))
+    if old_demand == 0
+      new_price = last_price.price
+    else
+      new_price = last_price.price + (supply_slope * (new_demand - old_demand))
+    end
     market_prices.create :price => new_price, :game => game
   end
 
