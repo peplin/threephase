@@ -1,5 +1,15 @@
 class FuelMarket < ActiveRecord::Base
-  has_many :market_prices
+  has_many :market_prices do
+    def find_current(game)
+      price = find(:all, :conditions => {:game_id => game},
+          :order => "created_at DESC", :limit => 1)
+      if price
+        price.first
+      else
+        nil
+      end
+    end
+  end
   has_many :games, :through => :market_prices
   has_many :generator_types
   has_many :generators, :through => :generator_types do
@@ -20,7 +30,11 @@ class FuelMarket < ActiveRecord::Base
 
   def average_demand game, time=nil
     generators.find_by_game(game).inject(0) {|demand, generator|
-      demand + generator.average_fuel_burn_rate(time)
+      if time and generator.created_at >= time
+        demand
+      else
+        demand + generator.average_fuel_burn_rate(time)
+      end
     }
   end
 
@@ -31,10 +45,15 @@ class FuelMarket < ActiveRecord::Base
   end
 
   def clear game
+    last_price = market_prices.find_current(game)
+    old_demand = average_demand(game, last_price.created_at)
+    new_demand = average_demand(game)
+    new_price = last_price.price + (supply_slope * (new_demand - old_demand))
+    market_prices.create :price => new_price, :game => game
   end
 
   def current_price game
-    market_price = market_prices.order("created_at DESC").find_by_game_id(game)
+    market_price = market_prices.find_current(game)
     if market_price
       market_price.price
     else
