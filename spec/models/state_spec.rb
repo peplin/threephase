@@ -24,6 +24,7 @@ describe State do
       @state = Factory :state
       @city = Factory :city, :state => @state
       @generator = Factory :generator, :city => @city
+      @generator.fuel_market.initialize_for @state.game
       @line = Factory :line, :city => @city
       @storage_device = Factory :storage_device, :city => @city
     end
@@ -41,14 +42,24 @@ describe State do
       @state.bids.should include bid
     end
 
-    it "should have a fuel type finder on generators" do
-      @state.generators.find_by_fuel_market(
-          @generator.fuel_market).should include @generator
-      another_generator = Factory :renewable_generator, :city => @city
-      @state.generators.find_by_fuel_market(
-          @generator.fuel_market).should_not include another_generator
-      @state.generators.find_by_fuel_market(
-          another_generator.fuel_market).should include another_generator
+    context "with another renewable generator" do
+      before do
+        @another_generator = Factory :renewable_generator, :city => @city
+      end
+
+      it "should have a fuel type finder on generators" do
+        @state.generators.find_by_fuel_market(
+            @generator.fuel_market).should include @generator
+        @state.generators.find_by_fuel_market(
+            @generator.fuel_market).should_not include @another_generator
+        @state.generators.find_by_fuel_market(
+            @another_generator.fuel_market).should include @another_generator
+      end
+
+      it "should order generators by marginal cost" do
+        @state.generators.ordered_by_marginal_cost.first.should eq(
+            @another_generator)
+      end
     end
 
     it "should return all lines" do

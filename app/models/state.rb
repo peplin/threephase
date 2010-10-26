@@ -35,6 +35,10 @@ class State < ActiveRecord::Base
       find(:all, :joins => "INNER JOIN generator_types ON technical_component_instances.buildable_id = generator_types.id",
           :conditions => {:generator_types => {:fuel_market_id => fuel_market}})
     end
+
+    def ordered_by_marginal_cost
+      find(:all).sort {|a, b| a.marginal_cost <=> b.marginal_cost }
+    end
   end
   belongs_to :map
   belongs_to :game
