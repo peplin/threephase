@@ -37,7 +37,7 @@ class State < ActiveRecord::Base
     end
 
     def ordered_by_marginal_cost
-      find(:all).sort {|a, b| a.marginal_cost <=> b.marginal_cost }
+      find(:all, :readonly => false).sort {|a, b| a.marginal_cost <=> b.marginal_cost }
     end
   end
   belongs_to :map
@@ -85,8 +85,8 @@ class State < ActiveRecord::Base
   end
 
   def demand
-    @state.cities.inject(0) {|sum, city|
-      demand + city.demand
+    cities.inject(0) {|sum, city|
+      sum + city.demand
     }
   end
 
@@ -100,6 +100,20 @@ class State < ActiveRecord::Base
   end
 
   def set_operating_levels
+    current_demand = demand
+    generators.ordered_by_marginal_cost.inject(0) {|level, generator|
+      capacity_shortfall = current_demand - level
+      if capacity_shortfall > 0
+        met_capacity = [generator.capacity, capacity_shortfall].min
+        generator.operating_level = (
+            met_capacity / Float(generator.capacity) * 100).floor
+        level = level + met_capacity
+      else
+        generator.operating_level = 0
+      end
+      generator.save
+      level
+    }
   end
 
   def step
