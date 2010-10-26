@@ -44,8 +44,6 @@ describe FuelMarket do
         stub_time
       end
 
-      it { @market.friendly_id.should eq(@market.name.downcase) }
-
       it "should know the instantaneous demand in a game" do
         demand = @game.generators(@market).inject(0) {|demand, gen|
           demand + gen.fuel_burn_rate

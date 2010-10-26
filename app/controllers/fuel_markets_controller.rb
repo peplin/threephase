@@ -1,20 +1,20 @@
 class FuelMarketsController < ApplicationController
   before_filter :find_game
-  before_filter :find_markets
+  before_filter :find_fuel_markets
   respond_to :json, :html
 
   def index
-    respond_with @markets
+    respond_with @fuel_markets
   end
 
   def show
-    @market = FuelMarket.find params[:id]
+    @fuel_market = FuelMarket.find params[:id]
     respond_with @fuel_market.current_price @game
   end
 
   private
 
-  def find_markets
-    @markets = FuelMarket.all
+  def find_fuel_markets
+    @fuel_markets = FuelMarket.all
   end
 end
