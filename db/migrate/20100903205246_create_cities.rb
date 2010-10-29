@@ -8,6 +8,13 @@ class CreateCities < ActiveRecord::Migration
       t.datetime :stepped_at
       t.string :cached_slug
 
+      t.float :coal_index
+      t.float :oil_index
+      t.float :natural_gas_index
+      t.float :sun_index
+      t.float :wind_index
+      t.float :water_index
+
       t.references :state, :null => false
     end
     

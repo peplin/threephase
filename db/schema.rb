@@ -51,17 +51,17 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
   end
 
   create_table "blocks", :force => true do |t|
-    t.integer  "x",                                   :null => false
-    t.integer  "y",                                   :null => false
-    t.integer  "elevation",         :default => 0,    :null => false
-    t.string   "block_type",                          :null => false
-    t.float    "wind_index",        :default => 0.0,  :null => false
-    t.integer  "water_index",       :default => 0,    :null => false
-    t.integer  "sun_index",         :default => 5125, :null => false
-    t.integer  "natural_gas_index", :default => 0,    :null => false
-    t.integer  "coal_index",        :default => 0,    :null => false
-    t.integer  "oil_index",         :default => 0,    :null => false
-    t.integer  "map_id",                              :null => false
+    t.integer  "x",                                :null => false
+    t.integer  "y",                                :null => false
+    t.integer  "elevation",         :default => 0, :null => false
+    t.string   "block_type",                       :null => false
+    t.float    "wind_index",                       :null => false
+    t.integer  "water_index",                      :null => false
+    t.integer  "sun_index",                        :null => false
+    t.integer  "natural_gas_index",                :null => false
+    t.integer  "coal_index",                       :null => false
+    t.integer  "oil_index",                        :null => false
+    t.integer  "map_id",                           :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -69,13 +69,19 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
   add_index "blocks", ["x", "y", "map_id"], :name => "index_blocks_on_x_and_y_and_map_id", :unique => true
 
   create_table "cities", :force => true do |t|
-    t.string   "name",        :null => false
-    t.integer  "x",           :null => false
-    t.integer  "y",           :null => false
+    t.string   "name",              :null => false
+    t.integer  "x",                 :null => false
+    t.integer  "y",                 :null => false
     t.integer  "customers"
     t.datetime "stepped_at"
     t.string   "cached_slug"
-    t.integer  "state_id",    :null => false
+    t.float    "coal_index"
+    t.float    "oil_index"
+    t.float    "natural_gas_index"
+    t.float    "sun_index"
+    t.float    "wind_index"
+    t.float    "water_index"
+    t.integer  "state_id",          :null => false
   end
 
   add_index "cities", ["cached_slug"], :name => "index_cities_on_cached_slug", :unique => true

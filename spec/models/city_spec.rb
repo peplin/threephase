@@ -20,6 +20,10 @@ describe City do
       @generator = Factory :generator, :city => @city
     end
 
+    it "should have a map helper" do
+      @city.map.should eq(@city.state.map)
+    end
+
     it "should return all repairs" do
       repair = Factory :repair, :repairable => @generator
       @city.repairs.should include repair
@@ -69,6 +73,73 @@ describe City do
       it "should know the distance between itself an another city" do
         @other = Factory :city, :x => 200, :y => 200
         @city.distance_to_city(@other).should be_close 141.42, 0.5
+      end
+    end
+
+    context "with a map" do
+      it "should scale resource indicies by customers" do
+        bigger_city = Factory :city, :customers => @city.customers * 2
+        bigger_city.coal_index.should be > @city.coal_index
+      end
+
+      context "with some coal" do
+        before do
+          @city.map.blocks.first.coal_index = 42
+        end
+
+        it "should have a coal index cached from the map" do
+          @city.coal_index.should be >= 0
+        end
+      end
+
+      context "with some oil" do
+        before do
+          @city.map.blocks.first.oil_index = 42
+        end
+
+        it "should have a oil index cached from the map" do 
+          @city.oil_index.should be >= 0
+        end
+      end
+
+      context "with some gas" do
+        before do
+          @city.map.blocks.first.natural_gas_index = 42
+        end
+
+        it "should have a natural gas index cached from the map" do
+          @city.natural_gas_index.should be >= 0
+        end
+      end
+
+      context "with some sun" do
+        before do
+          @city.map.blocks.first.sun_index = 42
+        end
+
+        it "should have annual sunfall cached from the map" do
+          @city.sun_index.should be >= 0
+        end
+      end
+
+      context "with some wind" do
+        before do
+          @city.map.blocks.first.wind_index = 42
+        end
+
+        it "should have average windspeed cached from the map" do
+          @city.wind_index.should be >= 0
+        end
+      end
+
+      context "with some water" do
+        before do
+          @city.map.blocks.first.water_index = 42
+        end
+
+        it "should have average water flow from the map" do
+          @city.water_index.should be >= 0
+        end
       end
     end
   end

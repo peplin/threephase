@@ -1,7 +1,9 @@
 require 'distance'
+require 'simple'
 
 class City < ActiveRecord::Base
   include CoordinateDistance
+  include SimpleExtensions
 
   belongs_to :state
   has_many :load_profiles do
@@ -25,13 +27,18 @@ class City < ActiveRecord::Base
 
   attr_readonly :x, :y, :state
 
-  after_create :generate_load_profiles
-  before_create :add_customers
   before_validation :generate_name, :on => :create
   before_validation :generate_coordinates, :on => :create
+  before_create :add_customers
+  before_create :calculate_natural_resource_indicies
+  after_create :generate_load_profiles
 
   def lines
     Line.with_city(id)
+  end
+
+  def map
+    state.map
   end
 
   def demand time=nil
@@ -84,6 +91,15 @@ class City < ActiveRecord::Base
   end
 
   def add_customers
-    self.customers = rand(1000)
+    # TODO something better.
+    self.customers ||= rand(1000)
+  end
+
+  def calculate_natural_resource_indicies
+    [:coal, :oil, :natural_gas, :sun, :wind, :water].each do |index|
+      write_attribute("#{index.to_s}_index", map.natural_resource_index(
+          index, x, y, range_map(customers, 0, 1000, 0, map.width / 4.0)))
+      # TODO use better customer range
+    end
   end
 end
