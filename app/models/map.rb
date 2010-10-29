@@ -3,12 +3,31 @@ class Map < ActiveRecord::Base
   HEIGHT = 400
   belongs_to :user
   has_many :states
-  has_many :blocks
+  has_many :blocks do
+    def near(x, y, radius)
+      find(:all).collect do |block|
+        block if block.distance(x, y) <= radius
+      end.compact
+    end
+  end
   has_friendly_id :name, :use_slug => true
 
   validates :name, :presence => true, :length => {:maximum => 30}
 
   after_create :attach_blocks
+
+  def natural_resource_index index, x=nil, y=nil, radius=nil
+    if x and y and radius
+      block_set = blocks.near(x, y, radius)
+    else
+      block_set = blocks
+    end
+
+    total = block_set.inject(0) {|total, block|
+      total + block.natural_resource_index(:coal)
+    }
+    block_set.length > 0 ? total / block_set.length : 0
+  end
 
   def height
     HEIGHT

@@ -5,7 +5,8 @@ describe Map do
   it { should have_many :states }
   it { should have_many :blocks }
   it { should allow_value("Cityville").for(:name) }
-  it { should_not allow_value("foobarfoobarfoobarfoobarfoobarfoobarfoobarfoobar").for(:name) }
+  it { should_not allow_value("foobarfoobarfoobarfoobarfoobarfoobarfoobarfoobar"
+      ).for(:name) }
 
   it { should respond_to :friendly_id }
 
@@ -24,6 +25,35 @@ describe Map do
 
     it "should have initialized blocks" do
       @map.blocks.length.should be > 0
+    end
+
+    it "should return blocks within a certain distance of some coordinates" do
+      radius, x, y = 100, 42, 42
+      blocks = @map.blocks.collect {|block|
+        block if block.distance(x, y) < radius
+      }.compact
+      @map.blocks.near(x, y, radius).should eq(blocks)
+    end
+
+    context "with nautral resource helpers" do
+      it "should calculate an overall natural resource index" do
+        blocks = @map.blocks
+        total = blocks.inject(0) {|total, block|
+          total + block.natural_resource_index(:coal)
+        }
+        @map.natural_resource_index(:coal).should eq(
+            total / Float(blocks.length))
+      end
+
+      it "should calculate a natural resource index over a radius at a point" do
+        radius, x, y = 100, 42, 42
+        blocks = @map.blocks.near(x, y, radius)
+        total = blocks.inject(0) {|total, block|
+          total + block.natural_resource_index(:coal)
+        }
+        @map.natural_resource_index(:coal, x, y, radius).should eq(
+            total / Float(blocks.length))
+      end
     end
   end
 end
