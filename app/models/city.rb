@@ -1,4 +1,8 @@
+require 'distance'
+
 class City < ActiveRecord::Base
+  include CoordinateDistance
+
   belongs_to :state
   has_many :load_profiles do
     def find_at_time time
@@ -44,7 +48,7 @@ class City < ActiveRecord::Base
   end
 
   def distance other_x, other_y
-    Math.sqrt(((other_x - x) ** 2) + ((other_y - y) ** 2))
+    coordinate_distance x, y, other_x, other_y
   end
   
   def distance_to_city city
