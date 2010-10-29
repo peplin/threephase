@@ -53,6 +53,15 @@ describe TechnicalComponentInstance do
             time.at_beginning_of_day).should eq(
             @instance.average_operating_level(time.end_of_day))
       end
+
+      it "should update the avg. op. level when the operating level changes" do
+        new_level = 61
+        new_average = (@instance.average_operating_levels.first.
+            normalized_operating_level(new_level)).to_int
+        @instance.operating_level = new_level
+        proc { @instance.save }.should change(@instance,
+            :average_operating_level).to(new_average)
+      end
     end
 
     it "should be able to step"
