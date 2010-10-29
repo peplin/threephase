@@ -93,33 +93,6 @@ describe Generator do
               @generator.average_fuel_burn_rate(Time.now.end_of_day))
         end
       end
-
-      context "average operating level" do
-        it "should have an average operating level for the day" do
-          day = Time.now
-          returned_level = @generator.average_operating_level
-          level = @generator.average_operating_levels.find(:all,
-              :conditions => {
-                :created_at => day.at_beginning_of_day..day.end_of_day}).first
-          returned_level.should eq(level.operating_level)
-        end
-
-        it "should have an average operating level for an arbitrary day" do
-          day = 1.day.ago
-          returned_level = @generator.average_operating_level(day)
-          level = @generator.average_operating_levels.find(:all,
-              :conditions => {
-                :created_at => day.at_beginning_of_day..day.end_of_day}).first
-          returned_level.should eq(level.operating_level)
-        end
-
-        it "should have an average operating level dependent only on day" do
-          time = Time.now
-          @generator.average_operating_level(
-              time.at_beginning_of_day).should eq(
-              @generator.average_operating_level(time.end_of_day))
-        end
-      end
     end
 
     context "with renewable fuel" do

@@ -44,17 +44,6 @@ class Generator < TechnicalComponentInstance
     fuel_burn_rate(average_operating_level(time))
   end
 
-  def average_operating_level time=nil
-    time ||= Time.now
-    level = average_operating_levels.find(:all, :conditions => {
-        :created_at => time.at_beginning_of_day..time.end_of_day}).first
-    if not level
-      level = average_operating_levels.create(
-          :operating_level => operating_level, :created_at => time)
-    end
-    level.operating_level
-  end
-
   def step time
     cost = cost_since(time)
     state.cash -= cost
