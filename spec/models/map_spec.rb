@@ -35,7 +35,7 @@ describe Map do
       @map.blocks.near(x, y, radius).should eq(blocks)
     end
 
-    context "with nautral resource helpers" do
+    context "with natural resource helpers" do
       it "should calculate an overall natural resource index" do
         blocks = @map.blocks
         total = blocks.inject(0) {|total, block|

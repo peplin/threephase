@@ -26,7 +26,7 @@ class Map < ActiveRecord::Base
     total = block_set.inject(0) {|total, block|
       total + block.natural_resource_index(:coal)
     }
-    block_set.length > 0 ? total / block_set.length : 0
+    block_set.length > 0 ? total / Float(block_set.length) : 0
   end
 
   def height
@@ -48,7 +48,8 @@ class Map < ActiveRecord::Base
       next unless x % 50 == 0
       (0..height).each do |y|
         next unless y % 50 == 0
-        self.blocks.create(:x => x, :y => y)
+        # TODO generate an intersting map, with more than one lbock type
+        self.blocks.create(:x => x, :y => y, :block_type => :mountain)
       end
     end
   end
