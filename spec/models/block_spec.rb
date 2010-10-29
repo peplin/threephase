@@ -27,9 +27,8 @@ describe Block do
     end
 
     it "should set values for resource indicides" do
-      [:coal_index, :oil_index, :natural_gas_index, :sun_index, :wind_index,
-          :water_index].each do |index|
-        @block.send(index).should be >= 0
+      Block::NATURAL_RESOURCES.each do |index|
+        @block.natural_resource_index(index).should be >= 0
       end
     end
   end

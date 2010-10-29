@@ -9,6 +9,7 @@ describe FuelMarket do
   it { should validate_presence_of :name }
   it { should validate_presence_of :initial_average_price }
   it { should validate_presence_of :initial_standard_deviation }
+  it { should validate_presence_of :supply_slope }
 
   it { should respond_to :friendly_id }
 

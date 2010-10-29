@@ -7,6 +7,7 @@ class CreateFuelMarkets < ActiveRecord::Migration
       t.float :initial_average_price, :null => false
       t.float :initial_standard_deviation, :null => false
       t.float :supply_slope, :null => false, :default => 1
+      t.enum :related_natural_resource
     end
     add_index :fuel_markets, :cached_slug, :unique => true
   end

@@ -2,6 +2,7 @@ require 'distance'
 
 class Block < ActiveRecord::Base
   include CoordinateDistance
+  NATURAL_RESOURCES = [:coal, :oil, :natural_gas, :sun, :wind, :water]
 
   belongs_to :map
   has_many :wind_profiles
@@ -16,8 +17,11 @@ class Block < ActiveRecord::Base
   validates :coal_index, :percentage => true, :allow_nil => true
   validates :oil_index, :percentage => true, :allow_nil => true
 
-  attr_readonly :wind_index, :water_index, :sun_index, :natural_gas_index,
-      :coal_index, :oil_index
+  NATURAL_RESOURCES.each do |index|
+    # this isn't as DRY as it could be, because we can't call the class method
+    # while creating the class.
+    attr_readonly "#{index.to_s}_index".to_sym
+  end
 
   validates :block_type, :presence => true
   enum_attr :block_type, [:mountain, :water, :plains]
@@ -30,7 +34,7 @@ class Block < ActiveRecord::Base
   end
 
   def natural_resource_index(resource)
-    attributes["#{resource.to_s}_index"]
+    attributes[attribute_for_index(resource)]
   end
 
   def to_s
@@ -39,11 +43,14 @@ class Block < ActiveRecord::Base
 
   private
 
+  def attribute_for_index index
+    "#{index.to_s}_index"
+  end
+
   def generate_natural_resource_indicies
-    [:coal_index, :oil_index, :natural_gas_index, :sun_index, :wind_index,
-        :water_index].each do |index|
-      next if attributes[index]
-      write_attribute(index, rand(100))
+    NATURAL_RESOURCES.each do |index|
+      next if attributes[attribute_for_index(index)]
+      write_attribute(attribute_for_index(index), rand(100))
       # TODO be smarter about random value, and really never use this, since the
       # map should set it while taking into account the topology
     end

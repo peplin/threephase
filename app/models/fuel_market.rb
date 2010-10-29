@@ -23,11 +23,14 @@ class FuelMarket < ActiveRecord::Base
     end
   end
   has_friendly_id :name, :use_slug => true
+  enum_attr :related_natural_resource, Block::NATURAL_RESOURCES
 
   validates :name, :presence => true
   validates :initial_average_price, :presence => true,
       :numericality => {:greater_than => 0}
   validates :initial_standard_deviation, :presence => true,
+      :numericality => {:greater_than_or_equal_to => 0}
+  validates :supply_slope, :presence => true,
       :numericality => {:greater_than_or_equal_to => 0}
 
   def average_demand game, time=nil
