@@ -11,6 +11,12 @@ Factory.define :block do |b|
   b.y { Factory.next :block_y }
   b.block_type :mountain
   b.association :map
+  b.coal_index 1
+  b.oil_index 1
+  b.natural_gas_index 1
+  b.sun_index 1
+  b.wind_index 1
+  b.water_index 1
 end
 
 Factory.define :mountain_block, :parent => :block do |b|

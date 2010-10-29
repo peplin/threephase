@@ -7,12 +7,6 @@ describe Block do
   it { should validate_presence_of :y }
   it { should validate_presence_of :elevation }
   it { should validate_presence_of :block_type }
-  it { should validate_presence_of :wind_index }
-  it { should validate_presence_of :water_index }
-  it { should validate_presence_of :sun_index }
-  it { should validate_presence_of :natural_gas_index }
-  it { should validate_presence_of :coal_index }
-  it { should validate_presence_of :oil_index }
   it { should validate_presence_of :map }
 
   context "A Block instance" do
@@ -30,6 +24,13 @@ describe Block do
 
     it "should have a natural resource index helper" do
       @block.natural_resource_index(:coal).should eq(@block.coal_index)
+    end
+
+    it "should set values for resource indicides" do
+      [:coal_index, :oil_index, :natural_gas_index, :sun_index, :wind_index,
+          :water_index].each do |index|
+        @block.send(index).should be >= 0
+      end
     end
   end
 end

@@ -9,16 +9,14 @@ class Block < ActiveRecord::Base
   validates_presence_of :x
   validates_presence_of :y
   validates_presence_of :elevation
-  validates_presence_of :wind_index
-  validates_presence_of :water_index
-  validates_presence_of :sun_index
-  validates_presence_of :natural_gas_index
-  validates_presence_of :coal_index
-  validates_presence_of :oil_index
+  attr_readonly :wind_index, :water_index, :sun_index, :natural_gas_index,
+      :coal_index, :oil_index
 
   validates :block_type, :presence => true
   enum_attr :block_type, [:mountain, :water, :plains]
   validates :map, :presence => true
+
+  before_validation :generate_natural_resource_indicies
 
   def distance other_x, other_y
     coordinate_distance x, y, other_x, other_y
@@ -30,5 +28,17 @@ class Block < ActiveRecord::Base
 
   def to_s
     "(#{x}, #{y}) #{block_type}"
+  end
+
+  private
+
+  def generate_natural_resource_indicies
+    [:coal_index, :oil_index, :natural_gas_index, :sun_index, :wind_index,
+        :water_index].each do |index|
+      next if attributes[index]
+      write_attribute(index, rand(100))
+      # TODO be smarter about random value, and really never use this, since the
+      # map should set it while taking into account the topology
+    end
   end
 end
