@@ -23,10 +23,9 @@ class Map < ActiveRecord::Base
       block_set = blocks
     end
 
-    total = block_set.inject(0) {|total, block|
+   block_set.inject(0) {|total, block|
       total + block.natural_resource_index(:coal)
     }
-    block_set.length > 0 ? total / Float(block_set.length) : 0
   end
 
   def height

@@ -38,21 +38,19 @@ describe Map do
     context "with natural resource helpers" do
       it "should calculate an overall natural resource index" do
         blocks = @map.blocks
-        total = blocks.inject(0) {|total, block|
+        index = blocks.inject(0) {|total, block|
           total + block.natural_resource_index(:coal)
         }
-        @map.natural_resource_index(:coal).should eq(
-            total / Float(blocks.length))
+        @map.natural_resource_index(:coal).should eq(index)
       end
 
       it "should calculate a natural resource index over a radius at a point" do
         radius, x, y = 100, 42, 42
         blocks = @map.blocks.near(x, y, radius)
-        total = blocks.inject(0) {|total, block|
+        index = blocks.inject(0) {|total, block|
           total + block.natural_resource_index(:coal)
         }
-        @map.natural_resource_index(:coal, x, y, radius).should eq(
-            total / Float(blocks.length))
+        @map.natural_resource_index(:coal, x, y, radius).should eq(index)
       end
     end
   end

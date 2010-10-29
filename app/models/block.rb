@@ -9,6 +9,13 @@ class Block < ActiveRecord::Base
   validates_presence_of :x
   validates_presence_of :y
   validates_presence_of :elevation
+  validates :wind_index, :percentage => true, :allow_nil => true
+  validates :water_index, :percentage => true, :allow_nil => true
+  validates :sun_index, :percentage => true, :allow_nil => true
+  validates :natural_gas_index, :percentage => true, :allow_nil => true
+  validates :coal_index, :percentage => true, :allow_nil => true
+  validates :oil_index, :percentage => true, :allow_nil => true
+
   attr_readonly :wind_index, :water_index, :sun_index, :natural_gas_index,
       :coal_index, :oil_index
 
