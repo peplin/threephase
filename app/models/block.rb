@@ -16,7 +16,7 @@ class Block < ActiveRecord::Base
   enum_attr :block_type, [:mountain, :water, :plains]
   validates :map, :presence => true
 
-  before_validation :generate_natural_resource_indicies
+  before_validation :generate_natural_resource_indicies, :on => :create
 
   def distance other_x, other_y
     coordinate_distance x, y, other_x, other_y
