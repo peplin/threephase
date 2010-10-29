@@ -23,7 +23,6 @@ describe FuelMarket do
     price.price.should be <= market.initial_average_price + market.initial_standard_deviation
   end
 
-
   context "A FuelMarket instance" do
     before do
       @price = Factory :market_price
@@ -65,11 +64,17 @@ describe FuelMarket do
                 :order => "created_at DESC").price)
       end
 
+      it "should return the price discount for a city" do
+        @market.discount_for(@city).should eq(
+            @city.natural_resource_index(@market.related_natural_resource) /
+              @state.natural_resource_index(@market.related_natural_resource) *
+              FuelMarket::LOCAL_RESOURCE_SCALE_FACTOR)
+      end
+
       it "should have a current price a specific city" do
-        (@market.current_local_price(@city)).should eq(
-            @game.market_prices.find_by_fuel_market_id(@market,
-                :order => "created_at DESC").price)
-        # TODO multiple by city factors
+        @market.current_local_price(@city).should eq(
+            @market.current_price(@city.game) *
+            ((100.0 - @market.discount_for(@city)) / 100.0))
       end
 
       it "should grab the most recent price for current price" do

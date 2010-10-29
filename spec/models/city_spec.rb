@@ -20,8 +20,12 @@ describe City do
       @generator = Factory :generator, :city => @city
     end
 
-    it "should have a map helper" do
+    it "should have a map shortcut" do
       @city.map.should eq(@city.state.map)
+    end
+
+    it "should have a shortcut to its game" do
+      @city.game.should eq(@city.state.game)
     end
 
     it "should return all repairs" do

@@ -56,6 +56,10 @@ class State < ActiveRecord::Base
   before_create :generate_starting_cash
   after_create :generate_starting_cities
 
+  def natural_resource_index index
+    map.natural_resource_index index
+  end
+
   def interstate_lines
     InterstateLine.with_state(id)
   end

@@ -29,6 +29,11 @@ describe State do
       @storage_device = Factory :storage_device, :city => @city
     end
 
+    it "should return the map's natural resource index" do
+      @state.natural_resource_index(:coal).should eq(
+        @state.map.natural_resource_index(:coal))
+    end
+
     it "should return all repairs" do
       repair = Factory :repair, :repairable => @generator
       @state.repairs.should include repair

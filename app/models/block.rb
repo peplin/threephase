@@ -1,8 +1,20 @@
 require 'distance'
 
+module NaturalResources
+  NATURAL_RESOURCES = [:coal, :oil, :natural_gas, :sun, :wind, :water]
+
+  def attribute_for_index index
+    "#{index.to_s}_index"
+  end
+
+  def natural_resource_index(resource)
+    send(attribute_for_index(resource))
+  end
+end
+
 class Block < ActiveRecord::Base
   include CoordinateDistance
-  NATURAL_RESOURCES = [:coal, :oil, :natural_gas, :sun, :wind, :water]
+  include NaturalResources
 
   belongs_to :map
   has_many :wind_profiles
@@ -33,23 +45,15 @@ class Block < ActiveRecord::Base
     coordinate_distance x, y, other_x, other_y
   end
 
-  def natural_resource_index(resource)
-    attributes[attribute_for_index(resource)]
-  end
-
   def to_s
     "(#{x}, #{y}) #{block_type}"
   end
 
   private
 
-  def attribute_for_index index
-    "#{index.to_s}_index"
-  end
-
   def generate_natural_resource_indicies
     NATURAL_RESOURCES.each do |index|
-      next if attributes[attribute_for_index(index)]
+      next if send(attribute_for_index(index))
       write_attribute(attribute_for_index(index), rand(100))
       # TODO be smarter about random value, and really never use this, since the
       # map should set it while taking into account the topology

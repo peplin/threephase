@@ -4,6 +4,7 @@ require 'simple'
 class City < ActiveRecord::Base
   include CoordinateDistance
   include SimpleExtensions
+  include NaturalResources
 
   belongs_to :state
   has_many :load_profiles do
@@ -39,6 +40,10 @@ class City < ActiveRecord::Base
 
   def map
     state.map
+  end
+  
+  def game
+    state.game
   end
 
   def demand time=nil
@@ -96,9 +101,10 @@ class City < ActiveRecord::Base
   end
 
   def calculate_natural_resource_indicies
-    [:coal, :oil, :natural_gas, :sun, :wind, :water].each do |index|
-      write_attribute("#{index.to_s}_index", map.natural_resource_index(
-          index, x, y, range_map(customers, 0, 1000, 0, map.width / 4.0)))
+    Block::NATURAL_RESOURCES.each do |index|
+      write_attribute(attribute_for_index(index),
+          map.natural_resource_index(index, x, y,
+          range_map(customers, 0, 1000, 0, map.width / 4.0)))
       # TODO use better customer range
     end
   end

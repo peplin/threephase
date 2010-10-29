@@ -1,5 +1,6 @@
 class FuelMarket < ActiveRecord::Base
   FUEL_UNIT_SCALE = 1000000
+  LOCAL_RESOURCE_SCALE_FACTOR = 1000
 
   has_many :market_prices do
     def find_current(game)
@@ -72,7 +73,14 @@ class FuelMarket < ActiveRecord::Base
   end
 
   def current_local_price city
-    current_price city.state.game
+    current_price(city.game) * ((100.0 - discount_for(city)) / 100.0)
+  end
+
+  def discount_for city
+    return 0 if not related_natural_resource
+    city.natural_resource_index(related_natural_resource) /
+        city.state.natural_resource_index(related_natural_resource) *
+        LOCAL_RESOURCE_SCALE_FACTOR
   end
 
   def average_price

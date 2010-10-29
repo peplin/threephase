@@ -17,6 +17,7 @@ class Map < ActiveRecord::Base
   after_create :attach_blocks
 
   def natural_resource_index index, x=nil, y=nil, radius=nil
+    # TODO if this doesn't change, cache it on map creation
     if x and y and radius
       block_set = blocks.near(x, y, radius)
     else
