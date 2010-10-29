@@ -21,5 +21,15 @@ describe Block do
     end
 
     it "should have a static wind profile"
+
+    it "should know the distance between itself and something else" do
+      other_x, other_y = @block.x + 12, @block.y + 55
+      @block.distance(other_x, other_y).should eq(
+          @block.coordinate_distance(@block.x, @block.y, other_x, other_y))
+    end
+
+    it "should have a natural resource index helper" do
+      @block.natural_resource_index(:coal).should eq(@block.coal_index)
+    end
   end
 end

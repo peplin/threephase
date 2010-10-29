@@ -1,4 +1,8 @@
+require 'distance'
+
 class Block < ActiveRecord::Base
+  include CoordinateDistance
+
   belongs_to :map
   has_many :wind_profiles
 
@@ -15,6 +19,14 @@ class Block < ActiveRecord::Base
   validates :block_type, :presence => true
   enum_attr :block_type, [:mountain, :water, :plains]
   validates :map, :presence => true
+
+  def distance other_x, other_y
+    coordinate_distance x, y, other_x, other_y
+  end
+
+  def natural_resource_index(resource)
+    attributes["#{resource.to_s}_index"]
+  end
 
   def to_s
     "(#{x}, #{y}) #{block_type}"
