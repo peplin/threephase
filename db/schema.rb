@@ -55,11 +55,12 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
     t.integer  "y",                                   :null => false
     t.integer  "elevation",         :default => 0,    :null => false
     t.string   "block_type",                          :null => false
-    t.float    "wind_speed",        :default => 0.0,  :null => false
-    t.integer  "water_flow",        :default => 0,    :null => false
-    t.integer  "sunfall",           :default => 5125, :null => false
+    t.float    "wind_index",        :default => 0.0,  :null => false
+    t.integer  "water_index",       :default => 0,    :null => false
+    t.integer  "sun_index",         :default => 5125, :null => false
     t.integer  "natural_gas_index", :default => 0,    :null => false
     t.integer  "coal_index",        :default => 0,    :null => false
+    t.integer  "oil_index",         :default => 0,    :null => false
     t.integer  "map_id",                              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
