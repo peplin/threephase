@@ -36,7 +36,7 @@ class FuelMarket < ActiveRecord::Base
 
   def average_demand game, time=nil
     generators.find_by_game(game).inject(0) {|demand, generator|
-      if time and generator.created_at >= time
+      if time and generator.created_at <= time
         demand
       else
         demand + generator.average_fuel_burn_rate(time)
