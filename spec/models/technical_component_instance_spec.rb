@@ -5,7 +5,6 @@ describe TechnicalComponentInstance do
   it { should belong_to :buildable }
 
   it { should validate_presence_of :city }
-  it { should validate_presence_of :operating_level }
 
   context "instance" do
     before do
@@ -58,8 +57,7 @@ describe TechnicalComponentInstance do
         new_level = 61
         new_average = (@instance.average_operating_levels.first.
             normalized_operating_level(new_level)).to_int
-        @instance.operating_level = new_level
-        proc { @instance.save }.should change(@instance,
+        proc { @instance.operating_level = new_level }.should change(@instance,
             :average_operating_level).to(new_average)
       end
     end

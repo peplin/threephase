@@ -147,10 +147,9 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
 
   create_table "interstate_lines", :force => true do |t|
     t.boolean  "accepted"
-    t.integer  "operating_level",   :default => 100, :null => false
-    t.integer  "incoming_state_id",                  :null => false
-    t.integer  "outgoing_state_id",                  :null => false
-    t.integer  "line_type_id",                       :null => false
+    t.integer  "incoming_state_id", :null => false
+    t.integer  "outgoing_state_id", :null => false
+    t.integer  "line_type_id",      :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -172,12 +171,6 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
     t.integer  "height",                       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "load_profiles", :force => true do |t|
-    t.integer "hour",                   :null => false
-    t.integer "demand",  :default => 0, :null => false
-    t.integer "city_id",                :null => false
   end
 
   create_table "maps", :force => true do |t|
@@ -260,13 +253,12 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
   end
 
   create_table "technical_component_instances", :force => true do |t|
-    t.string   "instance_type",                    :null => false
-    t.integer  "operating_level", :default => 100, :null => false
+    t.string   "instance_type",  :null => false
     t.datetime "stepped_at"
-    t.integer  "city_id",                          :null => false
+    t.integer  "city_id",        :null => false
     t.integer  "other_city_id"
-    t.integer  "buildable_id",                     :null => false
-    t.string   "buildable_type",                   :null => false
+    t.integer  "buildable_id",   :null => false
+    t.string   "buildable_type", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

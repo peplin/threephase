@@ -111,6 +111,23 @@ class State < ActiveRecord::Base
     [x, y]
   end
 
+  def optimal_operating_level generator, time=nil
+    level = 0
+    operating_level = 0
+    generators.ordered_by_marginal_cost(time).each do |gen|
+      capacity_shortfall = demand - level
+      met_capacity = [gen.capacity, capacity_shortfall].min
+      level += met_capacity
+
+      if gen == generator
+        operating_level = (met_capacity / Float(gen.capacity) * 100).floor
+        break
+      end
+      break if capacity_shortfall <= 0
+    end
+    operating_level
+  end
+
   def set_operating_levels
     generators.ordered_by_marginal_cost.inject(0) {|level, generator|
       capacity_shortfall = demand - level

@@ -44,9 +44,6 @@ class Generator < TechnicalComponentInstance
     fuel_burn_rate(average_operating_level(time))
   end
 
-  def operating_level time=nil
-  end
-
   def step time
     cost = cost_since(time)
     state.cash -= cost

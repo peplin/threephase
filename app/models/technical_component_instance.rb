@@ -10,12 +10,10 @@ class TechnicalComponentInstance < ActiveRecord::Base
   belongs_to :buildable, :polymorphic => true
   belongs_to :city
 
-  validates :operating_level, :percentage => true, :allow_nil => true
   validates :city, :presence => true
   has_one :state, :through => :city
 
   after_create :add_average_operating_level
-  before_save :update_average_operating_level
 
   def game
     state.game
@@ -23,6 +21,23 @@ class TechnicalComponentInstance < ActiveRecord::Base
 
   def operated_hours time
     game.time_since(time) / 1.hour
+  end
+
+  def operating_level time=nil
+    if not time
+      if not @operating_level
+        @operating_level = city.state.optimal_operating_level self, time
+        update_average_operating_level
+      end
+      @operating_level
+    else
+      city.state.optimal_operating_level self, time
+    end
+  end
+
+  def operating_level= level
+    @operating_level = level
+    update_average_operating_level
   end
 
   def average_operating_level time=nil
@@ -45,15 +60,13 @@ class TechnicalComponentInstance < ActiveRecord::Base
   end
 
   def update_average_operating_level
-    if operating_level_changed?
-      # TODO use game time if applicable
-      average_level = average_operating_levels.find_by_day(Time.now)
-      if average_level and average_level.created_at.to_date == Date.today
-        average_level.refresh(operating_level_change[1])
-        average_level.save
-      else
-        add_average_operating_level
-      end
+    # TODO use game time if applicable
+    average_level = average_operating_levels.find_by_day(Date.today)
+    if average_level and average_level.created_at.to_date == Date.today
+      average_level.refresh(@operating_level)
+      average_level.save
+    else
+      add_average_operating_level
     end
   end
 end

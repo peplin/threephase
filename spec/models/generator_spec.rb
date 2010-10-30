@@ -48,6 +48,7 @@ describe Generator do
 
       it "should know how much fuel it has used since a point in time" do
         time = 2.hours.ago
+        debugger # TODO
         @generator.fuel_used_since(time).should eq(
             @generator.generator_type.operating_fuel(
               @generator.operating_level) * @generator.operated_hours(time))

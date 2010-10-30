@@ -2,7 +2,6 @@ class CreateInterstateLines < ActiveRecord::Migration
   def self.up
     create_table :interstate_lines do |t|
       t.boolean :accepted
-      t.integer :operating_level, :null => false, :default => 100
       
       t.integer :incoming_state_id, :null => false
       t.integer :outgoing_state_id, :null => false
