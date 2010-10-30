@@ -37,8 +37,10 @@ class State < ActiveRecord::Base
     end
 
     def ordered_by_marginal_cost time=nil
-      find(:all, :readonly => false).sort {|a, b|
-        a.marginal_cost(time) <=> b.marginal_cost(time)
+      time ||= Time.now.utc
+      find(:all, :readonly => false,
+          :conditions => ["created_at <= ?", time]).sort {|a, b|
+            a.marginal_cost(time) <=> b.marginal_cost(time)
       }
     end
   end

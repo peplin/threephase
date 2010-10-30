@@ -65,6 +65,11 @@ describe State do
         @state.generators.ordered_by_marginal_cost.first.should eq(
             @another_generator)
       end
+
+      it "should only include generators that existed in ordered list" do
+        @state.generators.ordered_by_marginal_cost(1.day.ago).first.should eq(
+          nil)
+      end
     end
 
     it "should return all lines" do
