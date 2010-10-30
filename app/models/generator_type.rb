@@ -46,12 +46,12 @@ class GeneratorType < ActiveRecord::Base
     operating_level * capacity
   end
 
-  def marginal_cost city
-    marginal_fuel_cost(city)
+  def marginal_cost city, time=nil
+    marginal_fuel_cost(city, time)
   end
 
-  def marginal_fuel_cost city
-    marginal_fuel_burn_rate * city.current_price(fuel_market)
+  def marginal_fuel_cost city, time=nil
+    marginal_fuel_burn_rate * city.current_price(fuel_market, time)
   end
 
   def to_s

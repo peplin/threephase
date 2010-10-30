@@ -66,6 +66,14 @@ class FuelMarket < ActiveRecord::Base
     market_prices.create :price => new_price, :game => game
   end
 
+  def price game, time=nil
+    if time
+      price_at game, time  
+    else
+      current_price game
+    end
+  end
+
   def current_price game
     market_price = market_prices.find_current(game)
     if market_price
@@ -75,8 +83,8 @@ class FuelMarket < ActiveRecord::Base
     end
   end
 
-  def current_local_price city
-    current_price(city.game) * ((100.0 - discount_for(city)) / 100.0)
+  def current_local_price city, time=nil
+    price(city.game, time) * ((100.0 - discount_for(city)) / 100.0)
   end
 
   def price_at game, time

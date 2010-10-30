@@ -64,6 +64,12 @@ describe FuelMarket do
                 :order => "created_at DESC").price)
       end
 
+      it "should have a current/timed price helper" do
+        @market.price(@game).should eq(@market.current_price(@game))
+        @market.price(@game, Time.now.utc).should eq(
+            @market.price_at(@game, Time.now.utc))
+      end
+
       it "should return the price discount for a city" do
         @market.discount_for(@city).should eq(
             @city.natural_resource_index(@market.related_natural_resource) /

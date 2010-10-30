@@ -77,8 +77,8 @@ class City < ActiveRecord::Base
   def step
   end
 
-  def current_price market
-    market.current_local_price self
+  def current_price market, time=nil
+    market.current_local_price self, time
   end
 
   def to_s

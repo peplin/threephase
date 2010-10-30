@@ -14,8 +14,8 @@ class Generator < TechnicalComponentInstance
     generator_type.capacity
   end
 
-  def marginal_cost
-    generator_type.marginal_cost(city)
+  def marginal_cost time=nil
+    generator_type.marginal_cost(city, time)
   end
 
   def marginal_fuel_cost
@@ -42,6 +42,9 @@ class Generator < TechnicalComponentInstance
 
   def average_fuel_burn_rate time=nil
     fuel_burn_rate(average_operating_level(time))
+  end
+
+  def operating_level time=nil
   end
 
   def step time

@@ -36,9 +36,9 @@ class State < ActiveRecord::Base
           :conditions => {:generator_types => {:fuel_market_id => fuel_market}})
     end
 
-    def ordered_by_marginal_cost
+    def ordered_by_marginal_cost time=nil
       find(:all, :readonly => false).sort {|a, b|
-        a.marginal_cost <=> b.marginal_cost
+        a.marginal_cost(time) <=> b.marginal_cost(time)
       }
     end
   end
@@ -112,9 +112,8 @@ class State < ActiveRecord::Base
   end
 
   def set_operating_levels
-    current_demand = demand
     generators.ordered_by_marginal_cost.inject(0) {|level, generator|
-      capacity_shortfall = current_demand - level
+      capacity_shortfall = demand - level
       if capacity_shortfall > 0
         met_capacity = [generator.capacity, capacity_shortfall].min
         generator.operating_level = (

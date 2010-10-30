@@ -10,7 +10,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
   belongs_to :buildable, :polymorphic => true
   belongs_to :city
 
-  validates :operating_level, :presence => true, :percentage => true
+  validates :operating_level, :percentage => true, :allow_nil => true
   validates :city, :presence => true
   has_one :state, :through => :city
 
