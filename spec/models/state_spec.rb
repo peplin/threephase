@@ -88,6 +88,13 @@ describe State do
       })
     end
 
+    it "should have demand at a certain time of its cities" do
+      time = Time.now
+      @state.demand(time).should eq(@state.cities.inject(0) {|demand, city|
+        demand + city.demand(time)
+      })
+    end
+
     it "should have peak demand equal to sum of the peak demand of cities" do
       @state.peak_demand.should eq(@state.cities.inject(0) {|demand, city|
         demand + city.peak_demand
@@ -99,25 +106,21 @@ describe State do
       another_generator.fuel_market.initialize_for @state.game
       ordered_generators = @state.generators.ordered_by_marginal_cost
       @state.stubs(:demand).returns(@generator.capacity - 1)
-      @state.set_operating_levels
-      ordered_generators[0].reload.operating_level.should be < 100
-      ordered_generators[1].reload.operating_level.should eq(0)
+      @state.optimal_operating_level(ordered_generators[0]).should be < 100
+      @state.optimal_operating_level(ordered_generators[1]).should eq(0)
 
       @state.stubs(:demand).returns(@generator.capacity)
-      @state.set_operating_levels
-      ordered_generators[0].reload.operating_level.should eq(100)
-      ordered_generators[1].reload.operating_level.should eq(0)
+      @state.optimal_operating_level(ordered_generators[0]).should eq(100)
+      @state.optimal_operating_level(ordered_generators[1]).should eq(0)
 
       @state.stubs(:demand).returns(@generator.capacity + 10)
-      @state.set_operating_levels
-      ordered_generators[0].reload.operating_level.should eq(100)
-      ordered_generators[1].reload.operating_level.should be > 0
+      @state.optimal_operating_level(ordered_generators[0]).should eq(100)
+      @state.optimal_operating_level(ordered_generators[1]).should be > 0
 
       @state.stubs(:demand).returns(
           @generator.capacity + another_generator.capacity + 2)
-      @state.set_operating_levels
-      ordered_generators[0].reload.operating_level.should eq(100)
-      ordered_generators[1].reload.operating_level.should eq(100)
+      @state.optimal_operating_level(ordered_generators[0]).should eq(100)
+      @state.optimal_operating_level(ordered_generators[1]).should eq(100)
     end
 
     it "should return free coordinates" do

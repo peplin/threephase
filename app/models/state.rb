@@ -90,9 +90,9 @@ class State < ActiveRecord::Base
     }
   end
 
-  def demand
+  def demand time=nil
     cities.inject(0) {|sum, city|
-      sum + city.demand
+      sum + city.demand(time)
     }
   end
 
@@ -115,7 +115,7 @@ class State < ActiveRecord::Base
     level = 0
     operating_level = 0
     generators.ordered_by_marginal_cost(time).each do |gen|
-      capacity_shortfall = demand - level
+      capacity_shortfall = demand(time) - level
       met_capacity = [gen.capacity, capacity_shortfall].min
       level += met_capacity
 
@@ -126,22 +126,6 @@ class State < ActiveRecord::Base
       break if capacity_shortfall <= 0
     end
     operating_level
-  end
-
-  def set_operating_levels
-    generators.ordered_by_marginal_cost.inject(0) {|level, generator|
-      capacity_shortfall = demand - level
-      if capacity_shortfall > 0
-        met_capacity = [generator.capacity, capacity_shortfall].min
-        generator.operating_level = (
-            met_capacity / Float(generator.capacity) * 100).floor
-        level = level + met_capacity
-      else
-        generator.operating_level = 0
-      end
-      generator.save
-      level
-    }
   end
 
   def step

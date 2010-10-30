@@ -73,7 +73,7 @@ describe FuelMarket do
       it "should return the price discount for a city" do
         @market.discount_for(@city).should eq(
             @city.natural_resource_index(@market.related_natural_resource) /
-              @state.natural_resource_index(@market.related_natural_resource) *
+              @state.natural_resource_index(@market.related_natural_resource) /
               FuelMarket::LOCAL_RESOURCE_SCALE_FACTOR)
       end
 
