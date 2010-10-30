@@ -16,7 +16,7 @@ class LoadProfile < ActiveRecord::Base
   def calculate_demand
     if (8..23).to_a.include? self.hour
       # oversimplified parabola
-      self.demand = -0.1 * ((self.hour - 15) ** 2) + 4
+      self.demand = -0.1 * ((0.42 * self.hour - 5) ** 4) + 100
     end
   end
 end
