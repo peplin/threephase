@@ -9,8 +9,6 @@ describe InterstateLine do
   it { should validate_presence_of :outgoing_state }
   it { should validate_presence_of :line_type }
 
-  it { should validate_presence_of :operating_level }
-
   context "an instance of InterstateLine" do
     before do
       @line = Factory :interstate_line

@@ -11,7 +11,6 @@ class InterstateLine < ActiveRecord::Base
   validates :line_type, :presence => true
   validates :incoming_state, :presence => true
   validates :outgoing_state, :presence => true
-  validates :operating_level, :presence => true
   validates_with LineEndpointValidator, :start => :incoming_state,
       :end => :outgoing_state
 
@@ -23,6 +22,11 @@ class InterstateLine < ActiveRecord::Base
     else
       raise "response cannot be changed once submitted"
     end
+  end
+
+  def operating_level
+    #TODO
+    0.0
   end
 
   def to_s
