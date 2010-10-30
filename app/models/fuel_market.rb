@@ -44,6 +44,9 @@ class FuelMarket < ActiveRecord::Base
     }
   end
 
+  def peak_demand game
+  end
+
   def demand game
     generators.find_by_game(game).inject(0) {|demand, generator|
       demand + generator.fuel_burn_rate
@@ -74,6 +77,15 @@ class FuelMarket < ActiveRecord::Base
 
   def current_local_price city
     current_price(city.game) * ((100.0 - discount_for(city)) / 100.0)
+  end
+
+  def price_at game, time
+    price = market_prices.where(:game_id => game).closest_to(time).first
+    if price
+      price.price
+    else
+      0.0
+    end
   end
 
   def discount_for city

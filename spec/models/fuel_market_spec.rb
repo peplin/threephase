@@ -83,6 +83,11 @@ describe FuelMarket do
         @market.current_price(@game).should eq(new_price)
       end
 
+      it "should have the price for an arbitrary day" do
+        @market.price_at(@game, Time.now.utc).should eq(
+            @market.current_price(@game))
+      end
+
       it "should have a lower coal price in a city with coal"
 
       it "should average the price over all games" do

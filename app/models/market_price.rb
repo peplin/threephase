@@ -4,6 +4,7 @@ class MarketPrice < ActiveRecord::Base
 
   scope :closest_to, lambda { |date|
     order(%{ABS(strftime('%s', "#{date.to_formatted_s(:db)}") - strftime('%s', created_at)) asc}).
+    order("id DESC").
     limit(1)
   }
 
