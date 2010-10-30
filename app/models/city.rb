@@ -60,9 +60,7 @@ class City < ActiveRecord::Base
 
   def repairs
     [generators, lines, storage_devices].collect do |instances|
-      instances.collect do |i|
-        i.repairs
-      end
+      instances.collect(&:repairs).flatten
     end.flatten!
   end
 

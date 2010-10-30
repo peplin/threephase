@@ -69,21 +69,15 @@ class State < ActiveRecord::Base
   end
 
   def repairs
-    cities.collect do |city|
-      city.repairs
-    end.flatten
+    cities.collect(&:repairs).flatten
   end
 
   def bids
-    cities.collect do |city|
-      city.bids
-    end.flatten
+    cities.collect(&:bids).flatten
   end
 
   def lines
-    cities.collect do |city|
-      city.lines
-    end.flatten
+    cities.collect(&:lines).flatten
   end
 
   def capacity

@@ -21,9 +21,7 @@ class CitiesController < ApplicationController
 
   def find_cities
     if current_user.admin?
-      @cities = @game.states.collect do |r|
-        r.cities
-      end
+      @cities = @game.states.collect(&:cities)
     else
       @state = current_user.states.find_by_game(@game)
       @cities = @state.cities

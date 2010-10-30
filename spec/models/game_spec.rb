@@ -83,9 +83,7 @@ describe Game do
     it "should be able to step"
 
     it "should return all generators" do
-      generators = @game.states.collect do |state|
-        state.generators
-      end.flatten
+      generators = @game.states.collect(&:generators).flatten
       @game.generators.should eq(generators)
     end
 
