@@ -29,7 +29,7 @@ describe FuelMarket do
       @market = @price.fuel_market
       @game = @price.game
       @state = Factory :state, :game => @game
-      @city = Factory :city, :state => @state
+      @city = Factory :city, :state => @state, :customers => 100000
       @generator_type = Factory :generator_type, :fuel_market => @market
       @generator = Factory :generator, :city => @city,
           :generator_type => @generator_type

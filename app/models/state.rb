@@ -86,7 +86,7 @@ class State < ActiveRecord::Base
 
   def capacity
     generators.inject(0) {|total, generator|
-      generator.capacity
+      total + generator.capacity
     }
   end
 
