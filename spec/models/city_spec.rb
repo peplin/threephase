@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe City do
   it { should belong_to :state }
-  it { should have_many :load_profiles }
   it { should have_many :generators }
   it { should have_many :storage_devices }
   it { should have_many(:bids).through(:generators) }
@@ -49,8 +48,20 @@ describe City do
       @city.demand.should be > 0
     end
 
+    it "should vary demand based on number of customers" do
+      time = Time.now.beginning_of_day
+      original_demand = @city.demand(time)
+      @city.customers *= 2
+      @city.demand(time).should be > original_demand
+    end
+
     it "should have a load profile for each hour of the day" do
-      @city.load_profiles.count.should eq 24
+      @city.load_profile.length.should eq 24
+    end
+
+    it "should have higher load if during the day" do
+      @city.demand(Time.now.beginning_of_day + 13.hours
+          ).should be > @city.demand(Time.now.beginning_of_day + 3.hours)
     end
 
     it "should be able to step"

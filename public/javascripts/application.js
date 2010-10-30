@@ -15,7 +15,7 @@ function drawGraphs() {
 
         var demand = [];
         $.each(data, function(key, value) {
-          demand.push(value.load_profile.demand);
+          demand.push(value);
         });
 
         var r = Raphael(cityId + "-load-profile", 450, 155);

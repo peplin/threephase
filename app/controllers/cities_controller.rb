@@ -14,7 +14,7 @@ class CitiesController < ApplicationController
   end
 
   def load_profile
-    respond_with @city.load_profiles
+    respond_with @city.load_profile
   end
 
   private
@@ -31,6 +31,6 @@ class CitiesController < ApplicationController
   end
 
   def find_city
-    @city = City.find params[:id], :include => :load_profiles
+    @city = City.find params[:id]
   end
 end

@@ -6,12 +6,9 @@ class City < ActiveRecord::Base
   include SimpleExtensions
   include NaturalResources
 
+  DEMAND_SCALE_FACTOR = 1000.0
+
   belongs_to :state
-  has_many :load_profiles do
-    def find_at_time time
-      find_by_hour(time.hour)
-    end
-  end
   has_many :generators
   has_many :bids, :through => :generators
   has_many :outgoing_lines, :class_name => "Line", :foreign_key => "city_id"
@@ -32,7 +29,6 @@ class City < ActiveRecord::Base
   before_validation :generate_coordinates, :on => :create
   before_create :add_customers
   before_create :calculate_natural_resource_indicies
-  after_create :generate_load_profiles
 
   def lines
     Line.with_city(id)
@@ -48,7 +44,14 @@ class City < ActiveRecord::Base
 
   def demand time=nil
     time ||= Time.now
-    load_profiles.find_at_time(time).demand
+    ((-0.1 * ((0.42 * time.hour - 5) ** 4) + 100) *
+        customers / DEMAND_SCALE_FACTOR)
+  end
+
+  def load_profile
+    (0..23).collect do |hour|
+      demand(Time.now.at_beginning_of_day + hour.hour)
+    end
   end
 
   def repairs
@@ -79,12 +82,6 @@ class City < ActiveRecord::Base
   end
 
   private
-
-  def generate_load_profiles
-    (0..23).each do |hour|
-      self.load_profiles << LoadProfile.new(:hour => hour)
-    end
-  end
 
   def generate_name
     self.name = "A City" unless self.name
