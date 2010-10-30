@@ -94,38 +94,39 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
     t.float  "initial_average_price",                       :null => false
     t.float  "initial_standard_deviation",                  :null => false
     t.float  "supply_slope",               :default => 1.0, :null => false
+    t.string "related_natural_resource"
   end
 
   add_index "fuel_markets", ["cached_slug"], :name => "index_fuel_markets_on_cached_slug", :unique => true
 
   create_table "games", :force => true do |t|
-    t.integer  "speed",                  :default => 0,             :null => false
+    t.integer  "speed",                  :default => 0,           :null => false
     t.datetime "updated_at"
     t.integer  "max_players"
     t.datetime "started"
     t.datetime "ended"
-    t.integer  "max_line_capacity",      :default => 1500,          :null => false
-    t.integer  "technology_cost",        :default => 50,            :null => false
-    t.integer  "technology_reliability", :default => 50,            :null => false
-    t.integer  "frequency",              :default => 60,            :null => false
-    t.integer  "wind_speed",             :default => 50,            :null => false
-    t.integer  "sunfall",                :default => 50,            :null => false
-    t.integer  "water_flow",             :default => 50,            :null => false
-    t.string   "regulation_type",        :default => "unregulated", :null => false
-    t.float    "starting_capital",       :default => 500000000.0,   :null => false
-    t.integer  "interest_rate",          :default => 6,             :null => false
-    t.integer  "reliability_constraint", :default => 1,             :null => false
-    t.integer  "fuel_cost",              :default => 50,            :null => false
-    t.integer  "fuel_cost_volatility",   :default => 50,            :null => false
-    t.integer  "workforce_reliability",  :default => 50,            :null => false
-    t.integer  "workforce_cost",         :default => 50,            :null => false
-    t.boolean  "unionized",              :default => true,          :null => false
-    t.integer  "carbon_allowance",       :default => 50,            :null => false
-    t.integer  "tax_credit",             :default => 50,            :null => false
-    t.integer  "renewable_requirement",  :default => 50,            :null => false
-    t.integer  "political_stability",    :default => 50,            :null => false
-    t.integer  "political_opposition",   :default => 50,            :null => false
-    t.integer  "public_support",         :default => 50,            :null => false
+    t.integer  "max_line_capacity",      :default => 1500,        :null => false
+    t.integer  "technology_cost",        :default => 50,          :null => false
+    t.integer  "technology_reliability", :default => 50,          :null => false
+    t.integer  "frequency",              :default => 60,          :null => false
+    t.integer  "wind_speed",             :default => 50,          :null => false
+    t.integer  "sunfall",                :default => 50,          :null => false
+    t.integer  "water_flow",             :default => 50,          :null => false
+    t.string   "regulation_type",        :default => "ror",       :null => false
+    t.float    "starting_capital",       :default => 500000000.0, :null => false
+    t.integer  "interest_rate",          :default => 6,           :null => false
+    t.integer  "reliability_constraint", :default => 1,           :null => false
+    t.integer  "fuel_cost",              :default => 50,          :null => false
+    t.integer  "fuel_cost_volatility",   :default => 50,          :null => false
+    t.integer  "workforce_reliability",  :default => 50,          :null => false
+    t.integer  "workforce_cost",         :default => 50,          :null => false
+    t.boolean  "unionized",              :default => true,        :null => false
+    t.integer  "carbon_allowance",       :default => 50,          :null => false
+    t.integer  "tax_credit",             :default => 50,          :null => false
+    t.integer  "renewable_requirement",  :default => 50,          :null => false
+    t.integer  "political_stability",    :default => 50,          :null => false
+    t.integer  "political_opposition",   :default => 50,          :null => false
+    t.integer  "public_support",         :default => 50,          :null => false
     t.datetime "created_at"
   end
 

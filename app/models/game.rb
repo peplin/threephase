@@ -18,7 +18,7 @@ class Game < ActiveRecord::Base
   has_many :users, :through => :states
   has_many :maps, :through => :states
 
-  enum_attr :regulation_type, [:unregulated, :ror, :auction] do
+  enum_attr :regulation_type, [:lmp, :ror, :auction] do
     label :ror => "Rate of Return"
   end
   validates :regulation_type, :presence => true
