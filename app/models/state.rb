@@ -37,7 +37,9 @@ class State < ActiveRecord::Base
     end
 
     def ordered_by_marginal_cost
-      find(:all, :readonly => false).sort {|a, b| a.marginal_cost <=> b.marginal_cost }
+      find(:all, :readonly => false).sort {|a, b|
+        a.marginal_cost <=> b.marginal_cost
+      }
     end
   end
   belongs_to :map
@@ -91,6 +93,12 @@ class State < ActiveRecord::Base
   def demand
     cities.inject(0) {|sum, city|
       sum + city.demand
+    }
+  end
+
+  def peak_demand
+    cities.inject(0) {|sum, city|
+      sum + city.peak_demand
     }
   end
 

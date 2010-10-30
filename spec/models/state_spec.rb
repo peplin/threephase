@@ -88,6 +88,12 @@ describe State do
       })
     end
 
+    it "should have peak demand equal to sum of the peak demand of cities" do
+      @state.peak_demand.should eq(@state.cities.inject(0) {|demand, city|
+        demand + city.peak_demand
+      })
+    end
+
     it "should set all generator operating levels based on the MC curve" do
       another_generator = Factory :generator, :city => @city
       another_generator.fuel_market.initialize_for @state.game
