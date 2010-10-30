@@ -54,6 +54,10 @@ class City < ActiveRecord::Base
     end
   end
 
+  def peak_demand
+    load_profile.max
+  end
+
   def repairs
     [generators, lines, storage_devices].collect do |instances|
       instances.collect do |i|

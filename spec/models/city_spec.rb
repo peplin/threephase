@@ -48,6 +48,10 @@ describe City do
       @city.demand.should be > 0
     end
 
+    it "should have a peak demand" do
+      @city.peak_demand.should eq(@city.load_profile.max)
+    end
+
     it "should vary demand based on number of customers" do
       time = Time.now.beginning_of_day
       original_demand = @city.demand(time)
