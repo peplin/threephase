@@ -56,7 +56,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
   private
 
   def add_average_operating_level
-    self.average_operating_levels.create(:operating_level => operating_level)
+    self.average_operating_levels.create(:operating_level => 0)
   end
 
   def update_average_operating_level
