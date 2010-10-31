@@ -65,6 +65,12 @@ class City < ActiveRecord::Base
     end
   end
 
+  def cost_since time
+    generators.inject(0) do |cost, generator|
+      cost = generator.cost_since(time)
+    end
+  end
+
   def repairs
     [generators, lines, storage_devices].collect do |instances|
       instances.collect(&:repairs).flatten

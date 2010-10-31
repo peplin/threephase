@@ -30,22 +30,6 @@ class GeneratorType < ActiveRecord::Base
     marginal_fuel_burn_rate == 0
   end
 
-  def operating_cost city, operating_level=100
-    operating_fuel_cost(city, operating_level)
-  end
-
-  def operating_fuel_cost city, operating_level=100
-    marginal_fuel_cost(city) * operating_capacity(operating_level)
-  end
-
-  def operating_fuel city, operating_level=100
-    marginal_fuel_burn_rate * operating_capacity(operating_level)
-  end
-
-  def operating_capacity operating_level=100
-    operating_level * capacity
-  end
-
   def marginal_cost city, time=nil
     marginal_fuel_cost(city, time)
   end

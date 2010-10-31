@@ -153,7 +153,7 @@ describe State do
         capacity_shortfall = @state.demand - level
         met_capacity = [gen.capacity, capacity_shortfall].min
         level += met_capacity
-        if capacity_shortfall - level <= 0 or not demand_met?
+        if capacity_shortfall - level <= 0 or not @state.demand_met?
           mc = gen.marginal_cost
           break
         end

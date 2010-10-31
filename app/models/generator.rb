@@ -18,35 +18,43 @@ class Generator < TechnicalComponentInstance
     generator_type.marginal_cost(city, time)
   end
 
-  def marginal_fuel_cost
-    generator_type.marginal_fuel_cost(city)
+  def marginal_fuel_cost time=nil
+    generator_type.marginal_fuel_cost(city, time)
   end
 
   def cost_since time
-    fuel_cost_since(time) + (marginal_cost * operated_hours(time))
+    fuel_cost_since(time)
   end
 
-  def fuel_cost_since time, level=nil
-    level ||= operating_level
-    generator_type.operating_fuel_cost(city, level) * operated_hours(time)
+  def fuel_cost_since time
+    ((time.to_i + 10.minutes)..Time.now.utc.to_i).step(10.minutes).inject(0) do |total, t|
+      total + operating_fuel_cost(Time.at(t)) / 6.0
+    end
   end
 
-  def fuel_used_since time, level=nil
-    fuel_burn_rate(level) * operated_hours(time)
+  def fuel_used_since time
+    ((time.to_i + 10.minutes)..Time.now.utc.to_i).step(10.minutes).inject(0) do |total, t|
+      total + fuel_burn_rate(Time.at(t)) / 6.0
+    end
   end
 
-  def fuel_burn_rate level=nil
-    level ||= operating_level
-    generator_type.operating_fuel(city, level)
+  def fuel_burn_rate time=nil
+    operating_fuel(operating_level(time))
   end
 
   def average_fuel_burn_rate time=nil
-    fuel_burn_rate(average_operating_level(time))
+    operating_fuel(average_operating_level(time))
   end
 
-  def step time
-    cost = cost_since(time)
-    state.cash -= cost
-    state.save
+  def operating_fuel level
+    generator_type.marginal_fuel_burn_rate * level
+  end
+
+  def operating_cost time=nil
+    operating_fuel_cost(time)
+  end
+
+  def operating_fuel_cost time=nil
+    marginal_fuel_cost(time) * operating_level(time)
   end
 end

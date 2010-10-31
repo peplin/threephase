@@ -45,11 +45,6 @@ describe GeneratorType do
       @generator_type.marginal_cost(@city).should be > 0
     end
 
-    it "should have a operating cost dependent on operating level" do
-      @generator_type.operating_cost(@city, 15).should be < (
-          @generator_type.operating_cost(@city))
-    end
-
     context "with a renewable fuel" do
       before do
         @generator_type.marginal_fuel_burn_rate = 0

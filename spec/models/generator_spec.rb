@@ -11,7 +11,7 @@ describe Generator do
   context "an instance of Generator" do
     context "with non-renewable fuel" do
       before do
-        @generator = Factory :generator
+        @generator = Factory :generator, :created_at => 2.hours.ago
         stub_time
       end
 
@@ -32,25 +32,10 @@ describe Generator do
             @generator.generator_type.marginal_fuel_cost(@generator.city))
       end
 
-      context "when the simulation is stepped" do
-        before do
-          cost = @generator.cost_since(1.hour.ago)
-          Generator.any_instance.stubs(:cost_since).returns(cost)
-        end
-
-        it "should deduct the marginal cost for that time from the state" do
-          original_cash = @generator.state.cash
-          @generator.step 1.hour.ago
-          @generator.state.cash.should be_close(original_cash -
-              @generator.cost_since(1.hour.ago), 1)
-        end
-      end
-
       it "should know how much fuel it has used since a point in time" do
         time = 2.hours.ago
-        @generator.fuel_used_since(time).should eq(
-            @generator.fuel_burn_rate(@generator.operating_level) *
-                @generator.operated_hours(time))
+        @generator.stubs(:fuel_burn_rate).returns(1)
+        @generator.fuel_used_since(time).should eq(2)
       end
 
       it "should use more fuel over time" do
@@ -58,22 +43,16 @@ describe Generator do
             @generator.fuel_used_since(10.minutes.ago))
       end
 
-      it "should allow an override of operating level when calculating fuel" do
-        time = 1.hour.ago
-        @generator.fuel_used_since(time, 100).should be > (
-            @generator.fuel_used_since(time, 50))
-      end
-
       context "fuel burn rate" do
         it "should have an hourly burn rate" do
           @generator.fuel_burn_rate.should eq(
-              @generator.generator_type.operating_fuel(
-                @generator.city, @generator.operating_level))
+              @generator.operating_fuel(@generator.operating_level))
         end
 
         it "should have a level adjusted hourly burn rate" do
-          @generator.fuel_burn_rate(50).should eq(
-              @generator.generator_type.operating_fuel(@generator.city, 50))
+        @generator.stubs(:operating_level).returns(@generator.capacity / 2.0)
+          @generator.fuel_burn_rate(10.minutes.ago).should eq(
+              @generator.operating_fuel(@generator.capacity / 2.0))
         end
 
         it "should have an average fuel burn rate for the day" do
@@ -98,7 +77,7 @@ describe Generator do
 
     context "with renewable fuel" do
       before do
-        @generator = Factory :renewable_generator
+        @generator = Factory :renewable_generator, :created_at => 2.hours.ago
       end
 
       it "should not use any fuel" do

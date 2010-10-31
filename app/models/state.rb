@@ -142,7 +142,15 @@ class State < ActiveRecord::Base
     mc
   end
 
-  def step
+  def cost_since time
+    cities.inject(0) do |cost, city|
+      cost + city.cost_since(time)
+    end
+  end
+
+  def deduct_operating_costs
+    self.cash -= cost_since(costs_deducted_at)
+    self.costs_deducted_at = Time.now
   end
 
   def charge_customers

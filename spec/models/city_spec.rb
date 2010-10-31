@@ -68,8 +68,6 @@ describe City do
           ).should be > @city.demand(Time.now.beginning_of_day + 3.hours)
     end
 
-    it "should be able to step"
-
     it "should know the amount of power demanded since a time" do
       time = 6.hours.ago
       @city.stubs(:demand).returns(1)
