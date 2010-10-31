@@ -238,6 +238,7 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
     t.integer  "research_budget", :default => 5000000, :null => false
     t.integer  "cash"
     t.datetime "stepped_at"
+    t.datetime "charged_at"
     t.integer  "map_id",                               :null => false
     t.integer  "game_id",                              :null => false
     t.integer  "user_id"

@@ -144,6 +144,12 @@ class State < ActiveRecord::Base
   def charge_customers
   end
 
+  def demanded_since time
+    cities.inject(0) do |demanded, city|
+      city.demanded_since(time)
+    end
+  end
+
   def to_s
     name
   end

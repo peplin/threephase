@@ -156,9 +156,20 @@ describe State do
       @state.marginal_cost_to_customers.should eq(mc)
     end
 
-    it "should return the marginal cost to customers at a time"
+    it "should charge customers the MC * demand over time" do
+      time = 1.hour.ago
+      @state.customers_charged_at = time
+      proc { @state.charge_customers }.should change(@state, :cash).by(
+          @state.marginal_cost_to_customers * @state.demanded_since(time))
+    end
 
-    it "should charge customers the MC * demand over time"
+    it "should know the amount of power demanded since a time" do
+      time = 6.hours.ago
+      @state.demanded_since(time).should eq(
+        @state.cities.inject(0) do |demanded, city|
+          city.demanded_since(time)
+        end)
+    end
 
     it "should be able to step"
   end

@@ -58,6 +58,13 @@ class City < ActiveRecord::Base
     load_profile.max
   end
 
+  def demanded_since time
+    # TODO would be nice to do this with an integral
+    (time.to_i..Time.now.utc.to_i).step(1.hour).inject(0) do |total, hour|
+      total + demand(Time.at(hour))
+    end
+  end
+
   def repairs
     [generators, lines, storage_devices].collect do |instances|
       instances.collect(&:repairs).flatten

@@ -70,6 +70,13 @@ describe City do
 
     it "should be able to step"
 
+    it "should know the amount of power demanded since a time" do
+      time = 6.hours.ago
+      @city.stubs(:demand).returns(1)
+      @city.demanded_since(time).should eq(
+          (time.to_i..Time.now.utc.to_i).step(1.hour).length)
+    end
+
     it "should know the current local price" do
       fuel_market = Factory :fuel_market
       @city.current_price(fuel_market).should eq(
