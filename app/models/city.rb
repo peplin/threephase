@@ -61,8 +61,9 @@ class City < ActiveRecord::Base
 
   def demanded_since time
     # TODO would be nice to do this with an integral
-    (time.to_i..Time.now.utc.to_i).step(1.hour).inject(0) do |total, hour|
-      total + demand(Time.at(hour))
+    ((time.to_i + 10.minutes)..Time.now.utc.to_i
+        ).step(10.minutes).inject(0) do |total, hour|
+      total + demand(Time.at(hour)) / 6.0
     end
   end
 
@@ -84,9 +85,6 @@ class City < ActiveRecord::Base
   
   def distance_to_city city
     distance city.x, city.y
-  end
-
-  def step
   end
 
   def current_price market, time=nil

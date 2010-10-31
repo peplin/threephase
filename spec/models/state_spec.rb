@@ -170,7 +170,7 @@ describe State do
       # marginal_cost_to_consumers for TODAY, so it would calculate the wrong
       # total. let's not worry about it for the first release.
       proc { @state.charge_customers }.should change(@state, :cash).by(
-          -1 * (@state.marginal_cost_to_customers *
+          (@state.marginal_cost_to_customers *
             @state.demanded_since(time)).ceil)
     end
 

@@ -138,6 +138,7 @@ class State < ActiveRecord::Base
         mc = gen.marginal_cost
         break
       end
+      level
     end
     mc
   end
@@ -151,12 +152,14 @@ class State < ActiveRecord::Base
   def deduct_operating_costs
     self.cash -= cost_since(costs_deducted_at)
     self.costs_deducted_at = Time.now
+    self.cash
   end
 
   def charge_customers
-    self.cash -= (marginal_cost_to_customers *
+    self.cash += (marginal_cost_to_customers *
         demanded_since(customers_charged_at))
     self.customers_charged_at = Time.now
+    self.cash
   end
 
   def demand_met? time=nil
