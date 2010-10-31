@@ -142,6 +142,24 @@ describe State do
       @state.cities.find_nearest(100, 200)
     end
 
+    it "should return the marginal cost to customers" do
+      mc = 0
+      @state.generators.ordered_by_marginal_cost.inject(0) do |level, gen|
+        capacity_shortfall = @state.demand - level
+        met_capacity = [gen.capacity, capacity_shortfall].min
+        level += met_capacity
+        if capacity_shortfall <= 0
+          mc = gen.marginal_cost
+          break
+        end
+      end
+      @state.marginal_cost_to_customers.should eq(mc)
+    end
+
+    it "should return the marginal cost to customers at a time"
+
+    it "should charge customers the MC * demand over time"
+
     it "should be able to step"
   end
 

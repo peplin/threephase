@@ -108,9 +108,8 @@ class State < ActiveRecord::Base
   end
 
   def optimal_operating_level generator, time=nil
-    level = 0
     operating_level = 0
-    generators.ordered_by_marginal_cost(time).each do |gen|
+    generators.ordered_by_marginal_cost(time).inject(0) do |level, gen|
       capacity_shortfall = demand(time) - level
       met_capacity = [gen.capacity, capacity_shortfall].min
       level += met_capacity
@@ -120,11 +119,29 @@ class State < ActiveRecord::Base
         break
       end
       break if capacity_shortfall <= 0
+      level
     end
     operating_level
   end
 
+  def marginal_cost_to_customers time=nil
+    mc = 0
+    generators.ordered_by_marginal_cost.inject(0) do |level, gen|
+      capacity_shortfall = demand(time) - level
+      met_capacity = [gen.capacity, capacity_shortfall].min
+      level += met_capacity
+      if capacity_shortfall <= 0
+        mc = gen.marginal_cost
+        break
+      end
+    end
+    mc
+  end
+
   def step
+  end
+
+  def charge_customers
   end
 
   def to_s
