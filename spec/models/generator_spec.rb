@@ -49,8 +49,8 @@ describe Generator do
       it "should know how much fuel it has used since a point in time" do
         time = 2.hours.ago
         @generator.fuel_used_since(time).should eq(
-            @generator.generator_type.operating_fuel(
-              @generator.operating_level) * @generator.operated_hours(time))
+            @generator.fuel_burn_rate(@generator.operating_level) *
+                @generator.operated_hours(time))
       end
 
       it "should use more fuel over time" do
@@ -67,7 +67,8 @@ describe Generator do
       context "fuel burn rate" do
         it "should have an hourly burn rate" do
           @generator.fuel_burn_rate.should eq(
-              @generator.generator_type.operating_fuel(@generator.city))
+              @generator.generator_type.operating_fuel(
+                @generator.city, @generator.operating_level))
         end
 
         it "should have a level adjusted hourly burn rate" do
