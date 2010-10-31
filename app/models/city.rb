@@ -1,5 +1,6 @@
 require 'distance'
 require 'simple'
+require 'block'
 
 class City < ActiveRecord::Base
   include CoordinateDistance
