@@ -119,7 +119,7 @@ class State < ActiveRecord::Base
       level += met_capacity
 
       if gen == generator
-        operating_level = (met_capacity / Float(gen.capacity) * 100).floor
+        operating_level = met_capacity
         break
       end
       break if capacity_shortfall <= 0

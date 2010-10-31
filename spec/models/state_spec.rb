@@ -111,21 +111,26 @@ describe State do
       another_generator.fuel_market.initialize_for @state.game
       ordered_generators = @state.generators.ordered_by_marginal_cost
       @state.stubs(:demand).returns(@generator.capacity - 1)
-      @state.optimal_operating_level(ordered_generators[0]).should be < 100
+      @state.optimal_operating_level(ordered_generators[0]).should be < (
+          ordered_generators[0].capacity)
       @state.optimal_operating_level(ordered_generators[1]).should eq(0)
 
       @state.stubs(:demand).returns(@generator.capacity)
-      @state.optimal_operating_level(ordered_generators[0]).should eq(100)
+      @state.optimal_operating_level(ordered_generators[0]).should eq(
+          ordered_generators[0].capacity)
       @state.optimal_operating_level(ordered_generators[1]).should eq(0)
 
       @state.stubs(:demand).returns(@generator.capacity + 10)
-      @state.optimal_operating_level(ordered_generators[0]).should eq(100)
+      @state.optimal_operating_level(ordered_generators[0]).should eq(
+          ordered_generators[0].capacity)
       @state.optimal_operating_level(ordered_generators[1]).should be > 0
 
       @state.stubs(:demand).returns(
           @generator.capacity + another_generator.capacity + 2)
-      @state.optimal_operating_level(ordered_generators[0]).should eq(100)
-      @state.optimal_operating_level(ordered_generators[1]).should eq(100)
+      @state.optimal_operating_level(ordered_generators[0]).should eq(
+          ordered_generators[0].capacity)
+      @state.optimal_operating_level(ordered_generators[1]).should eq(
+          ordered_generators[1].capacity)
     end
 
     it "should return free coordinates" do
@@ -167,6 +172,13 @@ describe State do
       proc { @state.charge_customers }.should change(@state, :cash).by(
           -1 * (@state.marginal_cost_to_customers *
             @state.demanded_since(time)).ceil)
+    end
+
+    it "should deduct operating costs" do
+      operating_costs = -1
+      # TODO
+      proc { @state.deduct_operating_costs }.should change(@state, :cash).by(
+          operating_costs)
     end
 
     it "should know the amount of power demanded since a time" do
