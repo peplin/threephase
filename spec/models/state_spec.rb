@@ -148,19 +148,25 @@ describe State do
         capacity_shortfall = @state.demand - level
         met_capacity = [gen.capacity, capacity_shortfall].min
         level += met_capacity
-        if capacity_shortfall <= 0
+        if capacity_shortfall - level <= 0 or not demand_met?
           mc = gen.marginal_cost
           break
         end
       end
+      @state.marginal_cost_to_customers.should be > 0
       @state.marginal_cost_to_customers.should eq(mc)
     end
 
     it "should charge customers the MC * demand over time" do
       time = 1.hour.ago
       @state.customers_charged_at = time
+      # TODO this is slightly problematic if the difference in time between
+      # charging customers crosses the day boundary. we are using the
+      # marginal_cost_to_consumers for TODAY, so it would calculate the wrong
+      # total. let's not worry about it for the first release.
       proc { @state.charge_customers }.should change(@state, :cash).by(
-          @state.marginal_cost_to_customers * @state.demanded_since(time))
+          -1 * (@state.marginal_cost_to_customers *
+            @state.demanded_since(time)).ceil)
     end
 
     it "should know the amount of power demanded since a time" do
@@ -169,6 +175,13 @@ describe State do
         @state.cities.inject(0) do |demanded, city|
           city.demanded_since(time)
         end)
+    end
+
+    it "should know if demand is met" do
+      @state.stubs(:demand).returns(100)
+      @state.demand_met?.should eq(true)
+      @state.stubs(:demand).returns(300)
+      @state.demand_met?.should eq(false)
     end
 
     it "should be able to step"

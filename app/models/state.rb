@@ -38,10 +38,14 @@ class State < ActiveRecord::Base
 
     def ordered_by_marginal_cost time=nil
       time ||= Time.now.utc
-      find(:all, :readonly => false,
-          :conditions => ["created_at <= ?", time]).sort {|a, b|
-            a.marginal_cost(time) <=> b.marginal_cost(time)
+      find_existing_at(time).sort {|a, b|
+        a.marginal_cost(time) <=> b.marginal_cost(time)
       }
+    end
+
+    def find_existing_at time
+      time ||= Time.now.utc
+      find(:all, :readonly => false, :conditions => ["created_at <= ?", time])
     end
   end
   belongs_to :map
@@ -80,8 +84,8 @@ class State < ActiveRecord::Base
     cities.collect(&:lines).flatten
   end
 
-  def capacity
-    generators.inject(0) {|total, generator|
+  def capacity time=nil
+    generators.find_existing_at(time).inject(0) {|total, generator|
       total + generator.capacity
     }
   end
@@ -130,7 +134,7 @@ class State < ActiveRecord::Base
       capacity_shortfall = demand(time) - level
       met_capacity = [gen.capacity, capacity_shortfall].min
       level += met_capacity
-      if capacity_shortfall <= 0
+      if capacity_shortfall - level <= 0 or not demand_met?(time)
         mc = gen.marginal_cost
         break
       end
@@ -142,6 +146,13 @@ class State < ActiveRecord::Base
   end
 
   def charge_customers
+    self.cash -= (marginal_cost_to_customers *
+        demanded_since(customers_charged_at))
+    self.customers_charged_at = Time.now
+  end
+
+  def demand_met? time=nil
+    capacity >= demand(time)
   end
 
   def demanded_since time

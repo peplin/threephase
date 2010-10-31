@@ -234,13 +234,13 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
   add_index "slugs", ["sluggable_id"], :name => "index_slugs_on_sluggable_id"
 
   create_table "states", :force => true do |t|
-    t.string   "name",                                 :null => false
-    t.integer  "research_budget", :default => 5000000, :null => false
+    t.string   "name",                                      :null => false
+    t.integer  "research_budget",      :default => 5000000, :null => false
     t.integer  "cash"
     t.datetime "stepped_at"
-    t.datetime "charged_at"
-    t.integer  "map_id",                               :null => false
-    t.integer  "game_id",                              :null => false
+    t.datetime "customers_charged_at"
+    t.integer  "map_id",                                    :null => false
+    t.integer  "game_id",                                   :null => false
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -5,7 +5,7 @@ class CreateStates < ActiveRecord::Migration
       t.integer :research_budget, :null => false, :default => 5000000
       t.integer :cash
       t.datetime :stepped_at
-      t.datetime :charged_at
+      t.datetime :customers_charged_at
 
       t.references :map, :null => false
       t.references :game, :null => false
