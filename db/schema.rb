@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101024180804) do
+ActiveRecord::Schema.define(:version => 20101101154610) do
 
   create_table "access_tokens", :force => true do |t|
     t.integer  "user_id"
@@ -187,6 +187,13 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
     t.float    "price",          :null => false
     t.integer  "fuel_market_id", :null => false
     t.integer  "game_id",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "peak_demands", :force => true do |t|
+    t.integer  "city_id",     :null => false
+    t.integer  "peak_demand", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

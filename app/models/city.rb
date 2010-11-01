@@ -1,6 +1,7 @@
 require 'distance'
 require 'simple'
-require 'block'
+require 'natural_resources'
+require 'query_extensions'
 
 class City < ActiveRecord::Base
   include CoordinateDistance
@@ -14,6 +15,11 @@ class City < ActiveRecord::Base
   has_many :bids, :through => :generators
   has_many :outgoing_lines, :class_name => "Line", :foreign_key => "city_id"
   has_many :incoming_lines, :class_name => "Line", :foreign_key => "other_city_id"
+  has_many :peak_demands, :extend => FindByDayExtension do
+    def latest
+      order("created_at DESC")
+    end
+  end
   has_friendly_id :name, :use_slug => true
 
   validates :name, :presence => true
@@ -29,6 +35,7 @@ class City < ActiveRecord::Base
   before_validation :generate_coordinates, :on => :create
   before_create :add_customers
   before_create :calculate_natural_resource_indicies
+  after_create :add_historical_peak_demand
 
   def lines
     Line.with_city(id)
@@ -45,7 +52,7 @@ class City < ActiveRecord::Base
   def demand time=nil
     time ||= Time.now
     ((-0.1 * ((0.42 * time.hour - 5) ** 4) + 100) *
-        customers / DEMAND_SCALE_FACTOR)
+        customers / DEMAND_SCALE_FACTOR).to_int
   end
 
   def load_profile
@@ -54,8 +61,16 @@ class City < ActiveRecord::Base
     end
   end
 
-  def peak_demand
-    load_profile.max
+  def peak_demand time=nil
+    if not time
+      peak = load_profile.max
+      if peak != peak_demands.latest.first.peak_demand
+        peak_demands.create :peak_demand => peak
+      end
+    else
+      peak = peak_demands.find_by_day(time)
+    end
+    peak
   end
 
   def demanded_since time
@@ -108,6 +123,10 @@ class City < ActiveRecord::Base
   def add_customers
     # TODO something better.
     self.customers ||= rand(1000)
+  end
+
+  def add_historical_peak_demand
+    self.peak_demands.create :peak_demand => load_profile.max
   end
 
   def calculate_natural_resource_indicies

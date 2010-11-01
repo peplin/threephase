@@ -51,6 +51,12 @@ describe City do
       @city.peak_demand.should eq(@city.load_profile.max)
     end
 
+    it "should add a new peak demand history if it changes" do
+      proc { @city.peak_demand }.should_not change(PeakDemand, :count)
+      @city.stubs(:demand).returns(0)
+      proc { @city.peak_demand }.should change(PeakDemand, :count).by(1)
+    end
+
     it "should vary demand based on number of customers" do
       time = Time.now.beginning_of_day
       original_demand = @city.demand(time)

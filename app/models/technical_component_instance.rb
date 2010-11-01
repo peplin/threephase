@@ -1,12 +1,10 @@
+require 'query_extensions'
+
 class TechnicalComponentInstance < ActiveRecord::Base
   self.inheritance_column = :instance_type
   has_many :repairs, :as => :repairable, :dependent => :destroy
-  has_many :average_operating_levels, :autosave => true do
-    def find_by_day time
-      find(:all, :conditions => {
-          :created_at => time.at_beginning_of_day..time.end_of_day}).first
-    end
-  end
+  has_many :average_operating_levels, :autosave => true,
+      :extend => FindByDayExtension
   belongs_to :buildable, :polymorphic => true
   belongs_to :city
 

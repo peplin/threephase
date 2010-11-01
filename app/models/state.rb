@@ -1,21 +1,4 @@
-module FindNearestCityExtension
-  def find_nearest x, y
-    shortest_distance = nil
-    nearest = nil
-    find(:all).each do |city|
-      distance = city.distance x, y
-      if shortest_distance == nil or distance < shortest_distance
-        shortest_distance = distance
-        nearest = city
-      end
-    end
-    nearest
-  end
-
-  def find_nearest_to_city city
-    find_nearest city.x, city.y
-  end
-end
+require 'query_extensions'
 
 class State < ActiveRecord::Base
   # Don't place cities any closer than this
@@ -95,9 +78,9 @@ class State < ActiveRecord::Base
     }
   end
 
-  def peak_demand
+  def peak_demand time=nil
     cities.inject(0) {|sum, city|
-      sum + city.peak_demand
+      sum + city.peak_demand(time)
     }
   end
 
