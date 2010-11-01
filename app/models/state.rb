@@ -21,14 +21,12 @@ class State < ActiveRecord::Base
     end
 
     def ordered_by_bid time=nil
-      time ||= Time.now
       find_existing_at(time).sort {|a, b|
         a.bid(time) <=> b.bid(time)
       }
     end
 
     def ordered_by_marginal_cost time=nil
-      time ||= Time.now
       find_existing_at(time).sort {|a, b|
         a.marginal_cost(time) <=> b.marginal_cost(time)
       }
@@ -147,7 +145,16 @@ class State < ActiveRecord::Base
   end
 
   def charge_customers
-    self.cash += (marginal_price * demanded_since(customers_charged_at))
+    # TODO this is slightly problematic if the difference in time between
+    # charging customers crosses the day boundary. we are using the
+    # marginal_price for TODAY, so it would calculate the wrong # total.
+    # let's not worry about it for the first release.
+    self.cash += case game.regulation_type
+      when :ror then ror_cost
+      when :lmp then lmp_cost
+      when :auction then auction_cost
+      else 0
+    end
     self.customers_charged_at = Time.now
     self.cash
   end
@@ -167,6 +174,21 @@ class State < ActiveRecord::Base
   end
 
   private
+
+  def ror_cost
+    cost = cost_since(customers_charged_at)
+    cost + cost * game.rate_of_return
+  end
+
+  def lmp_cost
+    # TODO
+  end
+
+  def auction_cost
+    # TODO if the time between calls to this cross the day boundary, the result
+    # will be incorrect because it will use the marginal price from TODAY
+    marginal_price * demanded_since(customers_charged_at)
+  end
 
   def generate_starting_cash
     self.cash = game.starting_capital

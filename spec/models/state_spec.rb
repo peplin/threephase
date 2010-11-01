@@ -71,15 +71,41 @@ describe State do
           nil)
       end
 
-      context "in an auction game" do
+      context "in an auction based regulation game" do
         before do
           @generator.game.regulation_type = :auction
           @generator.game.save
+          @another_generator.game.reload
+        end
+
+        it "should charge customers the MC * demand over time" do
+          time = 1.hour.ago
+          @state.customers_charged_at = time
+          # TODO this is slightly problematic if the difference in time between
+          # charging customers crosses the day boundary. we are using the
+          # marginal_price for TODAY, so it would calculate the wrong # total. let's not worry about it for the first release.
+          proc { @state.charge_customers }.should change(@state, :cash).by(
+              (@state.marginal_price * @state.demanded_since(time)).to_int)
         end
 
         it "should order generators by bids" do
           @another_generator.bid = @generator.marginal_cost + 1
           @state.generators.ordered_by_bid.first.should eq(@generator)
+        end
+      end
+
+      context "in a rate of return regulation game" do
+        before do
+          @generator.game.regulation_type = :ror
+          @generator.game.save
+        end
+
+        it "should charge customers a rate of return on operating costs" do
+          time = 1.hour.ago
+          @state.customers_charged_at = time
+          cost = @state.cost_since(@state.customers_charged_at)
+          proc { @state.charge_customers }.should change(@state, :cash).by(
+              cost + cost * @state.game.rate_of_return)
         end
       end
     end
@@ -172,16 +198,6 @@ describe State do
       end
       @state.marginal_price.should be > 0
       @state.marginal_price.should eq(mc)
-    end
-
-    it "should charge customers the MC * demand over time" do
-      time = 1.hour.ago
-      @state.customers_charged_at = time
-      # TODO this is slightly problematic if the difference in time between
-      # charging customers crosses the day boundary. we are using the
-      # marginal_price for TODAY, so it would calculate the wrong # total. let's not worry about it for the first release.
-      proc { @state.charge_customers }.should change(@state, :cash).by(
-          (@state.marginal_price * @state.demanded_since(time)).to_int)
     end
 
     it "should deduct operating costs" do
