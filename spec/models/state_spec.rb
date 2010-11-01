@@ -158,8 +158,8 @@ describe State do
           break
         end
       end
-      @state.marginal_cost_to_customers.should be > 0
-      @state.marginal_cost_to_customers.should eq(mc)
+      @state.marginal_price.should be > 0
+      @state.marginal_price.should eq(mc)
     end
 
     it "should charge customers the MC * demand over time" do
@@ -167,11 +167,9 @@ describe State do
       @state.customers_charged_at = time
       # TODO this is slightly problematic if the difference in time between
       # charging customers crosses the day boundary. we are using the
-      # marginal_cost_to_consumers for TODAY, so it would calculate the wrong
-      # total. let's not worry about it for the first release.
+      # marginal_price for TODAY, so it would calculate the wrong # total. let's not worry about it for the first release.
       proc { @state.charge_customers }.should change(@state, :cash).by(
-          (@state.marginal_cost_to_customers *
-            @state.demanded_since(time)).ceil)
+          (@state.marginal_price * @state.demanded_since(time)).ceil)
     end
 
     it "should deduct operating costs" do

@@ -128,7 +128,7 @@ class State < ActiveRecord::Base
     operating_level
   end
 
-  def marginal_cost_to_customers time=nil
+  def marginal_price time=nil
     mc = 0
     generators.ordered_by_marginal_cost.inject(0) do |level, gen|
       capacity_shortfall = peak_demand - level
@@ -156,8 +156,7 @@ class State < ActiveRecord::Base
   end
 
   def charge_customers
-    self.cash += (marginal_cost_to_customers *
-        demanded_since(customers_charged_at))
+    self.cash += (marginal_price * demanded_since(customers_charged_at))
     self.customers_charged_at = Time.now
     self.cash
   end
