@@ -84,17 +84,19 @@ describe Generator do
 
         it "should have an average fuel burn rate for the day" do
           @generator.average_fuel_burn_rate.should eq(
-              @generator.fuel_burn_rate(@generator.average_operating_level))
+              @generator.operating_fuel(@generator.average_operating_level))
         end
 
         it "should have an average fuel burn rate for an arbitrary day" do
+          @generator.created_at = 2.days.ago
           day = 1.day.ago
           @generator.average_fuel_burn_rate(day).should eq(
-              @generator.fuel_burn_rate(
-              @generator.average_operating_level(day)))
+              @generator.operating_fuel(
+                @generator.average_operating_level(day)))
         end
 
         it "should have an average fuel burn dependent only on day, not time" do
+          @generator.created_at = 2.days.ago
           @generator.average_fuel_burn_rate(
               Time.now.at_beginning_of_day).should eq(
               @generator.average_fuel_burn_rate(Time.now.end_of_day))
