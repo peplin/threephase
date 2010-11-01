@@ -49,6 +49,7 @@ describe State do
     context "with another renewable generator" do
       before do
         @another_generator = Factory :renewable_generator, :city => @city
+        @state.generators.reload
       end
 
       it "should have a fuel type finder on generators" do
@@ -68,6 +69,18 @@ describe State do
       it "should only include generators that existed in ordered list" do
         @state.generators.ordered_by_marginal_cost(1.day.ago).first.should eq(
           nil)
+      end
+
+      context "in an auction game" do
+        before do
+          @generator.game.regulation_type = :auction
+          @generator.game.save
+        end
+
+        it "should order generators by bids" do
+          @another_generator.bid = @generator.marginal_cost + 1
+          @state.generators.ordered_by_bid.first.should eq(@generator)
+        end
       end
     end
 
