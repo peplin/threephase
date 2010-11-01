@@ -10,10 +10,8 @@ class Game < ActiveRecord::Base
   has_many :fuel_markets, :through => :market_prices
   has_many :allowed_generator_types
   has_many :allowed_line_types
-  has_many :allowed_storage_device_types
   has_many :generator_types, :through => :allowed_generator_types
   has_many :line_types, :through => :allowed_line_types
-  has_many :storage_device_types, :through => :allowed_storage_device_types
   has_many :states
   has_many :users, :through => :states
   has_many :maps, :through => :states

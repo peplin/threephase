@@ -27,7 +27,6 @@ class State < ActiveRecord::Base
   has_many :incoming_interstate_lines, :class_name => "InterstateLine",
       :foreign_key => "incoming_state_id"
   has_many :cities, :extend => FindNearestCityExtension
-  has_many :storage_devices, :through => :cities
   has_many :generators, :through => :cities do
     def find_by_fuel_market fuel_market
       # Raw SQL to get around the fact that rails doesn't create the double

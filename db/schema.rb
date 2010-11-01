@@ -237,19 +237,12 @@ ActiveRecord::Schema.define(:version => 20101024180804) do
     t.string   "name",                                                    :null => false
     t.integer  "research_budget",      :default => 5000000,               :null => false
     t.integer  "cash"
-    t.datetime "stepped_at",           :default => '2010-10-31 23:28:59'
-    t.datetime "customers_charged_at", :default => '2010-10-31 23:28:59'
-    t.datetime "costs_deducted_at",    :default => '2010-10-31 23:28:59'
+    t.datetime "stepped_at",           :default => '2010-11-01 15:40:28'
+    t.datetime "customers_charged_at", :default => '2010-11-01 15:40:28'
+    t.datetime "costs_deducted_at",    :default => '2010-11-01 15:40:28'
     t.integer  "map_id",                                                  :null => false
     t.integer  "game_id",                                                 :null => false
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "storage_device_types", :force => true do |t|
-    t.float    "decay_rate",                 :null => false
-    t.integer  "efficiency", :default => 50, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

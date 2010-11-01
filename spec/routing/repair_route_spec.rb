@@ -3,18 +3,12 @@ require 'spec_helper'
 describe "routing to repairs" do
   before :all do
     @generator = Factory(:generator).to_param
-    @store = Factory(:storage_device).to_param
     @line = Factory(:line).to_param
     @repair = Factory(:repair).to_param
   end
 
   it "should expose a list of the current game's repairs" do
     {:get => "/repairs"}.should route_to(:action => "index", :controller => "repairs")
-  end
-
-  it "should expose a list of a storage device's repairs in the current game" do
-    {:get => "/storage-devices/#{@store}/repairs"}.should route_to(
-      :action => "index", :storage_device_id => @store, :controller => "repairs")
   end
 
   it "should expose a list of a line's repairs in the current game" do

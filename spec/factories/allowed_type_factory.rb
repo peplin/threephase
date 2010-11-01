@@ -13,9 +13,3 @@ Factory.define :allowed_line_type, :class => AllowedLineType,
   t.association :line_type
   t.buildable_type "LineType"
 end
-
-Factory.define :allowed_storage_device_type, :class => AllowedStorageDeviceType,
-    :parent => :allowed_technical_component_type do |t|
-  t.association :storage_device_type
-  t.buildable_type "StorageDeviceType"
-end

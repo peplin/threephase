@@ -22,8 +22,6 @@ Threephase::Application.routes.draw do
   resources :cities, :only => [:index, :show] do
     resources :lines
     resources :generators
-    resources "storage-devices", :controller => :storage_devices,
-        :as => :storage_devices
     resources :prices, :controller => :fuel_markets, :only => [:index, :show]
   end
 
@@ -32,15 +30,6 @@ Threephase::Application.routes.draw do
     resources :repairs, :only => [:index, :show]
     collection do
       resources :types, :controller => :line_types, :as => :line_types
-    end
-  end
-
-  resources "storage-devices", :controller => :storage_devices,
-      :as => :storage_devices do
-    resources :repairs, :only => [:index, :show]
-    collection do
-      resources :types, :controller => :storage_device_types,
-          :as => :storage_device_types
     end
   end
 

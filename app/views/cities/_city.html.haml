@@ -10,11 +10,6 @@
 %ul
   =render :partial => "lines/line_list", :collection => city.lines, :as => :line
 
-%h4 Storage Devices
-%a{:href => new_city_storage_device_url(city)} New Storage Device
-%ul
-  =render :partial => "storage_devices/storage_device_list", :collection => city.storage_devices, :as => :storage_device
-
 %h5 Load Profile
 .load-profile{:id => "#{city.id}-load-profile", :rel => city.id}
   %noscript

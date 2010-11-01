@@ -14,7 +14,6 @@ class City < ActiveRecord::Base
   has_many :bids, :through => :generators
   has_many :outgoing_lines, :class_name => "Line", :foreign_key => "city_id"
   has_many :incoming_lines, :class_name => "Line", :foreign_key => "other_city_id"
-  has_many :storage_devices
   has_friendly_id :name, :use_slug => true
 
   validates :name, :presence => true
@@ -74,7 +73,7 @@ class City < ActiveRecord::Base
   end
 
   def repairs
-    [generators, lines, storage_devices].collect do |instances|
+    [generators, lines].collect do |instances|
       instances.collect(&:repairs).flatten
     end.flatten!
   end

@@ -1,9 +1,0 @@
-=render :partial => 'global/form_header_fields', :locals => {:object => storage_device}
-%fieldset 
-  .fieldpair
-    %label
-      Type
-      =collection_select :storage_device, :storage_device_type_id, StorageDeviceType.all, :id, :to_s
-%input{:type => 'hidden', :name => 'storage_device[city_id]', :value => storage_device.city.id}
-%button{:type => 'submit'} Save
-%a.button{:href => storage_devices_path} Cancel

@@ -55,16 +55,6 @@ class ApplicationController < ActionController::Base
     @line = Line.find params[:line_id]
   end
 
-  def conditional_find_storage_device
-    if params[:storage_device_id]
-      find_storage_device
-    end
-  end
-
-  def find_storage_device
-    @storage_device = StorageDevice.find params[:storage_device_id]
-  end
-
   def conditional_find_game
     if params[:game_id]
       find_game

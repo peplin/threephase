@@ -1,9 +1,0 @@
-%h1 A Storage Device
-
-%a{:href => edit_storage_device_url(storage_device)} Edit
-
-%dl.attributes
-  %dt City
-  %dd= storage_device.city
-
-= render :partial => 'technical_component_instances/technical_component_instance', :locals => {:instance => storage_device}

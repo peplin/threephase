@@ -11,7 +11,6 @@ describe State do
   it { should have_many :incoming_interstate_lines }
   it { should have_many :outgoing_interstate_lines }
   it { should have_many(:generators).through(:cities) }
-  it { should have_many(:storage_devices).through(:cities) }
   it { should validate_presence_of :name }
   it { should validate_presence_of :research_budget }
   it { should allow_value(1000).for(:research_budget) }
@@ -26,7 +25,6 @@ describe State do
       @generator = Factory :generator, :city => @city
       @generator.fuel_market.initialize_for @state.game
       @line = Factory :line, :city => @city
-      @storage_device = Factory :storage_device, :city => @city
     end
 
     it "should return the map's natural resource index" do
