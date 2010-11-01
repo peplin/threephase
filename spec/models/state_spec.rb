@@ -167,14 +167,12 @@ describe State do
       # charging customers crosses the day boundary. we are using the
       # marginal_price for TODAY, so it would calculate the wrong # total. let's not worry about it for the first release.
       proc { @state.charge_customers }.should change(@state, :cash).by(
-          (@state.marginal_price * @state.demanded_since(time)).ceil)
+          (@state.marginal_price * @state.demanded_since(time)).to_int)
     end
 
     it "should deduct operating costs" do
-      operating_costs = -1
-      # TODO
       proc { @state.deduct_operating_costs }.should change(@state, :cash).by(
-          operating_costs)
+          @state.cost_since(@state.costs_deducted_at))
     end
 
     it "should know the amount of power demanded since a time" do
