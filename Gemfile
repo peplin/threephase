@@ -26,7 +26,8 @@ gem "resque"
 group :test, :development do
   gem 'shoulda'
   gem 'rcov'
-  gem 'rspec-rails', ">= 2.0.0.beta.20"
+  gem 'rspec', ">= 2.0.1"
+  gem 'rspec-rails', ">= 2.0.1"
 
   if RUBY_VERSION < '1.9'
     gem "ruby-debug"
