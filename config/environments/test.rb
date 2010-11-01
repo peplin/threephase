@@ -32,4 +32,6 @@ Threephase::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  ENV["REDISTOGO_URL"] = 'redis://localhost:6379'
 end
