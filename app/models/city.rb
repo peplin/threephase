@@ -78,7 +78,7 @@ class City < ActiveRecord::Base
     ((time.to_i + 10.minutes)..Time.now.utc.to_i
         ).step(10.minutes).inject(0) do |total, hour|
       total + demand(Time.at(hour)) / 6.0
-    end
+    end.ceil
   end
 
   def cost_since time

@@ -75,9 +75,10 @@ describe City do
 
     it "should know the amount of power demanded since a time" do
       time = 6.hours.ago
-      @city.stubs(:demand).returns(1)
-      @city.demanded_since(time).should eq(
-          (time.to_i..Time.now.utc.to_i).step(1.hour).length)
+      @city.stubs(:demand).returns(6)
+      @city.demanded_since(time).should eq(36)
+      @city.stubs(:demand).returns(10)
+      @city.demanded_since(time).should eq(60)
     end
 
     it "should know the current local price" do
