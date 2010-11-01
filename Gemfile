@@ -39,4 +39,5 @@ group :test, :development do
   gem 'mocha'
   gem 'hirb'
   gem 'autotest'
+  gem 'autotest-inotify'
 end
