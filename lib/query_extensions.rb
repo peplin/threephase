@@ -1,6 +1,6 @@
 module FindByDayExtension
   def find_by_day time=nil
-    time ||= Time.now.utc
+    time ||= Time.now
     find(:all, :conditions => {
         :created_at => time.at_beginning_of_day..time.end_of_day}).first
   end
@@ -33,7 +33,7 @@ end
 
 module FindExistingExtension
   def find_existing_at time
-    time ||= Time.now.utc
+    time ||= Time.now
     find(:all, :readonly => false, :conditions => ["created_at <= ?", time])
   end
 end

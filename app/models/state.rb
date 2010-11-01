@@ -21,14 +21,14 @@ class State < ActiveRecord::Base
     end
 
     def ordered_by_bid time=nil
-      time ||= Time.now.utc
+      time ||= Time.now
       find_existing_at(time).sort {|a, b|
         a.bid(time) <=> b.bid(time)
       }
     end
 
     def ordered_by_marginal_cost time=nil
-      time ||= Time.now.utc
+      time ||= Time.now
       find_existing_at(time).sort {|a, b|
         a.marginal_cost(time) <=> b.marginal_cost(time)
       }

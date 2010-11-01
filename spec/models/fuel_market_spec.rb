@@ -66,8 +66,8 @@ describe FuelMarket do
 
       it "should have a current/timed price helper" do
         @market.price(@game).should eq(@market.current_price(@game))
-        @market.price(@game, Time.now.utc).should eq(
-            @market.price_at(@game, Time.now.utc))
+        @market.price(@game, Time.now).should eq(
+            @market.price_at(@game, Time.now))
       end
 
       it "should return the price discount for a city" do
@@ -90,7 +90,7 @@ describe FuelMarket do
       end
 
       it "should have the price for an arbitrary day" do
-        @market.price_at(@game, Time.now.utc).should eq(
+        @market.price_at(@game, Time.now).should eq(
             @market.current_price(@game))
       end
 
