@@ -14,12 +14,11 @@ class City < ActiveRecord::Base
   has_many :generators
   has_many :bids, :through => :generators
   has_many :outgoing_lines, :class_name => "Line", :foreign_key => "city_id"
-  has_many :incoming_lines, :class_name => "Line", :foreign_key => "other_city_id"
-  has_many :peak_demands, :extend => FindByDayExtension do
-    def latest
-      order("created_at DESC")
-    end
-  end
+  has_many :incoming_lines, :class_name => "Line",
+      :foreign_key => "other_city_id"
+  has_many :peak_demands, :extend => [FindByDayExtension, FindLatestExtension]
+  has_many :marginal_prices,
+      :extend => [FindByDayExtension, FindLatestExtension]
   has_friendly_id :name, :use_slug => true
 
   validates :name, :presence => true

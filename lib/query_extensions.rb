@@ -24,3 +24,8 @@ module FindNearestCityExtension
   end
 end
 
+module FindLatestExtension
+  def latest
+    order("created_at DESC")
+  end
+end
