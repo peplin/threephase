@@ -1,6 +1,8 @@
+require 'query_extensions'
+
 class Generator < TechnicalComponentInstance
   belongs_to :generator_type, :foreign_key => "buildable_id"
-  has_many :bids
+  has_many :bids, :extend => FindByDayExtension
   has_many :accepted_bids, :conditions => "accepted = TRUE"
   has_one :fuel_market, :through => :generator_type
 
@@ -8,6 +10,14 @@ class Generator < TechnicalComponentInstance
 
   def takes_bids?
     state.game.regulation_type == :auction
+  end
+
+  def bid time=nil
+    if bid = bids.find_by_day(time)
+      bid.price
+    else
+      marginal_cost time
+    end
   end
 
   def capacity

@@ -113,8 +113,7 @@ class State < ActiveRecord::Base
   end
 
   def marginal_price time=nil
-    price = marginal_prices.find_by_day(time).first
-    if price
+    if price = marginal_prices.find_by_day(time)
       mc = price.marginal_price
     else
       mc = 0

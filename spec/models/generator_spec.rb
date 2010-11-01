@@ -18,6 +18,29 @@ describe Generator do
       it "should return its current revenue"
       it "should return its availability"
 
+      context "in an auction game" do
+        before do
+          @generator.state.game.regulation_type = :auction
+          @generator.save
+        end
+
+        it "should return the bid for an arbitrary day" do
+          bid = Factory :bid, :generator => @generator,
+              :price => @generator.marginal_cost + 2, :created_at => 2.days.ago
+          @generator.bid(2.days.ago).should eq(bid.price)
+        end
+
+        it "should return the bid for today" do
+          bid = Factory :bid, :generator => @generator,
+              :price => @generator.marginal_cost + 1
+          @generator.bid.should eq(bid.price)
+        end
+
+        it "should bid in at marginal cost if there is no bid for a day" do
+          @generator.bid.should eq(@generator.marginal_cost)
+        end
+      end
+
       it "should have a marginal cost shortcut" do
         @generator.marginal_cost.should eq(
             @generator.generator_type.marginal_cost(@generator.city))

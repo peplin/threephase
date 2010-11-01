@@ -1,5 +1,6 @@
 module FindByDayExtension
-  def find_by_day time
+  def find_by_day time=nil
+    time ||= Time.now.utc
     find(:all, :conditions => {
         :created_at => time.at_beginning_of_day..time.end_of_day}).first
   end
