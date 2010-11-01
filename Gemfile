@@ -18,6 +18,7 @@ gem "enumerated_attribute"
 gem "haml"
 gem "dynamic_form"
 gem "seed-fu", :git => "git://github.com/peplin/seed-fu.git", :branch => "rails3"
+gem "resque"
 
 # Deploy with Capistrano
 # gem 'capistrano'
