@@ -20,6 +20,10 @@ class Generator < TechnicalComponentInstance
     end
   end
 
+  def bid= price
+    bids.create :price => price
+  end
+
   def capacity
     generator_type.capacity
   end

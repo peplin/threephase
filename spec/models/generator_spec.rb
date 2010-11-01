@@ -20,8 +20,12 @@ describe Generator do
 
       context "in an auction game" do
         before do
-          @generator.state.game.regulation_type = :auction
-          @generator.save
+          @generator.game.regulation_type = :auction
+          @generator.game.save
+        end
+
+        it "should create a bid for the day" do
+          proc { @generator.bid = 42 }.should change(Bid, :count).by(1)
         end
 
         it "should return the bid for an arbitrary day" do
