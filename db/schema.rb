@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20101101165725) do
     t.integer  "sunfall",                :default => 50,          :null => false
     t.integer  "water_flow",             :default => 50,          :null => false
     t.string   "regulation_type",        :default => "ror",       :null => false
+    t.integer  "rate_of_return"
     t.float    "starting_capital",       :default => 500000000.0, :null => false
     t.integer  "interest_rate",          :default => 6,           :null => false
     t.integer  "reliability_constraint", :default => 1,           :null => false
@@ -258,9 +259,9 @@ ActiveRecord::Schema.define(:version => 20101101165725) do
     t.string   "name",                                                    :null => false
     t.integer  "research_budget",      :default => 5000000,               :null => false
     t.integer  "cash"
-    t.datetime "stepped_at",           :default => '2010-11-01 17:00:48'
-    t.datetime "customers_charged_at", :default => '2010-11-01 17:00:48'
-    t.datetime "costs_deducted_at",    :default => '2010-11-01 17:00:48'
+    t.datetime "stepped_at",           :default => '2010-11-01 20:13:42'
+    t.datetime "customers_charged_at", :default => '2010-11-01 20:13:42'
+    t.datetime "costs_deducted_at",    :default => '2010-11-01 20:13:42'
     t.integer  "map_id",                                                  :null => false
     t.integer  "game_id",                                                 :null => false
     t.integer  "user_id"

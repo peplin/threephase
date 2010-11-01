@@ -20,6 +20,8 @@ class Game < ActiveRecord::Base
     label :ror => "Rate of Return"
   end
   validates :regulation_type, :presence => true
+  validates :rate_of_return, :presence => true, :percentage => true,
+      :if => Proc.new { |game| game.regulation_type == :ror }
 
   validates :speed, :presence => true, :percentage => true
   validates :max_players, :numericality => {:greater_than_or_equal_to => 1},
@@ -54,6 +56,7 @@ class Game < ActiveRecord::Base
   validates :public_support, :presence => true, :percentage => true
 
   after_create :initialize_markets
+  before_validation :set_default_ror, :on => :create 
 
   def current_price market
     market.current_price self
@@ -94,6 +97,12 @@ class Game < ActiveRecord::Base
   end
 
   private
+
+  def set_default_ror
+    if not rate_of_return
+      self.rate_of_return = 8
+    end
+  end
 
   def initialize_markets
     FuelMarket.all.each do |market|
