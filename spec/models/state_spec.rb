@@ -75,7 +75,11 @@ describe State do
         before do
           @generator.game.regulation_type = :auction
           @generator.game.save
-          @another_generator.game.reload
+          # TODO we should just have to reload the game here, but for some
+          # reason it is not working
+          @another_generator.game.regulation_type = :auction
+          @another_generator.game.save
+          @state.reload
         end
 
         it "should charge customers the MC * demand over time" do
@@ -98,6 +102,7 @@ describe State do
         before do
           @generator.game.regulation_type = :ror
           @generator.game.save
+          @state.reload
         end
 
         it "should charge customers a rate of return on operating costs" do
@@ -197,7 +202,7 @@ describe State do
         end
       end
       @state.marginal_price.should be > 0
-      @state.marginal_price.should eq(mc)
+      @state.marginal_price.should be_close(mc, 0.0001)
     end
 
     it "should deduct operating costs" do
