@@ -3,6 +3,7 @@ require 'spec_helper'
 describe City do
   it { should belong_to :state }
   it { should have_many :generators }
+  it { should have_many :locational_marginal_prices }
   it { should have_many(:bids).through(:generators) }
   it { should have_db_index [:x, :y, :state_id] }
 

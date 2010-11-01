@@ -17,7 +17,7 @@ class City < ActiveRecord::Base
   has_many :incoming_lines, :class_name => "Line",
       :foreign_key => "other_city_id"
   has_many :peak_demands, :extend => [FindByDayExtension, FindLatestExtension]
-  has_many :marginal_prices,
+  has_many :locational_marginal_prices,
       :extend => [FindByDayExtension, FindLatestExtension]
   has_friendly_id :name, :use_slug => true
 
@@ -46,6 +46,16 @@ class City < ActiveRecord::Base
   
   def game
     state.game
+  end
+
+  def marginal_price time=nil
+    price = locational_marginal_prices.find_by_day(time)
+    if price
+      price.marginal_price
+    else
+      # TODO calculate LMP through state?
+      nil
+    end
   end
 
   def demand time=nil

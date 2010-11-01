@@ -5,6 +5,8 @@ class State < ActiveRecord::Base
   CITY_BUFFER = 50
 
   has_many :research_advancements
+  has_many :marginal_prices,
+      :extend => [FindByDayExtension, FindLatestExtension]
   has_many :outgoing_interstate_lines, :class_name => "InterstateLine",
       :foreign_key => "outgoing_state_id"
   has_many :incoming_interstate_lines, :class_name => "InterstateLine",
@@ -111,16 +113,22 @@ class State < ActiveRecord::Base
   end
 
   def marginal_price time=nil
-    mc = 0
-    generators.ordered_by_marginal_cost.inject(0) do |level, gen|
-      capacity_shortfall = peak_demand - level
-      met_capacity = [gen.capacity, capacity_shortfall].min
-      level += met_capacity
-      if capacity_shortfall - level <= 0 or not demand_met?(time)
-        mc = gen.marginal_cost
-        break
+    price = marginal_prices.find_by_day(time).first
+    if price
+      mc = price.marginal_price
+    else
+      mc = 0
+      generators.ordered_by_marginal_cost.inject(0) do |level, gen|
+        capacity_shortfall = peak_demand - level
+        met_capacity = [gen.capacity, capacity_shortfall].min
+        level += met_capacity
+        if capacity_shortfall - level <= 0 or not demand_met?(time)
+          mc = gen.marginal_cost
+          break
+        end
+        level
       end
-      level
+      marginal_prices.create :marginal_price => mc, :created_at => time
     end
     mc
   end

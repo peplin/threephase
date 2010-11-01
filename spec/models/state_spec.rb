@@ -8,6 +8,7 @@ describe State do
   it { should validate_presence_of :game }
   it { should validate_presence_of :user }
   it { should have_many :research_advancements }
+  it { should have_many :marginal_prices }
   it { should have_many :incoming_interstate_lines }
   it { should have_many :outgoing_interstate_lines }
   it { should have_many(:generators).through(:cities) }

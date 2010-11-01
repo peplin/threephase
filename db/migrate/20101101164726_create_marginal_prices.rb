@@ -1,7 +1,7 @@
 class CreateMarginalPrices < ActiveRecord::Migration
   def self.up
     create_table :marginal_prices do |t|
-      t.references :city, :null => false
+      t.references :state, :null => false
       t.float :marginal_price, :null => false
 
       t.timestamps

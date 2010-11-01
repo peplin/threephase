@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101101154610) do
+ActiveRecord::Schema.define(:version => 20101101165725) do
 
   create_table "access_tokens", :force => true do |t|
     t.integer  "user_id"
@@ -173,6 +173,13 @@ ActiveRecord::Schema.define(:version => 20101101154610) do
     t.datetime "updated_at"
   end
 
+  create_table "locational_marginal_prices", :force => true do |t|
+    t.integer  "city_id",        :null => false
+    t.float    "marginal_price", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "maps", :force => true do |t|
     t.string   "name",        :null => false
     t.string   "cached_slug"
@@ -182,6 +189,13 @@ ActiveRecord::Schema.define(:version => 20101101154610) do
   end
 
   add_index "maps", ["cached_slug"], :name => "index_maps_on_cached_slug", :unique => true
+
+  create_table "marginal_prices", :force => true do |t|
+    t.integer  "state_id",       :null => false
+    t.float    "marginal_price", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "market_prices", :force => true do |t|
     t.float    "price",          :null => false
@@ -244,9 +258,9 @@ ActiveRecord::Schema.define(:version => 20101101154610) do
     t.string   "name",                                                    :null => false
     t.integer  "research_budget",      :default => 5000000,               :null => false
     t.integer  "cash"
-    t.datetime "stepped_at",           :default => '2010-11-01 15:40:28'
-    t.datetime "customers_charged_at", :default => '2010-11-01 15:40:28'
-    t.datetime "costs_deducted_at",    :default => '2010-11-01 15:40:28'
+    t.datetime "stepped_at",           :default => '2010-11-01 17:00:48'
+    t.datetime "customers_charged_at", :default => '2010-11-01 17:00:48'
+    t.datetime "costs_deducted_at",    :default => '2010-11-01 17:00:48'
     t.integer  "map_id",                                                  :null => false
     t.integer  "game_id",                                                 :null => false
     t.integer  "user_id"
