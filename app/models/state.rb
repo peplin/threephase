@@ -12,7 +12,7 @@ class State < ActiveRecord::Base
   has_many :incoming_interstate_lines, :class_name => "InterstateLine",
       :foreign_key => "incoming_state_id"
   has_many :cities, :extend => FindNearestCityExtension
-  has_many :generators, :through => :cities do
+  has_many :generators, :through => :cities, :extend => FindExistingExtension do
     def find_by_fuel_market fuel_market
       # Raw SQL to get around the fact that rails doesn't create the double
       # join here properly. 
@@ -20,16 +20,18 @@ class State < ActiveRecord::Base
           :conditions => {:generator_types => {:fuel_market_id => fuel_market}})
     end
 
+    def ordered_by_bid time=nil
+      time ||= Time.now.utc
+      find_existing_at(time).sort {|a, b|
+        a.bid(time) <=> b.bid(time)
+      }
+    end
+
     def ordered_by_marginal_cost time=nil
       time ||= Time.now.utc
       find_existing_at(time).sort {|a, b|
         a.marginal_cost(time) <=> b.marginal_cost(time)
       }
-    end
-
-    def find_existing_at time
-      time ||= Time.now.utc
-      find(:all, :readonly => false, :conditions => ["created_at <= ?", time])
     end
   end
   belongs_to :map

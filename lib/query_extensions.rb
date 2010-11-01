@@ -30,3 +30,10 @@ module FindLatestExtension
     order("created_at DESC")
   end
 end
+
+module FindExistingExtension
+  def find_existing_at time
+    time ||= Time.now.utc
+    find(:all, :readonly => false, :conditions => ["created_at <= ?", time])
+  end
+end
