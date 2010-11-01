@@ -11,7 +11,8 @@ class TechnicalComponentInstance < ActiveRecord::Base
   validates :city, :presence => true
   has_one :state, :through => :city
 
-  after_create :add_average_operating_level
+  # TODO is there a more sensible way to prime the average operating level?
+  after_create :operating_level 
 
   def game
     state.game
@@ -24,8 +25,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
   def operating_level time=nil
     if not time
       if not @operating_level
-        @operating_level = city.state.optimal_operating_level self, time
-        update_average_operating_level
+        self.operating_level = city.state.optimal_operating_level self, time
       end
       @operating_level
     else
@@ -39,9 +39,12 @@ class TechnicalComponentInstance < ActiveRecord::Base
   end
 
   def average_operating_level time=nil
-    time ||= Time.now
-    level = average_operating_levels.find_by_day(time)
-    level ? level.operating_level : 0
+    if (time and time <= created_at or
+        not level = average_operating_levels.find_by_day(time))
+      0
+    else
+      level.operating_level
+    end
   end
 
   def step
@@ -53,10 +56,6 @@ class TechnicalComponentInstance < ActiveRecord::Base
 
   private
 
-  def add_average_operating_level
-    self.average_operating_levels.create(:operating_level => 0)
-  end
-
   def update_average_operating_level
     # TODO use game time if applicable
     average_level = average_operating_levels.find_by_day(Date.today)
@@ -64,7 +63,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
       average_level.refresh(@operating_level)
       average_level.save
     else
-      add_average_operating_level
+      self.average_operating_levels.create(:operating_level => operating_level)
     end
   end
 end

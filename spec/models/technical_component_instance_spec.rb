@@ -37,6 +37,8 @@ describe TechnicalComponentInstance do
 
       it "should have an average operating level for an arbitrary day" do
         day = 1.day.ago
+        @instance.created_at = day - 30.seconds
+        @instance.save
         level = @instance.average_operating_levels.first
         level.created_at = day
         level.save
@@ -47,6 +49,8 @@ describe TechnicalComponentInstance do
       end
 
       it "should have an average operating level dependent only on day" do
+        @instance.created_at = 1.day.ago
+        @instance.save
         time = Time.now
         @instance.average_operating_level(
             time.at_beginning_of_day).should eq(
@@ -59,6 +63,10 @@ describe TechnicalComponentInstance do
             normalized_operating_level(new_level)).to_int
         proc { @instance.operating_level = new_level }.should change(@instance,
             :average_operating_level).to(new_average)
+      end
+
+      it "should not have an average operating level for a time before this existed" do
+        @instance.average_operating_level(1.hour.ago).should eq(0)
       end
     end
 
