@@ -19,7 +19,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
   end
 
   def operated_hours time
-    game.time_since(time) / 1.hour
+    (game.time.now - time) / 1.hour
   end
 
   def operating_level time=nil

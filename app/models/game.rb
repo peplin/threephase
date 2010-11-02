@@ -3,8 +3,6 @@ require 'simple'
 class Game < ActiveRecord::Base
   include SimpleExtensions
 
-  TIME_SCALE_FACTOR = [1 / 0.8, 1 / 0.2]
-
   acts_as_limited
   has_many :market_prices
   has_many :fuel_markets, :through => :market_prices
@@ -23,7 +21,8 @@ class Game < ActiveRecord::Base
   validates :rate_of_return, :presence => true, :percentage => true,
       :if => Proc.new { |game| game.regulation_type == :ror }
 
-  validates :speed, :presence => true, :percentage => true
+  validates :speed, :presence => true, :numericality => {
+      :greater_than_or_equal_to => 1, :less_than_or_equal_to => 200}
   validates :max_players, :numericality => {:greater_than_or_equal_to => 1},
       :allow_nil => true
 
@@ -56,7 +55,7 @@ class Game < ActiveRecord::Base
   validates :public_support, :presence => true, :percentage => true
 
   after_create :initialize_markets
-  before_validation :set_default_ror, :on => :create 
+  before_validation :set_default_ror, :on => :create
 
   def current_price market
     market.current_price self
@@ -91,9 +90,40 @@ class Game < ActiveRecord::Base
     "#{states.count} confirmed players, #{started ? "started #{started}" : "not started"}"
   end
 
-  def time_since time
-    range_map(speed, 0, 100, TIME_SCALE_FACTOR[0],
-        TIME_SCALE_FACTOR[1]) * Float(Time.now - time)
+  def time
+    if not @time
+      klass = Class.new(DelegateClass(Time)) do
+        class << self
+          attr_reader :speed, :epoch
+
+          def at other
+            if other.is_a?(self)
+              new(other)
+            else
+              new(epoch + speed * (other - epoch))
+            end
+          end
+
+          def now
+            at(Time.now)
+          end
+        end
+
+        def initialize time
+          super(time)
+        end
+
+        def - other
+          super(self.class.at(other))
+        end
+      end
+      klass.instance_variable_set(:@speed, speed)
+      klass.instance_variable_set(:@epoch, created_at)
+      # TODO could get into trouble here, because this is a class constant
+      # shared by intances of Game with different epoch/speeds.
+      @time = Game.const_set("GameTime", klass)
+    end
+    @time
   end
 
   private

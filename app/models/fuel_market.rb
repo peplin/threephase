@@ -40,9 +40,6 @@ class FuelMarket < ActiveRecord::Base
     }
   end
 
-  def peak_demand game
-  end
-
   def demand game
     generators.find_by_game(game).inject(0) {|demand, generator|
       demand + generator.fuel_burn_rate

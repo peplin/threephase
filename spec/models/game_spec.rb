@@ -58,10 +58,6 @@ describe Game do
   it { should validate_presence_of :political_opposition }
   it { should validate_presence_of :public_support }
 
-  it "should have a base time scale factor" do
-    assert Game::TIME_SCALE_FACTOR
-  end
-
   context "A Game instance" do
     before do
       @fuel_market = Factory :fuel_market
@@ -82,6 +78,12 @@ describe Game do
 
     it "should be able to step"
 
+    context "with a scaled time" do
+      it "should have the same speed as the game" do
+        @game.time.speed.should eq(@game.speed)
+      end
+    end
+
     it "should return all generators" do
       generators = @game.states.collect(&:generators).flatten
       @game.generators.should eq(generators)
@@ -95,26 +97,42 @@ describe Game do
       @game.generators.should eq(generators)
     end
 
-    context "that has been updated" do
+    context "A game time instance" do
       before do
-        @game.updated_at = Time.now - 60
-        @now = Time.now
-        Time.stubs(:now).returns(@now)
+        stub_time
+        @game.speed = 1
+        @game.save
       end
 
-      it "should scale time passed based on game speed" do
-        @game.speed = 0
-        real_time = @game.time_since_update
-        @game.speed = 1
-        fast_time = @game.time_since_update
-        real_time.should be > (@now - @game.updated_at)
-        fast_time.should be > (@now - @game.updated_at)
-        real_time.should be < fast_time
+      context "with real-time speed" do
+        it "should return a non-scaled game time" do
+          @game.time.at(1.hour.ago).should be_close(1.hour.ago, 0.1)
+          @game.time.now.should be_close(Time.now, 0.1)
+        end
       end
 
-      it "should know how much time has passed with maxiumum speed" do
-        @game.speed = 1
-        @game.time_since_update.should be > (@now - @game.updated_at)
+      context "with a scaled speed" do
+        before do
+          @game.created_at = 10.minutes.ago
+          @game.speed = 2
+          @time = @game.time
+        end
+
+        it "should scale time passed based on game speed" do
+          @time.now.should eq(10.minutes.from_now)
+        end
+
+        it "should return a time scaled to game time" do
+          @time.now.should eq(@time.at(Time.now))
+        end
+
+        it "should convert Time to GameTime before subtracting" do
+          (@time.now - Time.now).should eq(0)
+        end
+
+        it "should not convert GameTime to GameTime before subtracting" do
+          (@time.at(10.minutes.from_now) - @time.now).should eq(20.minutes)
+        end
       end
     end
   end

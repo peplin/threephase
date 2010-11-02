@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20101101165725) do
   add_index "fuel_markets", ["cached_slug"], :name => "index_fuel_markets_on_cached_slug", :unique => true
 
   create_table "games", :force => true do |t|
-    t.integer  "speed",                  :default => 0,           :null => false
+    t.integer  "speed",                  :default => 100,         :null => false
     t.datetime "updated_at"
     t.integer  "max_players"
     t.datetime "started"
@@ -259,9 +259,9 @@ ActiveRecord::Schema.define(:version => 20101101165725) do
     t.string   "name",                                                    :null => false
     t.integer  "research_budget",      :default => 5000000,               :null => false
     t.integer  "cash"
-    t.datetime "stepped_at",           :default => '2010-11-01 20:13:42'
-    t.datetime "customers_charged_at", :default => '2010-11-01 20:13:42'
-    t.datetime "costs_deducted_at",    :default => '2010-11-01 20:13:42'
+    t.datetime "stepped_at",           :default => '2010-11-02 00:56:19'
+    t.datetime "customers_charged_at", :default => '2010-11-02 00:56:19'
+    t.datetime "costs_deducted_at",    :default => '2010-11-02 00:56:19'
     t.integer  "map_id",                                                  :null => false
     t.integer  "game_id",                                                 :null => false
     t.integer  "user_id"
