@@ -140,7 +140,7 @@ class Game < ActiveRecord::Base
         end
 
         def range other
-          ((self.class.at(time).to_i + 10.minutes)..self.to_i)
+          ((self.class.at(other).to_i + 10.minutes)..self.to_i)
         end
 
         def - other

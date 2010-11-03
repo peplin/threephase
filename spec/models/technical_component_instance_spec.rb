@@ -44,7 +44,8 @@ describe TechnicalComponentInstance do
         level.save
 
         returned_level = @instance.average_operating_level(day)
-        level = @instance.average_operating_levels.find_by_day(day)
+        level = @instance.average_operating_levels.find_by_day(
+            @instance.game, day)
         returned_level.should eq(level.operating_level)
       end
 

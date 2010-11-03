@@ -15,7 +15,9 @@ describe City do
 
   context "A City instance" do
     before do
-      @city = Factory :city, :x => 100, :y => 100
+      @game = Factory :game, :created_at => 1.day.ago
+      @state = Factory :state, :game => @game
+      @city = Factory :city, :x => 100, :y => 100, :state => @state
       @generator = Factory :generator, :city => @city
     end
 
@@ -77,9 +79,9 @@ describe City do
     it "should know the amount of power demanded since a time" do
       time = 6.hours.ago
       @city.stubs(:demand).returns(6)
-      @city.demanded_since(time).should eq(36)
+      @city.demanded_since(time).should be_close(36 * @city.game.speed, 1.1)
       @city.stubs(:demand).returns(10)
-      @city.demanded_since(time).should eq(60)
+      @city.demanded_since(time).should be_close(60 * @city.game.speed, 1.1)
     end
 
     it "should know the current local price" do
