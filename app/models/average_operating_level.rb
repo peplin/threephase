@@ -9,10 +9,14 @@ class AverageOperatingLevel < ActiveRecord::Base
   validates :technical_component_instance, :presence => true
 
   def normalized_operating_level new_operating_level
-    old_hours = updated_at.hour + 1
-    new_hours = technical_component_instance.game.time.now.hour + 1
+    old_hours = game.time.at(updated_at).hour + 1
+    new_hours = game.time.now.hour + 1
     normalized_average operating_level, new_operating_level, old_hours,
         new_hours
+  end
+
+  def game
+    technical_component_instance.game
   end
 
   def refresh new_operating_level
