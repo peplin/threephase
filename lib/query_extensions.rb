@@ -1,6 +1,7 @@
 module FindByDayExtension
-  def find_by_day time=nil
+  def find_by_day game, time=nil
     time ||= Time.now
+    time = game.time.to_normal(time)
     find(:all, :conditions => {
         :created_at => time.at_beginning_of_day..time.end_of_day}).first
   end
@@ -32,8 +33,9 @@ module FindLatestExtension
 end
 
 module FindExistingExtension
-  def find_existing_at time
+  def find_existing_at game, time
     time ||= Time.now
+    time = game.time.to_normal(time)
     find(:all, :readonly => false, :conditions => ["created_at <= ?", time])
   end
 end

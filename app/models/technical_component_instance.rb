@@ -40,7 +40,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
 
   def average_operating_level time=nil
     if (time and time <= created_at or
-        not level = average_operating_levels.find_by_day(time))
+        not level = average_operating_levels.find_by_day(game, time))
       0
     else
       level.operating_level
@@ -58,7 +58,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
 
   def update_average_operating_level
     today = game.time.now.to_date
-    average_level = average_operating_levels.find_by_day(today)
+    average_level = average_operating_levels.find_by_day(game, today)
     if average_level and average_level.created_at.to_date == today
       average_level.refresh(@operating_level)
       average_level.save

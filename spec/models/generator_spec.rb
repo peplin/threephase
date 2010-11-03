@@ -9,9 +9,16 @@ describe Generator do
   it { should validate_presence_of :generator_type }
 
   context "an instance of Generator" do
+    before do
+      @game = Factory :game, :created_at => 2.hours.ago
+      @state = Factory :state, :game => @game
+      @city = Factory :city, :state => @state
+    end
+
     context "with non-renewable fuel" do
       before do
-        @generator = Factory :generator, :created_at => 2.hours.ago
+        @generator = Factory :generator, :city => @city,
+            :created_at => 2.hours.ago
         stub_time
       end
 
@@ -60,14 +67,15 @@ describe Generator do
       end
 
       it "should know how much fuel it has used since a point in time" do
-        time = 2.hours.ago
+        time = @generator.game.time.now - 2.hours
         @generator.stubs(:fuel_burn_rate).returns(1)
         @generator.fuel_used_since(time).should eq(2)
       end
 
       it "should use more fuel over time" do
-        @generator.fuel_used_since(1.hour.ago).should be > (
-            @generator.fuel_used_since(10.minutes.ago))
+        @generator.fuel_used_since(
+            @generator.game.time.now - 1.hour).should be > (
+              @generator.fuel_used_since(@generator.game.time.now - 10.minutes))
       end
 
       context "fuel burn rate" do
@@ -106,7 +114,8 @@ describe Generator do
 
     context "with renewable fuel" do
       before do
-        @generator = Factory :renewable_generator, :created_at => 2.hours.ago
+        @generator = Factory :renewable_generator, :city => @city,
+            :created_at => 2.hours.ago
       end
 
       it "should not use any fuel" do

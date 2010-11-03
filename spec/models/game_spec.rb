@@ -100,8 +100,7 @@ describe Game do
     context "A game time instance" do
       before do
         stub_time
-        @game.speed = 1
-        @game.save
+        @game = Factory :game, :speed => 1, :created_at => 2.hours.ago
       end
 
       context "with real-time speed" do
@@ -109,17 +108,26 @@ describe Game do
           @game.time.at(1.hour.ago).should be_close(1.hour.ago, 0.1)
           @game.time.now.should be_close(Time.now, 0.1)
         end
+
+        it "should convert an integer to Time" do
+          time = Time.now
+          # Could be ~1 off due to int truncation issues, but that's just an
+          # issue with the test.
+          @game.time.at(time.to_i).to_i.should be_close(
+              @game.time.at(time).to_i, 1.1)
+          @game.time.at(time.to_i).to_i.should be_close(
+              Time.at(time.to_i).to_i, 1.1)
+        end
       end
 
       context "with a scaled speed" do
         before do
-          @game.created_at = 10.minutes.ago
-          @game.speed = 2
+          @game = Factory :game, :speed => 10, :created_at => 10.minutes.ago
           @time = @game.time
         end
 
         it "should scale time passed based on game speed" do
-          @time.now.should eq(10.minutes.from_now)
+          @time.now.should eq(90.minutes.from_now)
         end
 
         it "should return a time scaled to game time" do
@@ -131,7 +139,20 @@ describe Game do
         end
 
         it "should not convert GameTime to GameTime before subtracting" do
-          (@time.at(10.minutes.from_now) - @time.now).should eq(20.minutes)
+          (@time.at(10.minutes.from_now) - @time.now).should eq(100.minutes)
+        end
+
+        it "should convert an integer to Time" do
+          time = Time.now
+          # Again, due to some conversions this will be close but probably off
+          # by a few seconds. If there was a real error, it would be off by more
+          # than that, since the time speed is 10.
+          @time.at(time.to_i).to_i.should be_close(@time.at(time).to_i, 10)
+        end
+
+        it "should de-scale a game time to normal" do
+          time = Time.now
+          @time.to_normal(@time.at(time)).should eq(time)
         end
       end
     end

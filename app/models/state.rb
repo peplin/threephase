@@ -20,14 +20,14 @@ class State < ActiveRecord::Base
           :conditions => {:generator_types => {:fuel_market_id => fuel_market}})
     end
 
-    def ordered_by_bid time=nil
-      find_existing_at(time).sort {|a, b|
+    def ordered_by_bid game, time=nil
+      find_existing_at(game, time).sort {|a, b|
         a.bid(time) <=> b.bid(time)
       }
     end
 
-    def ordered_by_marginal_cost time=nil
-      find_existing_at(time).sort {|a, b|
+    def ordered_by_marginal_cost game, time=nil
+      find_existing_at(game, time).sort {|a, b|
         a.marginal_cost(time) <=> b.marginal_cost(time)
       }
     end
@@ -69,7 +69,7 @@ class State < ActiveRecord::Base
   end
 
   def capacity time=nil
-    generators.find_existing_at(time).inject(0) {|total, generator|
+    generators.find_existing_at(game, time).inject(0) {|total, generator|
       total + generator.capacity
     }
   end
@@ -97,7 +97,7 @@ class State < ActiveRecord::Base
 
   def optimal_operating_level generator, time=nil
     operating_level = 0
-    generators.ordered_by_marginal_cost(time).inject(0) do |level, gen|
+    generators.ordered_by_marginal_cost(game, time).inject(0) do |level, gen|
       capacity_shortfall = demand(time) - level
       met_capacity = [gen.capacity, capacity_shortfall].min
       level += met_capacity
@@ -113,11 +113,11 @@ class State < ActiveRecord::Base
   end
 
   def marginal_price time=nil
-    if price = marginal_prices.find_by_day(time)
+    if price = marginal_prices.find_by_day(game, time)
       mc = price.marginal_price
     else
       mc = 0
-      generators.ordered_by_marginal_cost.inject(0) do |level, gen|
+      generators.ordered_by_marginal_cost(game).inject(0) do |level, gen|
         capacity_shortfall = peak_demand - level
         met_capacity = [gen.capacity, capacity_shortfall].min
         level += met_capacity
@@ -127,6 +127,7 @@ class State < ActiveRecord::Base
         end
         level
       end
+      time ||= Time.now
       marginal_prices.create :marginal_price => mc, :created_at => time
     end
     mc

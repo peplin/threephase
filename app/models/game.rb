@@ -103,17 +103,52 @@ class Game < ActiveRecord::Base
               if not other.is_a?(Time)
                 other = Time.at(other)
               end
-              new(epoch + speed * (other - epoch))
+              new(scale(other))
             end
           end
 
           def now
             at(Time.now)
           end
+          
+          def to_normal time
+            if time.is_a?(self)
+              normal_time = Time.at(descale(time))
+            else
+              normal_time = time
+            end
+            normal_time
+          end
+
+          private
+
+          def scale other
+            check other
+            epoch + speed * (other - epoch)
+          end
+
+          def descale other
+            check other
+            epoch + (other - epoch) / speed
+          end
+
+          def check other
+            if other < epoch
+              raise RangeError, 'Time to scale must be after epoch'
+            end
+          end
+        end
+
+        def range other
+          ((self.class.at(time).to_i + 10.minutes)..self.to_i)
         end
 
         def - other
-          super(self.class.at(other))
+          if other.is_a?(Fixnum)
+            super
+          else
+            super(self.class.at(other))
+          end
         end
       end
       klass.instance_variable_set(:@speed, speed)

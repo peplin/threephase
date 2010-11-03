@@ -49,7 +49,7 @@ class City < ActiveRecord::Base
   end
 
   def marginal_price time=nil
-    price = locational_marginal_prices.find_by_day(time)
+    price = locational_marginal_prices.find_by_day(game, time)
     if price
       price.marginal_price
     else
@@ -77,15 +77,13 @@ class City < ActiveRecord::Base
         peak_demands.create :peak_demand => peak
       end
     else
-      peak = peak_demands.find_by_day(time)
+      peak = peak_demands.find_by_day(game, time)
     end
     peak
   end
 
   def demanded_since time
-    # TODO would be nice to do this with an integral
-    ((time.to_i + 10.minutes)..game.time.now.to_i
-        ).step(10.minutes).inject(0) do |total, hour|
+    game.time.now.range(time).step(10.minutes).inject(0) do |total, hour|
       total + demand(game.time.at(hour)) / 6.0
     end.ceil
   end

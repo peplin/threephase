@@ -62,12 +62,12 @@ describe State do
       end
 
       it "should order generators by marginal cost" do
-        @state.generators.ordered_by_marginal_cost.first.should eq(
+        @state.generators.ordered_by_marginal_cost(@state.game).first.should eq(
             @another_generator)
       end
 
       it "should only include generators that existed in ordered list" do
-        @state.generators.ordered_by_marginal_cost(1.day.ago).first.should eq(
+        @state.generators.ordered_by_marginal_cost(@state.game, 1.day.ago).first.should eq(
           nil)
       end
 
@@ -94,7 +94,8 @@ describe State do
 
         it "should order generators by bids" do
           @another_generator.bid = @generator.marginal_cost + 1
-          @state.generators.ordered_by_bid.first.should eq(@generator)
+          @state.generators.ordered_by_bid(@state.game).first.should eq(
+              @generator)
         end
       end
 
@@ -152,7 +153,7 @@ describe State do
     it "should set all generator operating levels based on the MC curve" do
       another_generator = Factory :generator, :city => @city
       another_generator.fuel_market.initialize_for @state.game
-      ordered_generators = @state.generators.ordered_by_marginal_cost
+      ordered_generators = @state.generators.ordered_by_marginal_cost(@state.game)
       @state.stubs(:demand).returns(@generator.capacity - 1)
       @state.optimal_operating_level(ordered_generators[0]).should be < (
           ordered_generators[0].capacity)
@@ -192,7 +193,7 @@ describe State do
 
     it "should return the marginal cost to customers" do
       mc = 0
-      @state.generators.ordered_by_marginal_cost.inject(0) do |level, gen|
+      @state.generators.ordered_by_marginal_cost(@state.game).inject(0) do |level, gen|
         capacity_shortfall = @state.demand - level
         met_capacity = [gen.capacity, capacity_shortfall].min
         level += met_capacity
