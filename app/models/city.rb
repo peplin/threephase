@@ -59,14 +59,14 @@ class City < ActiveRecord::Base
   end
 
   def demand time=nil
-    time ||= Time.now
+    time ||= game.time.now
     ((-0.1 * ((0.42 * time.hour - 5) ** 4) + 100) *
         customers / DEMAND_SCALE_FACTOR).to_int
   end
 
   def load_profile
     (0..23).collect do |hour|
-      demand(Time.now.at_beginning_of_day + hour.hour)
+      demand(game.time.now.at_beginning_of_day + hour.hour)
     end
   end
 
@@ -84,9 +84,9 @@ class City < ActiveRecord::Base
 
   def demanded_since time
     # TODO would be nice to do this with an integral
-    ((time.to_i + 10.minutes)..Time.now.to_i
+    ((time.to_i + 10.minutes)..game.time.now.to_i
         ).step(10.minutes).inject(0) do |total, hour|
-      total + demand(Time.at(hour)) / 6.0
+      total + demand(game.time.at(hour)) / 6.0
     end.ceil
   end
 

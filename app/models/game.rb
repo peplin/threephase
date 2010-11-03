@@ -100,6 +100,9 @@ class Game < ActiveRecord::Base
             if other.is_a?(self)
               new(other)
             else
+              if not other.is_a?(Time)
+                other = Time.at(other)
+              end
               new(epoch + speed * (other - epoch))
             end
           end
@@ -109,19 +112,13 @@ class Game < ActiveRecord::Base
           end
         end
 
-        def initialize time
-          super(time)
-        end
-
         def - other
           super(self.class.at(other))
         end
       end
       klass.instance_variable_set(:@speed, speed)
       klass.instance_variable_set(:@epoch, created_at)
-      # TODO could get into trouble here, because this is a class constant
-      # shared by intances of Game with different epoch/speeds.
-      @time = Game.const_set("GameTime", klass)
+      @time = klass
     end
     @time
   end

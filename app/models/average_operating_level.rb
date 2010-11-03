@@ -10,8 +10,7 @@ class AverageOperatingLevel < ActiveRecord::Base
 
   def normalized_operating_level new_operating_level
     old_hours = updated_at.hour + 1
-    new_hours = Time.now.hour + 1
-    # TODO use game time!
+    new_hours = technical_component_instance.game.time.now.hour + 1
     normalized_average operating_level, new_operating_level, old_hours,
         new_hours
   end

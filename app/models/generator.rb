@@ -41,14 +41,14 @@ class Generator < TechnicalComponentInstance
   end
 
   def fuel_cost_since time
-    ((time.to_i + 10.minutes)..Time.now.to_i).step(10.minutes).inject(0) do |total, t|
-      total + operating_fuel_cost(Time.at(t)) / 6.0
+    ((time.to_i + 10.minutes)..game.time.now.to_i).step(10.minutes).inject(0) do |total, t|
+      total + operating_fuel_cost(game.time.at(t)) / 6.0
     end
   end
 
   def fuel_used_since time
-    ((time.to_i + 10.minutes)..Time.now.to_i).step(10.minutes).inject(0) do |total, t|
-      total + fuel_burn_rate(Time.at(t)) / 6.0
+    ((time.to_i + 10.minutes)..game.time.now.to_i).step(10.minutes).inject(0) do |total, t|
+      total + fuel_burn_rate(game.time.at(t)) / 6.0
     end
   end
 
