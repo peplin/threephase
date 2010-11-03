@@ -107,7 +107,7 @@ describe State do
         end
 
         it "should charge customers a rate of return on operating costs" do
-          time = 1.hour.ago
+          time = 20.minutes.ago
           @state.customers_charged_at = time
           cost = @state.cost_since(@state.customers_charged_at)
           proc { @state.charge_customers }.should change(@state, :cash).by(
@@ -207,12 +207,15 @@ describe State do
     end
 
     it "should deduct operating costs" do
-      proc { @state.deduct_operating_costs }.should change(@state, :cash).by(
-          @state.cost_since(@state.costs_deducted_at))
+      original_cash = @state.cash
+      last_deducted = @state.costs_deducted_at
+      @state.deduct_operating_costs
+      @state.cash.should be_close(original_cash -
+          @state.cost_since(last_deducted), 1)
     end
 
     it "should know the amount of power demanded since a time" do
-      time = 6.hours.ago
+      time = 1.hours.ago
       @state.demanded_since(time).should eq(
         @state.cities.inject(0) do |demanded, city|
           city.demanded_since(time)

@@ -141,7 +141,7 @@ class State < ActiveRecord::Base
 
   def deduct_operating_costs
     self.cash -= cost_since(costs_deducted_at)
-    self.costs_deducted_at = game.time.now
+    self.costs_deducted_at = Time.now
     self.cash
   end
 
@@ -156,7 +156,7 @@ class State < ActiveRecord::Base
       when :auction then auction_cost
       else 0
     end
-    self.customers_charged_at = game.time.now
+    self.customers_charged_at = Time.now
     self.cash
   end
 
