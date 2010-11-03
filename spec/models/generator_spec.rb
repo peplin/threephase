@@ -67,15 +67,14 @@ describe Generator do
       end
 
       it "should know how much fuel it has used since a point in time" do
-        time = @generator.game.time.now - 2.hours
+        time = 2.hours.ago
         @generator.stubs(:fuel_burn_rate).returns(1)
-        @generator.fuel_used_since(time).should eq(2)
+        @generator.fuel_used_since(time).should be_close(20, 1)
       end
 
       it "should use more fuel over time" do
-        @generator.fuel_used_since(
-            @generator.game.time.now - 1.hour).should be > (
-              @generator.fuel_used_since(@generator.game.time.now - 10.minutes))
+        @generator.fuel_used_since(1.hour.ago).should be > (
+              @generator.fuel_used_since(10.minutes.ago))
       end
 
       context "fuel burn rate" do
