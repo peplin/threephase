@@ -144,10 +144,17 @@ class Game < ActiveRecord::Base
         end
 
         def - other
+          # Need to avoid use of super here because of this bug in Ruby 1.9.2:
+          # https://gist.github.com/455547
+          #
+          # This isn't a singleton method, but I think the Delegation parent is
+          # mucking with it.
           if other.is_a?(Fixnum)
-            super
+            Time.at(self) - other
+          elsif other.is_a?(self.class)
+            Time.at(self) - other
           else
-            super(self.class.at(other))
+            Time.at(self) - self.class.at(other)
           end
         end
       end

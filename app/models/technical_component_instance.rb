@@ -51,15 +51,23 @@ class TechnicalComponentInstance < ActiveRecord::Base
   end
 
   def to_s
-    "#{buildable} created #{created_at} operating at #{operating_level}%"
+    "#{buildable} created #{created_at_in_game} operating at #{operating_level}%"
+  end
+
+  def created_at_in_game
+    game.time.at(created_at)
+  end
+
+  def updated_at_in_game
+    game.time.at(updated_at)
   end
 
   private
 
   def update_average_operating_level
-    today = game.time.now.to_date
-    average_level = average_operating_levels.find_by_day(game, today)
-    if average_level and average_level.created_at.to_date == today
+    average_level = average_operating_levels.find_by_day(game, game.time.now)
+    if (average_level and 
+        game.time.at(average_level.created_at).to_date == game.time.now.to_date)
       average_level.refresh(@operating_level)
       average_level.save
     else
