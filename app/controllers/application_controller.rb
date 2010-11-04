@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :conditional_find_games
   before_filter :conditional_find_game
+  before_filter :check_capacity
 
   if ::Rails.env == 'test'
     rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
@@ -84,6 +85,14 @@ class ApplicationController < ActionController::Base
 
   def current_state
     current_user.current_state if current_user
+  end
+
+  def check_capacity
+    if current_state
+      if not current_state.demand_met?
+        flash[:error] = "Demand isn't being met!"
+      end
+    end
   end
 
   def game_required
