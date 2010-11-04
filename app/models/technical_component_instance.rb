@@ -4,6 +4,7 @@ require 'simple'
 class TechnicalComponentInstance < ActiveRecord::Base
   include SimpleExtensions
   self.inheritance_column = :instance_type
+  RATE_OF_RETURN_CAPITAL_DISCOUNT = 0.9
 
   has_one :state, :through => :city
   has_many :repairs, :as => :repairable, :dependent => :destroy
@@ -56,11 +57,15 @@ class TechnicalComponentInstance < ActiveRecord::Base
   end
 
   def capital_cost
-    range_map(capacity,
+    cost = range_map(capacity,
       buildable.peak_capacity_min,
       buildable.peak_capacity_max,
       buildable.capital_cost_min,
       buildable.capital_cost_max)
+    if game.regulation_type == :ror
+      cost *= RATE_OF_RETURN_CAPITAL_DISCOUNT 
+    end
+    cost
   end
 
   def waste_disposal_cost

@@ -1,5 +1,6 @@
 Factory.define :game do |g|
   g.regulation_type :ror
+  g.nickname "A Game"
   g.created_at 2.hours.ago # since game time depends on epoch being in the past
 end
 

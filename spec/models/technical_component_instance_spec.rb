@@ -26,12 +26,24 @@ describe TechnicalComponentInstance do
     end
 
     it "should have the final capital cost" do
+      @instance.game.regulation_type = :auction
+      @instance.game.save
       @instance.capital_cost.should eq(
           range_map(@instance.capacity,
             @instance.buildable.peak_capacity_min,
             @instance.buildable.peak_capacity_max,
             @instance.buildable.capital_cost_min,
             @instance.buildable.capital_cost_max))
+    end
+
+    it "should discount capital cost if regulation is ror" do
+      @instance.capital_cost.should eq(
+          range_map(@instance.capacity,
+            @instance.buildable.peak_capacity_min,
+            @instance.buildable.peak_capacity_max,
+            @instance.buildable.capital_cost_min,
+            @instance.buildable.capital_cost_max) *
+            TechnicalComponentInstance::RATE_OF_RETURN_CAPITAL_DISCOUNT)
     end
 
     it "should have the final waste disposal cost" do
