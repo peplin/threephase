@@ -2,7 +2,7 @@
 - disabled |= false
 %fieldset 
   %legend General Options
-  - percentage_slider :speed, game, {:disabled => disabled}
+  - slider :speed, game, {:unit => "x real-time", :disabled => disabled}
 %fieldset 
   %legend Technical Options
   - slider :max_line_capacity, game, {:unit => "MW", :display_name => "Maximum Line Capacity", :step => 10, :disabled => disabled}

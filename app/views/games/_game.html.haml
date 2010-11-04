@@ -7,8 +7,7 @@
 - else
   %p
     You are playing in this game.
-    %a{:href => games_url} Leave this game
-    = button_to "Leave this game", {:id => current_state.id}, :method => :delete, :confirm => "Are you sure?"
+    = button_to "Leave this game", state_url(current_state.id), :method => :delete, :confirm => "Are you sure?"
 
 %h2 States
 
