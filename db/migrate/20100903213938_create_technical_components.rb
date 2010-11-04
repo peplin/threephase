@@ -3,7 +3,9 @@ class CreateTechnicalComponents < ActiveRecord::Migration
     create_table :technical_components do |t|
       t.string :name, :null => false
       t.text :description
-      t.integer :capacity, :null => false
+      t.integer :peak_capacity_min, :null => false, :default => 0
+      t.integer :peak_capacity_max, :null => false
+      t.integer :average_capacity, :null => false
       t.integer :mtbf, :null => false
       t.integer :mttr, :null => false
       t.integer :repair_cost, :null => false
