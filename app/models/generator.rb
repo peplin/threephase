@@ -24,10 +24,6 @@ class Generator < TechnicalComponentInstance
     bids.create :price => price
   end
 
-  def capacity
-    generator_type.capacity
-  end
-
   def marginal_cost time=nil
     generator_type.marginal_cost(city, time)
   end

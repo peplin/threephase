@@ -1,12 +1,16 @@
 require 'spec_helper'
+require 'simple'
 
 describe TechnicalComponentInstance do
   it { should belong_to :city }
   it { should belong_to :buildable }
 
   it { should validate_presence_of :city }
+  it { should validate_presence_of :capacity }
 
   context "instance" do
+    include SimpleExtensions
+
     before do
       @instance = Factory :generator
     end
@@ -19,6 +23,24 @@ describe TechnicalComponentInstance do
       stub_time
       @instance.operated_hours(Time.now).should eq(0)
       @instance.operated_hours(1.hour.ago).should be > 0
+    end
+
+    it "should have the final capital cost" do
+      @instance.capital_cost.should eq(
+          range_map(@instance.capacity,
+            @instance.buildable.peak_capacity_min,
+            @instance.buildable.peak_capacity_max,
+            @instance.buildable.capital_cost_min,
+            @instance.buildable.capital_cost_max))
+    end
+
+    it "should have the final waste disposal cost" do
+      @instance.waste_disposal_cost.should eq(
+          range_map(@instance.capacity,
+            @instance.buildable.peak_capacity_min,
+            @instance.buildable.peak_capacity_max,
+            @instance.buildable.waste_disposal_cost_min,
+            @instance.buildable.waste_disposal_cost_max))
     end
 
     context "average operating level" do

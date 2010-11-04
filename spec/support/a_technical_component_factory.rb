@@ -1,7 +1,6 @@
 Factory.define :technical_component do |c|
   c.name "A Technical Component"
   c.peak_capacity_max 100
-  c.average_capacity 100
   c.mtbf 15 + rand(100)
   c.mttr 30 + rand(100)
   c.repair_cost rand(100)

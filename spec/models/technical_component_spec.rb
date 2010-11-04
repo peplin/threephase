@@ -14,7 +14,6 @@ describe TechnicalComponent do
   it { should_not allow_value(0).for(:peak_capacity_max) }
   it { should_not allow_value(-1).for(:peak_capacity_max) }
 
-  it { should validate_presence_of :average_capacity }
   it { should validate_presence_of :mtbf }
   it { should validate_presence_of :mttr }
   it { should validate_presence_of :repair_cost }
