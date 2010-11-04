@@ -42,4 +42,13 @@ module ApplicationHelper
     slider attribute, instance,
         params.update({:unit => "%", :display_name => display_name})
   end
+
+  def title title=nil
+    if title
+      @title = "#{title} - Threephase"
+    else
+      @title
+    end
+    content_for(:title) { @title }
+  end
 end

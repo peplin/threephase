@@ -1,3 +1,4 @@
-%h2 Create a State
+- title "Join #{@state.game}"
+%h2= "Join #{@game"
 = form_for @state do |f|
   = render :partial => 'form_fields', :locals => {:state => @state}

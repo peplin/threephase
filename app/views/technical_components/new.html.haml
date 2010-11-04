@@ -1,3 +1,4 @@
+- title "New #{@type.class.name.humanize}"
 %h2= "Create a #{@type.class.name.humanize}"
 = form_for @type do |f|
   = render "#{@type.class.name.underscore}/form_fields"

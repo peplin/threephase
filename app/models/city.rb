@@ -113,7 +113,7 @@ class City < ActiveRecord::Base
   end
 
   def to_s
-    "#{name} (#{x}, #{y})"
+    name
   end
 
   private

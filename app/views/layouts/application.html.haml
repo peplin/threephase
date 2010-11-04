@@ -1,7 +1,7 @@
 !!! 5
 %html
   %head
-    %title= page_title or "Threephase"
+    %title= yield :title
     =render "shared/stylesheets"
     = yield :extra_stylesheets
     =render "shared/head"

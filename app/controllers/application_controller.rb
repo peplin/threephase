@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   layout 'application'
   helper :all
   helper_method :current_user_session, :current_user, :current_game, 
-      :current_state, :check_ownership, :page_title
+      :current_state, :check_ownership
 
   before_filter :conditional_find_games
   before_filter :conditional_find_game
@@ -13,14 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def page_title title=nil
-    if title
-      @page_title = "#{title} - Threephase"
-    else
-      @page_title
-    end
-  end
 
   def check_ownership valid
     if not current_user.admin and not valid
