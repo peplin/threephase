@@ -7,7 +7,8 @@ Threephase::Application.routes.draw do
     resources :cities, :only => [:index, :show]
   end
 
-  resources :states, :only => [:index, :show, :update, :create, :edit] do
+  resources :states,
+      :only => [:index, :show, :update, :create, :edit, :destroy] do
     resources :cities, :only => [:index, :show]
     resources "interstate-lines", :controller => :interstate_lines,
         :as => :interstate_lines,
