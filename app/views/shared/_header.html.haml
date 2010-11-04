@@ -9,7 +9,7 @@
   %ul
     - if current_state
       %li
-        %a{:href => game_path(current_game)}= "$#{number_to_human(current_state.cash)}"
+        %a{:href => game_path(current_game)}= "#{current_game.time.now} | $#{number_to_human(current_state.cash)}"
     - else
       %li
         %a{:href => games_path} Join a Game
