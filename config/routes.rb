@@ -1,6 +1,9 @@
 Threephase::Application.routes.draw do
   resources :games, :except => [:destroy] do
     resources :states, :only => [:index, :show, :new] do
+      collection do
+        post 'switch'
+      end
       resources :cities, :only => [:index, :show]
     end
     resources :prices, :controller => :fuel_markets, :only => [:index, :show]

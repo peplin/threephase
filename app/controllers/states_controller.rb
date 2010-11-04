@@ -28,6 +28,11 @@ class StatesController < ApplicationController
     redirect_to game
   end
 
+  def switch
+    current_state.destroy
+    redirect_to new_game_state_path(@game)
+  end
+
   def show
     respond_with @state
   end

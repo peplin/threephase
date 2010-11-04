@@ -3,7 +3,7 @@
 - if not current_state
   %a{:href => new_game_state_url(game)} Join this game
 - elsif current_state.game != game
-  %a{:href => new_game_state_url(game)} Switch to this game
+  = button_to "Switch to this game", switch_game_states_url(game.id), :confirm => "Are you sure?"
 - else
   %p
     You are playing in this game.
