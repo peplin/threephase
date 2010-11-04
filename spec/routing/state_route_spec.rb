@@ -42,7 +42,9 @@ describe "routing to states" do
       :action => "update", :id => @state,
       :controller => "states") }
 
-  it "does not allow deleting of a state" do
-    {:delete => "/states/#{@state}"}.should_not be_routable
+  it "should expose a direct URL to destroy a state" do
+    {:delete => "/states/#{@state}"}.should route_to(
+      :action => "destroy", :id => @state,
+      :controller => "states") 
   end
 end

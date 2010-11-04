@@ -89,15 +89,16 @@ class TechnicalComponentInstance < ActiveRecord::Base
   private
 
   def within_capacity_limits
-    if (capacity > generator_type.peak_capacity_max or
-        capacity < generator_type.peak_capacity_min)
+    if (capacity > buildable.peak_capacity_max or
+        capacity < buildable.peak_capacity_min)
       errors[:capacity] << "capacity must be within the range of the type"
     end if capacity
   end
 
   def set_capacity
     if buildable and not capacity
-      self.capacity = self.buildable.peak_capacity_min
+      self.capacity = range_map(50, 0, 100, self.buildable.peak_capacity_min,
+          self.buildable.peak_capacity_max)
     end
   end
 

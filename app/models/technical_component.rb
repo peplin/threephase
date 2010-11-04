@@ -11,9 +11,9 @@ class TechnicalComponent < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :peak_capacity_min, :presence => true, :numericality => {
-      :greater_than_or_equal_to => 0}
-  validates :peak_capacity_max, :presence => true, :numericality => {
       :greater_than_or_equal_to => 1}
+  validates :peak_capacity_max, :presence => true, :numericality => {
+      :greater_than_or_equal_to => 2}
   validates :mtbf, :presence => true
   validates :mttr, :presence => true
   validates :repair_cost, :presence => true, :percentage => true

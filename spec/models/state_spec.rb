@@ -66,6 +66,11 @@ describe State do
             @another_generator)
       end
 
+      it "should order generators by average cost" do
+        @state.generators.ordered_by_average_cost(@state.game).first.should eq(
+            @another_generator)
+      end
+
       it "should only include generators that existed in ordered list" do
         @state.generators.ordered_by_marginal_cost(@state.game, 1.day.ago).first.should eq(
           nil)
@@ -191,14 +196,14 @@ describe State do
       @state.cities.find_nearest(100, 200)
     end
 
-    it "should return the marginal cost to customers" do
+    it "should return the marginal price for customers" do
       mc = 0
-      @state.generators.ordered_by_marginal_cost(@state.game).inject(0) do |level, gen|
+      @state.generators.ordered_by_average_cost(@state.game).inject(0) do |level, gen|
         capacity_shortfall = @state.demand - level
         met_capacity = [gen.capacity, capacity_shortfall].min
         level += met_capacity
         if capacity_shortfall - level <= 0 or not @state.demand_met?
-          mc = gen.marginal_cost
+          mc = gen.average_cost
           break
         end
       end
@@ -223,6 +228,7 @@ describe State do
     end
 
     it "should know if demand is met" do
+      @state.stubs(:capacity).returns(200)
       @state.stubs(:demand).returns(100)
       @state.demand_met?.should eq(true)
       @state.stubs(:demand).returns(300)

@@ -28,6 +28,10 @@ class Generator < TechnicalComponentInstance
     generator_type.marginal_cost(city, time)
   end
 
+  def average_cost time=nil
+    capital_cost / capacity + marginal_cost(time)
+  end
+
   def marginal_fuel_cost time=nil
     generator_type.marginal_fuel_cost(city, time)
   end

@@ -259,9 +259,9 @@ ActiveRecord::Schema.define(:version => 20101101165725) do
     t.string   "name",                                                    :null => false
     t.integer  "research_budget",      :default => 5000000,               :null => false
     t.integer  "cash"
-    t.datetime "stepped_at",           :default => '2010-11-04 02:03:29'
-    t.datetime "customers_charged_at", :default => '2010-11-04 02:03:29'
-    t.datetime "costs_deducted_at",    :default => '2010-11-04 02:03:29'
+    t.datetime "stepped_at",           :default => '2010-11-04 02:34:20'
+    t.datetime "customers_charged_at", :default => '2010-11-04 02:34:20'
+    t.datetime "costs_deducted_at",    :default => '2010-11-04 02:34:20'
     t.integer  "map_id",                                                  :null => false
     t.integer  "game_id",                                                 :null => false
     t.integer  "user_id"
@@ -284,7 +284,7 @@ ActiveRecord::Schema.define(:version => 20101101165725) do
   create_table "technical_components", :force => true do |t|
     t.string   "name",                                        :null => false
     t.text     "description"
-    t.integer  "peak_capacity_min",            :default => 0, :null => false
+    t.integer  "peak_capacity_min",            :default => 1, :null => false
     t.integer  "peak_capacity_max",                           :null => false
     t.integer  "mtbf",                                        :null => false
     t.integer  "mttr",                                        :null => false

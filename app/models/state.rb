@@ -31,6 +31,12 @@ class State < ActiveRecord::Base
         a.marginal_cost(time) <=> b.marginal_cost(time)
       }
     end
+
+    def ordered_by_average_cost game, time=nil
+      find_existing_at(game, time).sort {|a, b|
+        a.average_cost(time) <=> b.average_cost(time)
+      }
+    end
   end
   belongs_to :map
   belongs_to :game
@@ -117,12 +123,12 @@ class State < ActiveRecord::Base
       mc = price.marginal_price
     else
       mc = 0
-      generators.ordered_by_marginal_cost(game).inject(0) do |level, gen|
+      generators.ordered_by_average_cost(game).inject(0) do |level, gen|
         capacity_shortfall = peak_demand - level
         met_capacity = [gen.capacity, capacity_shortfall].min
         level += met_capacity
         if capacity_shortfall - level <= 0 or not demand_met?(time)
-          mc = gen.marginal_cost
+          mc = gen.average_cost
           break
         end
         level
