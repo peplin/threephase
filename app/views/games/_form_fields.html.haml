@@ -3,6 +3,10 @@
 %fieldset 
   %legend General Options
   - slider :speed, game, {:unit => "x real-time", :disabled => disabled}
+  - if not disabled
+    .fieldpair
+      %label Nickname
+      %input{:id => "nickname", :name => "game[nickname]", :value => game.nickname}
 %fieldset 
   %legend Technical Options
   - slider :max_line_capacity, game, {:unit => "MW", :display_name => "Maximum Line Capacity", :step => 10, :disabled => disabled}

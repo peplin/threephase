@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20101101165725) do
     t.integer  "max_players"
     t.datetime "started"
     t.datetime "ended"
+    t.string   "nickname",                                        :null => false
     t.integer  "max_line_capacity",      :default => 1500,        :null => false
     t.integer  "technology_cost",        :default => 50,          :null => false
     t.integer  "technology_reliability", :default => 50,          :null => false
@@ -259,9 +260,9 @@ ActiveRecord::Schema.define(:version => 20101101165725) do
     t.string   "name",                                                    :null => false
     t.integer  "research_budget",      :default => 5000000,               :null => false
     t.integer  "cash"
-    t.datetime "stepped_at",           :default => '2010-11-04 02:34:20'
-    t.datetime "customers_charged_at", :default => '2010-11-04 02:34:20'
-    t.datetime "costs_deducted_at",    :default => '2010-11-04 02:34:20'
+    t.datetime "stepped_at",           :default => '2010-11-04 04:06:52'
+    t.datetime "customers_charged_at", :default => '2010-11-04 04:06:52'
+    t.datetime "costs_deducted_at",    :default => '2010-11-04 04:06:52'
     t.integer  "map_id",                                                  :null => false
     t.integer  "game_id",                                                 :null => false
     t.integer  "user_id"

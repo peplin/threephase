@@ -17,6 +17,7 @@ class Game < ActiveRecord::Base
   enum_attr :regulation_type, [:lmp, :ror, :auction] do
     label :ror => "Rate of Return"
   end
+  validates :nickname, :presence => true
   validates :regulation_type, :presence => true
   validates :rate_of_return, :presence => true, :percentage => true,
       :if => Proc.new { |game| game.regulation_type == :ror }
@@ -87,7 +88,7 @@ class Game < ActiveRecord::Base
   end
 
   def to_s
-    "#{states.count} confirmed players, #{started ? "started #{started}" : "not started"}"
+    nickname
   end
 
   def time
