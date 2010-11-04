@@ -16,7 +16,7 @@ class TechnicalComponentInstancesController < ApplicationController
     if not @game
       @game = Game.find params[:game_id]
     end
-    @instance = component_type.new :city => @city
+    @instance = component_type.new :city => @city, :capacity => 20
     respond_with @instance
   end
 

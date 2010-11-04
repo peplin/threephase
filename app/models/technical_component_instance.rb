@@ -96,7 +96,8 @@ class TechnicalComponentInstance < ActiveRecord::Base
   def within_capacity_limits
     if (capacity > buildable.peak_capacity_max or
         capacity < buildable.peak_capacity_min)
-      errors[:capacity] << "capacity must be within the range of the type"
+      errors[:capacity] << ("must be within the range of the type "
+          "(#{buildable.peak_capacity_min} - #{buildable.peak_capacity_max}MW)")
     end if capacity
   end
 

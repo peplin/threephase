@@ -4,6 +4,7 @@
     %label
       Type
       =collection_select :generator, :generator_type_id, GeneratorType.all, :id, :to_s
+  - slider :capacity, generator, {:unit => "MW", :step => 5, :min => 0, :max => 2000}
 %input{:type => 'hidden', :name => 'generator[city_id]', :value => generator.city.id}
 %button{:type => 'submit'} Save
 %a.button{:href => generators_path} Cancel

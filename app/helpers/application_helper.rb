@@ -5,10 +5,7 @@ module ApplicationHelper
 
   def slider(attribute, instance, params=nil)
     unit = params[:unit] or nil
-    display_name = params[:display_name] or nil
     prepend = params[:prepend] or false
-    disabled = params[:disabled] or false
-    step = params[:step] or 1
 
     value = instance.send(attribute)
     unitized_value = value
@@ -16,25 +13,29 @@ module ApplicationHelper
       if unit == "%"
         unitized_value = "#{value}%"
       else
-        unitized_value = "#{unit}#{value}" if prepend
-        unitized_value = "#{value} #{unit}" if not prepend
+        if prepend
+          unitized_value = "#{unit}#{value}"
+        else
+          unitized_value = "#{value} #{unit}"
+        end
       end
     end
 
     haml_tag ".fieldpair" do
-      haml_tag :label, (display_name or titlecase(attribute.to_s.humanize)),
+      haml_tag :label,
+          (params[:display_name] or titlecase(attribute.to_s.humanize)),
           :for => attribute
       haml_tag "span.label", unitized_value, :name => attribute
       haml_tag "input.label", :id => attribute, :type => :hidden,
           :name => "#{instance.class.name.underscore}[#{attribute}]",
           :value => value
       haml_tag ".slider", :rel => attribute,
-          "data-min" => instance.class.minimum_for(attribute),
-          "data-max" => instance.class.maximum_for(attribute),
+          "data-min" => (params[:min] or instance.class.minimum_for(attribute)),
+          "data-max" => (params[:max] or instance.class.maximum_for(attribute)),
           "data-unit" => unit,
           "data-prepend" => prepend ? 1 : 0,
-          "data-disabled" => disabled ? 1 : 0,
-          "data-step" => step
+          "data-disabled" => params[:disabled] ? 1 : 0,
+          "data-step" => params[:step] or 1
     end
   end
 
