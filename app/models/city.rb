@@ -9,7 +9,6 @@ class City < ActiveRecord::Base
   include NaturalResources
 
   DEMAND_SCALE_FACTOR = 1000.0
-
   belongs_to :state
   has_many :generators
   has_many :bids, :through => :generators
@@ -119,7 +118,8 @@ class City < ActiveRecord::Base
   private
 
   def generate_name
-    self.name = "A City" unless self.name
+    srand
+    self.name = NAMES[rand(NAMES.length)] unless self.name
   end
 
   def generate_coordinates
@@ -144,4 +144,13 @@ class City < ActiveRecord::Base
       # TODO use better customer range
     end
   end
+
+  NAMES = [
+    "Aliquippa", "Allentown", "Altoona", "Arnold", "Beaver Falls", "Bethlehem", "Bradford", "Butler", "Boiling Springs", "Carbondale", "Chester",
+    "Clairton", "Coatesville", "Connellsville", "Corry", "DuBois", "Duquesne", "Easton", "Erie", "Farrell", "Franklin (Venango County)", "Greensburg",
+    "Harrisburg", "Hazleton", "Hermitage", "Hershey", "Jeannette", "Johnstown", "Lancaster", "Latrobe", "Lebanon", "Levittown", "Lock Haven", "Lower Burrell",
+    "McKeesport", "Meadville", "Monessen", "Monongahela", "Morrisville", "Mansfield", "Nanticoke", "New Castle", "New Kensington", "Oil City", "Parker", "Philadelphia",
+    "Pittsburgh", "Pittston", "Pottsville", "Reading", "St. Marys", "Scranton", "Shamokin", "Sharon", "Sunbury", "Souderton", "Titusville", "Uniontown",
+    "Warren", "Washington", "Wilkes-Barre", "Williamsport", "York",
+  ]
 end
