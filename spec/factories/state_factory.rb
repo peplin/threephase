@@ -3,6 +3,9 @@ Factory.define :state do |r|
   r.association :map
   r.association :game
   r.association :user
+  r.costs_deducted_at 1.hour.ago
+  r.customers_charged_at 1.hour.ago
+  r.stepped_at 1.hour.ago
   r.created_at 2.hours.ago # since game time depends on epoch being in the past
 end
 
