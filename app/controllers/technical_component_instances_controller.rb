@@ -53,7 +53,11 @@ class TechnicalComponentInstancesController < ApplicationController
   end
 
   def levels
-    respond_with @instance.average_operating_levels.limit(10)
+    levels = @instance.average_operating_levels.limit(10)
+    (10 - levels.length).times do
+      levels << levels.first
+    end
+    respond_with levels
   end
 
   private

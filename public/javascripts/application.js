@@ -22,7 +22,7 @@ function drawGraphs() {
         var graph = r.g.linechart(20, 0, 430, 130, hours, demand,
             {nostroke: false, axis: "0 0 1 1", smooth: true});
         r.g.text(250, 145, "Hour");
-        r.g.text(10, 75, "MW");
+        r.g.text(50, 75, "MW");
       }
     });
   });
@@ -60,9 +60,38 @@ function drawGraphs() {
               }, function() {
                 this.tags && this.tags.remove();
             });
-          r.g.text(10, 75, "$/MW");
+          r.g.text(50, 75, "$/MW");
           graph.symbols.attr({r: 3});
         }
+      }
+    });
+  });
+
+  $(".levels").each(function() {
+    var element = this;
+    var cityId = $(this).attr('rel');
+    $.ajax({
+      type : "GET",
+      // TODO need a generic technical component instances endpoint
+      url: '/generators/' + $(this).attr('rel') + '/levels',
+      success : function(data){
+        var days = [];
+        for(var i = data.length; i > 0; i--) {
+          days.push(i);
+        }
+
+        var levels = [];
+        $.each(data, function(key, value) {
+          levels.push(value.average_operating_level.operating_level);
+        });
+
+        var r = Raphael(cityId + "-levels", 450, 155);
+        var graph = r.g.linechart(20, 0, 430, 130, days, levels,
+            {nostroke: false,
+              axis: "0 0 1 1",
+              smooth: true});
+        r.g.text(250, 145, "Days Ago");
+        r.g.text(50, 75, "MW");
       }
     });
   });

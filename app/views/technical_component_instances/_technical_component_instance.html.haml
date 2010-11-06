@@ -8,3 +8,7 @@
   
 %h2 Repairs
 = render instance.repairs
+
+%h2 Average Operating Level
+
+.levels{:id => "#{instance.id}-levels", :rel => instance.id}
