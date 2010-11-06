@@ -93,7 +93,7 @@ describe TechnicalComponentInstance do
       end
 
       it "should update the avg. op. level when the operating level changes" do
-        new_level = 61
+        new_level = 90
         new_average = (@instance.average_operating_levels.first.
             normalized_operating_level(new_level)).to_int
         proc { @instance.operating_level = new_level }.should change(@instance,
