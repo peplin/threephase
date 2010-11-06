@@ -9,11 +9,3 @@ class AllowedTechnicalComponentType < ActiveRecord::Base
     buildable
   end
 end
-
-class AllowedGeneratorType < AllowedTechnicalComponentType
-  belongs_to :generator_type, :foreign_key => "buildable_id"
-end
-
-class AllowedLineType < AllowedTechnicalComponentType
-  belongs_to :line_type, :foreign_key => "buildable_id"
-end
