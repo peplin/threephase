@@ -23,7 +23,7 @@ describe AverageOperatingLevel do
       time = @average.updated_at + 2.hours
       Time.stubs(:now).returns(time)
       proc { @average.refresh(62) }.should change(@average, :operating_level)
-      @average.operating_level.should be_close(35, 2.1)
+      @average.operating_level.should be_close(59, 2.1)
     end
   end
 end
