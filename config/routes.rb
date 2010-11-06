@@ -28,7 +28,10 @@ Threephase::Application.routes.draw do
       get :levels, :on => :member
     end
     resources :generators do
-      get :levels, :on => :member
+      member do
+        get :levels
+        get :costs
+      end
     end
     resources :prices, :controller => :fuel_markets, :only => [:index, :show]
   end
@@ -46,7 +49,10 @@ Threephase::Application.routes.draw do
         :on => :collection
     resources :bids, :except => [:update, :destroy]
     resources :repairs, :only => [:index, :show]
-    get :levels, :on => :member
+    member do
+      get :levels
+      get :costs
+    end
   end
 
   resources :bids, :only => [:show, :create]

@@ -18,3 +18,7 @@
       %ul
         - generator.bids.each do |bid|
           %li= bid
+
+%h2 Marginal Cost
+
+.costs{:id => "#{generator.id}-costs", :rel => generator.id}

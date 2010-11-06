@@ -1,6 +1,8 @@
 $ = jQuery.noConflict();
 
 function drawGraphs() {
+  // TODO DRY the graph creation, once we figure out a common implementation
+
   $(".load-profile").each(function() {
     var element = this;
     var cityId = $(this).attr('rel');
@@ -95,6 +97,34 @@ function drawGraphs() {
       }
     });
   });
+
+  $(".costs").each(function() {
+    var element = this;
+    var cityId = $(this).attr('rel');
+    $.ajax({
+      type : "GET",
+      url: '/generators/' + $(this).attr('rel') + '/costs',
+      success : function(data){
+        var days = [];
+        for(var i = data.length; i > 0; i--) {
+          days.push(i);
+        }
+
+        var costs = [];
+        $.each(data, function(key, value) {
+          costs.push(value);
+        });
+
+        var r = Raphael(cityId + "-costs", 450, 155);
+        var graph = r.g.linechart(20, 0, 430, 130, days, costs,
+            {nostroke: false,
+              axis: "0 0 1 1",
+              smooth: true});
+        r.g.text(250, 145, "Days Ago");
+        r.g.text(50, 75, "MC ($)");
+      }
+    });
+  });
 }
 
 function drawPercentageSlider(element, value) {
@@ -127,12 +157,12 @@ function drawSlider(element, value, min, max, unit, range) {
       slide: function(event, ui) {
           var unitized_value = ui.value;
           if(unit == "%") {
-              unitized_value += unit; 
+              unitized_value += unit;
           } else {
               if(prepend == "1") {
-                unitized_value = unit + ui.value; 
+                unitized_value = unit + ui.value;
               } else {
-                unitized_value += " " + unit; 
+                unitized_value += " " + unit;
               }
           }
           $('input#' + $(element).attr('rel')).val(ui.value);

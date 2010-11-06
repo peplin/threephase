@@ -82,7 +82,7 @@ class City < ActiveRecord::Base
   end
 
   def demanded_since time
-    game.time.now.range(time).step(10.minutes).inject(0) do |total, hour|
+    game.time.now.range(time).inject(0) do |total, hour|
       total + demand(game.time.at(hour)) / 6.0
     end.ceil
   end

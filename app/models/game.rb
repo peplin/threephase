@@ -144,8 +144,8 @@ class Game < ActiveRecord::Base
           self.class.to_normal(self)
         end
 
-        def range other
-          ((self.class.at(other).to_i + 10.minutes)..self.to_i)
+        def range other, step=10.minutes
+          ((self.class.at(other).to_i + step)..self.to_i).step(step)
         end
 
         def - other
