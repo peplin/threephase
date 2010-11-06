@@ -17,14 +17,6 @@ describe GamesController do
     it_should_behave_like "standard POST create"
     it_should_behave_like "standard PUT update"
 
-    context "on POST to :create without data" do
-      it_should_behave_like "successful POST create"
-
-      def do_post format='html'
-        post :create, :format => format
-      end
-    end
-
     context "on PUT to :update" do
       before :all do
         @data = Factory.attributes_for :another_game
