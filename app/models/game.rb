@@ -140,6 +140,10 @@ class Game < ActiveRecord::Base
           end
         end
 
+        def to_normal
+          self.class.to_normal(self)
+        end
+
         def range other
           ((self.class.at(other).to_i + 10.minutes)..self.to_i)
         end
