@@ -3,10 +3,10 @@ class TechnicalComponentInstancesController < ApplicationController
   before_filter :find_city, :only => [:index, :new]
   before_filter :find_game, :only => [:index, :new]
   before_filter :find_instances, :only => :index
-  before_filter :find_instance, :only => [:edit, :show, :update]
+  before_filter :find_instance, :only => [:edit, :show, :update, :levels]
 
   respond_to :json, :except => [:new, :edit]
-  respond_to :html
+  respond_to :html, :except => [:levels]
 
   def index
     respond_with @instances
@@ -50,6 +50,10 @@ class TechnicalComponentInstancesController < ApplicationController
       flash[:notice] = "#{component_type.to_s} was successfully updated."
     end
     respond_with @game, @instance
+  end
+
+  def levels
+    respond_with @instance.average_operating_levels.limit(10)
   end
 
   private

@@ -24,25 +24,29 @@ Threephase::Application.routes.draw do
 
   match "/cities/:id/load-profile" => "cities#load_profile", :via => :get
   resources :cities, :only => [:index, :show] do
-    resources :lines
-    resources :generators
+    resources :lines do
+      get :levels, :on => :member
+    end
+    resources :generators do
+      get :levels, :on => :member
+    end
     resources :prices, :controller => :fuel_markets, :only => [:index, :show]
   end
 
   resources :prices, :controller => :fuel_markets, :only => [:index, :show]
   resources :lines do
     resources :repairs, :only => [:index, :show]
-    collection do
-      resources :types, :controller => :line_types, :as => :line_types
-    end
+    resources :types, :controller => :line_types, :as => :line_types,
+        :on => :collection
+    get :levels, :on => :member
   end
 
   resources :generators, :except => [:destroy] do
-    collection do
-      resources :types, :controller => :generator_types, :as => :generator_types
-    end
+    resources :types, :controller => :generator_types, :as => :generator_types,
+        :on => :collection
     resources :bids, :except => [:update, :destroy]
     resources :repairs, :only => [:index, :show]
+    get :levels, :on => :member
   end
 
   resources :bids, :only => [:show, :create]

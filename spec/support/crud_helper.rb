@@ -401,6 +401,7 @@ share_examples_for "successful PUT update" do
     before do
       do_put 'json'
     end
+
     it_should_behave_like JSONResponse
     it { should respond_with :success }
   end

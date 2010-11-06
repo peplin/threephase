@@ -90,6 +90,21 @@ share_examples_for "a technical component instance" do
     it_should_behave_like "standard GET edit"
     it_should_behave_like "standard GET show"
 
+    context "on GET to :historical_operating_levels" do
+      before do
+        setup_crud_names
+        @instance = Factory @factory_name
+        get :levels, :id => @instance, :format => 'json' 
+      end
+
+      it_should_behave_like JSONResponse
+      it { should respond_with :success }
+      it "should return an list of average operating levels" do
+        json_response[0]["average_operating_level"]["operating_level"].should eq(
+            @instance.average_operating_levels.first.operating_level)
+      end
+    end
+
     context "on POST to :create" do
       context "with valid data" do
         it_should_behave_like "standard successful POST create"

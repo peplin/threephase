@@ -29,8 +29,8 @@ describe "routing to generators" do
 
   it "should expose a hackable URL to a city's generator in the current game" do
     {:get => "/cities/#{@city}/generators/#{@generator}"
-        }.should route_to(:action => "show", :city_id => @city, :id => @generator,
-        :controller => "generators")
+        }.should route_to(:action => "show", :city_id => @city,
+          :id => @generator, :controller => "generators")
   end
 
   it "should expose a direct URL to a generator" do
@@ -38,10 +38,10 @@ describe "routing to generators" do
       :id => @generator, :controller => "generators")
   end
   
-  it "should expose a hackable URL to edit a city's generator in the current game" do
+  it "should expose a hackable URL to edit a city's gen. in the current game" do
     {:get => "/cities/#{@city}/generators/#{@generator}/edit"
-        }.should route_to(:action => "edit", :city_id => @city, :id => @generator,
-        :controller => "generators")
+        }.should route_to(:action => "edit", :city_id => @city,
+          :id => @generator, :controller => "generators")
   end
 
   it "should expose a hackable URL to edit the current game's generator" do
@@ -50,10 +50,15 @@ describe "routing to generators" do
   end
 
   it "should expose a direct URL to edit a generator" do
-    {:get => "/generators/#{@generator}/edit"}.should route_to(:action => "edit",
-      :id => @generator, :controller => "generators")
+    {:get => "/generators/#{@generator}/edit"}.should route_to(
+        :action => "edit", :id => @generator, :controller => "generators")
   end
 
-  it { {:put => "/generators/#{@generator}"}.should route_to(:action => "update",
-      :id => @generator, :controller => "generators") }
+  it "should expose a direct URL to a generator's average operating levels" do
+    {:get => "/generators/#{@generator}/levels"}.should route_to(
+        :action => "levels", :id => @generator, :controller => "generators")
+  end
+
+  it { {:put => "/generators/#{@generator}"}.should route_to(
+      :action => "update", :id => @generator, :controller => "generators") }
 end
