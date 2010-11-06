@@ -88,7 +88,7 @@ class Game < ActiveRecord::Base
   end
 
   def to_s
-    nickname
+    "#{nickname} (#{states.count} players)"
   end
 
   def time
