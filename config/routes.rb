@@ -1,9 +1,8 @@
 Threephase::Application.routes.draw do
   resources :games, :except => [:destroy] do
     resources :states, :only => [:index, :show, :new] do
-      collection do
-        post 'switch'
-      end
+      post :switch, :on => :collection
+      get :prices, :on => :member
       resources :cities, :only => [:index, :show]
     end
     resources :prices, :controller => :fuel_markets, :only => [:index, :show]
@@ -16,6 +15,7 @@ Threephase::Application.routes.draw do
     resources "interstate-lines", :controller => :interstate_lines,
         :as => :interstate_lines,
         :only => [:index, :show, :create, :update, :new]
+    get :prices, :on => :member
   end
   resources :advancements, :controller => :research_advancements,
       :only => [:index, :show, :create]

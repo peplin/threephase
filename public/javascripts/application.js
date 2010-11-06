@@ -125,6 +125,34 @@ function drawGraphs() {
       }
     });
   });
+
+  $(".prices").each(function() {
+    var element = this;
+    var cityId = $(this).attr('rel');
+    $.ajax({
+      type : "GET",
+      url: '/states/' + $(this).attr('rel') + '/prices',
+      success : function(data){
+        var days = [];
+        for(var i = data.length; i > 0; i--) {
+          days.push(i);
+        }
+
+        var prices = [];
+        $.each(data, function(key, value) {
+          prices.push(value.marginal_price.marginal_price);
+        });
+
+        var r = Raphael(cityId + "-prices", 450, 155);
+        var graph = r.g.linechart(20, 0, 430, 130, days, prices,
+            {nostroke: false,
+              axis: "0 0 1 1",
+              smooth: true});
+        r.g.text(250, 145, "Days Ago");
+        r.g.text(50, 75, "MC ($)");
+      }
+    });
+  });
 }
 
 function drawPercentageSlider(element, value) {

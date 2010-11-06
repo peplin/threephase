@@ -25,8 +25,7 @@ describe GeneratorsController do
     it_should_behave_like JSONResponse
     it { should respond_with :success }
     it "should return a list of marginal costs for the last 10 days" do
-      json_response.last.should eq(
-        @instance.marginal_cost)
+      json_response.last.should eq(@instance.marginal_cost)
     end
   end
 end

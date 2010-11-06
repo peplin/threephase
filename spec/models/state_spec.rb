@@ -198,6 +198,8 @@ describe State do
 
     it "should return the marginal price for customers" do
       mc = 0
+      @state.marginal_prices.each do |p| p.destroy end
+      @state.reload
       @state.generators.ordered_by_average_cost(@state.game).inject(0) do |level, gen|
         capacity_shortfall = @state.demand - level
         met_capacity = [gen.capacity, capacity_shortfall].min

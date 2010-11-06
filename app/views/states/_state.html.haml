@@ -14,6 +14,10 @@
   %dt Research Budget
   %dd= number_to_currency(state.research_budget, :precision => 0)
 
+%h2 Marginal Price
+
+.prices{:id => "#{state.id}-prices", :rel => state.id}
+
 #cities
   %h2 Cities
   = render :partial => "cities/city_summary", :collection => state.cities, :as => :city

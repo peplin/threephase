@@ -53,6 +53,8 @@ class State < ActiveRecord::Base
 
   before_create :generate_starting_cash
   after_create :generate_starting_cities
+  # TODO is there a more sensible way to prime the average operating level?
+  after_create :marginal_price
 
   def natural_resource_index index
     map.natural_resource_index index
@@ -119,6 +121,8 @@ class State < ActiveRecord::Base
   end
 
   def marginal_price time=nil
+    # MP is set once per day - if a generator is built on a day, the MP will not
+    # be recalculated.
     if price = marginal_prices.find_by_day(game, time)
       mc = price.marginal_price
     else
