@@ -65,9 +65,15 @@ users << Factory(:user)
 users << Factory(:user)
 users << Factory(:user)
 
+srand
 games.each_with_index do |game, i|
   users.each_with_index do |user, j|
-    Factory(:state, :game => game, :user => user,
+    state = Factory(:state, :game => game, :user => user,
         :name => STATE_NAMES[(i + 1) * j])
+    state.cities.each do |city|
+      Factory(:generator, :city => state.cities.first,
+          :generator_type => GeneratorType.find(
+            rand(GeneratorType.all.count) + 1))
+    end
   end
 end
