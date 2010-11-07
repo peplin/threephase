@@ -143,8 +143,8 @@ function drawGraphs() {
           prices.push(value.marginal_price.marginal_price);
         });
 
-        var r = Raphael(cityId + "-prices", 450, 155);
-        var graph = r.g.linechart(20, 0, 430, 130, days, prices,
+        var r = Raphael(cityId + "-prices", 380, 150);
+        var graph = r.g.linechart(25, 0, 350, 125, days, prices,
             {nostroke: false,
               axis: "0 0 1 1",
               smooth: true});
@@ -242,7 +242,7 @@ function drawSliders() {
 }
 
 $(document).ready(function() {
-  //drawGraphs();
+  drawGraphs();
   drawSliders();
   if(drawMap != undefined) {
     drawMap();
