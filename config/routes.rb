@@ -48,14 +48,17 @@ Threephase::Application.routes.draw do
   resources :prices, :controller => :fuel_markets, :only => [:index, :show]
   resources :lines do
     resources :repairs, :only => [:index, :show]
-    resources :types, :controller => :line_types, :as => :line_types,
-        :on => :collection
+    collection do
+      resources :types, :controller => :line_types, :as => :line_types
+    end
     get :levels, :on => :member
   end
 
   resources :generators, :except => [:destroy] do
-    resources :types, :controller => :generator_types, :as => :generator_types,
-        :on => :collection
+    collection do
+      resources :types, :controller => :generator_types,
+          :as => :generator_types
+    end
     resources :bids, :except => [:update, :destroy]
     resources :repairs, :only => [:index, :show]
     member do
