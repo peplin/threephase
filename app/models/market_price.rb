@@ -3,7 +3,8 @@ class MarketPrice < ActiveRecord::Base
   belongs_to :fuel_market
 
   scope :closest_to, lambda { |date|
-    order(%{ABS(strftime('%s', "#{date.to_formatted_s(:db)}") - strftime('%s', created_at)) asc}).
+    # TODO this should have to be a GameTime
+    order(%{ABS(strftime('%s', "#{date.to_normal.to_formatted_s(:db)}") - strftime('%s', created_at)) asc}).
     order("id DESC").
     limit(1)
   }

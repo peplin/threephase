@@ -3,9 +3,9 @@ class GeneratorsController < TechnicalComponentInstancesController
   def costs
     find_instance
     game = @instance.game
-    costs = game.time.now.range([10.days.ago, game.time.epoch].max, 1.day
-        ).collect do |t|
-      time = game.time.at(t)
+    costs = game.time.now.range(game.time.now -
+        [10.days, game.time.now - game.time.epoch].min, 1.day).collect do |t|
+      time = game.time.at(t, false)
       @instance.marginal_cost(time)
     end
 

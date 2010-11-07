@@ -97,6 +97,9 @@ class Game < ActiveRecord::Base
         class << self
           attr_reader :speed, :epoch
 
+          # TODO the repurcussions of this scale thing are HUGE. FIX IT.
+          # will we ever want to scale if passing in a Fixnum, or will that be
+          # from a range loop?
           def at other, scale=true
             if other.is_a?(self)
               new(other)
@@ -164,11 +167,11 @@ class Game < ActiveRecord::Base
           # To get around it for now we have to unscale and rescale
           # Ugh, this is getting ugly - converting to integers loses precision.
           if other.is_a?(Fixnum) or other.is_a?(Float)
-            self.class.at(Time.at(self) - other)
+            self.class.at(Time.at(self) - other, false)
           elsif other.is_a?(self.class)
             Time.at(self) - other
           else
-            self.class.at(Time.at(self) - self.class.at(other), false)
+            Time.at(self) - self.class.at(other)
           end
         end
       end
