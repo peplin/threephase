@@ -45,9 +45,9 @@ class Map < ActiveRecord::Base
 
   def attach_blocks
     (0..width).each do |x|
-      next unless x % 50 == 0
+      next unless x % 20 == 0
       (0..height).each do |y|
-        next unless y % 50 == 0
+        next unless y % 20 == 0
         self.blocks.create(:x => x, :y => y,
             :block_type => (Block.new.block_types[
                 rand(Block.new.block_types.length)]))
