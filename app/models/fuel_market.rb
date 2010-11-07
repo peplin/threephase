@@ -81,7 +81,8 @@ class FuelMarket < ActiveRecord::Base
   end
 
   def price_at game, time
-    price = market_prices.where(:game_id => game).closest_to(time).first
+    price = market_prices.where(:game_id => game).closest_to(
+        game.time.to_normal(time)).first
     if price
       price.price
     else
