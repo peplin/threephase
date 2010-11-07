@@ -44,10 +44,11 @@ class Map < ActiveRecord::Base
   private
 
   def attach_blocks
+    step = ::Rails.env == "test" ? 100 : 20
     (0..width).each do |x|
-      next unless x % 20 == 0
+      next unless x % step == 0
       (0..height).each do |y|
-        next unless y % 20 == 0
+        next unless y % step == 0
         self.blocks.create(:x => x, :y => y,
             :block_type => (Block.new.block_types[
                 rand(Block.new.block_types.length)]))
