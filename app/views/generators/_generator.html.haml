@@ -6,8 +6,6 @@
   %dt City
   %dd= generator.city
 
-= render :partial => 'technical_component_instances/technical_component_instance', :locals => {:instance => generator}
-
 - if generator.takes_bids?
   %h2 Bids
 
@@ -22,3 +20,5 @@
 %h2 Marginal Cost
 
 .costs{:id => "#{generator.id}-costs", :rel => generator.id}
+
+= render :partial => 'technical_component_instances/technical_component_instance', :locals => {:instance => generator}

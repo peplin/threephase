@@ -17,6 +17,16 @@
   %dt Research Budget
   %dd= number_to_currency(state.research_budget, :precision => 0)
 
+%h2 Marginal Price
+
+.prices{:id => "#{state.id}-prices", :rel => state.id}
+
+%h2 Average Cost Curve
+
+MW / AC in $
+
+.curve{:id => "#{state.id}-curve", :rel => state.id}
+
 #cities
   %h2 Cities
   = render :partial => "cities/city_summary", :collection => state.cities, :as => :city
@@ -30,13 +40,3 @@
   %a{:href => new_state_interstate_line_url(state)}
     New Interstate Line
   = render :partial => "interstate_lines/interstate_line_list", :collection => state.interstate_lines, :as => :interstate_line
-
-%h2 Marginal Price
-
-.prices{:id => "#{state.id}-prices", :rel => state.id}
-
-%h2 Average Cost Curve
-
-MW / AC in $
-
-.curve{:id => "#{state.id}-curve", :rel => state.id}

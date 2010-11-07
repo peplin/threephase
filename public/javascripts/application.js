@@ -20,8 +20,8 @@ function drawGraphs() {
           demand.push(value);
         });
 
-        var r = Raphael(cityId + "-load-profile", 450, 155);
-        var graph = r.g.linechart(20, 0, 430, 130, hours, demand,
+        var r = Raphael(cityId + "-load-profile", 380, 160);
+        var graph = r.g.linechart(25, 0, 350, 140, hours, demand,
             {nostroke: false, axis: "0 0 1 1", smooth: true});
         r.g.text(250, 145, "Hour");
         r.g.text(50, 75, "MW");

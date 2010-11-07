@@ -1,5 +1,12 @@
 %h3= city.name
 
+%h5 Load Profile
+.load-profile{:id => "#{city.id}-load-profile", :rel => city.id}
+  %noscript
+    %ul
+      - (0..23).each do |hour|
+        %li= city.demand(hour)
+
 %h4 Generators
 %a{:href => new_city_generator_url(city)} New Generator
 %ul
@@ -9,10 +16,3 @@
 %a{:href => new_city_line_url(city)} New Transmission Line
 %ul
   =render :partial => "lines/line_list", :collection => city.lines, :as => :line
-
-%h5 Load Profile
-.load-profile{:id => "#{city.id}-load-profile", :rel => city.id}
-  %noscript
-    %ul
-      - (0..23).each do |hour|
-        %li= city.demand(hour)
