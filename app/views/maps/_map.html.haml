@@ -1,0 +1,4 @@
+- content_for :extra_javascript do
+  = javascript_include_tag "map"
+
+.map{:id => "#{state.id}-map", :rel => state.id}

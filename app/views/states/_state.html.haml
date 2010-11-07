@@ -9,6 +9,9 @@
     %a{:href => user_path(state.user)}= state.user
   %dt Map
   %dd= state.map
+  %dt Country
+  %dd
+    %a{:href => game_url(state.game)}= state.game
   %dt Cash
   %dd= number_to_currency(state.cash, :precision => 0)
   %dt Research Budget

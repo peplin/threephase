@@ -2,7 +2,7 @@ class StatesController < ApplicationController
   before_filter :login_required
   before_filter :game_required
   before_filter :find_state, :only => [:show, :edit, :update, :destroy, :prices,
-      :curve]
+      :curve, :map]
 
   respond_to :json, :except => [:new, :edit]
   respond_to :html
@@ -61,6 +61,10 @@ class StatesController < ApplicationController
     respond_with({
         :generators => @state.generators.ordered_by_average_cost(@state.game),
         :demand => @state.demand}.to_json)
+  end
+
+  def map
+    respond_with @state.map, :include => [:blocks]
   end
 
   private

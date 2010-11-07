@@ -5,6 +5,7 @@ Threephase::Application.routes.draw do
       member do
         get :prices
         get :curve
+        get :map
       end
       resources :cities, :only => [:index, :show]
     end
@@ -21,6 +22,7 @@ Threephase::Application.routes.draw do
     member do
       get :prices
       get :curve
+      get :map
     end
   end
   resources :advancements, :controller => :research_advancements,

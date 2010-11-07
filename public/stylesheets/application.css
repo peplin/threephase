@@ -349,3 +349,7 @@ input.label {
   width: 450px;
   height: 200px;
 }
+
+.map {
+  border: 1px solid #B2B2B2; border-width: 2px;
+}

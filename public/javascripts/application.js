@@ -242,6 +242,9 @@ function drawSliders() {
 }
 
 $(document).ready(function() {
-  drawGraphs();
+  //drawGraphs();
   drawSliders();
+  if(drawMap != undefined) {
+    drawMap();
+  }
 });
