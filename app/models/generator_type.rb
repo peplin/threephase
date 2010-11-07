@@ -24,7 +24,6 @@ class GeneratorType < ActiveRecord::Base
       :greater_than_or_equal_to => 1}
   validates :tax_credit, :presence => true, :numericality => {
       :greater_than_or_equal_to => 0}
-  validates :fuel_market, :presence => true
 
   def renewable?
     marginal_fuel_burn_rate == 0
