@@ -103,6 +103,9 @@ class State < ActiveRecord::Base
     [x, y]
   end
 
+  # TODO DRY up these three functions - need an organized, efficient way to
+  # calculate and cache the operating level.
+
   def optimal_operating_level generator, time=nil
     operating_level = 0
     generators.ordered_by_marginal_cost(game, time).inject(0) do |level, gen|

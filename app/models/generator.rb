@@ -71,4 +71,9 @@ class Generator < TechnicalComponentInstance
   def operating_fuel_cost time=nil
     marginal_fuel_cost(time) * operating_level(time)
   end
+
+  def as_json(options={})
+    serializable_hash.merge(:marginal_cost => marginal_cost, 
+        :capacity => capacity)
+  end
 end

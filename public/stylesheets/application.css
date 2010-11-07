@@ -342,3 +342,10 @@ input.label {
 .ui-slider {
   margin: 5px;
 }
+
+/* Graph Specific */
+
+.curve {
+  width: 450px;
+  height: 200px;
+}

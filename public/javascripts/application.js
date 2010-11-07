@@ -153,6 +153,38 @@ function drawGraphs() {
       }
     });
   });
+
+  $(".curve").each(function() {
+    var element = this;
+    var cityId = $(this).attr('rel');
+    $.ajax({
+      type : "GET",
+      url: '/states/' + $(this).attr('rel') + '/curve',
+      success : function(data){
+        var days = [];
+        for(var i = data.length; i > 0; i--) {
+          days.push(i);
+        }
+
+        var lines = [];
+        var metCapacity = 0;
+        var highestCost = 0;
+        $.each(data.generators, function(key, value) {
+            var line = []
+            line.push([metCapacity, value.marginal_cost]);
+            line.push([metCapacity + value.capacity, value.marginal_cost]);
+            metCapacity += value.capacity;
+            lines.push({data: line, label: "Gen. " + value.id})
+            highestCost = value.marginal_cost;
+        });
+        lines.push({data: [[data.demand, highestCost - 25],
+              [data.demand, highestCost + 25]],
+            label: "Demand"}); 
+
+        $.plot($("#" + cityId + "-curve"), lines);
+      }
+    });
+  });
 }
 
 function drawPercentageSlider(element, value) {
