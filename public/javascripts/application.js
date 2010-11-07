@@ -91,7 +91,7 @@ function drawGraphs() {
         var graph = r.g.linechart(20, 0, 430, 130, days, levels,
             {nostroke: false,
               axis: "0 0 1 1",
-              smooth: true});
+              smooth: false});
         r.g.text(250, 145, "Days Ago");
         r.g.text(50, 75, "MW");
       }
@@ -119,7 +119,7 @@ function drawGraphs() {
         var graph = r.g.linechart(20, 0, 430, 130, days, costs,
             {nostroke: false,
               axis: "0 0 1 1",
-              smooth: true});
+              smooth: false});
         r.g.text(250, 145, "Days Ago");
         r.g.text(50, 75, "MC ($)");
       }
@@ -147,9 +147,9 @@ function drawGraphs() {
         var graph = r.g.linechart(25, 0, 350, 125, days, prices,
             {nostroke: false,
               axis: "0 0 1 1",
-              smooth: true});
+              smooth: false});
         r.g.text(250, 145, "Days Ago");
-        r.g.text(50, 75, "MC ($)");
+        r.g.text(50, 75, "MP ($)");
       }
     });
   });
