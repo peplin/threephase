@@ -97,14 +97,19 @@ class Game < ActiveRecord::Base
         class << self
           attr_reader :speed, :epoch
 
-          def at other
+          def at other, scale=true
             if other.is_a?(self)
               new(other)
             else
               if not other.is_a?(Time)
                 other = Time.at(other)
               end
-              new(scale(other))
+
+              if scale
+                new(scale(other))
+              else
+                new(other)
+              end
             end
           end
 
@@ -130,7 +135,7 @@ class Game < ActiveRecord::Base
 
           def descale other
             check other
-            epoch + (other - epoch) / speed
+            epoch + (other - epoch).to_i / speed
           end
 
           def check other
@@ -154,12 +159,16 @@ class Game < ActiveRecord::Base
           #
           # This isn't a singleton method, but I think the Delegation parent is
           # mucking with it.
-          if other.is_a?(Fixnum)
-            Time.at(self) - other
+          # TODO it's problematic that these return Time, not GameTime -
+          # we lose the metadata that this is a scaled time.
+          # To get around it for now we have to unscale and rescale
+          # Ugh, this is getting ugly - converting to integers loses precision.
+          if other.is_a?(Fixnum) or other.is_a?(Float)
+            self.class.at(Time.at(self) - other)
           elsif other.is_a?(self.class)
             Time.at(self) - other
           else
-            Time.at(self) - self.class.at(other)
+            self.class.at(Time.at(self) - self.class.at(other), false)
           end
         end
       end

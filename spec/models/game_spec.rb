@@ -105,8 +105,8 @@ describe Game do
 
       context "with real-time speed" do
         it "should return a non-scaled game time" do
-          @game.time.at(1.hour.ago).should be_close(1.hour.ago, 0.1)
-          @game.time.now.should be_close(Time.now, 0.1)
+          @game.time.at(1.hour.ago).to_i.should be_close(1.hour.ago.to_i, 1)
+          @game.time.now.to_i.should eq(Time.now.to_i)
         end
 
         it "should convert an integer to Time" do
@@ -135,7 +135,7 @@ describe Game do
         end
 
         it "should convert Time to GameTime before subtracting" do
-          (@time.now - Time.now).should eq(0)
+          (@time.now - Time.now).to_i.should eq(0)
         end
 
         it "should not convert GameTime to GameTime before subtracting" do
