@@ -48,8 +48,9 @@ class Map < ActiveRecord::Base
       next unless x % 50 == 0
       (0..height).each do |y|
         next unless y % 50 == 0
-        # TODO generate an intersting map, with more than one lbock type
-        self.blocks.create(:x => x, :y => y, :block_type => :mountain)
+        self.blocks.create(:x => x, :y => y,
+            :block_type => (Block.new.block_types[
+                rand(Block.new.block_types.length)]))
       end
     end
   end
