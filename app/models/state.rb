@@ -53,6 +53,7 @@ class State < ActiveRecord::Base
   validates :user, :presence => true
 
   before_create :generate_starting_cash
+  after_create :initialize_times
   after_create :generate_starting_cities
   # TODO is there a more sensible way to prime the average operating level?
   after_create :marginal_price
@@ -207,6 +208,12 @@ class State < ActiveRecord::Base
     # TODO if the time between calls to this cross the day boundary, the result
     # will be incorrect because it will use the marginal price from TODAY
     marginal_price * demanded_since(customers_charged_at)
+  end
+
+  def initialize_times
+    self.stepped_at = created_at
+    self.costs_deducted_at = created_at
+    self.customers_charged_at = created_at
   end
 
   def generate_starting_cash
