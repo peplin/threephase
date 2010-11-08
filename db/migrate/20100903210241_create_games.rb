@@ -2,7 +2,6 @@ class CreateGames < ActiveRecord::Migration
   def self.up
     create_table :games do |t|
       t.integer :speed, :null => false, :default => 10
-      t.datetime :updated_at, :null => false, :default => Time.now
       t.integer :max_players
       t.datetime :started
       t.datetime :ended
