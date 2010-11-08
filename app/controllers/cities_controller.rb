@@ -20,9 +20,7 @@ class CitiesController < ApplicationController
   private
 
   def find_cities
-    if current_user and current_user.admin?
-      @cities = @game.states.collect(&:cities)
-    elsif params[:state_id]
+    if params[:state_id]
       @cities = State.find(params[:state_id]).cities
     else
       @cities = current_state.cities
