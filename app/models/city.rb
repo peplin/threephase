@@ -8,7 +8,7 @@ class City < ActiveRecord::Base
   include SimpleExtensions
   include NaturalResources
 
-  DEMAND_SCALE_FACTOR = 1000.0
+  DEMAND_SCALE_FACTOR = 50.0
   belongs_to :state
   has_many :generators
   has_many :bids, :through => :generators

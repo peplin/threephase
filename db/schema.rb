@@ -260,9 +260,9 @@ ActiveRecord::Schema.define(:version => 20101101165725) do
     t.string   "name",                                                    :null => false
     t.integer  "research_budget",      :default => 5000000,               :null => false
     t.integer  "cash"
-    t.datetime "stepped_at",           :default => '2010-11-08 00:38:41'
-    t.datetime "customers_charged_at", :default => '2010-11-08 00:38:41'
-    t.datetime "costs_deducted_at",    :default => '2010-11-08 00:38:41'
+    t.datetime "stepped_at",           :default => '2010-11-08 00:57:35'
+    t.datetime "customers_charged_at", :default => '2010-11-08 00:57:35'
+    t.datetime "costs_deducted_at",    :default => '2010-11-08 00:57:35'
     t.integer  "map_id",                                                  :null => false
     t.integer  "game_id",                                                 :null => false
     t.integer  "user_id"

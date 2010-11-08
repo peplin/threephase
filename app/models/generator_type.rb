@@ -34,7 +34,11 @@ class GeneratorType < ActiveRecord::Base
   end
 
   def marginal_fuel_cost city, time=nil
-    marginal_fuel_burn_rate * city.current_price(fuel_market, time)
+    if fuel_market
+      marginal_fuel_burn_rate * city.current_price(fuel_market, time)
+    else
+      0
+    end
   end
 
   def to_s

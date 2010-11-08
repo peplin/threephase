@@ -209,7 +209,7 @@ class State < ActiveRecord::Base
   end
 
   def generate_starting_cities
-    (1 + rand(4)).times do
+    (2 + rand(4)).times do
       self.cities << City.new
     end
   end
