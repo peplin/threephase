@@ -155,6 +155,7 @@ class State < ActiveRecord::Base
   end
 
   def deduct_operating_costs
+    logger.info "Duducting operating costs for #{self}"
     self.cash -= cost_since(costs_deducted_at)
     self.costs_deducted_at = Time.now
     self.cash
@@ -186,6 +187,11 @@ class State < ActiveRecord::Base
   end
 
   def step
+    deduct_operating_costs
+    charge_customers
+  end
+
+  def step_async
     Resque.enqueue(Step, self.id)
   end
 

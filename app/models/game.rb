@@ -156,6 +156,10 @@ class Game < ActiveRecord::Base
         end
 
         def range other, step=10.minutes
+          delta = self.to_i - self.class.at(other).to_i
+          if delta > 1.day
+            step = 1.day
+          end
           ((self.class.at(other).to_i + step)..self.to_i).step(step)
         end
 

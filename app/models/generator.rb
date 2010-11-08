@@ -42,13 +42,15 @@ class Generator < TechnicalComponentInstance
 
   def fuel_cost_since time
     game.time.now.range(time).inject(0) do |total, t|
-      total + operating_fuel_cost(game.time.at(t, false)) / 6.0
+      t = game.time.at(t, false)
+      logger.debug "Adding fuel costs for #{self} at #{t}"
+      total + operating_fuel_cost(t)
     end
   end
 
   def fuel_used_since time
     game.time.now.range(time).inject(0) do |total, t|
-      total + fuel_burn_rate(game.time.at(t, false)) / 6.0
+      total + fuel_burn_rate(game.time.at(t, false))
     end
   end
 

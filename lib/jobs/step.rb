@@ -3,8 +3,10 @@ class Step
 
   def self.perform(state_id)
     state = State.find(state_id)
-    state.deduct_operating_costs
-    state.charge_customers
+    logger.info "Stepping #{state}"
+    state.step
+    state.save
+    logger.info "Done stepping #{state}"
   end
 end
 
