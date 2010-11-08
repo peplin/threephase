@@ -1,0 +1,4 @@
+step_games:
+  cron: "* * * * *"
+  class: StepAllGames
+  args:

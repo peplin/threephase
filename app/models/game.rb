@@ -70,6 +70,12 @@ class Game < ActiveRecord::Base
     not ended
   end
 
+  def step_async
+    states.each do |state|
+      state.step_async
+    end
+  end
+
   def step
     states.each do |state|
       state.step
