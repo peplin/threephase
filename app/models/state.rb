@@ -1,4 +1,5 @@
 require 'query_extensions'
+require 'jobs/step'
 
 class State < ActiveRecord::Base
   # Don't place cities any closer than this
@@ -181,6 +182,10 @@ class State < ActiveRecord::Base
     cities.inject(0) do |demanded, city|
       city.demanded_since(time)
     end
+  end
+
+  def step
+    Resque.enqueue(Step, self.id)
   end
 
   def to_s

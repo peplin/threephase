@@ -71,6 +71,9 @@ class Game < ActiveRecord::Base
   end
 
   def step
+    states.each do |state|
+      state.step
+    end
   end
 
   def generators fuel_market=nil
