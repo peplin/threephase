@@ -80,7 +80,7 @@ class TechnicalComponentInstance < ActiveRecord::Base
   end
 
   def to_s
-    "#{buildable} created #{created_at_in_game} operating at #{operating_level}%"
+    "#{buildable} created #{created_at_in_game} operating at #{operating_level / Float(capacity) * 100}%"
   end
 
   def created_at_in_game
