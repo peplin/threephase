@@ -18,17 +18,14 @@ gem "seed-fu", :git => "git://github.com/peplin/seed-fu.git",
 gem "resque"
 gem "resque-scheduler"
 
-group :production do
-  gem 'pg'
-end
+gem 'pg'
+gem 'sqlite3-ruby', :require => 'sqlite3'
 
 group :test, :development do
-  gem 'sqlite3-ruby', :require => 'sqlite3'
   gem 'shoulda'
   gem 'rcov'
   gem 'rspec', ">= 2.0.1"
   gem 'rspec-rails', ">= 2.0.1"
-  gem 'silent-postgres'
 
   if RUBY_VERSION < '1.9'
     gem "ruby-debug"
